@@ -4,15 +4,15 @@ public class Cliente {
 	
 	private Integer idcliente;
 	private String nome;
-	private Long cpf;
-	private Long rg;
+	private String cpf;
+	private String rg;
 	private String uf;
 	private String cidade;
 	private String rua;
 	private String bairro;
 	private Integer numero;
 	private Double salario;
-	private Long telefone;
+	private String telefone;
 	private String interesses;
 	
 	
@@ -21,9 +21,9 @@ public class Cliente {
 		
 	}
 	
-	public Cliente(Integer idcliente, String nome, Long cpf, Long rg,
+	public Cliente(Integer idcliente, String nome, String cpf, String rg,
 			String uf, String cidade, String rua, String bairro,
-			Integer numero, Double salario, Long telefone, String interesses) {
+			Integer numero, Double salario, String telefone, String interesses) {
 		super();
 		this.idcliente = idcliente;
 		this.nome = nome;
@@ -57,19 +57,19 @@ public class Cliente {
 		this.nome = nome;
 	}
 	
-	public Long getCpf() {
+	public String getCpf() {
 		return cpf;
 	}
 	
-	public void setCpf(Long cpf) {
+	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
 	
-	public Long getRg() {
+	public String getRg() {
 		return rg;
 	}
 	
-	public void setRg(Long rg) {
+	public void setRg(String rg) {
 		this.rg = rg;
 	}
 	
@@ -122,11 +122,11 @@ public class Cliente {
 		this.salario = salario;
 	}
 	
-	public Long getTelefone() {
+	public String getTelefone() {
 		return telefone;
 	}
 	
-	public void setTelefone(Long telefone) {
+	public void setTelefone(String telefone) {
 		this.telefone = telefone;
 	}
 	

@@ -4,15 +4,15 @@ public class Corretor {
 	
 	private Integer idcorretor;
 	private String nomecorretor;
-	private Long cpf;
-	private Long rg;
+	private String cpf;
+	private String rg;
 	private String uf;
 	private String estado;
 	private String rua;
 	private Integer numero;
 	private Double salario;
 	private Double comissão;
-	private Long telefone;
+	private String telefone;
 	
 	// private Imobiliaria Imobiliaria; ?????
 	
@@ -26,9 +26,9 @@ public class Corretor {
 	
 	
 	
-	public Corretor(Integer idcorretor, String nomecorretor, Long cpf, Long rg,
+	public Corretor(Integer idcorretor, String nomecorretor, String cpf, String rg,
 			String uf, String estado, String rua, Integer numero,
-			Double salario, Double comissão, Long telefone) {
+			Double salario, Double comissão, String telefone) {
 		//construtor com atributos 
 		super();
 		this.idcorretor = idcorretor;
@@ -60,19 +60,19 @@ public class Corretor {
 		this.nomecorretor = nomecorretor;
 	}
 	
-	public Long getCpf() {
+	public String getCpf() {
 		return cpf;
 	}
 	
-	public void setCpf(Long cpf) {
+	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
 	
-	public Long getRg() {
+	public String getRg() {
 		return rg;
 	}
 	
-	public void setRg(Long rg) {
+	public void setRg(String rg) {
 		this.rg = rg;
 	}
 	
@@ -124,11 +124,11 @@ public class Corretor {
 		this.comissão = comissão;
 	}
 	
-	public Long getTelefone() {
+	public String getTelefone() {
 		return telefone;
 	}
 	
-	public void setTelefone(Long telefone) {
+	public void setTelefone(String telefone) {
 		this.telefone = telefone;
 	}
 	

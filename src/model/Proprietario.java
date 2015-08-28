@@ -6,7 +6,7 @@ public class Proprietario {
 	private Long cpf;
 	private Long rg;
 	private String contato;
-	private Long telefonecontato;
+	private String telefonecontato;
 	
 	
 	
@@ -16,7 +16,7 @@ public class Proprietario {
 	
 	
 	public Proprietario(String nome, Long cpf, Long rg, String contato,
-			Long telefonecontato) {
+			String telefonecontato) {
 		super();
 		this.nome = nome;
 		this.cpf = cpf;
@@ -57,11 +57,11 @@ public class Proprietario {
 		this.contato = contato;
 	}
 	
-	public Long getTelefonecontato() {
+	public String getTelefonecontato() {
 		return telefonecontato;
 	}
 	
-	public void setTelefonecontato(Long telefonecontato) {
+	public void setTelefonecontato(String telefonecontato) {
 		this.telefonecontato = telefonecontato;
 	}
 	
