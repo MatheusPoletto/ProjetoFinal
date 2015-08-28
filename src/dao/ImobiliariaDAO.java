@@ -1,5 +1,5 @@
 package dao;
 
-public class ImobiliariaDAO {
+public interface ImobiliariaDAO {
 
 }
