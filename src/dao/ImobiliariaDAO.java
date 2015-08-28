@@ -1,5 +1,7 @@
 package dao;
 
-public interface ImobiliariaDAO {
+import model.Imobiliaria;
+
+public interface ImobiliariaDAO extends GenericDAO<Imobiliaria>{
 
 }
