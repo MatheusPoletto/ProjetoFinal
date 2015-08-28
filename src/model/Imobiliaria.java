@@ -9,14 +9,14 @@ public class Imobiliaria  {
 	private Integer idimobiliaria;
 	private String razaosocial;
 	private String nomefantasia;
-	private Long cnpj;
+	private String cnpj;
 	// não é melhor fazer uma classe endereço ai chama o endereço ? 
 	private String uf; 
 	private String cidade;
 	private String rua;
 	private String bairro;
 	private Integer numero; 
-	private Long telefone;
+	private String telefone;
 	private String nomeproprietario;
 	
 	
@@ -27,8 +27,8 @@ public class Imobiliaria  {
 	
 	
 	public Imobiliaria(Integer idimobiliaria, String razaosocial,
-			String nomefantasia, Long cnpj, String uf, String cidade,
-			String rua, String bairro, Integer numero, Long telefone,
+			String nomefantasia, String cnpj, String uf, String cidade,
+			String rua, String bairro, Integer numero, String telefone,
 			String nomeproprietario) {
 		
 		// construtor com atributos 
@@ -77,12 +77,12 @@ public class Imobiliaria  {
 	}
 
 
-	public Long getCnpj() {
+	public String getCnpj() {
 		return cnpj;
 	}
 
 
-	public void setCnpj(Long cnpj) {
+	public void setCnpj(String cnpj) {
 		this.cnpj = cnpj;
 	}
 
@@ -137,12 +137,12 @@ public class Imobiliaria  {
 	}
 
 
-	public Long getTelefone() {
+	public String getTelefone() {
 		return telefone;
 	}
 
 
-	public void setTelefone(Long telefone) {
+	public void setTelefone(String telefone) {
 		this.telefone = telefone;
 	}
 
