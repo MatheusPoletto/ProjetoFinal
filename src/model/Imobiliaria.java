@@ -1,6 +1,6 @@
 package model;
 
-public class Imobiliaria {
+public class Imobiliaria  {
 	
 	// diario de bordo dia 28/08/2015, depois de muito sofrimento, consigo escrever estas
 	// linhas, creio que estou entrando em um planeta desconhecido 
