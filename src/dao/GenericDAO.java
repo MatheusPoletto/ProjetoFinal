@@ -2,7 +2,7 @@ package dao;
 
 import java.util.List;
 
-public interface DAOBUSCA<T> {
+public interface GenericDAO<T> {
 	
 	// este é o DAO, o nome esta DAOBUSCA porque eu não tive ideia de nome melhor 
 	
