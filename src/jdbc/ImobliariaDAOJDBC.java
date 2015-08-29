@@ -1,6 +1,8 @@
 package jdbc;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.List;
 
 import model.Imobiliaria;
@@ -19,19 +21,47 @@ public class ImobliariaDAOJDBC implements ImobiliariaDAO {
 	}
 
 	@Override
-	public void inserir(Imobiliaria entidade) {
+	public void inserir(Imobiliaria imobiliaria) {
+		// TODO Auto-generated method stub
+		
+		String sql = "insert into Imobiliaria (razaosocial, nomefantasia, cnpj, uf, cidade, rua , bairro, numero, telefone, nomeproprietario) values(?, ?, ?, ?, ?, ?,?,?,?,?)";
+		try {
+			PreparedStatement pstmt = con.prepareStatement(sql); 
+			
+			pstmt.setString(1, imobiliaria.getRazaosocial());
+			pstmt.setString(2, imobiliaria.getNomefantasia());
+			pstmt.setString(3, imobiliaria.getCnpj());
+			pstmt.setString(4, imobiliaria.getUf());
+			pstmt.setString(5, imobiliaria.getCidade());
+			pstmt.setString(6, imobiliaria.getRua());
+			pstmt.setString(7, imobiliaria.getBairro());
+			pstmt.setInt(8, imobiliaria.getNumero());
+			pstmt.setString(9, imobiliaria.getTelefone());
+			pstmt.setString(10, imobiliaria.getNomeproprietario());
+			
+			
+			
+			
+			
+			pstmt.executeUpdate(); 
+			
+		} catch (SQLException e){
+			
+			e.printStackTrace();
+			
+			
+		}
+		
+	}
+
+	@Override
+	public void alterar(Imobiliaria imobiliaria) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void alterar(Imobiliaria entidade) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void excluir(Imobiliaria entidade) {
+	public void excluir(Imobiliaria imobiliaria) {
 		// TODO Auto-generated method stub
 		
 	}

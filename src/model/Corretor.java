@@ -7,7 +7,7 @@ public class Corretor {
 	private String cpf;
 	private String rg;
 	private String uf;
-	private String estado;
+	private String cidade;
 	private String rua;
 	private Integer numero;
 	private Double salario;
@@ -27,7 +27,7 @@ public class Corretor {
 	
 	
 	public Corretor(Integer idcorretor, String nomecorretor, String cpf, String rg,
-			String uf, String estado, String rua, Integer numero,
+			String uf, String cidade, String rua, Integer numero,
 			Double salario, Double comissão, String telefone) {
 		//construtor com atributos 
 		super();
@@ -36,7 +36,7 @@ public class Corretor {
 		this.cpf = cpf;
 		this.rg = rg;
 		this.uf = uf;
-		this.estado = estado;
+		this.cidade = cidade;
 		this.rua = rua;
 		this.numero = numero;
 		this.salario = salario;
@@ -84,12 +84,12 @@ public class Corretor {
 		this.uf = uf;
 	}
 	
-	public String getEstado() {
-		return estado;
+	public String getCidade() {
+		return cidade;
 	}
 	
-	public void setEstado(String estado) {
-		this.estado = estado;
+	public void setCidade(String cidade) {
+		this.cidade = cidade;
 	}
 	
 	public String getRua() {
