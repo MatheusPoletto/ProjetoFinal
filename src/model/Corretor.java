@@ -133,6 +133,15 @@ public class Corretor {
 	}
 	
 	
+	// teste de metodo para calcular o salario. 
+	
+	public Double calculaSalario(Double valor){
+
+		salario = salario + (0.6 * valor);
+		return salario;
+	}
+	
+	
 	
 	
 	

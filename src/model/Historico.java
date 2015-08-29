@@ -9,24 +9,7 @@ public class Historico {
 	
 	private Imovel imovel;
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
-	
-	
-	
-
-	
-	
 	
 	
 
