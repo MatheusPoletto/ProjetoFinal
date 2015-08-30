@@ -15,36 +15,10 @@ public class Cliente {
 	private String telefone;
 	private String interesses;
 	
-	
-	public Cliente(){
-		
-		
-	}
-	
-	public Cliente(Integer idcliente, String nome, String cpf, String rg,
-			String uf, String cidade, String rua, String bairro,
-			Integer numero, Double salario, String telefone, String interesses) {
-		super();
-		this.idcliente = idcliente;
-		this.nome = nome;
-		this.cpf = cpf;
-		this.rg = rg;
-		this.uf = uf;
-		this.cidade = cidade;
-		this.rua = rua;
-		this.bairro = bairro;
-		this.numero = numero;
-		this.salario = salario;
-		this.telefone = telefone;
-		this.interesses = interesses;
-	}
-
-
 	public Integer getIdcliente() {
 		return idcliente;
 	}
-	
-	
+
 	public void setIdcliente(Integer idcliente) {
 		this.idcliente = idcliente;
 	}
@@ -138,7 +112,27 @@ public class Cliente {
 		this.interesses = interesses;
 	}
 	
+	public Cliente(){
+		
+	}
 	
+	public Cliente(Integer idcliente, String nome, String cpf, String rg,
+			String uf, String cidade, String rua, String bairro,
+			Integer numero, Double salario, String telefone, String interesses) {
+		super();
+		this.idcliente = idcliente;
+		this.nome = nome;
+		this.cpf = cpf;
+		this.rg = rg;
+		this.uf = uf;
+		this.cidade = cidade;
+		this.rua = rua;
+		this.bairro = bairro;
+		this.numero = numero;
+		this.salario = salario;
+		this.telefone = telefone;
+		this.interesses = interesses;
+	}
 	
 
 }
