@@ -1,4 +1,4 @@
-package jdbc;
+package dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,7 +7,6 @@ import java.util.List;
 
 import model.Corretor;
 import conexao.ConexaoUtil;
-import dao.CorretorDAO;
 
 public class CorretorDAOJDBC implements CorretorDAO{
 

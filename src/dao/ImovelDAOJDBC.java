@@ -1,11 +1,10 @@
-package jdbc;
+package dao;
 
 import java.sql.Connection;
 import java.util.List;
 
 import model.Imovel;
 import conexao.ConexaoUtil;
-import dao.ImovelDAO;
 
 public class ImovelDAOJDBC implements ImovelDAO{
 

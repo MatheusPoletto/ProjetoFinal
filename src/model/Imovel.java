@@ -2,11 +2,11 @@ package model;
 
 public class Imovel {
 	private Integer idImovel;
-	private String uf;
-	private String cidade;
-	private String bairro;
 	private String rua;
 	private Integer numero;
+	private String cidade;
+	private String bairro;
+	private String uf;
 	private Proprietario proprietario;
 	
 	public Integer getIdImovel() {
@@ -64,7 +64,7 @@ public class Imovel {
 	public void setProprietario(Proprietario proprietario) {
 		this.proprietario = proprietario;
 	}
-	
+
 	public Imovel(){
 		
 	}
@@ -73,11 +73,11 @@ public class Imovel {
 			String rua, Integer numero, Proprietario proprietario) {
 		super();
 		this.idImovel = idimovel;
-		this.uf = uf;
-		this.cidade = cidade;
-		this.bairro = bairro;
-		this.rua = rua;
-		this.numero = numero;
 		this.proprietario = proprietario;
+		this.rua = rua;
+		this.cidade = cidade;
+		this.numero = numero;
+		this.bairro = bairro;
+		this.uf = uf;
 	}	
 }

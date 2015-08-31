@@ -1,51 +1,52 @@
-package jdbc;
+package dao;
 
 import java.sql.Connection;
 import java.util.List;
 
-import model.Cliente;
+import model.Proprietario;
 import conexao.ConexaoUtil;
-import dao.ClienteDAO;
 
-public class ClienteDAOJDBC implements ClienteDAO{
+public class ProprietarioDAOJDBC implements ProprietarioDAO{
 
+	
+	
+	
 	private Connection con;
 
-	public  ClienteDAOJDBC(){
+	public  ProprietarioDAOJDBC(){
 		con = ConexaoUtil.getCon();
 		
 
 	}
 
 	@Override
-	public void inserir(Cliente entidade) {
+	public void inserir(Proprietario entidade) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void alterar(Cliente entidade) {
+	public void alterar(Proprietario entidade) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void excluir(Cliente entidade) {
+	public void excluir(Proprietario entidade) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public Cliente buscar(Integer id) {
+	public Proprietario buscar(Integer id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Cliente> todos() {
+	public List<Proprietario> todos() {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
 	
 }

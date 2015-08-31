@@ -1,0 +1,3 @@
+*dao e jdbc sao mesmos pacotes (dao)
+*pedir se precisa classe para endereco
+*usar 2 construtores em imovel = aluguel, a vista
