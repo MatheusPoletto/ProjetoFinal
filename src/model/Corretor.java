@@ -1,9 +1,8 @@
 package model;
 
 public class Corretor {
-	
-	private Integer idcorretor;
-	private String nomecorretor;
+	private Integer idCorretor;
+	private String nomeCorretor;
 	private String cpf;
 	private String rg;
 	private String uf;
@@ -13,51 +12,28 @@ public class Corretor {
 	private Double salario;
 	private Double comissão;
 	private String telefone;
-	
 	// private Imobiliaria Imobiliaria; ?????
 	
-	
-	
-	public Corretor(){
-		
-		//Construtor vazio
+	// teste de metodo para calcular o salario
+	public Double calculaSalario(Double valor){
+		salario = salario + (0.6 * valor);
+		return salario;
 	}
 	
-	
-	
-	
-	public Corretor(Integer idcorretor, String nomecorretor, String cpf, String rg,
-			String uf, String cidade, String rua, Integer numero,
-			Double salario, Double comissão, String telefone) {
-		//construtor com atributos 
-		super();
-		this.idcorretor = idcorretor;
-		this.nomecorretor = nomecorretor;
-		this.cpf = cpf;
-		this.rg = rg;
-		this.uf = uf;
-		this.cidade = cidade;
-		this.rua = rua;
-		this.numero = numero;
-		this.salario = salario;
-		this.comissão = comissão;
-		this.telefone = telefone;
-	}
-	
-	public Integer getIdcorretor() {
-		return idcorretor;
+	public Integer getIdCorretor() {
+		return idCorretor;
 	}
 
-	public void setIdcorretor(Integer idcorretor) {
-		this.idcorretor = idcorretor;
+	public void setIdCorretor(Integer idcorretor) {
+		this.idCorretor = idcorretor;
 	}
 	
-	public String getNomecorretor() {
-		return nomecorretor;
+	public String getNomeCorretor() {
+		return nomeCorretor;
 	}
 	
-	public void setNomecorretor(String nomecorretor) {
-		this.nomecorretor = nomecorretor;
+	public void setNomeCorretor(String nomecorretor) {
+		this.nomeCorretor = nomecorretor;
 	}
 	
 	public String getCpf() {
@@ -132,20 +108,24 @@ public class Corretor {
 		this.telefone = telefone;
 	}
 	
-	
-	// teste de metodo para calcular o salario. 
-	
-	public Double calculaSalario(Double valor){
+	public Corretor(){
 
-		salario = salario + (0.6 * valor);
-		return salario;
 	}
 	
-	
-	
-	
-	
-	
-	
-
+	public Corretor(Integer idcorretor, String nomecorretor, String cpf, String rg,
+			String uf, String cidade, String rua, Integer numero,
+			Double salario, Double comissão, String telefone) {
+		super();
+		this.idCorretor = idcorretor;
+		this.nomeCorretor = nomecorretor;
+		this.cpf = cpf;
+		this.rg = rg;
+		this.uf = uf;
+		this.cidade = cidade;
+		this.rua = rua;
+		this.numero = numero;
+		this.salario = salario;
+		this.comissão = comissão;
+		this.telefone = telefone;
+	}
 }

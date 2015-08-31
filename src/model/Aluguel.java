@@ -1,86 +1,59 @@
 package model;
 
 public class Aluguel{
-	
-
-
-	private Integer idaluguel;
-	
-	private Double valormensal;
-	private String formadepagamento;
-	
+	private Integer idAluguel;
+	private Double valorMensal;
+	private String formaDePagamento;
 	private Corretor corretor;
 	private Cliente cliente;
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	public Aluguel(Integer idaluguel, Double valormensal,
-			String formadepagamento, Corretor corretor, Cliente cliente) {
-		super();
-		this.idaluguel = idaluguel;
-		this.valormensal = valormensal;
-		this.formadepagamento = formadepagamento;
-		this.corretor = corretor;
-		this.cliente = cliente;
+	public Integer getIdAluguel() {
+		return idAluguel;
 	}
 	
-	public Integer getIdaluguel() {
-		return idaluguel;
+	public void setIdAluguel(Integer idaluguel) {
+		this.idAluguel = idaluguel;
 	}
-	public void setIdaluguel(Integer idaluguel) {
-		this.idaluguel = idaluguel;
+	
+	public Double getValorMensal() {
+		return valorMensal;
 	}
-	public Double getValormensal() {
-		return valormensal;
+	
+	public void setValorMensal(Double valormensal) {
+		this.valorMensal = valormensal;
 	}
-	public void setValormensal(Double valormensal) {
-		this.valormensal = valormensal;
+	
+	public String getFormaDePagamento() {
+		return formaDePagamento;
 	}
-	public String getFormadepagamento() {
-		return formadepagamento;
+	
+	public void setFormaDePagamento(String formadepagamento) {
+		this.formaDePagamento = formadepagamento;
 	}
-	public void setFormadepagamento(String formadepagamento) {
-		this.formadepagamento = formadepagamento;
-	}
+	
 	public Corretor getCorretor() {
 		return corretor;
 	}
+	
 	public void setCorretor(Corretor corretor) {
 		this.corretor = corretor;
 	}
+	
 	public Cliente getCliente() {
 		return cliente;
 	}
+	
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
 	
-	
-
-	
-
-	
-	
-	
-
-
-	
-
-
-	
-	
-	
-	
-	
-
+	public Aluguel(Integer idaluguel, Double valormensal,
+			String formadepagamento, Corretor corretor, Cliente cliente) {
+		super();
+		this.idAluguel = idaluguel;
+		this.valorMensal = valormensal;
+		this.formaDePagamento = formadepagamento;
+		this.corretor = corretor;
+		this.cliente = cliente;
+	}
 }

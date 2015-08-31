@@ -1,9 +1,7 @@
 package model;
 
 public class Imovel {
-
-	
-	private Integer idimovel;
+	private Integer idImovel;
 	private String uf;
 	private String cidade;
 	private String bairro;
@@ -11,33 +9,12 @@ public class Imovel {
 	private Integer numero;
 	private Proprietario proprietario;
 	
-	
-	
-	
-	public Imovel(){
-		
-		
+	public Integer getIdImovel() {
+		return idImovel;
 	}
 	
-	
-	public Imovel(Integer idimovel, String uf, String cidade, String bairro,
-			String rua, Integer numero, Proprietario proprietario) {
-		super();
-		this.idimovel = idimovel;
-		this.uf = uf;
-		this.cidade = cidade;
-		this.bairro = bairro;
-		this.rua = rua;
-		this.numero = numero;
-		this.proprietario = proprietario;
-	}
-
-	public Integer getIdimovel() {
-		return idimovel;
-	}
-	
-	public void setIdimovel(Integer idimovel) {
-		this.idimovel = idimovel;
+	public void setIdImovel(Integer idimovel) {
+		this.idImovel = idimovel;
 	}
 	
 	public String getUf() {
@@ -88,12 +65,19 @@ public class Imovel {
 		this.proprietario = proprietario;
 	}
 	
+	public Imovel(){
+		
+	}
 	
-	
-	
-	
-	
-	
-	
-	
+	public Imovel(Integer idimovel, String uf, String cidade, String bairro,
+			String rua, Integer numero, Proprietario proprietario) {
+		super();
+		this.idImovel = idimovel;
+		this.uf = uf;
+		this.cidade = cidade;
+		this.bairro = bairro;
+		this.rua = rua;
+		this.numero = numero;
+		this.proprietario = proprietario;
+	}	
 }

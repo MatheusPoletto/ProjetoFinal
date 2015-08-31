@@ -6,24 +6,7 @@ public class Proprietario {
 	private Long cpf;
 	private Long rg;
 	private String contato;
-	private String telefonecontato;
-	
-	
-	
-	public Proprietario(){
-		
-	}
-	
-	
-	public Proprietario(String nome, Long cpf, Long rg, String contato,
-			String telefonecontato) {
-		super();
-		this.nome = nome;
-		this.cpf = cpf;
-		this.rg = rg;
-		this.contato = contato;
-		this.telefonecontato = telefonecontato;
-	}
+	private String telefoneContato;
 
 	public String getNome() {
 		return nome;
@@ -57,16 +40,25 @@ public class Proprietario {
 		this.contato = contato;
 	}
 	
-	public String getTelefonecontato() {
-		return telefonecontato;
+	public String getTelefoneContato() {
+		return telefoneContato;
 	}
 	
-	public void setTelefonecontato(String telefonecontato) {
-		this.telefonecontato = telefonecontato;
+	public void setTelefoneContato(String telefonecontato) {
+		this.telefoneContato = telefonecontato;
 	}
 	
+	public Proprietario(){
+		
+	}
 	
-	
-	
-
+	public Proprietario(String nome, Long cpf, Long rg, String contato,
+			String telefonecontato) {
+		super();
+		this.nome = nome;
+		this.cpf = cpf;
+		this.rg = rg;
+		this.contato = contato;
+		this.telefoneContato = telefonecontato;
+	}
 }

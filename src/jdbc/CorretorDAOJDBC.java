@@ -31,7 +31,7 @@ public class CorretorDAOJDBC implements CorretorDAO{
 			
 
 			
-			pstmt.setString(1, Corretor.getNomecorretor());
+			pstmt.setString(1, Corretor.getNomeCorretor());
 			pstmt.setString(2, Corretor.getCpf());
 			pstmt.setString(3, Corretor.getRg());
 			pstmt.setString(4, Corretor.getUf());

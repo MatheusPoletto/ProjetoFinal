@@ -28,8 +28,8 @@ public class ImobliariaDAOJDBC implements ImobiliariaDAO {
 		try {
 			PreparedStatement pstmt = con.prepareStatement(sql); 
 			
-			pstmt.setString(1, imobiliaria.getRazaosocial());
-			pstmt.setString(2, imobiliaria.getNomefantasia());
+			pstmt.setString(1, imobiliaria.getRazaoSocial());
+			pstmt.setString(2, imobiliaria.getNomeFantasia());
 			pstmt.setString(3, imobiliaria.getCnpj());
 			pstmt.setString(4, imobiliaria.getUf());
 			pstmt.setString(5, imobiliaria.getCidade());
@@ -37,7 +37,7 @@ public class ImobliariaDAOJDBC implements ImobiliariaDAO {
 			pstmt.setString(7, imobiliaria.getBairro());
 			pstmt.setInt(8, imobiliaria.getNumero());
 			pstmt.setString(9, imobiliaria.getTelefone());
-			pstmt.setString(10, imobiliaria.getNomeproprietario());
+			pstmt.setString(10, imobiliaria.getNomeProprietario());
 			
 			
 			

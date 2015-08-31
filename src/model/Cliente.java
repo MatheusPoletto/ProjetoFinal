@@ -1,8 +1,7 @@
 package model;
 
 public class Cliente {
-	
-	private Integer idcliente;
+	private Integer idCliente;
 	private String nome;
 	private String cpf;
 	private String rg;
@@ -15,12 +14,12 @@ public class Cliente {
 	private String telefone;
 	private String interesses;
 	
-	public Integer getIdcliente() {
-		return idcliente;
+	public Integer getIdCliente() {
+		return idCliente;
 	}
 
-	public void setIdcliente(Integer idcliente) {
-		this.idcliente = idcliente;
+	public void setIdCliente(Integer idcliente) {
+		this.idCliente = idcliente;
 	}
 	
 	public String getNome() {
@@ -120,7 +119,7 @@ public class Cliente {
 			String uf, String cidade, String rua, String bairro,
 			Integer numero, Double salario, String telefone, String interesses) {
 		super();
-		this.idcliente = idcliente;
+		this.idCliente = idcliente;
 		this.nome = nome;
 		this.cpf = cpf;
 		this.rg = rg;
@@ -133,6 +132,4 @@ public class Cliente {
 		this.telefone = telefone;
 		this.interesses = interesses;
 	}
-	
-
 }
