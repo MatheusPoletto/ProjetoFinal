@@ -3,9 +3,9 @@ package model;
 public class Proprietario {
 	
 	private String nome;
-	private Long cpf;
-	private Long rg;
-	private String contato;
+	private String cpf;
+	private String rg;
+	private String emailContato;
 	private String telefoneContato;
 
 	public String getNome() {
@@ -16,28 +16,28 @@ public class Proprietario {
 		this.nome = nome;
 	}
 	
-	public Long getCpf() {
+	public String getCpf() {
 		return cpf;
 	}
 	
-	public void setCpf(Long cpf) {
+	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
 	
-	public Long getRg() {
+	public String getRg() {
 		return rg;
 	}
 	
-	public void setRg(Long rg) {
+	public void setRg(String rg) {
 		this.rg = rg;
 	}
 	
-	public String getContato() {
-		return contato;
+	public String getEmailContato() {
+		return emailContato;
 	}
 	
-	public void setContato(String contato) {
-		this.contato = contato;
+	public void setEmailContato(String contato) {
+		this.emailContato = contato;
 	}
 	
 	public String getTelefoneContato() {
@@ -52,13 +52,13 @@ public class Proprietario {
 		
 	}
 	
-	public Proprietario(String nome, Long cpf, Long rg, String contato,
+	public Proprietario(String nome, String cpf, String rg, String emailContato,
 			String telefonecontato) {
 		super();
 		this.nome = nome;
 		this.cpf = cpf;
 		this.rg = rg;
-		this.contato = contato;
+		this.emailContato = emailContato;
 		this.telefoneContato = telefonecontato;
 	}
 }
