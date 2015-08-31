@@ -1,33 +1,39 @@
-package model;
+package pessoa;
 
-public class Cliente {
-	private Integer idCliente;
-	private String nome;
+public class Corretor {
+	private Integer idCorretor;
+	private String nomeCorretor;
 	private String cpf;
 	private String rg;
 	private String uf;
 	private String cidade;
 	private String rua;
-	private String bairro;
 	private Integer numero;
 	private Double salario;
+	private Double comissão;
 	private String telefone;
-	private String interesses;
+	// private Imobiliaria Imobiliaria; ?????
 	
-	public Integer getIdCliente() {
-		return idCliente;
+	// teste de metodo para calcular o salario
+	public Double calculaSalario(Double valor){
+		salario = salario + (0.6 * valor);
+		return salario;
+	}
+	
+	public Integer getIdCorretor() {
+		return idCorretor;
 	}
 
-	public void setIdCliente(Integer idcliente) {
-		this.idCliente = idcliente;
+	public void setIdCorretor(Integer idcorretor) {
+		this.idCorretor = idcorretor;
 	}
 	
-	public String getNome() {
-		return nome;
+	public String getNomeCorretor() {
+		return nomeCorretor;
 	}
 	
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setNomeCorretor(String nomecorretor) {
+		this.nomeCorretor = nomecorretor;
 	}
 	
 	public String getCpf() {
@@ -55,7 +61,6 @@ public class Cliente {
 	}
 	
 	public String getCidade() {
-		
 		return cidade;
 	}
 	
@@ -69,14 +74,6 @@ public class Cliente {
 	
 	public void setRua(String rua) {
 		this.rua = rua;
-	}
-	
-	public String getBairro() {
-		return bairro;
-	}
-	
-	public void setBairro(String bairro) {
-		this.bairro = bairro;
 	}
 	
 	public Integer getNumero() {
@@ -95,6 +92,14 @@ public class Cliente {
 		this.salario = salario;
 	}
 	
+	public Double getComissão() {
+		return comissão;
+	}
+	
+	public void setComissão(Double comissão) {
+		this.comissão = comissão;
+	}
+	
 	public String getTelefone() {
 		return telefone;
 	}
@@ -103,33 +108,24 @@ public class Cliente {
 		this.telefone = telefone;
 	}
 	
-	public String getInteresses() {
-		return interesses;
+	public Corretor(){
+
 	}
 	
-	public void setInteresses(String interesses) {
-		this.interesses = interesses;
-	}
-	
-	public Cliente(){
-		
-	}
-	
-	public Cliente(Integer idcliente, String nome, String cpf, String rg,
-			String uf, String cidade, String rua, String bairro,
-			Integer numero, Double salario, String telefone, String interesses) {
+	public Corretor(Integer idcorretor, String nomecorretor, String cpf, String rg,
+			String uf, String cidade, String rua, Integer numero,
+			Double salario, Double comissão, String telefone) {
 		super();
-		this.idCliente = idcliente;
-		this.nome = nome;
+		this.idCorretor = idcorretor;
+		this.nomeCorretor = nomecorretor;
 		this.cpf = cpf;
 		this.rg = rg;
 		this.uf = uf;
 		this.cidade = cidade;
 		this.rua = rua;
-		this.bairro = bairro;
 		this.numero = numero;
 		this.salario = salario;
+		this.comissão = comissão;
 		this.telefone = telefone;
-		this.interesses = interesses;
 	}
 }

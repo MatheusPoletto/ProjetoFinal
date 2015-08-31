@@ -1,6 +1,6 @@
 package dao;
 
-import model.Cliente;
+import pessoa.Cliente;
 
 public interface ClienteDAO extends GenericDAO<Cliente>{
 

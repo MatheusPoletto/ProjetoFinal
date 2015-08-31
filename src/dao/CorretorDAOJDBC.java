@@ -5,8 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
-import model.Corretor;
 import conexao.ConexaoUtil;
+import pessoa.Corretor;
 
 public class CorretorDAOJDBC implements CorretorDAO{
 

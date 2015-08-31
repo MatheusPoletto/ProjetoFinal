@@ -1,4 +1,6 @@
-package model;
+package imovel;
+
+import pessoa.Proprietario;
 
 public class Aluguel extends Imovel{
 	private Double valorMensal;

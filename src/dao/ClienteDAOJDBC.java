@@ -3,8 +3,8 @@ package dao;
 import java.sql.Connection;
 import java.util.List;
 
-import model.Cliente;
 import conexao.ConexaoUtil;
+import pessoa.Cliente;
 
 public class ClienteDAOJDBC implements ClienteDAO{
 

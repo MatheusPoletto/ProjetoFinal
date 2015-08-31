@@ -1,6 +1,6 @@
 package dao;
 
-import model.Imovel;
+import imovel.Imovel;
 
 public interface ImovelDAO extends GenericDAO<Imovel>{
 

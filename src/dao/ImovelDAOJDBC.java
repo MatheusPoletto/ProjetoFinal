@@ -3,8 +3,8 @@ package dao;
 import java.sql.Connection;
 import java.util.List;
 
-import model.Imovel;
 import conexao.ConexaoUtil;
+import imovel.Imovel;
 
 public class ImovelDAOJDBC implements ImovelDAO{
 

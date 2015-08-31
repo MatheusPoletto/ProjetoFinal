@@ -1,4 +1,6 @@
-package model;
+package imovel;
+
+import pessoa.Proprietario;
 
 public class Imovel {
 	private Integer idImovel;
@@ -8,6 +10,13 @@ public class Imovel {
 	private String bairro;
 	private String uf;
 	private Proprietario proprietario;
+	private Boolean isAlugar;
+	
+	private void isAlugar(){
+		if(isAlugar == true){
+			
+		}
+	}
 	
 	public Integer getIdImovel() {
 		return idImovel;
@@ -63,6 +72,14 @@ public class Imovel {
 	
 	public void setProprietario(Proprietario proprietario) {
 		this.proprietario = proprietario;
+	}
+
+	public Boolean getIsAlugar() {
+		return isAlugar;
+	}
+
+	public void setIsAlugar(Boolean isAlugar) {
+		this.isAlugar = isAlugar;
 	}
 
 	public Imovel(){

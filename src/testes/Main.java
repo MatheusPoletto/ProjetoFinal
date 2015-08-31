@@ -1,9 +1,9 @@
 package testes;
 
-import model.Cliente;
-import model.Imovel;
-import model.Proprietario;
-import model.Venda;
+import imovel.Imovel;
+import imovel.Venda;
+import pessoa.Cliente;
+import pessoa.Proprietario;
 
 public class Main {
 	public static void main(String[] args) {
@@ -22,6 +22,9 @@ public class Main {
 		//2o
 		Cliente cliente1 = new Cliente(1, "Bruna Serrano da Cruz", "8.313.345-10", "3.546.109", "SC", 
 				"Ponte Serrada", "Irineu Bornhausen", "Antonio Paglia", 170, 8970.10, "3435-0904", "Apartamento");
+		//tenho meu cliente que quer comprar o venda1 "imovel"
+		
+		//3o = fazer a venda
 		
 		
 	}

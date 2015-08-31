@@ -1,4 +1,4 @@
-package model;
+package pessoa;
 
 public class Proprietario {
 	

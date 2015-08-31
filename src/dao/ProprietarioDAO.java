@@ -1,6 +1,6 @@
 package dao;
 
-import model.Proprietario;
+import pessoa.Proprietario;
 
 public interface ProprietarioDAO extends GenericDAO<Proprietario>{
 

@@ -3,8 +3,8 @@ package dao;
 import java.sql.Connection;
 import java.util.List;
 
-import model.Proprietario;
 import conexao.ConexaoUtil;
+import pessoa.Proprietario;
 
 public class ProprietarioDAOJDBC implements ProprietarioDAO{
 

@@ -1,6 +1,6 @@
 package dao;
 
-import model.Corretor;
+import pessoa.Corretor;
 
 public interface CorretorDAO extends GenericDAO<Corretor>{
 
