@@ -1,7 +1,11 @@
 package testes;
 
+import java.time.LocalDate;
+
 import imovel.Imovel;
 import imovel.Venda;
+import model.Historico;
+import model.VendaImovel;
 import pessoa.Cliente;
 import pessoa.Proprietario;
 
@@ -25,7 +29,16 @@ public class Main {
 		//tenho meu cliente que quer comprar o venda1 "imovel"
 		
 		//3o = fazer a venda
+		Historico vendeimovel1 = new VendaImovel(1, LocalDate.of(2015, 9, 1), venda1, cliente1);	
 		
 		
+		if(vendeimovel1 instanceof VendaImovel){
+			System.out.println("VENDA DE IMÓVEL");
+		}else {
+			System.out.println("ALUGUEL DE IMÓVEL");
+		}
+		System.out.println("Código da compra: " +vendeimovel1.getImovel().getIdImovel());
+		System.out.println("Nome do cliente: " +vendeimovel1.getCliente().getNome());
+		System.out.println("Nome do proprietário do imóvel: " +vendeimovel1.getImovel().getProprietario().getNome());
 	}
 }
