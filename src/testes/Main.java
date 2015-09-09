@@ -7,7 +7,6 @@ import imovel.Venda;
 import model.Historico;
 import model.VendaImovel;
 import pessoa.Cliente;
-import pessoa.Proprietario;
 
 public class Main {
 	public static void main(String[] args) {
@@ -17,7 +16,7 @@ public class Main {
 		 * 3o = salvar essa compra*/
 		
 		//1o
-		Proprietario proprietario1 = new Proprietario("Matheus Poletto", "1.345.33.3131-3", "6.553.133", 
+		/*Proprietario proprietario1 = new Proprietario("Matheus Poletto", "1.345.33.3131-3", "6.553.133", 
 				"motaviop@gmail.com", "3435-0904");
 		Venda venda1 = new Venda(1, "sc", "ponte serrada", "antonio paglia", "irineu", 150, proprietario1);
 		venda1.setValorTotal(130000.50);
@@ -40,5 +39,5 @@ public class Main {
 		System.out.println("Código da compra: " +vendeimovel1.getImovel().getIdImovel());
 		System.out.println("Nome do cliente: " +vendeimovel1.getCliente().getNome());
 		System.out.println("Nome do proprietário do imóvel: " +vendeimovel1.getImovel().getProprietario().getNome());
-	}
+	*/}
 }

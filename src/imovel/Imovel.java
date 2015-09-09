@@ -1,6 +1,5 @@
 package imovel;
 
-import pessoa.Proprietario;
 
 public class Imovel {
 	private Integer idImovel;
@@ -9,7 +8,6 @@ public class Imovel {
 	private String cidade;
 	private String bairro;
 	private String uf;
-	private Proprietario proprietario;
 	
 	public Integer getIdImovel() {
 		return idImovel;
@@ -59,23 +57,15 @@ public class Imovel {
 		this.numero = numero;
 	}
 	
-	public Proprietario getProprietario() {
-		return proprietario;
-	}
-	
-	public void setProprietario(Proprietario proprietario) {
-		this.proprietario = proprietario;
-	}
 
 	public Imovel(){
 		
 	}
 	
 	public Imovel(Integer idimovel, String uf, String cidade, String bairro,
-			String rua, Integer numero, Proprietario proprietario) {
+			String rua, Integer numero) {
 		super();
 		this.idImovel = idimovel;
-		this.proprietario = proprietario;
 		this.rua = rua;
 		this.cidade = cidade;
 		this.numero = numero;

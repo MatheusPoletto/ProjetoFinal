@@ -1,6 +1,5 @@
 package imovel;
 
-import pessoa.Proprietario;
 
 public class Venda extends Imovel {
 	private Double valorTotal;
@@ -13,9 +12,8 @@ public class Venda extends Imovel {
 		this.valorTotal = valorTotal;
 	}
 
-	public Venda(Integer idimovel, String uf, String cidade, String bairro, String rua, Integer numero,
-			Proprietario proprietario) {
-		super(idimovel, uf, cidade, bairro, rua, numero, proprietario);
+	public Venda(Integer idimovel, String uf, String cidade, String bairro, String rua, Integer numero) {
+		super(idimovel, uf, cidade, bairro, rua, numero);
 	}
 	
 	
