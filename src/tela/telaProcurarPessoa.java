@@ -21,6 +21,7 @@ public class telaProcurarPessoa extends JFrame{
 	private JButton jbtRemoverSelecionado;
 	private JButton jbtMostrarTodos;
 	private JTable jtbPessoas;
+	private JButton jbtVerSelecionado;
 	private DefaultTableModel dtbPessoas;
 	private JScrollPane jspPessoas;
 	
@@ -69,19 +70,24 @@ public class telaProcurarPessoa extends JFrame{
 		jspPessoas.setVisible(true);
 		getContentPane().add(jspPessoas);
 		
+		jbtVerSelecionado = new JButton("Ver selecionado");
+		jbtVerSelecionado.setVisible(true);
+		jbtVerSelecionado.setBounds(0, 440, 200, 30);
+		getContentPane().add(jbtVerSelecionado);
+		
 		jbtMostrarTodos = new JButton("Mostrar todos");
 		jbtMostrarTodos.setVisible(true);
-		jbtMostrarTodos.setBounds(100, 440, 200, 30);
+		jbtMostrarTodos.setBounds(200, 440, 200, 30);
 		getContentPane().add(jbtMostrarTodos);
 		
 		jbtEditarSelecionado = new JButton("Editar selecionado");
 		jbtEditarSelecionado.setVisible(true);
-		jbtEditarSelecionado.setBounds(300, 440, 200, 30);
+		jbtEditarSelecionado.setBounds(400, 440, 200, 30);
 		getContentPane().add(jbtEditarSelecionado);
 		
 		jbtRemoverSelecionado = new JButton("Remover selecionado");
 		jbtRemoverSelecionado.setVisible(true);
-		jbtRemoverSelecionado.setBounds(500, 440, 200, 30);
+		jbtRemoverSelecionado.setBounds(600, 440, 200, 30);
 		getContentPane().add(jbtRemoverSelecionado);
 		
 		setResizable(false);
