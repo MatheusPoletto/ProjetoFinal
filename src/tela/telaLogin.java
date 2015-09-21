@@ -22,6 +22,21 @@ public class telaLogin extends JInternalFrame implements ActionListener{
 	private JLabel jlbUsuario, jlbSenha;
 	private JButton jbtEntrar;
 	private JLabel jlbIcon1;
+	private String nomeUsuario, senhaUsuario, tipoUsuario;
+
+	
+	
+	public String getNomeUsuario() {
+		return nomeUsuario;
+	}
+
+	public String getSenhaUsuario() {
+		return senhaUsuario;
+	}
+
+	public String getTipoUsuario() {
+		return tipoUsuario;
+	}
 
 	telaLogin(){
 		setTitle("Login");
@@ -81,6 +96,9 @@ public class telaLogin extends JInternalFrame implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == jbtEntrar){
 			if(jtfUsuario.getText().equals("Poletto") && jpfSenha.getText().equals("123456")){
+				nomeUsuario = jtfUsuario.getText();
+				senhaUsuario = jpfSenha.getText();
+				tipoUsuario = "gestor";
 				this.dispose();
 				JOptionPane.showMessageDialog(null, "Autenticado com sucesso");
 				telaPrincipal.getTlPrincipal().alteraVisibilidade();

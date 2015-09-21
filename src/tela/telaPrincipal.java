@@ -1,9 +1,12 @@
 package tela;
 
+import java.awt.Color;
+
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 
 public class telaPrincipal extends JFrame{
 	private static final long serialVersionUID = 1L;
@@ -45,6 +48,8 @@ public class telaPrincipal extends JFrame{
 		
 		barra.add(jmnCadastro);
 		
+		
+		getContentPane().setBackground(new Color(181, 181, 181));
 		setJMenuBar(barra);
 		setSize(900,600);
 		setVisible(true);
@@ -54,6 +59,7 @@ public class telaPrincipal extends JFrame{
 	
 	public void alteraVisibilidade(){
 		barra.setVisible(true);
+		JOptionPane.showMessageDialog(null, "Bem vindo " +telaPrincipal.getTlPrincipal().getTlLogin().getNomeUsuario());
 	}
 	
 	public static void main(String[] args) {
