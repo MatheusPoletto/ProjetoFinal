@@ -1,68 +1,88 @@
 package pessoa;
 
 public class Endereco {
-
-	
-	private String uf;
-	private String cidade;
+	private Integer id;
 	private String rua;
+	private String numero;
 	private String bairro;
-	private Integer numero;
+	private String cidade;
+	private String cep;
+	private String uf;
+	private String telefone;
 	
-	
-	
-	
-	public Endereco(){} 
-	
-	
-	
-	
-	
-	
-	
-	
-	public Endereco(String uf, String cidade, String rua, String bairro,
-			Integer numero) {
+	public Endereco(Integer id, String rua, String numero, String bairro, String cidade, String cep, String uf, String telefone) {
 		super();
-		this.uf = uf;
-		this.cidade = cidade;
+		this.id = id;
 		this.rua = rua;
-		this.bairro = bairro;
 		this.numero = numero;
-	}
-	public String getUf() {
-		return uf;
-	}
-	public void setUf(String uf) {
-		this.uf = uf;
-	}
-	public String getCidade() {
-		return cidade;
-	}
-	public void setCidade(String cidade) {
+		this.bairro = bairro;
 		this.cidade = cidade;
+		this.cep = cep;
+		this.uf = uf;
+		this.telefone = telefone;
 	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
 	public String getRua() {
 		return rua;
 	}
+
 	public void setRua(String rua) {
 		this.rua = rua;
 	}
+
+	public String getNumero() {
+		return numero;
+	}
+
+	public void setNumero(String numero) {
+		this.numero = numero;
+	}
+
 	public String getBairro() {
 		return bairro;
 	}
+
 	public void setBairro(String bairro) {
 		this.bairro = bairro;
 	}
-	public Integer getNumero() {
-		return numero;
+
+	public String getCidade() {
+		return cidade;
 	}
-	public void setNumero(Integer numero) {
-		this.numero = numero;
+
+	public void setCidade(String cidade) {
+		this.cidade = cidade;
+	}
+
+	public String getCep() {
+		return cep;
+	}
+
+	public void setCep(String cep) {
+		this.cep = cep;
 	}
 	
-	
-	
-	
-	
+	public String getUf() {
+		return uf;
+	}
+
+	public void setUf(String uf) {
+		this.uf = uf;
+	}
+
+	public String getTelefone() {
+		return telefone;
+	}
+
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
+	}
 }

@@ -14,8 +14,6 @@ public class CorretorDAOJDBC implements CorretorDAO{
 
 	public  CorretorDAOJDBC(){
 		con = ConexaoUtil.getCon();
-		
-
 	}
 
 	@Override
@@ -24,7 +22,7 @@ public class CorretorDAOJDBC implements CorretorDAO{
 		
 		
 		
-		String sql = "insert into Corretor (nomecorretor, cpf, rg, uf, cidade, rua, numero, salario, comissao, telefone) values(?, ?, ?, ?, ?, ?,?,?,?, ?)";
+		/*String sql = "insert into Corretor (nomecorretor, cpf, rg, uf, cidade, rua, numero, salario, comissao, telefone) values(?, ?, ?, ?, ?, ?,?,?,?, ?)";
 		try {
 			PreparedStatement pstmt = con.prepareStatement(sql); 
 			
@@ -56,7 +54,7 @@ public class CorretorDAOJDBC implements CorretorDAO{
 		
 		
 		
-		
+		*/
 	}
 
 	@Override

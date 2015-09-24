@@ -74,7 +74,7 @@ public class telaProcurarPessoa extends JFrame {
 		jtbPessoas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		jtbPessoas.setModel(dtbPessoas);
 		jspPessoas = new JScrollPane(jtbPessoas);
-		jspPessoas.setBounds(1, 35, 793, 390);
+		jspPessoas.setBounds(1, 35, 793, 300);
 		jspPessoas.setVisible(true);
 		getContentPane().add(jspPessoas);
 
