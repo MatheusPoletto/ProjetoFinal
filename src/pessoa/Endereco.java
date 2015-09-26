@@ -8,9 +8,9 @@ public class Endereco {
 	private String cidade;
 	private String cep;
 	private String uf;
-	private String telefone;
+
 	
-	public Endereco(Integer id, String rua, String numero, String bairro, String cidade, String cep, String uf, String telefone) {
+	public Endereco(Integer id, String rua, String numero, String bairro, String cidade, String cep, String uf) {
 		super();
 		this.id = id;
 		this.rua = rua;
@@ -19,7 +19,7 @@ public class Endereco {
 		this.cidade = cidade;
 		this.cep = cep;
 		this.uf = uf;
-		this.telefone = telefone;
+		
 	}
 
 	public Integer getId() {
@@ -78,11 +78,5 @@ public class Endereco {
 		this.uf = uf;
 	}
 
-	public String getTelefone() {
-		return telefone;
-	}
 
-	public void setTelefone(String telefone) {
-		this.telefone = telefone;
-	}
 }

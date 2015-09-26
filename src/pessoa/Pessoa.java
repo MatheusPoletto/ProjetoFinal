@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 public class Pessoa {
 	private Integer id;
+	// id não é auto incremento? 
 	private String nome;
 	private String rg;
 	private String cpf;
@@ -13,6 +14,7 @@ public class Pessoa {
 	//outro combobox que retorna 0 para masculino e 1 para feminino
 	private LocalDate dataNascimento;
 	private Endereco endereco;
+	private String Telefone; 
 	
 	
 	
