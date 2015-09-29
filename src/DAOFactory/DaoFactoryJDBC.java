@@ -7,6 +7,7 @@ import dao.CorretorDAOJDBC;
 import dao.EnderecoDAO;
 import dao.EnderecoDAOJDBC;
 import dao.HistoricoDAO;
+import dao.HistoricoDAOJDBC;
 import dao.ImobiliariaDAO;
 import dao.ImobliariaDAOJDBC;
 import dao.ImovelDAO;
@@ -39,8 +40,8 @@ public class DaoFactoryJDBC implements AbstractDaoFactory {
 	@Override
 public HistoricoDAO historicoDAO() {
 	
-		// return new HistoricoDAOJDBC(); //falta fazer historico dao jdbc 
-	return null; 
+		 return new HistoricoDAOJDBC(); //falta fazer historico dao jdbc 
+	//return null; 
 	}
 
 	@Override
