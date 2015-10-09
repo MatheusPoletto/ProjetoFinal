@@ -4,10 +4,11 @@ public class Cliente {
 	private Pessoa pessoa;
 	private Integer idCliente;
 	private Double salario;
-	private String telefone;
+	
 	//String ou arraylist?
 	private String interesses;
 	private Endereco endereco;
+	//aqui tinha o telefone, resolvemos tirar poque na quase pessoa já existe um telefone. 
 	
 	
 	public Cliente(){
@@ -18,12 +19,12 @@ public class Cliente {
 	
 	
 	public Cliente(Pessoa pessoa, Integer idCliente, Double salario,
-			String telefone, String interesses, Endereco endereco) {
+			String interesses, Endereco endereco) {
 		super();
 		this.pessoa = pessoa;
 		this.idCliente = idCliente;
 		this.salario = salario;
-		this.telefone = telefone;
+		
 		this.interesses = interesses;
 		this.endereco = endereco;
 	}
@@ -45,12 +46,8 @@ public class Cliente {
 	public void setSalario(Double salario) {
 		this.salario = salario;
 	}
-	public String getTelefone() {
-		return telefone;
-	}
-	public void setTelefone(String telefone) {
-		this.telefone = telefone;
-	}
+	
+
 	public String getInteresses() {
 		return interesses;
 	}

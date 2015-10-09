@@ -5,7 +5,7 @@ public class AnuncianteImovel {
 	private Pessoa pessoa;
 	private Endereco endereço; 
 	private String idanuncianteImovel; 
-	private String telefone;
+	//aqui tinha o telefone, resolvemos tirar poque na quase pessoa já existe um telefone. 
 	
 	
 	
@@ -27,7 +27,7 @@ public class AnuncianteImovel {
 		this.pessoa = pessoa;
 		this.endereço = endereço;
 		this.idanuncianteImovel = idanuncianteImovel;
-		this.telefone = telefone;
+	
 	}
 	public Pessoa getPessoa() {
 		return pessoa;
@@ -47,12 +47,7 @@ public class AnuncianteImovel {
 	public void setIdanuncianteImovel(String idanuncianteImovel) {
 		this.idanuncianteImovel = idanuncianteImovel;
 	}
-	public String getTelefone() {
-		return telefone;
-	}
-	public void setTelefone(String telefone) {
-		this.telefone = telefone;
-	} 
+
 	
 	
 	

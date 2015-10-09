@@ -4,6 +4,7 @@ package imovel;
 public class Aluguel extends Imovel{
 	private Double valorMensal;
 	private Integer mesesContrato;
+	// nossso cerebro travou aqui, tirar duvidas. // nossso cerebro travou aqui, tirar duvidas. 
 	
 	public Double getValorMensal() {
 		return valorMensal;
