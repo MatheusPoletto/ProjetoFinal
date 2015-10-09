@@ -19,7 +19,7 @@ public class Aluguel extends Imovel{
 	}
 	
 	public Aluguel(Integer idimovel, String uf, String cidade, String bairro, String rua, Integer numero) {
-		super(idimovel, uf, cidade, bairro, rua, numero);
+		// super(idimovel, uf, cidade, bairro, rua, numero);
 	}
 
 }
