@@ -4,19 +4,22 @@ import java.time.LocalDate;
 
 import imovel.Imovel;
 import pessoa.Cliente;
+import pessoa.Corretor;
 
 public class Historico {
 	private Integer idhistorico;
 	private LocalDate data;
 	private Imovel imovel;
 	private Cliente cliente;
+	private Corretor corretor;
 	
-	public Historico(Integer idhistorico, LocalDate data, Imovel imovel, Cliente cliente) {
+	public Historico(Integer idhistorico, LocalDate data, Imovel imovel, Cliente cliente, Corretor corretor) {
 		super();
 		this.idhistorico = idhistorico;
 		this.data = data;
 		this.imovel = imovel;
 		this.cliente = cliente;
+		this.corretor = corretor;
 	}
 
 	public Integer getIdhistorico() {
@@ -49,6 +52,14 @@ public class Historico {
 
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
+	}
+
+	public Corretor getCorretor() {
+		return corretor;
+	}
+
+	public void setCorretor(Corretor corretor) {
+		this.corretor = corretor;
 	}
 	
 	

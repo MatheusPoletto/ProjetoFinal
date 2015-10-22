@@ -1,5 +1,6 @@
 package imovel;
 
+import pessoa.Cliente;
 import pessoa.Endereco;
 import pessoa.Pessoa;
 
@@ -8,7 +9,7 @@ public class Imovel {
 	private Integer idImovel;
 	private Endereco endereco; 
 	private String metrosquadrados; 
-	private Pessoa pessoa; 
+	private Cliente cliente; 
 	
 	
 	// não coloquei os gettes e os settes porque o imovel tem que receber uma venda ou um aluguel e o seu dono
@@ -41,11 +42,26 @@ public class Imovel {
 		this.endereco = endereco;
 	}
 
-	public Pessoa getPessoa() {
-		return pessoa;
+	public Cliente getCliente() {
+		return cliente;
 	}
 
-	public void setPessoa(Pessoa pessoa) {
-		this.pessoa = pessoa;
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+
+	public Imovel(Integer idImovel, Endereco endereco, String metrosquadrados, Cliente cliente) {
+		super();
+		this.idImovel = idImovel;
+		this.endereco = endereco;
+		this.metrosquadrados = metrosquadrados;
+		this.cliente = cliente;
+	}
+
+	public Imovel() {
+		super();
+		// TODO Auto-generated constructor stub
 	}	
+	
+	
 }

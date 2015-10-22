@@ -1,13 +1,14 @@
 package pessoa;
 
+import java.util.ArrayList;
+
 public class Cliente {
 	private Pessoa pessoa;
 	private Integer idCliente;
 	private Double salario;
 	
 	//String ou arraylist?
-	private String interesses;
-	private Endereco endereco;
+	private ArrayList<String> interesses;
 	//aqui tinha o telefone, resolvemos tirar poque na quase pessoa já existe um telefone. 
 	
 	
@@ -19,14 +20,13 @@ public class Cliente {
 	
 	
 	public Cliente(Pessoa pessoa, Integer idCliente, Double salario,
-			String interesses, Endereco endereco) {
+			ArrayList<String> interesses) {
 		super();
 		this.pessoa = pessoa;
 		this.idCliente = idCliente;
 		this.salario = salario;
 		
 		this.interesses = interesses;
-		this.endereco = endereco;
 	}
 	public Pessoa getPessoa() {
 		return pessoa;
@@ -48,20 +48,10 @@ public class Cliente {
 	}
 	
 
-	public String getInteresses() {
+	public ArrayList<String> getInteresses() {
 		return interesses;
 	}
-	public void setInteresses(String interesses) {
+	public void setInteresses(ArrayList<String> interesses) {
 		this.interesses = interesses;
 	}
-	public Endereco getEndereco() {
-		return endereco;
-	}
-	public void setEndereco(Endereco endereco) {
-		this.endereco = endereco;
-	}
-	
-	
-	
-	
 }

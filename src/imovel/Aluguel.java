@@ -1,5 +1,7 @@
 package imovel;
 
+import pessoa.Cliente;
+import pessoa.Endereco;
 
 public class Aluguel extends Imovel{
 	private Double valorMensal;
@@ -19,8 +21,10 @@ public class Aluguel extends Imovel{
 		this.mesesContrato = mesesContrato;
 	}
 	
-	public Aluguel(Integer idimovel, String uf, String cidade, String bairro, String rua, Integer numero) {
-		// super(idimovel, uf, cidade, bairro, rua, numero);
+	public Aluguel(Integer idImovel, Endereco endereco, String metrosquadrados, Cliente cliente, Double valorMensal,
+			Integer mesesContrato) {
+		super(idImovel, endereco, metrosquadrados, cliente);
+		this.valorMensal = valorMensal;
+		this.mesesContrato = mesesContrato;
 	}
-
 }
