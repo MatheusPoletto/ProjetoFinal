@@ -2,11 +2,16 @@ package dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
+import DAOFactory.DaoFactoryJDBC;
 import conexao.ConexaoUtil;
 import pessoa.Corretor;
+import pessoa.Endereco;
+import pessoa.Pessoa;
 
 public class CorretorDAOJDBC implements CorretorDAO{
 
@@ -18,43 +23,17 @@ public class CorretorDAOJDBC implements CorretorDAO{
 
 	@Override
 	public void inserir(Corretor Corretor) {
-		// TODO Auto-generated method stub
-		
-		
-		
-		/*String sql = "insert into Corretor (nomecorretor, cpf, rg, uf, cidade, rua, numero, salario, comissao, telefone) values(?, ?, ?, ?, ?, ?,?,?,?, ?)";
+		String sql = "insert into Corretor (salario, comissao, Pessoa_idPessoa) values(? ,? ,?)";
 		try {
 			PreparedStatement pstmt = con.prepareStatement(sql); 
 			
-
-			
-			pstmt.setString(1, Corretor.getNomeCorretor());
-			pstmt.setString(2, Corretor.getCpf());
-			pstmt.setString(3, Corretor.getRg());
-			pstmt.setString(4, Corretor.getUf());
-			pstmt.setString(5,Corretor.getCidade());
-			pstmt.setString(6,Corretor.getRua());
-			pstmt.setInt(7, Corretor.getNumero());
-			pstmt.setDouble(8, Corretor.getSalario());
-			pstmt.setDouble(9, Corretor.getComissão());
-			pstmt.setString(10, Corretor.getTelefone());
-			
-			
-			
-			
-			
+			pstmt.setDouble(1, Corretor.getSalario());
+			pstmt.setDouble(2, Corretor.getPorcentagemComissao());
+			pstmt.setInt(3, Corretor.getPessoa().getId());
 			pstmt.executeUpdate(); 
-			
 		} catch (SQLException e){
-			
 			e.printStackTrace();
-			
-			
 		}
-		
-		
-		
-		*/
 	}
 
 	@Override
@@ -77,14 +56,47 @@ public class CorretorDAOJDBC implements CorretorDAO{
 
 	@Override
 	public List<Corretor> todos() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Corretor> corretores = new ArrayList<>();
+		String sql = "select * from corretor";
+		try {
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()){
+				Corretor corretor = new Corretor();
+				corretor.setIdCorretor(rs.getInt("idCorretor"));
+				corretor.setSalario(rs.getDouble("salario"));
+				corretor.setPorcentagemComissao(rs.getDouble("comissao"));
+			
+				PessoaDAO pessoaDao = DaoFactoryJDBC.get().pessoaDAO();
+				int idPessoa = rs.getInt("Pessoa_idPessoa");
+				for(Pessoa pessoa: pessoaDao.todos()){
+					if(pessoa.getId() == idPessoa){
+						corretor.setPessoa(pessoa);
+					}
+				}
+				corretores.add(corretor);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return corretores;
 	}
 
 	@Override
 	public Integer maiorId() {
-		// TODO Auto-generated method stub
-		return null;
+		Integer maior = null;
+		String sql = "select max(idCorretor) from corretor";
+		try {
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()){
+				maior = rs.getInt("max(idCorretor)");
+
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return maior;
 	}
 	
 }

@@ -4,21 +4,19 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
+import DAOFactory.DaoFactoryJDBC;
 import pessoa.Endereco;
+import pessoa.Pessoa;
 import conexao.ConexaoUtil;
 
 public class EnderecoDAOJDBC implements EnderecoDAO{
-
-	
-	
 	private Connection con;
 
 	public  EnderecoDAOJDBC(){
 		con = ConexaoUtil.getCon();
-		
-
 	}
 
 	@Override
@@ -75,8 +73,25 @@ public class EnderecoDAOJDBC implements EnderecoDAO{
 
 	@Override
 	public List<Endereco> todos() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Endereco> enderecos = new ArrayList<>();
+		String sql = "select * from endereco";
+		try {
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()){
+				Endereco endereco = new Endereco();
+				endereco.setId(rs.getInt("idEndereco"));
+				endereco.setRua(rs.getString("rua"));
+				endereco.setNumero(rs.getString("numero"));
+				endereco.setBairro(rs.getString("bairro"));
+				endereco.setCidade(rs.getString("cidade"));
+				endereco.setUf(rs.getString("uf"));
+				enderecos.add(endereco);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return enderecos;
 	}
 	
 	

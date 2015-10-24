@@ -8,6 +8,7 @@ import java.util.Date;
 
 import DAOFactory.DaoFactoryJDBC;
 import dao.ClienteDAO;
+import dao.CorretorDAO;
 import dao.EnderecoDAO;
 import dao.PessoaDAO;
 import imovel.Aluguel;
@@ -25,34 +26,72 @@ public class Main {
 		PessoaDAO pessoaDao = DaoFactoryJDBC.get().pessoaDAO();
 		EnderecoDAO enderecoDao = DaoFactoryJDBC.get().enderecoDAO();
 		ClienteDAO clienteDao = DaoFactoryJDBC.get().clienteDAO();
+		CorretorDAO corretorDao = DaoFactoryJDBC.get().corretorDAO();
 	
-		Endereco endereco = new Endereco(enderecoDao.maiorId()+1, "Rua Irineu Bornhausen", "160", "Antonio Paglia", "Ponte Serrada", "89683-000", "SC");
-		enderecoDao.inserir(endereco);
+		Endereco enderecoCliente = new Endereco(enderecoDao.maiorId()+1, "Rua Irineu Bornhausen", "160", "Antonio Paglia", "Ponte Serrada", "89683-000", "SC");
+		enderecoDao.inserir(enderecoCliente);
+		Endereco enderecoCorretor = new Endereco(enderecoDao.maiorId()+1, "Rua Paraná", "170", "BR-282", "Ponte Serrada", "89683-000", "SC");
+		enderecoDao.inserir(enderecoCorretor);
 		
-		Pessoa pessoa = new Pessoa();
-		pessoa.setId(pessoaDao.maiorId()+1);
-		pessoa.setNome("Matheus Otavio Poletto");
-		pessoa.setRg("6.543.345");
-		pessoa.setCpf("098.676.199-87");
-		pessoa.setEstadoCivil("Solteiro");
-		pessoa.setGenero("Masculino");
-		Date date = new SimpleDateFormat("yyyyMMdd").parse("19970124");
-		pessoa.setDataNascimento(date);
-		pessoa.setEndereco(endereco);
-		pessoa.setTelefone("3435-0000");
-		pessoaDao.inserir(pessoa);
+		Date dateCliente = new SimpleDateFormat("yyyyMMdd").parse("19970124");
+		Date dateCorretor = new SimpleDateFormat("yyyyMMdd").parse("19961020");
+		Pessoa pessoaCliente = new Pessoa(pessoaDao.maiorId()+1, "Matheus Otavio Poletto", "6.516.346", "098.676.444-81", "Casado", "Masculino", dateCliente, enderecoCliente, "3435-0000");
+		pessoaDao.inserir(pessoaCliente);
+		Pessoa pessoaCorretor = new Pessoa(pessoaDao.maiorId()+1, "Matheus Arilton Ribak", "5.269.689", "158.987.458-79", "Solteiro", "Masculino", dateCorretor, enderecoCorretor, "3435-1589");
+		pessoaDao.inserir(pessoaCorretor);
 		
-		Cliente cliente = new Cliente(); 
-		cliente.setPessoa(pessoa);
-		cliente.setIdCliente(0);
+		Cliente cliente = new Cliente(pessoaCliente, clienteDao.maiorId()+1); 
 		//ArrayList<String> interesses = new ArrayList<>();
-		cliente.setInteresses(null);
-		cliente.setSalario(3500.60);
 		clienteDao.inserir(cliente);
 		
+		Corretor corretor = new Corretor(pessoaCorretor, corretorDao.maiorId()+1, 1500.00, 10.5);
+		corretorDao.inserir(corretor);
+		
+		System.out.println("PESSOAS: ");
 		for(Pessoa pessoas : pessoaDao.todos()){
-			System.out.println(pessoas.getNome());
+			System.out.println("NOME: "+ pessoas.getNome() +" | ENDERECO: " + pessoas.getEndereco().getRua() +", " + pessoas.getEndereco().getBairro());
 		}
+		
+		System.out.println("\nCORRETORES:");
+		for(Corretor corretores : corretorDao.todos()){
+			System.out.println("NOME: "+ corretores.getPessoa().getNome() +" | ENDERECO: " + corretores.getPessoa().getEndereco().getRua() +","
+					+ " " + corretores.getPessoa().getEndereco().getBairro());
+		}
+		
+		System.out.println("\nCLIENTES:");
+		for(Cliente clientes : clienteDao.todos()){
+			System.out.println("NOME: "+ clientes.getPessoa().getNome()+" | ENDERECO: " + clientes.getPessoa().getEndereco().getRua() +","
+					+ " " + clientes.getPessoa().getEndereco().getBairro());
+		}
+		
+		System.out.println("\nENDEREÇOS:");		
+		for(Endereco enderecos : enderecoDao.todos()){
+			System.out.println("RUA: "+ enderecos.getRua());
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 		/*Endereco enderecoImovel = new Endereco(1, "Rua Angelo Favretto", "25", "Centro", "Ponte Serrada", "89683-000", "SC");
 		

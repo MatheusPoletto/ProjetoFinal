@@ -69,11 +69,22 @@ public class Pessoa {
 	}
 	public void setTelefone(String telefone) {
 		Telefone = telefone;
+	}
+	public Pessoa(Integer id, String nome, String rg, String cpf, String estadoCivil, String genero,
+			Date dataNascimento, Endereco endereco, String telefone) {
+		super();
+		this.id = id;
+		this.nome = nome;
+		this.rg = rg;
+		this.cpf = cpf;
+		this.estadoCivil = estadoCivil;
+		this.genero = genero;
+		this.dataNascimento = dataNascimento;
+		this.endereco = endereco;
+		Telefone = telefone;
+	}
+	
+	public Pessoa() {
+		super();
 	} 
-	
-	
-	
-	
-	
-	
 }

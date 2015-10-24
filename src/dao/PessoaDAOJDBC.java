@@ -7,43 +7,37 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-
+import DAOFactory.DaoFactoryJDBC;
 import conexao.ConexaoUtil;
+import pessoa.Endereco;
 import pessoa.Pessoa;
 
 public class PessoaDAOJDBC implements PessoaDAO{
-
-	
 	private Connection con;
 
 	public  PessoaDAOJDBC(){
 		con = ConexaoUtil.getCon();
-		
-
 	}
-	
-	
+
 	@Override
 	public void inserir(Pessoa entidade) {
-		String sql = "insert into Pessoa(idPessoa, nome, rg, cpf, estadoCivil, genero, dataNascimento, telefone, Endereco_idEndereco) values(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		String sql = "insert into Pessoa(nome, rg, cpf, estadoCivil, genero, dataNascimento, telefone, Endereco_idEndereco) values(?, ?, ?, ?, ?, ?, ?, ?)";
 		try {
 			PreparedStatement pstmt = con.prepareStatement(sql); 
-			pstmt.setInt(1, entidade.getId());
-			pstmt.setString(2, entidade.getNome());
-			pstmt.setString(3, entidade.getRg());
-			pstmt.setString(4, entidade.getCpf());
-			pstmt.setString(5, entidade.getEstadoCivil());
-			pstmt.setString(6, entidade.getGenero());
+			pstmt.setString(1, entidade.getNome());
+			pstmt.setString(2, entidade.getRg());
+			pstmt.setString(3, entidade.getCpf());
+			pstmt.setString(4, entidade.getEstadoCivil());
+			pstmt.setString(5, entidade.getGenero());
 			java.util.Date dataUtil = entidade.getDataNascimento();
 			java.sql.Date dataSql = new java.sql.Date(dataUtil.getTime());  
-			pstmt.setDate(7, dataSql);
-			pstmt.setString(8, entidade.getTelefone());
-			pstmt.setInt(9, entidade.getEndereco().getId());
+			pstmt.setDate(6, dataSql);
+			pstmt.setString(7, entidade.getTelefone());
+			pstmt.setInt(8, entidade.getEndereco().getId());
 			pstmt.executeUpdate(); 
 		} catch (SQLException e){
 			e.printStackTrace();
 		}	
-		
 	}
 
 	@Override
@@ -81,6 +75,14 @@ public class PessoaDAOJDBC implements PessoaDAO{
 				pessoa.setGenero(rs.getString("genero"));
 				pessoa.setDataNascimento(rs.getDate("dataNascimento"));
 				pessoa.setTelefone(rs.getString("telefone"));
+			
+				EnderecoDAO enderecoDao = DaoFactoryJDBC.get().enderecoDAO();
+				int idEndereco = rs.getInt("Endereco_idEndereco");
+				for(Endereco endereco: enderecoDao.todos()){
+					if(endereco.getId() == idEndereco){
+						pessoa.setEndereco(endereco);
+					}
+				}
 				pessoas.add(pessoa);
 			}
 		} catch (SQLException e) {

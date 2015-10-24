@@ -14,6 +14,8 @@ import dao.ImovelDAO;
 import dao.ImovelDAOJDBC;
 import dao.PessoaDAO;
 import dao.PessoaDAOJDBC;
+import dao.UsuarioDAO;
+import dao.UsuarioDAOJDBC;
 
 // tem que digitar como ta se colocar letra minuscula e no dao ta maiscula vai dar erro. 
 
@@ -69,6 +71,12 @@ public class DaoFactoryJDBC implements AbstractDaoFactory {
 	public PessoaDAO pessoaDAO() {
 		
 		return new PessoaDAOJDBC();
+	}
+
+	@Override
+	public UsuarioDAO usuarioDAO() {
+
+		return new UsuarioDAOJDBC();
 	}
 
 }
