@@ -4,9 +4,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
+import DAOFactory.DaoFactoryJDBC;
 import conexao.ConexaoUtil;
+import pessoa.Corretor;
+import pessoa.Endereco;
+import pessoa.Pessoa;
 import pessoa.Usuario;
 
 public class UsuarioDAOJDBC implements UsuarioDAO{
@@ -69,8 +74,30 @@ public class UsuarioDAOJDBC implements UsuarioDAO{
 
 	@Override
 	public List<Usuario> todos() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Usuario> usuarios = new ArrayList<>();
+		String sql = "select * from usuario";
+		try {
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()){
+				Usuario usuario = new Usuario();
+				usuario.setIdUsuario(rs.getInt("idUsuario"));
+				usuario.setLogin(rs.getString("login"));
+				usuario.setSenha(rs.getString("senha"));
+				
+				CorretorDAO corretorDao = DaoFactoryJDBC.get().corretorDAO();
+				int idCorretor = rs.getInt("Corretor_idCorretor");
+				for(Corretor corretor: corretorDao.todos()){
+					if(corretor.getIdCorretor() == idCorretor){
+						usuario.setCorretor(corretor);
+					}
+				}
+				usuarios.add(usuario);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return usuarios;
 	}
 
 }

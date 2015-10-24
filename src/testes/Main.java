@@ -11,6 +11,7 @@ import dao.ClienteDAO;
 import dao.CorretorDAO;
 import dao.EnderecoDAO;
 import dao.PessoaDAO;
+import dao.UsuarioDAO;
 import imovel.Aluguel;
 import imovel.Imovel;
 import imovel.Venda;
@@ -20,6 +21,7 @@ import pessoa.Cliente;
 import pessoa.Corretor;
 import pessoa.Endereco;
 import pessoa.Pessoa;
+import pessoa.Usuario;
 
 public class Main {
 	public static void main(String[] args) throws ParseException {		
@@ -27,6 +29,7 @@ public class Main {
 		EnderecoDAO enderecoDao = DaoFactoryJDBC.get().enderecoDAO();
 		ClienteDAO clienteDao = DaoFactoryJDBC.get().clienteDAO();
 		CorretorDAO corretorDao = DaoFactoryJDBC.get().corretorDAO();
+		UsuarioDAO usuarioDao = DaoFactoryJDBC.get().usuarioDAO();
 	
 		Endereco enderecoCliente = new Endereco(enderecoDao.maiorId()+1, "Rua Irineu Bornhausen", "160", "Antonio Paglia", "Ponte Serrada", "89683-000", "SC");
 		enderecoDao.inserir(enderecoCliente);
@@ -46,6 +49,9 @@ public class Main {
 		
 		Corretor corretor = new Corretor(pessoaCorretor, corretorDao.maiorId()+1, 1500.00, 10.5);
 		corretorDao.inserir(corretor);
+		
+		Usuario usuario = new Usuario(usuarioDao.maiorId()+1, "RibakinhoHUE", "123456", corretor);
+		usuarioDao.inserir(usuario);
 		
 		System.out.println("PESSOAS: ");
 		for(Pessoa pessoas : pessoaDao.todos()){
@@ -67,6 +73,11 @@ public class Main {
 		System.out.println("\nENDEREÇOS:");		
 		for(Endereco enderecos : enderecoDao.todos()){
 			System.out.println("RUA: "+ enderecos.getRua());
+		}
+		
+		System.out.println("\nUSUARIOS:");		
+		for(Usuario usuarios : usuarioDao.todos()){
+			System.out.println("LOGIN: "+ usuarios.getLogin() + " | SENHA: "+ usuarios.getSenha() + " | CORRETOR RESPONSÁVEL PELA CONTA: "+ usuarios.getCorretor().getPessoa().getNome());
 		}
 		
 		
