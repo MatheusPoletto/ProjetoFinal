@@ -47,5 +47,11 @@ public class ImovelDAOJDBC implements ImovelDAO{
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public Integer maiorId() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }

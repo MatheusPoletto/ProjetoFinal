@@ -1,6 +1,8 @@
 package pessoa;
 
+
 import java.time.LocalDate;
+import java.util.Date;
 
 public class Pessoa {
 	private Integer id;
@@ -9,7 +11,7 @@ public class Pessoa {
 	private String cpf;
 	private String estadoCivil;
 	private String genero;
-	private LocalDate dataNascimento;
+	private Date dataNascimento;
 	private Endereco endereco;
 	private String Telefone;
 	
@@ -50,10 +52,10 @@ public class Pessoa {
 	public void setGenero(String genero) {
 		this.genero = genero;
 	}
-	public LocalDate getDataNascimento() {
+	public Date getDataNascimento() {
 		return dataNascimento;
 	}
-	public void setDataNascimento(LocalDate dataNascimento) {
+	public void setDataNascimento(Date dataNascimento) {
 		this.dataNascimento = dataNascimento;
 	}
 	public Endereco getEndereco() {

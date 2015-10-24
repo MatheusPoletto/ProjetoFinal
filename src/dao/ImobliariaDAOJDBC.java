@@ -76,4 +76,10 @@ public class ImobliariaDAOJDBC implements ImobiliariaDAO {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public Integer maiorId() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

@@ -80,5 +80,11 @@ public class CorretorDAOJDBC implements CorretorDAO{
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public Integer maiorId() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }

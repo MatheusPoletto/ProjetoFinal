@@ -49,6 +49,13 @@ public class HistoricoDAOJDBC implements HistoricoDAO{
 		return null;
 	}
 
+
+	@Override
+	public Integer maiorId() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 	
 }

@@ -8,7 +8,7 @@ public interface GenericDAO<T> {
 	void excluir(T entidade);
 	
 	T buscar(Integer id);
-
+	Integer maiorId();
 	List<T> todos();
 
 		

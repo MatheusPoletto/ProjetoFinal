@@ -18,10 +18,19 @@ import dao.PessoaDAOJDBC;
 // tem que digitar como ta se colocar letra minuscula e no dao ta maiscula vai dar erro. 
 
 public class DaoFactoryJDBC implements AbstractDaoFactory {
-
+	
+	private static DaoFactoryJDBC factory;
+	
+	public static DaoFactoryJDBC get(){
+		
+		if(factory == null){
+			factory = new DaoFactoryJDBC();
+		}
+		return factory;
+	}
+	
 	@Override
 	public ClienteDAO clienteDAO() {
-	
 		return new ClienteDAOJDBC();
 	}
 
@@ -38,7 +47,7 @@ public class DaoFactoryJDBC implements AbstractDaoFactory {
 	}
 
 	@Override
-public HistoricoDAO historicoDAO() {
+	public HistoricoDAO historicoDAO() {
 	
 		 return new HistoricoDAOJDBC(); //falta fazer historico dao jdbc 
 	//return null; 

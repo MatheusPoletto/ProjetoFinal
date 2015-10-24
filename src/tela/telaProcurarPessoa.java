@@ -22,6 +22,10 @@ import javax.swing.table.DefaultTableModel;
 
 import com.mysql.jdbc.log.Log;
 
+import DAOFactory.DaoFactoryJDBC;
+import dao.PessoaDAO;
+import pessoa.Pessoa;
+
 public class telaProcurarPessoa extends JFrame {
 
 	private JPanel jpnFiltro;
@@ -37,6 +41,7 @@ public class telaProcurarPessoa extends JFrame {
 	private DefaultTableModel dtbPessoas;
 	private JScrollPane jspPessoas;
 	private JToolBar jtbBarra;
+	private PessoaDAO pessoaDao = DaoFactoryJDBC.get().pessoaDAO();
 
 	public telaProcurarPessoa() {
 		setTitle("Pesquisar pessoa física");
@@ -143,52 +148,10 @@ public class telaProcurarPessoa extends JFrame {
 	}
 
 	private void alimentarDtb() {
-		dtbPessoas.addRow(new String[] { "1", "MATHEUS OTAVIO POLETTO", "5.326.968", "087.698.198-98", "CORRETOR" });
-		dtbPessoas.addRow(new String[] { "2", "MATHEUS ARILTON RIBAK", "6.789.190", "123.432.133-95", "CLIENTE" });
-		dtbPessoas.addRow(new String[] { "3", "BRUNA DA CRUZ", "5.359.478", "897.548.451-98", "GESTOR" });
-		dtbPessoas.addRow(new String[] { "4", "MATHEUS OTAVIO POLETTO", "9.326.968", "087.698.198-98", "CORRETOR" });
-		dtbPessoas.addRow(new String[] { "5", "MATHEUS ARILTON RIBAK", "6.789.190", "123.432.133-95", "CORRETOR" });
-		dtbPessoas.addRow(new String[] { "6", "BRUNA DA CRUZ", "5.359.478", "897.548.451-98", "GESTOR" });
-		dtbPessoas.addRow(new String[] { "7", "MATHEUS OTAVIO POLETTO", "7.326.968", "087.698.198-98", "CORRETOR" });
-		dtbPessoas.addRow(new String[] { "8", "MATHEUS ARILTON RIBAK", "6.789.190", "123.432.133-95", "CORRETOR" });
-		dtbPessoas.addRow(new String[] { "9", "BRUNA DA CRUZ", "5.359.478", "897.548.451-98", "GESTOR" });
-		dtbPessoas.addRow(new String[] { "10", "GELSO FARIA NOME GRANDE ENROLACAO TESTE BEM CHARS PENTA KILL YASUO",
-				"5.326.968", "087.698.198-98", "CORRETOR" });
-		dtbPessoas.addRow(new String[] { "11", "MATHEUS ARILTON RIBAK", "8.789.190", "123.432.133-95", "CORRETOR" });
-		dtbPessoas.addRow(new String[] { "12", "BRUNA DA CRUZ", "5.359.478", "897.548.451-98", "GESTOR" });
-		dtbPessoas.addRow(new String[] { "13", "MATHEUS OTAVIO POLETTO", "5.326.968", "087.698.198-98", "CORRETOR" });
-		dtbPessoas.addRow(new String[] { "14", "MATHEUS ARILTON RIBAK", "2.789.190", "123.432.133-95", "CLIENTE" });
-		dtbPessoas.addRow(new String[] { "15", "BRUNA DA CRUZ", "5.359.478", "897.548.451-98", "GESTOR" });
-		dtbPessoas.addRow(new String[] { "16", "MATHEUS OTAVIO POLETTO", "5.326.968", "087.698.198-98", "GESTOR" });
-		dtbPessoas.addRow(new String[] { "17", "MATHEUS ARILTON RIBAK", "3.789.190", "123.432.133-95", "CLIENTE" });
-		dtbPessoas.addRow(new String[] { "18", "BRUNA DA CRUZ", "5.359.478", "897.548.451-98", "GESTOR" });
-		dtbPessoas.addRow(new String[] { "19", "MATHEUS OTAVIO POLETTO", "5.326.968", "087.698.198-98", "GESTOR" });
-		dtbPessoas.addRow(new String[] { "20", "MATHEUS ARILTON RIBAK", "4.789.190", "123.432.133-95", "CORRETOR" });
-		dtbPessoas.addRow(new String[] { "21", "BRUNA DA CRUZ", "5.359.478", "897.548.451-98", "GESTOR" });
-		dtbPessoas.addRow(new String[] { "22", "MATHEUS OTAVIO POLETTO", "5.326.968", "087.698.198-98", "CORRETOR" });
-		dtbPessoas.addRow(new String[] { "23", "MATHEUS ARILTON RIBAK", "8.789.190", "123.432.133-95", "CLIENTE" });
-		dtbPessoas.addRow(new String[] { "24", "BRUNA DA CRUZ", "5.359.478", "897.548.451-98", "GESTOR" });
-		dtbPessoas.addRow(new String[] { "25", "MATHEUS OTAVIO POLETTO", "5.326.968", "087.698.198-98", "CORRETOR" });
-		dtbPessoas.addRow(new String[] { "26", "MATHEUS ARILTON RIBAK", "9.789.190", "123.432.133-95", "CLIENTE" });
-		dtbPessoas.addRow(new String[] { "27", "BRUNA DA CRUZ", "5.359.478", "897.548.451-98", "GESTOR" });
-		dtbPessoas.addRow(new String[] { "28", "MATHEUS OTAVIO POLETTO", "5.326.968", "087.698.198-98", "CORRETOR" });
-		dtbPessoas.addRow(new String[] { "29", "MATHEUS ARILTON RIBAK", "7.789.190", "123.432.133-95", "GESTOR" });
-		dtbPessoas.addRow(new String[] { "30", "BRUNA DA CRUZ", "5.359.478", "897.548.451-98", "GESTOR" });
-		dtbPessoas.addRow(new String[] { "31", "MATHEUS OTAVIO POLETTO", "5.326.968", "087.698.198-98", "CORRETOR" });
-		dtbPessoas.addRow(new String[] { "32", "MATHEUS ARILTON RIBAK", "3.789.190", "123.432.133-95", "GESTOR" });
-		dtbPessoas.addRow(new String[] { "33", "BRUNA DA CRUZ", "5.359.478", "897.548.451-98", "GESTOR" });
-		dtbPessoas.addRow(new String[] { "34", "MATHEUS OTAVIO POLETTO", "5.326.968", "087.698.198-98", "CORRETOR" });
-		dtbPessoas.addRow(new String[] { "35", "MATHEUS ARILTON RIBAK", "2.789.190", "123.432.133-95", "CLIENTE" });
-		dtbPessoas.addRow(new String[] { "36", "BRUNA DA CRUZ", "5.359.478", "897.548.451-98", "GESTOR" });
-		dtbPessoas.addRow(new String[] { "37", "MATHEUS OTAVIO POLETTO", "5.326.968", "087.698.198-98", "CORRETOR" });
-		dtbPessoas.addRow(new String[] { "38", "MATHEUS ARILTON RIBAK", "6.789.190", "123.432.133-95", "CLIENTE" });
-		dtbPessoas.addRow(new String[] { "39", "BRUNA DA CRUZ", "5.359.478", "897.548.451-98", "GESTOR" });
-		dtbPessoas.addRow(new String[] { "40", "MATHEUS OTAVIO POLETTO", "5.326.968", "087.698.198-98", "CLIENTE" });
-		dtbPessoas.addRow(new String[] { "41", "MATHEUS ARILTON RIBAK", "3.789.190", "123.432.133-95", "CLIENTE" });
-		dtbPessoas.addRow(new String[] { "42", "BRUNA DA CRUZ", "5.359.478", "897.548.451-98", "CLIENTE" });
-		dtbPessoas.addRow(new String[] { "43", "MATHEUS OTAVIO POLETTO", "5.326.968", "087.698.198-98", "CLIENTE" });
-		dtbPessoas.addRow(new String[] { "44", "MATHEUS ARILTON RIBAK", "2.789.190", "123.432.133-95", "CLIENTE" });
-		dtbPessoas.addRow(new String[] { "45", "BRUNA DA CRUZ", "5.359.478", "897.548.451-98", "CLIENTE" });
+		for(Pessoa pessoa: pessoaDao.todos()){
+			dtbPessoas.addRow(new String[] {String.valueOf(pessoa.getId()), pessoa.getNome(), pessoa.getRg(), pessoa.getCpf(), "ARRUMAR"});
+		}
+		
 	}
 
 	public static void main(String[] args) {

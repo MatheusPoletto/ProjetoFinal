@@ -1,6 +1,8 @@
 package dao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.List;
 
 import conexao.ConexaoUtil;
@@ -18,8 +20,15 @@ public class ClienteDAOJDBC implements ClienteDAO{
 
 	@Override
 	public void inserir(Cliente entidade) {
-		// TODO Auto-generated method stub
-		
+		String sql = "insert into Cliente (idCliente, Pessoa_idPessoa) values(?, ?)";
+		try {
+			PreparedStatement pstmt = con.prepareStatement(sql); 
+			pstmt.setInt(1, entidade.getIdCliente());
+			pstmt.setInt(2, entidade.getPessoa().getId());
+			pstmt.executeUpdate(); 
+		} catch (SQLException e){
+			e.printStackTrace();
+		}	
 	}
 
 	@Override
@@ -42,6 +51,12 @@ public class ClienteDAOJDBC implements ClienteDAO{
 
 	@Override
 	public List<Cliente> todos() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer maiorId() {
 		// TODO Auto-generated method stub
 		return null;
 	}

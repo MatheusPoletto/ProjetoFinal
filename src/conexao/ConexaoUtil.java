@@ -20,7 +20,12 @@ public class ConexaoUtil {
 	
 		
 		try {
-			
+			 try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			 connection = DriverManager.getConnection(endereco, usuario, senha);
 				
 			}catch(SQLException e){

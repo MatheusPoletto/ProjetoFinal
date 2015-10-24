@@ -1,8 +1,15 @@
 package testes;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 
+import DAOFactory.DaoFactoryJDBC;
+import dao.ClienteDAO;
+import dao.EnderecoDAO;
+import dao.PessoaDAO;
 import imovel.Aluguel;
 import imovel.Imovel;
 import imovel.Venda;
@@ -14,19 +21,26 @@ import pessoa.Endereco;
 import pessoa.Pessoa;
 
 public class Main {
-	public static void main(String[] args) {		
-		Endereco endereco = new Endereco(0, "Rua Irineu Bornhausen", "160", "Antonio Paglia", "Ponte Serrada", "89683-000", "SC");
+	public static void main(String[] args) throws ParseException {		
+		PessoaDAO pessoaDao = DaoFactoryJDBC.get().pessoaDAO();
+		EnderecoDAO enderecoDao = DaoFactoryJDBC.get().enderecoDAO();
+		ClienteDAO clienteDao = DaoFactoryJDBC.get().clienteDAO();
+	
+		Endereco endereco = new Endereco(enderecoDao.maiorId()+1, "Rua Irineu Bornhausen", "160", "Antonio Paglia", "Ponte Serrada", "89683-000", "SC");
+		enderecoDao.inserir(endereco);
 		
 		Pessoa pessoa = new Pessoa();
-		pessoa.setId(0);
+		pessoa.setId(pessoaDao.maiorId()+1);
 		pessoa.setNome("Matheus Otavio Poletto");
 		pessoa.setRg("6.543.345");
 		pessoa.setCpf("098.676.199-87");
 		pessoa.setEstadoCivil("Solteiro");
 		pessoa.setGenero("Masculino");
-		pessoa.setDataNascimento(LocalDate.of(1997, 01, 24));
+		Date date = new SimpleDateFormat("yyyyMMdd").parse("19970124");
+		pessoa.setDataNascimento(date);
 		pessoa.setEndereco(endereco);
 		pessoa.setTelefone("3435-0000");
+		pessoaDao.inserir(pessoa);
 		
 		Cliente cliente = new Cliente(); 
 		cliente.setPessoa(pessoa);
@@ -34,8 +48,13 @@ public class Main {
 		//ArrayList<String> interesses = new ArrayList<>();
 		cliente.setInteresses(null);
 		cliente.setSalario(3500.60);
+		clienteDao.inserir(cliente);
 		
-		Endereco enderecoImovel = new Endereco(1, "Rua Angelo Favretto", "25", "Centro", "Ponte Serrada", "89683-000", "SC");
+		for(Pessoa pessoas : pessoaDao.todos()){
+			System.out.println(pessoas.getNome());
+		}
+		
+		/*Endereco enderecoImovel = new Endereco(1, "Rua Angelo Favretto", "25", "Centro", "Ponte Serrada", "89683-000", "SC");
 		
 		Imovel imovel = new Imovel();
 		imovel.setIdImovel(0);
@@ -53,7 +72,7 @@ public class Main {
 		pessoaComprador.setCpf("099.676.183-85");
 		pessoaComprador.setEstadoCivil("Casado");
 		pessoaComprador.setGenero("Masculino");
-		pessoaComprador.setDataNascimento(LocalDate.of(1996, 05, 20));
+		//pessoaComprador.setDataNascimento(LocalDate.of(1996, 05, 20));
 		pessoaComprador.setEndereco(endereco);
 		pessoaComprador.setTelefone("3435-1111");
 		
@@ -73,7 +92,7 @@ public class Main {
 		pessoaCorretor.setCpf("099.676.183-85");
 		pessoaCorretor.setEstadoCivil("Casado");
 		pessoaCorretor.setGenero("Masculino");
-		pessoaCorretor.setDataNascimento(LocalDate.of(1996, 05, 20));
+		//pessoaCorretor.setDataNascimento(LocalDate.of(1996, 05, 20));
 		pessoaCorretor.setEndereco(endereco);
 		pessoaCorretor.setTelefone("3435-1111");
 		
@@ -87,6 +106,6 @@ public class Main {
 		Historico historico = new Historico(0, LocalDate.now(), imovel, clienteComprador, corretor);
 		System.out.println(historico.getCliente().getPessoa().getNome());
 		
-		
+	*/	
 	}
 }
