@@ -59,7 +59,6 @@ public class telaPrincipal extends JFrame{
 	
 	public void alteraVisibilidade(){
 		barra.setVisible(true);
-		JOptionPane.showMessageDialog(null, "Bem vindo " +telaPrincipal.getTlPrincipal().getTlLogin().getNomeUsuario());
 	}
 	
 	public static void main(String[] args) {

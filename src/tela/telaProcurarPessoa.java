@@ -8,6 +8,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -23,7 +24,11 @@ import javax.swing.table.DefaultTableModel;
 import com.mysql.jdbc.log.Log;
 
 import DAOFactory.DaoFactoryJDBC;
+import dao.ClienteDAO;
+import dao.CorretorDAO;
 import dao.PessoaDAO;
+import pessoa.Cliente;
+import pessoa.Corretor;
 import pessoa.Pessoa;
 
 public class telaProcurarPessoa extends JFrame {
@@ -32,7 +37,6 @@ public class telaProcurarPessoa extends JFrame {
 	private JLabel jlbNome;
 	private JLabel jlbRG;
 	private JLabel jlbCpf;
-	private JButton jbtDetalharPessoa;
 	private JButton jbtEditarPessoa;
 	private JButton jbtRemoverPessoa;
 	private JButton jbtAtualizarPessoas;
@@ -41,10 +45,11 @@ public class telaProcurarPessoa extends JFrame {
 	private DefaultTableModel dtbPessoas;
 	private JScrollPane jspPessoas;
 	private JToolBar jtbBarra;
-	private PessoaDAO pessoaDao = DaoFactoryJDBC.get().pessoaDAO();
+	private CorretorDAO corretorDao = DaoFactoryJDBC.get().corretorDAO();
+	private ClienteDAO clienteDao = DaoFactoryJDBC.get().clienteDAO();
 
 	public telaProcurarPessoa() {
-		setTitle("Pesquisar pessoa física");
+		setTitle("PESSOAS CADASTRADAS");
 		setLayout(null);
 
 		jlbNome = new JLabel("Nome:");
@@ -79,7 +84,7 @@ public class telaProcurarPessoa extends JFrame {
 		jtbPessoas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		jtbPessoas.setModel(dtbPessoas);
 		jspPessoas = new JScrollPane(jtbPessoas);
-		jspPessoas.setBounds(1, 35, 793, 300);
+		jspPessoas.setBounds(1, 75, 793, 300);
 		jspPessoas.setVisible(true);
 		getContentPane().add(jspPessoas);
 
@@ -89,56 +94,38 @@ public class telaProcurarPessoa extends JFrame {
 		jtbPessoas.getColumnModel().getColumn(3).setPreferredWidth(100);
 		jtbPessoas.getColumnModel().getColumn(4).setPreferredWidth(80);
 
-		jbtDetalharPessoa = new JButton("Detalhar selecionado");
-		jbtDetalharPessoa.setFont(new Font("Arial", Font.PLAIN, 14));
-		jbtDetalharPessoa.setBackground(new Color(255, 255, 240));
-		jbtDetalharPessoa.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				JOptionPane.showMessageDialog(null,
-						"ID: " + dtbPessoas.getValueAt(jtbPessoas.getSelectedRow(), 0) + "\nNome: "
-								+ dtbPessoas.getValueAt(jtbPessoas.getSelectedRow(), 1) + "\nRG: "
-								+ dtbPessoas.getValueAt(jtbPessoas.getSelectedRow(), 2)
 
-				);
-			}
-		});
+		jbtEditarPessoa = new JButton();
 
-		jbtAtualizarPessoas = new JButton("Atualizar");
-		jbtAtualizarPessoas.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				JOptionPane.showMessageDialog(null, "Atualizar");
-			}
-		});
+		jbtRemoverPessoa = new JButton();
 
-		jbtEditarPessoa = new JButton("Alterar selecionado");
+		jbtCriarPessoa = new JButton();
+		
+		jbtAtualizarPessoas = new JButton();
 
-		jbtRemoverPessoa = new JButton("Remover selecionado");
-
-		jbtCriarPessoa = new JButton("Criar novo");
-
-		jbtCriarPessoa.setFont(new Font("Arial", Font.PLAIN, 14));
-		jbtCriarPessoa.setBackground(new Color(255, 255, 240));
-		jbtAtualizarPessoas.setFont(new Font("Arial", Font.PLAIN, 14));
-		jbtAtualizarPessoas.setBackground(new Color(255, 255, 240));
-		jbtEditarPessoa.setFont(new Font("Arial", Font.PLAIN, 14));
-		jbtEditarPessoa.setBackground(new Color(255, 255, 240));
-		jbtRemoverPessoa.setFont(new Font("Arial", Font.PLAIN, 14));
-		jbtRemoverPessoa.setBackground(new Color(255, 255, 240));
+		jbtCriarPessoa.setBackground(Color.white);
+		jbtAtualizarPessoas.setBackground(Color.white);
+		jbtEditarPessoa.setBackground(Color.white);
+		jbtRemoverPessoa.setBackground(Color.white);
+		
+		jbtCriarPessoa.setIcon(new ImageIcon("botoes_png/adicionar.png"));
+		jbtAtualizarPessoas.setIcon(new ImageIcon("botoes_png/atualizar.png"));
+		jbtEditarPessoa.setIcon(new ImageIcon("botoes_png/editar.png"));
+		jbtRemoverPessoa.setIcon(new ImageIcon("botoes_png/remover.png"));
 
 		jtbBarra = new JToolBar();
 		jtbBarra.setOrientation(0);
 		jtbBarra.setFloatable(false);
-		jtbBarra.setBounds(0, 0, 800, 30);
+		jtbBarra.setBounds(0, 0, 800, 60);
 		jtbBarra.addSeparator();
-		jtbBarra.add(jbtDetalharPessoa);
+		jtbBarra.add(jbtCriarPessoa);
 		jtbBarra.addSeparator();
-		jtbBarra.add(jbtAtualizarPessoas);
+		jtbBarra.add(jbtRemoverPessoa);
+		jtbBarra.add(jbtEditarPessoa);
 		jtbBarra.addSeparator();
 		jtbBarra.add(jbtEditarPessoa);
 		jtbBarra.addSeparator();
-		jtbBarra.add(jbtRemoverPessoa);
-		jtbBarra.addSeparator();
-		jtbBarra.add(jbtCriarPessoa);
+		jtbBarra.add(jbtAtualizarPessoas);
 		getContentPane().add(jtbBarra);
 
 		setResizable(false);
@@ -148,8 +135,12 @@ public class telaProcurarPessoa extends JFrame {
 	}
 
 	private void alimentarDtb() {
-		for(Pessoa pessoa: pessoaDao.todos()){
-			dtbPessoas.addRow(new String[] {String.valueOf(pessoa.getId()), pessoa.getNome(), pessoa.getRg(), pessoa.getCpf(), "ARRUMAR"});
+		for(Corretor corretor: corretorDao.todos()){
+			dtbPessoas.addRow(new String[] {String.valueOf(corretor.getIdCorretor()), corretor.getPessoa().getNome(), corretor.getPessoa().getRg(), corretor.getPessoa().getCpf(), "CORRETOR"});
+		}
+		
+		for(Cliente cliente: clienteDao.todos()){
+			dtbPessoas.addRow(new String[]{String.valueOf(cliente.getIdCliente()), cliente.getPessoa().getNome(), cliente.getPessoa().getRg(), cliente.getPessoa().getCpf(), "CLIENTE"});
 		}
 		
 	}

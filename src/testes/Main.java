@@ -31,7 +31,7 @@ public class Main {
 		CorretorDAO corretorDao = DaoFactoryJDBC.get().corretorDAO();
 		UsuarioDAO usuarioDao = DaoFactoryJDBC.get().usuarioDAO();
 	
-		Endereco enderecoCliente = new Endereco(enderecoDao.maiorId()+1, "Rua Irineu Bornhausen", "160", "Antonio Paglia", "Ponte Serrada", "89683-000", "SC");
+		/*Endereco enderecoCliente = new Endereco(enderecoDao.maiorId()+1, "Rua Irineu Bornhausen", "160", "Antonio Paglia", "Ponte Serrada", "89683-000", "SC");
 		enderecoDao.inserir(enderecoCliente);
 		Endereco enderecoCorretor = new Endereco(enderecoDao.maiorId()+1, "Rua Paraná", "170", "BR-282", "Ponte Serrada", "89683-000", "SC");
 		enderecoDao.inserir(enderecoCorretor);
@@ -49,9 +49,9 @@ public class Main {
 		
 		Corretor corretor = new Corretor(pessoaCorretor, corretorDao.maiorId()+1, 1500.00, 10.5);
 		corretorDao.inserir(corretor);
-		
-		Usuario usuario = new Usuario(usuarioDao.maiorId()+1, "RibakinhoHUE", "123456", corretor);
-		usuarioDao.inserir(usuario);
+	
+		Usuario usuario = new Usuario(usuarioDao.maiorId()+1, "MPoletto", "1234", corretor);
+		usuarioDao.inserir(usuario);*/
 		
 		System.out.println("PESSOAS: ");
 		for(Pessoa pessoas : pessoaDao.todos()){

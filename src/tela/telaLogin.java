@@ -14,6 +14,10 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import DAOFactory.DaoFactoryJDBC;
+import dao.UsuarioDAO;
+import pessoa.Usuario;
+
 public class telaLogin extends JInternalFrame implements ActionListener{
 
 	private static final long serialVersionUID = 1L;
@@ -23,8 +27,7 @@ public class telaLogin extends JInternalFrame implements ActionListener{
 	private JButton jbtEntrar;
 	private JLabel jlbIcon1;
 	private String nomeUsuario, senhaUsuario, tipoUsuario;
-
-	
+	private UsuarioDAO usuarioDao = DaoFactoryJDBC.get().usuarioDAO();
 	
 	public String getNomeUsuario() {
 		return nomeUsuario;
@@ -43,8 +46,8 @@ public class telaLogin extends JInternalFrame implements ActionListener{
 		setLayout(null);
 		
 		adicionaComponentes();
-		jtfUsuario.setText("Poletto");
-		jpfSenha.setText("123456");
+		jtfUsuario.setText("MPoletto");
+		jpfSenha.setText("1234");
 		setLocation(250, 130);
 		setResizable(false);
 		setSize(400, 300);
@@ -94,18 +97,21 @@ public class telaLogin extends JInternalFrame implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		Boolean autenticou = false;
 		if(e.getSource() == jbtEntrar){
-			if(jtfUsuario.getText().equals("Poletto") && jpfSenha.getText().equals("123456")){
-				nomeUsuario = jtfUsuario.getText();
-				senhaUsuario = jpfSenha.getText();
-				tipoUsuario = "gestor";
-				this.dispose();
-				JOptionPane.showMessageDialog(null, "Autenticado com sucesso");
-				telaPrincipal.getTlPrincipal().alteraVisibilidade();
-			}else {
+			for(Usuario usuarios : usuarioDao.todos()){
+				if(jtfUsuario.getText().equals(usuarios.getLogin()) && jpfSenha.getText().equals(usuarios.getSenha())){
+					nomeUsuario = jtfUsuario.getText();
+					senhaUsuario = jpfSenha.getText();
+					telaPrincipal.getTlPrincipal().alteraVisibilidade();
+					autenticou = true;
+					this.dispose();
+				}
+			}
+			if(autenticou == false){
 				JOptionPane.showMessageDialog(null, "Falha ao autenticar");
 			}
 		}
-
 	}
 }
+
