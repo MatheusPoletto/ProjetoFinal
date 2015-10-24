@@ -22,8 +22,8 @@ public class Main {
 		pessoa.setNome("Matheus Otavio Poletto");
 		pessoa.setRg("6.543.345");
 		pessoa.setCpf("098.676.199-87");
-		pessoa.setEstadoCivil(0);
-		pessoa.setGenero(0);
+		pessoa.setEstadoCivil("Solteiro");
+		pessoa.setGenero("Masculino");
 		pessoa.setDataNascimento(LocalDate.of(1997, 01, 24));
 		pessoa.setEndereco(endereco);
 		pessoa.setTelefone("3435-0000");
@@ -51,8 +51,8 @@ public class Main {
 		pessoaComprador.setNome("Matheus Arilton Ribak");
 		pessoaComprador.setRg("5.353.445");
 		pessoaComprador.setCpf("099.676.183-85");
-		pessoaComprador.setEstadoCivil(1);
-		pessoaComprador.setGenero(0);
+		pessoaComprador.setEstadoCivil("Casado");
+		pessoaComprador.setGenero("Masculino");
 		pessoaComprador.setDataNascimento(LocalDate.of(1996, 05, 20));
 		pessoaComprador.setEndereco(endereco);
 		pessoaComprador.setTelefone("3435-1111");
@@ -71,8 +71,8 @@ public class Main {
 		pessoaCorretor.setNome("Matheus Arilton Ribak");
 		pessoaCorretor.setRg("5.353.445");
 		pessoaCorretor.setCpf("099.676.183-85");
-		pessoaCorretor.setEstadoCivil(1);
-		pessoaCorretor.setGenero(0);
+		pessoaCorretor.setEstadoCivil("Casado");
+		pessoaCorretor.setGenero("Masculino");
 		pessoaCorretor.setDataNascimento(LocalDate.of(1996, 05, 20));
 		pessoaCorretor.setEndereco(endereco);
 		pessoaCorretor.setTelefone("3435-1111");
@@ -85,6 +85,7 @@ public class Main {
 		corretor.setTelefone("9954-9681");
 		
 		Historico historico = new Historico(0, LocalDate.now(), imovel, clienteComprador, corretor);
+		System.out.println(historico.getCliente().getPessoa().getNome());
 		
 		
 	}

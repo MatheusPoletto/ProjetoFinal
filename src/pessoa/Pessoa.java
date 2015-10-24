@@ -4,14 +4,11 @@ import java.time.LocalDate;
 
 public class Pessoa {
 	private Integer id;
-	// id não é auto incremento? 
 	private String nome;
 	private String rg;
 	private String cpf;
-	private Integer estadoCivil;
-	//usamos um combobox que retorna um inteiro, 0 solteiro, 1 casado, 2 Divorciado, 3 viuvo, 4 separado
-	private Integer genero;
-	//outro combobox que retorna 0 para masculino e 1 para feminino
+	private String estadoCivil;
+	private String genero;
 	private LocalDate dataNascimento;
 	private Endereco endereco;
 	private String Telefone;
@@ -41,16 +38,16 @@ public class Pessoa {
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
-	public Integer getEstadoCivil() {
+	public String getEstadoCivil() {
 		return estadoCivil;
 	}
-	public void setEstadoCivil(Integer estadoCivil) {
+	public void setEstadoCivil(String estadoCivil) {
 		this.estadoCivil = estadoCivil;
 	}
-	public Integer getGenero() {
+	public String getGenero() {
 		return genero;
 	}
-	public void setGenero(Integer genero) {
+	public void setGenero(String genero) {
 		this.genero = genero;
 	}
 	public LocalDate getDataNascimento() {

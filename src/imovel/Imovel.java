@@ -12,9 +12,6 @@ public class Imovel {
 	private Cliente cliente; 
 	
 	
-	// não coloquei os gettes e os settes porque o imovel tem que receber uma venda ou um aluguel e o seu dono
-	// se está lendo isto já sabe o que fazer. 
-	
 	
 	
 	public Integer getIdImovel() {
