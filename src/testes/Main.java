@@ -50,7 +50,7 @@ public class Main {
 		Corretor corretor = new Corretor(pessoaCorretor, corretorDao.maiorId()+1, 1500.00, 10.5);
 		corretorDao.inserir(corretor);
 	
-		Usuario usuario = new Usuario(usuarioDao.maiorId()+1, "MPoletto", "1234", corretor);
+		Usuario usuario = new Usuario(usuarioDao.maiorId()+1, "MPoletto", "1234", 2, corretor);
 		usuarioDao.inserir(usuario);*/
 		
 		System.out.println("PESSOAS: ");
@@ -77,7 +77,7 @@ public class Main {
 		
 		System.out.println("\nUSUARIOS:");		
 		for(Usuario usuarios : usuarioDao.todos()){
-			System.out.println("LOGIN: "+ usuarios.getLogin() + " | SENHA: "+ usuarios.getSenha() + " | CORRETOR RESPONSÁVEL PELA CONTA: "+ usuarios.getCorretor().getPessoa().getNome());
+			System.out.println("Nível: "+ usuarios.getNivelAcesso() +"| LOGIN: "+ usuarios.getLogin() + " | SENHA: "+ usuarios.getSenha() + " | CORRETOR RESPONSÁVEL PELA CONTA: "+ usuarios.getCorretor().getPessoa().getNome());
 		}
 		
 		

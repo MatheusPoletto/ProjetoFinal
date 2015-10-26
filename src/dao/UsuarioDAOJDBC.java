@@ -24,13 +24,14 @@ public class UsuarioDAOJDBC implements UsuarioDAO{
 	
 	@Override
 	public void inserir(Usuario entidade) {
-		String sql = "insert into Usuario(idUsuario, login, senha, Corretor_idCorretor) values(?, ?, ?, ?)";
+		String sql = "insert into Usuario(idUsuario, login, senha, Corretor_idCorretor, nivelAcesso) values(?, ?, ?, ?, ?)";
 		try {
 			PreparedStatement pstmt = con.prepareStatement(sql); 
 			pstmt.setInt(1, entidade.getIdUsuario());
 			pstmt.setString(2, entidade.getLogin());
 			pstmt.setString(3, entidade.getSenha());
 			pstmt.setInt(4, entidade.getCorretor().getIdCorretor());
+			pstmt.setInt(5, entidade.getNivelAcesso());
 			pstmt.executeUpdate(); 
 		} catch (SQLException e){
 			e.printStackTrace();
@@ -84,7 +85,7 @@ public class UsuarioDAOJDBC implements UsuarioDAO{
 				usuario.setIdUsuario(rs.getInt("idUsuario"));
 				usuario.setLogin(rs.getString("login"));
 				usuario.setSenha(rs.getString("senha"));
-				
+				usuario.setNivelAcesso(rs.getInt("nivelAcesso"));
 				CorretorDAO corretorDao = DaoFactoryJDBC.get().corretorDAO();
 				int idCorretor = rs.getInt("Corretor_idCorretor");
 				for(Corretor corretor: corretorDao.todos()){
