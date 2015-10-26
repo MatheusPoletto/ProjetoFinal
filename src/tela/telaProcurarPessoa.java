@@ -41,15 +41,18 @@ public class telaProcurarPessoa extends JFrame {
 	private JButton jbtRemoverPessoa;
 	private JButton jbtAtualizarPessoas;
 	private JButton jbtCriarPessoa;
+	private JButton jbtMenu;
 	private JTable jtbPessoas;
 	private DefaultTableModel dtbPessoas;
 	private JScrollPane jspPessoas;
 	private JToolBar jtbBarra;
+	private Boolean barraVisivel = false;
+	private JLabel jlbTitulo;
 	private CorretorDAO corretorDao = DaoFactoryJDBC.get().corretorDAO();
 	private ClienteDAO clienteDao = DaoFactoryJDBC.get().clienteDAO();
 
 	public telaProcurarPessoa() {
-		setTitle("PESSOAS CADASTRADAS");
+		setTitle("");
 		setLayout(null);
 
 		jlbNome = new JLabel("Nome:");
@@ -62,6 +65,16 @@ public class telaProcurarPessoa extends JFrame {
 		jlbRG.setBounds(50, 0, 50, 30);
 		jlbCpf.setBounds(100, 0, 50, 30);
 
+		jlbTitulo = new JLabel("REGISTRO DE PESSOAS", SwingConstants.CENTER);
+		jlbTitulo.setBounds(110, 0, 595, 44);
+		//jlbTitulo.setIcon(new ImageIcon("img/titulo_registropessoas.png"));
+		jlbTitulo.setVisible(true);
+		jlbTitulo.setFont(new Font("ARIAL", Font.PLAIN, 18));
+		jlbTitulo.setOpaque(true);
+		jlbTitulo.setBackground(new Color(23, 20, 20));
+		jlbTitulo.setForeground(Color.white);
+		getContentPane().add(jlbTitulo);
+		
 		jpnFiltro = new JPanel();
 		jpnFiltro.setBounds(200, 3, 400, 40);
 		jpnFiltro.setVisible(false);
@@ -79,74 +92,84 @@ public class telaProcurarPessoa extends JFrame {
 		dtbPessoas.addColumn("Nome");
 		dtbPessoas.addColumn("RG");
 		dtbPessoas.addColumn("CPF");
-		dtbPessoas.addColumn("Tipo");
 		alimentarDtb();
 		jtbPessoas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		jtbPessoas.setModel(dtbPessoas);
 		jspPessoas = new JScrollPane(jtbPessoas);
-		jspPessoas.setBounds(1, 75, 793, 300);
+		jspPessoas.setBounds(0, 45, 702, 500);
+		//jspPessoas.setBounds(65, 0, 736, 500);
 		jspPessoas.setVisible(true);
 		getContentPane().add(jspPessoas);
-
-		jtbPessoas.getColumnModel().getColumn(0).setPreferredWidth(50);
-		jtbPessoas.getColumnModel().getColumn(1).setPreferredWidth(450);
-		jtbPessoas.getColumnModel().getColumn(2).setPreferredWidth(100);
+		jtbPessoas.getColumnModel().getColumn(0).setPreferredWidth(46);
+		jtbPessoas.getColumnModel().getColumn(1).setPreferredWidth(310);
+		jtbPessoas.getColumnModel().getColumn(2).setPreferredWidth(80);
 		jtbPessoas.getColumnModel().getColumn(3).setPreferredWidth(100);
-		jtbPessoas.getColumnModel().getColumn(4).setPreferredWidth(80);
 
 
-		jbtEditarPessoa = new JButton();
+		jbtEditarPessoa = new JButton("EDITAR");
 
-		jbtRemoverPessoa = new JButton();
+		jbtRemoverPessoa = new JButton("REMOVER");
 
-		jbtCriarPessoa = new JButton();
+		jbtCriarPessoa = new JButton("NOVO");
 		
-		jbtAtualizarPessoas = new JButton();
+		jbtAtualizarPessoas = new JButton("ATUALIZAR");
 
-		jbtCriarPessoa.setBackground(Color.white);
-		jbtAtualizarPessoas.setBackground(Color.white);
-		jbtEditarPessoa.setBackground(Color.white);
-		jbtRemoverPessoa.setBackground(Color.white);
-		
-		jbtCriarPessoa.setIcon(new ImageIcon("botoes_png/adicionar.png"));
-		jbtAtualizarPessoas.setIcon(new ImageIcon("botoes_png/atualizar.png"));
-		jbtEditarPessoa.setIcon(new ImageIcon("botoes_png/editar.png"));
-		jbtRemoverPessoa.setIcon(new ImageIcon("botoes_png/remover.png"));
-		
-		jbtCriarPessoa.setFocusable(false);
-		jbtAtualizarPessoas.setFocusable(false);
-		jbtEditarPessoa.setFocusable(false);
-		jbtRemoverPessoa.setFocusable(false);
+	
+		jbtMenu = new JButton();
+		jbtMenu.setBounds(0, 0, 110, 44);
+		jbtMenu.setVisible(true);
+		jbtMenu.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				if(barraVisivel == false){
+					jspPessoas.setBounds(100, 45, 600, 500);
+					jtbBarra.setVisible(true);
+					barraVisivel = true;
+				}else {
+					jspPessoas.setBounds(0, 45, 702, 500);
+					jtbBarra.setVisible(false);
+					barraVisivel = false;
+				}
+				
+			}
+		});
+		jbtMenu.setIcon(new ImageIcon("botoes_png/menu.png"));
+		getContentPane().add(jbtMenu);
 
 		jtbBarra = new JToolBar();
 		jtbBarra.setBackground(Color.white);
-		jtbBarra.setOrientation(0);
+		jtbBarra.setOrientation(1);
 		jtbBarra.setFloatable(false);
-		jtbBarra.setBounds(0, 0, 800, 60);
-		jtbBarra.addSeparator();
+		jtbBarra.setLayout(null);
+		jtbBarra.setBounds(0, 44, 100, 500);
+		jtbBarra.setVisible(false);
+		//jtbBarra.setBounds(0, 0, 65, 500);
 		jtbBarra.add(jbtCriarPessoa);
-		jtbBarra.addSeparator();
+		jbtCriarPessoa.setBounds(0,0,100,30);
 		jtbBarra.add(jbtRemoverPessoa);
+		jbtRemoverPessoa.setBounds(0,30,100,30);
+		jtbBarra.add(jbtAtualizarPessoas);
+		jbtAtualizarPessoas.setBounds(0,60,100,30);
 		jtbBarra.add(jbtEditarPessoa);
-		jtbBarra.addSeparator();
-		jtbBarra.add(jbtEditarPessoa);
-		jtbBarra.addSeparator();
+		jbtEditarPessoa.setBounds(0,90,100,30);
+		//jtbBarra.addSeparator();
 		jtbBarra.add(jbtAtualizarPessoas);
 		getContentPane().add(jtbBarra);
 
 		setResizable(false);
-		setSize(800, 500);
+		setSize(707, 500);
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
 
 	private void alimentarDtb() {
 		for(Corretor corretor: corretorDao.todos()){
-			dtbPessoas.addRow(new String[] {String.valueOf(corretor.getIdCorretor()), corretor.getPessoa().getNome(), corretor.getPessoa().getRg(), corretor.getPessoa().getCpf(), "CORRETOR"});
+			dtbPessoas.addRow(new String[] {String.valueOf(corretor.getIdCorretor()), corretor.getPessoa().getNome(), corretor.getPessoa().getRg(), corretor.getPessoa().getCpf()});
 		}
 		
 		for(Cliente cliente: clienteDao.todos()){
-			dtbPessoas.addRow(new String[]{String.valueOf(cliente.getIdCliente()), cliente.getPessoa().getNome(), cliente.getPessoa().getRg(), cliente.getPessoa().getCpf(), "CLIENTE"});
+			dtbPessoas.addRow(new String[]{String.valueOf(cliente.getIdCliente()), cliente.getPessoa().getNome(), cliente.getPessoa().getRg(), cliente.getPessoa().getCpf()});
 		}
 		
 	}
