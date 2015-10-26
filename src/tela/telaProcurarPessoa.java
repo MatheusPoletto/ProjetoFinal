@@ -112,8 +112,14 @@ public class telaProcurarPessoa extends JFrame {
 		jbtAtualizarPessoas.setIcon(new ImageIcon("botoes_png/atualizar.png"));
 		jbtEditarPessoa.setIcon(new ImageIcon("botoes_png/editar.png"));
 		jbtRemoverPessoa.setIcon(new ImageIcon("botoes_png/remover.png"));
+		
+		jbtCriarPessoa.setFocusable(false);
+		jbtAtualizarPessoas.setFocusable(false);
+		jbtEditarPessoa.setFocusable(false);
+		jbtRemoverPessoa.setFocusable(false);
 
 		jtbBarra = new JToolBar();
+		jtbBarra.setBackground(Color.white);
 		jtbBarra.setOrientation(0);
 		jtbBarra.setFloatable(false);
 		jtbBarra.setBounds(0, 0, 800, 60);
