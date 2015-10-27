@@ -36,8 +36,8 @@ public class Main {
 		Endereco enderecoCorretor = new Endereco(enderecoDao.maiorId()+1, "Rua Paraná", "170", "BR-282", "Ponte Serrada", "89683-000", "SC");
 		enderecoDao.inserir(enderecoCorretor);
 		
-		Date dateCliente = new SimpleDateFormat("yyyyMMdd").parse("19970124");
-		Date dateCorretor = new SimpleDateFormat("yyyyMMdd").parse("19961020");
+		Date dateCliente = new SimpleDateFormat("yyyy-MM-dd").parse("1997-01-24");
+		Date dateCorretor = new SimpleDateFormat("yyyy-MM-dd").parse("1996-10-20");
 		Pessoa pessoaCliente = new Pessoa(pessoaDao.maiorId()+1, "Matheus Otavio Poletto", "6.516.346", "098.676.444-81", "Casado", "Masculino", dateCliente, enderecoCliente, "3435-0000", "9954-9681", "motaviop@gmail.com");
 		pessoaDao.inserir(pessoaCliente);
 		Pessoa pessoaCorretor = new Pessoa(pessoaDao.maiorId()+1, "Matheus Arilton Ribak", "5.269.689", "158.987.458-79", "Solteiro", "Masculino", dateCorretor, enderecoCorretor, "3435-1589", "9999-8888", "matheusribak@hotmail.com");

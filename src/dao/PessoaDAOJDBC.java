@@ -9,6 +9,7 @@ import java.util.List;
 
 import DAOFactory.DaoFactoryJDBC;
 import conexao.ConexaoUtil;
+import pessoa.Cliente;
 import pessoa.Endereco;
 import pessoa.Pessoa;
 
@@ -56,12 +57,36 @@ public class PessoaDAOJDBC implements PessoaDAO{
 
 	@Override
 	public Pessoa buscar(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		EnderecoDAO enderecoDao = new EnderecoDAOJDBC();
+		Pessoa pessoa = null;
+		String sql = "select * from pessoa where idPessoa = ?";
+		try {
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, id);
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()){
+				pessoa = new Pessoa();
+				pessoa.setId(rs.getInt("idPessoa"));
+				pessoa.setNome(rs.getString("nome"));
+				pessoa.setRg(rs.getString("rg"));
+				pessoa.setCpf(rs.getString("cpf"));
+				pessoa.setEstadoCivil(rs.getString("estadoCivil"));
+				pessoa.setGenero(rs.getString("genero"));
+				pessoa.setDataNascimento(rs.getDate("dataNascimento"));
+				pessoa.setTelefoneResidencial(rs.getString("telefoneResidencial"));
+				pessoa.setTelefoneCelular(rs.getString("telefoneCelular"));
+				pessoa.setEmail(rs.getString("email"));
+				pessoa.setEndereco(enderecoDao.buscar(rs.getInt("Endereco_idEndereco")));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return pessoa;
 	}
 
 	@Override
 	public List<Pessoa> todos() {
+		EnderecoDAO enderecoDao = new EnderecoDAOJDBC();
 		List<Pessoa> pessoas = new ArrayList<>();
 		String sql = "select * from pessoa";
 		try {
@@ -79,14 +104,7 @@ public class PessoaDAOJDBC implements PessoaDAO{
 				pessoa.setTelefoneResidencial(rs.getString("telefoneResidencial"));
 				pessoa.setTelefoneCelular(rs.getString("telefoneCelular"));
 				pessoa.setEmail(rs.getString("email"));
-			
-				EnderecoDAO enderecoDao = DaoFactoryJDBC.get().enderecoDAO();
-				int idEndereco = rs.getInt("Endereco_idEndereco");
-				for(Endereco endereco: enderecoDao.todos()){
-					if(endereco.getId() == idEndereco){
-						pessoa.setEndereco(endereco);
-					}
-				}
+				pessoa.setEndereco(enderecoDao.buscar(rs.getInt("Endereco_idEndereco")));
 				pessoas.add(pessoa);
 			}
 		} catch (SQLException e) {

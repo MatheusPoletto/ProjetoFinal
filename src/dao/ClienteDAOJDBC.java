@@ -10,6 +10,7 @@ import java.util.List;
 import DAOFactory.DaoFactoryJDBC;
 import conexao.ConexaoUtil;
 import pessoa.Cliente;
+import pessoa.Endereco;
 import pessoa.Pessoa;
 
 public class ClienteDAOJDBC implements ClienteDAO{
@@ -45,12 +46,27 @@ public class ClienteDAOJDBC implements ClienteDAO{
 
 	@Override
 	public Cliente buscar(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		PessoaDAO pessoaDao = new PessoaDAOJDBC();
+		Cliente cliente = null;
+		String sql = "select * from cliente where idCliente = ?";
+		try {
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, id);
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()){
+				cliente = new Cliente();
+				cliente.setIdCliente(rs.getInt("idCliente"));
+				cliente.setPessoa(pessoaDao.buscar(rs.getInt("Pessoa_idPessoa")));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return cliente;
 	}
 
 	@Override
 	public List<Cliente> todos() {
+		PessoaDAO pessoaDao = new PessoaDAOJDBC();
 		List<Cliente> clientes = new ArrayList<>();
 		String sql = "select * from cliente";
 		try {
@@ -59,14 +75,7 @@ public class ClienteDAOJDBC implements ClienteDAO{
 			while(rs.next()){
 				Cliente cliente = new Cliente();
 				cliente.setIdCliente(rs.getInt("idCliente"));
-				
-				PessoaDAO pessoaDao = DaoFactoryJDBC.get().pessoaDAO();
-				int idPessoa = rs.getInt("Pessoa_idPessoa");
-				for(Pessoa pessoa : pessoaDao.todos()){
-					if(pessoa.getId() == idPessoa){
-						cliente.setPessoa(pessoa);
-					}
-				}
+				cliente.setPessoa(pessoaDao.buscar(rs.getInt("Pessoa_idPessoa")));
 				clientes.add(cliente);
 			}
 		} catch (SQLException e) {

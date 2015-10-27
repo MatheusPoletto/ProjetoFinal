@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import DAOFactory.DaoFactoryJDBC;
+import pessoa.Cliente;
 import pessoa.Endereco;
 import pessoa.Pessoa;
 import conexao.ConexaoUtil;
@@ -67,8 +68,26 @@ public class EnderecoDAOJDBC implements EnderecoDAO{
 
 	@Override
 	public Endereco buscar(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		Endereco endereco = null;
+		String sql = "select * from endereco where idEndereco = ?";
+		try {
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, id);
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()){
+				endereco = new Endereco();
+				endereco.setId(rs.getInt("idEndereco"));
+				endereco.setRua(rs.getString("rua"));
+				endereco.setNumero(rs.getString("numero"));
+				endereco.setBairro(rs.getString("bairro"));
+				endereco.setCidade(rs.getString("cidade"));
+				endereco.setUf(rs.getString("uf"));
+				endereco.setCep(rs.getString("cep"));	
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return endereco;
 	}
 
 	@Override

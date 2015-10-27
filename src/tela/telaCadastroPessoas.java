@@ -4,13 +4,17 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -20,9 +24,16 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.JToolBar;
 import javax.swing.SwingConstants;
+import javax.swing.text.MaskFormatter;
 
 import DAOFactory.DaoFactoryJDBC;
+import dao.ClienteDAO;
+import dao.CorretorDAO;
+import dao.EnderecoDAO;
 import dao.PessoaDAO;
+import pessoa.Cliente;
+import pessoa.Corretor;
+import pessoa.Endereco;
 import pessoa.Pessoa;
 
 public class telaCadastroPessoas extends JFrame {
@@ -38,6 +49,10 @@ public class telaCadastroPessoas extends JFrame {
 	private JButton jbtRegistrarCliente, jbtRegistrarCorretor;
 	private JTabbedPane jtbTipoRegistro;
 	private JPanel jpnCliente, jpnCorretor;	
+	private PessoaDAO pessoaDao = DaoFactoryJDBC.get().pessoaDAO();
+	private EnderecoDAO enderecoDao = DaoFactoryJDBC.get().enderecoDAO();
+	private ClienteDAO clienteDao = DaoFactoryJDBC.get().clienteDAO();
+	private CorretorDAO corretorDao = DaoFactoryJDBC.get().corretorDAO();
 	
 	public telaCadastroPessoas() {
 		setTitle("Cadastrar pessoa");
@@ -96,6 +111,12 @@ public class telaCadastroPessoas extends JFrame {
 					jtbTipoRegistro.setEnabledAt(1, false);
 					jtbTipoRegistro.setEnabledAt(0, true);
 					jtbTipoRegistro.setSelectedIndex(0);
+					
+					Pessoa pessoa = cadastrarPessoaEndereco();
+					Cliente cliente = new Cliente(pessoa, clienteDao.maiorId()+1);
+					clienteDao.inserir(cliente);
+					JOptionPane.showMessageDialog(null, "Cliente cadastrado com sucesso!", "Sucesso!", JOptionPane.PLAIN_MESSAGE);
+					
 				}
 			}
 		});
@@ -118,6 +139,11 @@ public class telaCadastroPessoas extends JFrame {
 					jtbTipoRegistro.setEnabledAt(0, false);
 					jtbTipoRegistro.setEnabledAt(1, true);
 					jtbTipoRegistro.setSelectedIndex(1);
+					
+					Pessoa pessoa = cadastrarPessoaEndereco();
+					Corretor corretor = new Corretor(pessoa, corretorDao.maiorId(), 1500.0, 10.0);
+					corretorDao.inserir(corretor);
+					JOptionPane.showMessageDialog(null, "Corretor cadastrado com sucesso!", "Sucesso!", JOptionPane.PLAIN_MESSAGE);
 				}			
 			}
 		});
@@ -192,7 +218,11 @@ public class telaCadastroPessoas extends JFrame {
 		jtfCpf.setBounds(280,54,120,24);
 		jtfCpf.setVisible(true);
 		
-		jtfDataNascimento = new JTextField();
+		try {
+			jtfDataNascimento = new JFormattedTextField(new MaskFormatter("####-##-##"));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 		jtfDataNascimento.setBounds(550,54,90,24);
 		jtfDataNascimento.setVisible(true);
 		
@@ -334,5 +364,41 @@ public class telaCadastroPessoas extends JFrame {
 			passou = true;
 		}
 		return passou;
+	}
+	
+	private Pessoa cadastrarPessoaEndereco(){
+		Date data = null;
+		try {
+			data = new SimpleDateFormat("yyyy-MM-dd").parse(jtfDataNascimento.getText());
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		
+		Pessoa pessoa = new Pessoa();
+		pessoa.setId(pessoaDao.maiorId()+1);
+		pessoa.setNome(jtfNome.getText());
+		pessoa.setRg(jtfRg.getText());
+		pessoa.setCpf(jtfCpf.getText());
+		pessoa.setDataNascimento(data);
+		pessoa.setGenero(jtfGenero.getText());
+		pessoa.setEstadoCivil(jcbEstadoCivil.getSelectedItem().toString());
+		pessoa.setTelefoneResidencial(jtfTelefoneResidencial.getText());
+		pessoa.setTelefoneCelular(jtfTelefoneCelular.getText());
+		pessoa.setEmail(jtfEmail.getText());
+	
+		Endereco endereco = new Endereco();
+		endereco.setId(enderecoDao.maiorId()+1);
+		endereco.setRua(jtfRua.getText());
+		endereco.setNumero(jtfNumero.getText());
+		endereco.setBairro(jtfBairro.getText());
+		endereco.setCidade(jtfCidade.getText());
+		endereco.setUf(jtfUf.getText());
+		endereco.setCep(jtfCep.getText());
+		enderecoDao.inserir(endereco);
+		
+		pessoa.setEndereco(endereco);
+		pessoaDao.inserir(pessoa);
+		
+		return pessoa;
 	}
 }

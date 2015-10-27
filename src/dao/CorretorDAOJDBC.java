@@ -9,6 +9,7 @@ import java.util.List;
 
 import DAOFactory.DaoFactoryJDBC;
 import conexao.ConexaoUtil;
+import pessoa.Cliente;
 import pessoa.Corretor;
 import pessoa.Endereco;
 import pessoa.Pessoa;
@@ -50,12 +51,27 @@ public class CorretorDAOJDBC implements CorretorDAO{
 
 	@Override
 	public Corretor buscar(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		PessoaDAO pessoaDao = new PessoaDAOJDBC();
+		Corretor corretor = null;
+		String sql = "select * from corretor where idCorretor = ?";
+		try {
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, id);
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()){
+				corretor = new Corretor();
+				corretor.setIdCorretor(rs.getInt("idCorretor"));
+				corretor.setPessoa(pessoaDao.buscar(rs.getInt("Pessoa_idPessoa")));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return corretor;
 	}
 
 	@Override
 	public List<Corretor> todos() {
+		PessoaDAO pessoaDao = new PessoaDAOJDBC();
 		List<Corretor> corretores = new ArrayList<>();
 		String sql = "select * from corretor";
 		try {
@@ -66,14 +82,7 @@ public class CorretorDAOJDBC implements CorretorDAO{
 				corretor.setIdCorretor(rs.getInt("idCorretor"));
 				corretor.setSalario(rs.getDouble("salario"));
 				corretor.setPorcentagemComissao(rs.getDouble("comissao"));
-			
-				PessoaDAO pessoaDao = DaoFactoryJDBC.get().pessoaDAO();
-				int idPessoa = rs.getInt("Pessoa_idPessoa");
-				for(Pessoa pessoa: pessoaDao.todos()){
-					if(pessoa.getId() == idPessoa){
-						corretor.setPessoa(pessoa);
-					}
-				}
+				corretor.setPessoa(pessoaDao.buscar(rs.getInt("Pessoa_idPessoa")));
 				corretores.add(corretor);
 			}
 		} catch (SQLException e) {

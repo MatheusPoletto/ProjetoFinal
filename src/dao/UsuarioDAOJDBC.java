@@ -75,6 +75,7 @@ public class UsuarioDAOJDBC implements UsuarioDAO{
 
 	@Override
 	public List<Usuario> todos() {
+		CorretorDAO corretorDao = new CorretorDAOJDBC();
 		List<Usuario> usuarios = new ArrayList<>();
 		String sql = "select * from usuario";
 		try {
@@ -86,13 +87,7 @@ public class UsuarioDAOJDBC implements UsuarioDAO{
 				usuario.setLogin(rs.getString("login"));
 				usuario.setSenha(rs.getString("senha"));
 				usuario.setNivelAcesso(rs.getInt("nivelAcesso"));
-				CorretorDAO corretorDao = DaoFactoryJDBC.get().corretorDAO();
-				int idCorretor = rs.getInt("Corretor_idCorretor");
-				for(Corretor corretor: corretorDao.todos()){
-					if(corretor.getIdCorretor() == idCorretor){
-						usuario.setCorretor(corretor);
-					}
-				}
+				usuario.setCorretor(corretorDao.buscar(rs.getInt("Corretor_idCorretor")));
 				usuarios.add(usuario);
 			}
 		} catch (SQLException e) {
