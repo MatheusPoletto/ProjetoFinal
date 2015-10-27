@@ -20,19 +20,19 @@ public class HistoricoDAOJDBC implements HistoricoDAO{
 	
 
 	@Override
-	public void inserir(Historico entidade) {
+	public void inserir(Historico historico) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void alterar(Historico entidade) {
+	public void alterar(Historico historico) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void excluir(Historico entidade) {
+	public void excluir(Historico historico) {
 		// TODO Auto-generated method stub
 		
 	}

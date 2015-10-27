@@ -20,11 +20,11 @@ public class ClienteDAOJDBC implements ClienteDAO{
 	}
 
 	@Override
-	public void inserir(Cliente entidade) {
+	public void inserir(Cliente cliente) {
 		String sql = "insert into Cliente (Pessoa_idPessoa) values( ?)";
 		try {
 			PreparedStatement pstmt = con.prepareStatement(sql); 
-			pstmt.setInt(1, entidade.getPessoa().getId());
+			pstmt.setInt(1, cliente.getPessoa().getId());
 			pstmt.executeUpdate(); 
 		} catch (SQLException e){
 			e.printStackTrace();
@@ -32,13 +32,13 @@ public class ClienteDAOJDBC implements ClienteDAO{
 	}
 
 	@Override
-	public void alterar(Cliente entidade) {
+	public void alterar(Cliente cliente) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void excluir(Cliente entidade) {
+	public void excluir(Cliente cliente) {
 		// TODO Auto-generated method stub
 		
 	}

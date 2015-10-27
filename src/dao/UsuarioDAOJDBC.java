@@ -23,15 +23,15 @@ public class UsuarioDAOJDBC implements UsuarioDAO{
 	}
 	
 	@Override
-	public void inserir(Usuario entidade) {
+	public void inserir(Usuario usuario) {
 		String sql = "insert into Usuario(idUsuario, login, senha, Corretor_idCorretor, nivelAcesso) values(?, ?, ?, ?, ?)";
 		try {
 			PreparedStatement pstmt = con.prepareStatement(sql); 
-			pstmt.setInt(1, entidade.getIdUsuario());
-			pstmt.setString(2, entidade.getLogin());
-			pstmt.setString(3, entidade.getSenha());
-			pstmt.setInt(4, entidade.getCorretor().getIdCorretor());
-			pstmt.setInt(5, entidade.getNivelAcesso());
+			pstmt.setInt(1, usuario.getIdUsuario());
+			pstmt.setString(2, usuario.getLogin());
+			pstmt.setString(3, usuario.getSenha());
+			pstmt.setInt(4, usuario.getCorretor().getIdCorretor());
+			pstmt.setInt(5, usuario.getNivelAcesso());
 			pstmt.executeUpdate(); 
 		} catch (SQLException e){
 			e.printStackTrace();
@@ -39,13 +39,13 @@ public class UsuarioDAOJDBC implements UsuarioDAO{
 	}
 
 	@Override
-	public void alterar(Usuario entidade) {
+	public void alterar(Usuario usuario) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void excluir(Usuario entidade) {
+	public void excluir(Usuario usuario) {
 		// TODO Auto-generated method stub
 		
 	}

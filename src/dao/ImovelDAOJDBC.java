@@ -19,19 +19,19 @@ public class ImovelDAOJDBC implements ImovelDAO{
 	}
 
 	@Override
-	public void inserir(Imovel entidade) {
+	public void inserir(Imovel imovel) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void alterar(Imovel entidade) {
+	public void alterar(Imovel imovel) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void excluir(Imovel entidade) {
+	public void excluir(Imovel imovel) {
 		// TODO Auto-generated method stub
 		
 	}

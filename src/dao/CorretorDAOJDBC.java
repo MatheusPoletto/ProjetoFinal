@@ -22,14 +22,14 @@ public class CorretorDAOJDBC implements CorretorDAO{
 	}
 
 	@Override
-	public void inserir(Corretor Corretor) {
+	public void inserir(Corretor corretor) {
 		String sql = "insert into Corretor (salario, comissao, Pessoa_idPessoa) values(? ,? ,?)";
 		try {
 			PreparedStatement pstmt = con.prepareStatement(sql); 
 			
-			pstmt.setDouble(1, Corretor.getSalario());
-			pstmt.setDouble(2, Corretor.getPorcentagemComissao());
-			pstmt.setInt(3, Corretor.getPessoa().getId());
+			pstmt.setDouble(1, corretor.getSalario());
+			pstmt.setDouble(2, corretor.getPorcentagemComissao());
+			pstmt.setInt(3, corretor.getPessoa().getId());
 			pstmt.executeUpdate(); 
 		} catch (SQLException e){
 			e.printStackTrace();
@@ -37,13 +37,13 @@ public class CorretorDAOJDBC implements CorretorDAO{
 	}
 
 	@Override
-	public void alterar(Corretor Corretor) {
+	public void alterar(Corretor corretor) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void excluir(Corretor Corretor) {
+	public void excluir(Corretor corretor) {
 		// TODO Auto-generated method stub
 		
 	}

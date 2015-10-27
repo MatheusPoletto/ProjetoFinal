@@ -20,16 +20,16 @@ public class EnderecoDAOJDBC implements EnderecoDAO{
 	}
 
 	@Override
-	public void inserir(Endereco entidade) {
+	public void inserir(Endereco endereco) {
 		String sql = "insert into Endereco(rua, numero, bairro, cidade, cep, uf) values(?, ?, ?, ?, ?, ?)";
 		try {
 			PreparedStatement pstmt = con.prepareStatement(sql); 
-			pstmt.setString(1, entidade.getRua());
-			pstmt.setString(2, entidade.getNumero());
-			pstmt.setString(3, entidade.getBairro());
-			pstmt.setString(4, entidade.getCidade());
-			pstmt.setString(5, entidade.getCep());
-			pstmt.setString(6, entidade.getUf());
+			pstmt.setString(1, endereco.getRua());
+			pstmt.setString(2, endereco.getNumero());
+			pstmt.setString(3, endereco.getBairro());
+			pstmt.setString(4, endereco.getCidade());
+			pstmt.setString(5, endereco.getCep());
+			pstmt.setString(6, endereco.getUf());
 			pstmt.executeUpdate(); 
 		} catch (SQLException e){
 			e.printStackTrace();

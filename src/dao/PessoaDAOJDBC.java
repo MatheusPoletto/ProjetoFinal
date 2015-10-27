@@ -20,20 +20,20 @@ public class PessoaDAOJDBC implements PessoaDAO{
 	}
 
 	@Override
-	public void inserir(Pessoa entidade) {
+	public void inserir(Pessoa pessoa) {
 		String sql = "insert into Pessoa(nome, rg, cpf, estadoCivil, genero, dataNascimento, telefone, Endereco_idEndereco) values(?, ?, ?, ?, ?, ?, ?, ?)";
 		try {
 			PreparedStatement pstmt = con.prepareStatement(sql); 
-			pstmt.setString(1, entidade.getNome());
-			pstmt.setString(2, entidade.getRg());
-			pstmt.setString(3, entidade.getCpf());
-			pstmt.setString(4, entidade.getEstadoCivil());
-			pstmt.setString(5, entidade.getGenero());
-			java.util.Date dataUtil = entidade.getDataNascimento();
+			pstmt.setString(1, pessoa.getNome());
+			pstmt.setString(2, pessoa.getRg());
+			pstmt.setString(3, pessoa.getCpf());
+			pstmt.setString(4, pessoa.getEstadoCivil());
+			pstmt.setString(5, pessoa.getGenero());
+			java.util.Date dataUtil = pessoa.getDataNascimento();
 			java.sql.Date dataSql = new java.sql.Date(dataUtil.getTime());  
 			pstmt.setDate(6, dataSql);
-			pstmt.setString(7, entidade.getTelefone());
-			pstmt.setInt(8, entidade.getEndereco().getId());
+			pstmt.setString(7, pessoa.getTelefone());
+			pstmt.setInt(8, pessoa.getEndereco().getId());
 			pstmt.executeUpdate(); 
 		} catch (SQLException e){
 			e.printStackTrace();
@@ -41,13 +41,13 @@ public class PessoaDAOJDBC implements PessoaDAO{
 	}
 
 	@Override
-	public void alterar(Pessoa entidade) {
+	public void alterar(Pessoa pessoa) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void excluir(Pessoa entidade) {
+	public void excluir(Pessoa pessoa) {
 		// TODO Auto-generated method stub
 		
 	}
