@@ -38,9 +38,9 @@ public class Main {
 		
 		Date dateCliente = new SimpleDateFormat("yyyyMMdd").parse("19970124");
 		Date dateCorretor = new SimpleDateFormat("yyyyMMdd").parse("19961020");
-		Pessoa pessoaCliente = new Pessoa(pessoaDao.maiorId()+1, "Matheus Otavio Poletto", "6.516.346", "098.676.444-81", "Casado", "Masculino", dateCliente, enderecoCliente, "3435-0000");
+		Pessoa pessoaCliente = new Pessoa(pessoaDao.maiorId()+1, "Matheus Otavio Poletto", "6.516.346", "098.676.444-81", "Casado", "Masculino", dateCliente, enderecoCliente, "3435-0000", "motaviop@gmail.com");
 		pessoaDao.inserir(pessoaCliente);
-		Pessoa pessoaCorretor = new Pessoa(pessoaDao.maiorId()+1, "Matheus Arilton Ribak", "5.269.689", "158.987.458-79", "Solteiro", "Masculino", dateCorretor, enderecoCorretor, "3435-1589");
+		Pessoa pessoaCorretor = new Pessoa(pessoaDao.maiorId()+1, "Matheus Arilton Ribak", "5.269.689", "158.987.458-79", "Solteiro", "Masculino", dateCorretor, enderecoCorretor, "3435-1589", "matheusribak@hotmail.com");
 		pessoaDao.inserir(pessoaCorretor);
 		
 		Cliente cliente = new Cliente(pessoaCliente, clienteDao.maiorId()+1); 

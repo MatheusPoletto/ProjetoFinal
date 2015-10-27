@@ -21,7 +21,7 @@ public class PessoaDAOJDBC implements PessoaDAO{
 
 	@Override
 	public void inserir(Pessoa pessoa) {
-		String sql = "insert into Pessoa(nome, rg, cpf, estadoCivil, genero, dataNascimento, telefone, Endereco_idEndereco) values(?, ?, ?, ?, ?, ?, ?, ?)";
+		String sql = "insert into Pessoa(nome, rg, cpf, estadoCivil, genero, dataNascimento, telefone, email, Endereco_idEndereco) values(?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		try {
 			PreparedStatement pstmt = con.prepareStatement(sql); 
 			pstmt.setString(1, pessoa.getNome());
@@ -33,7 +33,8 @@ public class PessoaDAOJDBC implements PessoaDAO{
 			java.sql.Date dataSql = new java.sql.Date(dataUtil.getTime());  
 			pstmt.setDate(6, dataSql);
 			pstmt.setString(7, pessoa.getTelefone());
-			pstmt.setInt(8, pessoa.getEndereco().getId());
+			pstmt.setString(8, pessoa.getEmail());
+			pstmt.setInt(9, pessoa.getEndereco().getId());
 			pstmt.executeUpdate(); 
 		} catch (SQLException e){
 			e.printStackTrace();
@@ -75,6 +76,7 @@ public class PessoaDAOJDBC implements PessoaDAO{
 				pessoa.setGenero(rs.getString("genero"));
 				pessoa.setDataNascimento(rs.getDate("dataNascimento"));
 				pessoa.setTelefone(rs.getString("telefone"));
+				pessoa.setEmail(rs.getString("email"));
 			
 				EnderecoDAO enderecoDao = DaoFactoryJDBC.get().enderecoDAO();
 				int idEndereco = rs.getInt("Endereco_idEndereco");

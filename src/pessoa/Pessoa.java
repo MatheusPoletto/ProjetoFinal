@@ -13,7 +13,8 @@ public class Pessoa {
 	private String genero;
 	private Date dataNascimento;
 	private Endereco endereco;
-	private String Telefone;
+	private String telefone;
+	private String email;
 	
 	
 	public Integer getId() {
@@ -65,13 +66,19 @@ public class Pessoa {
 		this.endereco = endereco;
 	}
 	public String getTelefone() {
-		return Telefone;
+		return telefone;
 	}
 	public void setTelefone(String telefone) {
-		Telefone = telefone;
+		telefone = telefone;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	public Pessoa(Integer id, String nome, String rg, String cpf, String estadoCivil, String genero,
-			Date dataNascimento, Endereco endereco, String telefone) {
+			Date dataNascimento, Endereco endereco, String telefone, String email) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -81,10 +88,13 @@ public class Pessoa {
 		this.genero = genero;
 		this.dataNascimento = dataNascimento;
 		this.endereco = endereco;
-		Telefone = telefone;
+		this.telefone = telefone;
+		this.email = email;
 	}
 	
 	public Pessoa() {
 		super();
 	} 
+	
+	
 }
