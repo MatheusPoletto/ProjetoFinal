@@ -2,30 +2,41 @@ package tela;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.JToolBar;
 import javax.swing.SwingConstants;
 
+import DAOFactory.DaoFactoryJDBC;
+import dao.PessoaDAO;
+import pessoa.Pessoa;
+
 public class telaCadastroPessoas extends JFrame {
 	private JLabel jlbTitulo;
 	private JPanel jpnCadastroPessoa, jpnCadastroEndereco, jpnTipoCadastro;
-	private JLabel jlbNome, jlbRg, jlbCpf, jlbDataNascimento, jlbEstadoCivil, jlbGenero, jlbTelefoneResidencial, jlbTelefoneCelular;	
+	private JLabel jlbNome, jlbRg, jlbCpf, jlbDataNascimento, jlbEstadoCivil, jlbGenero, jlbTelefoneResidencial, jlbTelefoneCelular, jlbEmail;	
 	private JLabel jlbRua, jlbNumero, jlbBairro, jlbCidade, jlbUf, jlbCep;
-	private JTextField jtfNome, jtfRg, jtfCpf, jtfDataNascimento, jtfGenero, jtfTelefoneResidencial, jtfTelefoneCelular;
+	private JTextField jtfNome, jtfRg, jtfCpf, jtfDataNascimento, jtfGenero, jtfTelefoneResidencial, jtfTelefoneCelular, jtfEmail;
 	private JTextField jtfRua, jtfNumero, jtfBairro, jtfCidade, jtfUf, jtfCep;
 	private JComboBox<String> jcbEstadoCivil;	
 	private JToolBar jtbBarra;
 	private JLabel jlbTipoRegistro;
 	private JButton jbtRegistrarCliente, jbtRegistrarCorretor;
+	private JButton jbtProcurarPessoa;
+	private JLabel jlbIconProcurar;
+	private PessoaDAO pessoaDao = DaoFactoryJDBC.get().pessoaDAO();
 	
 	public telaCadastroPessoas() {
 		setTitle("Cadastrar pessoa");
@@ -40,6 +51,20 @@ public class telaCadastroPessoas extends JFrame {
 		jlbTitulo.setForeground(Color.white);
 		getContentPane().add(jlbTitulo);
 		
+		jlbIconProcurar = new JLabel();
+		jlbIconProcurar.setIcon(new ImageIcon("botoes_png/search102.png"));
+		jlbIconProcurar.setBounds(24, 48, 32, 32);
+		jlbIconProcurar.setVisible(true);
+		getContentPane().add(jlbIconProcurar);
+		
+		jbtProcurarPessoa = new JButton("PROCURAR");
+		jbtProcurarPessoa.setBounds(60, 50, 100, 30);
+		jbtProcurarPessoa.setVisible(true);
+		jbtProcurarPessoa.setForeground(Color.white);
+		jbtProcurarPessoa.setFocusable(false);
+		jbtProcurarPessoa.setBackground(new Color(23, 20, 20));
+		getContentPane().add(jbtProcurarPessoa);
+		
 		criarPainelCadastroPessoa();
 		criarPainelEndereco();
 		
@@ -53,12 +78,22 @@ public class telaCadastroPessoas extends JFrame {
 		jbtRegistrarCliente.setBackground(new Color(23, 20, 20));
 		jbtRegistrarCliente.setForeground(Color.white);
 		jbtRegistrarCliente.setBounds(0, 0, 100, 30);
+		jbtRegistrarCliente.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				verificaCampos();				
+			}
+		});
 		
 		jbtRegistrarCorretor = new JButton("CORRETOR");
 		jbtRegistrarCorretor.setVisible(true);
 		jbtRegistrarCorretor.setBackground(new Color(23, 20, 20));
 		jbtRegistrarCorretor.setForeground(Color.white);
 		jbtRegistrarCorretor.setBounds(100, 0, 100, 30);
+		jbtRegistrarCorretor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				verificaCampos();				
+			}
+		});
 		
 		jtbBarra = new JToolBar();
 		jtbBarra.setOrientation(0);
@@ -70,7 +105,7 @@ public class telaCadastroPessoas extends JFrame {
 		jtbBarra.add(jbtRegistrarCorretor);
 		
 		jpnTipoCadastro = new JPanel();
-		jpnTipoCadastro.setBounds(350, 292, 325, 35);
+		jpnTipoCadastro.setBounds(350, 355, 325, 35);
 		jpnTipoCadastro.setVisible(true);
 		jpnTipoCadastro.setLayout(null);
 		jpnTipoCadastro.add(jlbTipoRegistro);
@@ -80,7 +115,7 @@ public class telaCadastroPessoas extends JFrame {
 		getContentPane().add(jpnTipoCadastro);
 
 		setResizable(false);
-		setSize(707, 365);
+		setSize(707, 427);
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
@@ -117,6 +152,10 @@ public class telaCadastroPessoas extends JFrame {
 		jlbTelefoneCelular = new JLabel("Tel. celular:");
 		jlbTelefoneCelular.setBounds(210,110,110, 30);
 		jlbTelefoneCelular.setVisible(true);
+		
+		jlbEmail = new JLabel("E-mail:");
+		jlbEmail.setBounds(10,140,110, 30);
+		jlbEmail.setVisible(true);
 		
 		jtfNome = new JTextField();
 		jtfNome.setBounds(80,24, 560,24);
@@ -155,8 +194,12 @@ public class telaCadastroPessoas extends JFrame {
 		jtfTelefoneCelular.setBounds(280,114,120,24);
 		jtfTelefoneCelular.setVisible(true);
 		
+		jtfEmail = new JTextField();
+		jtfEmail.setBounds(80, 144,320,24);
+		jtfEmail.setVisible(true);
+		
 		jpnCadastroPessoa = new JPanel();
-		jpnCadastroPessoa.setBounds(20, 50, 655, 148);
+		jpnCadastroPessoa.setBounds(20, 80, 655, 182);
 		jpnCadastroPessoa.setVisible(true);
 		jpnCadastroPessoa.setLayout(null);
 		jpnCadastroPessoa.setBorder(
@@ -169,6 +212,7 @@ public class telaCadastroPessoas extends JFrame {
 		jpnCadastroPessoa.add(jlbEstadoCivil);
 		jpnCadastroPessoa.add(jlbTelefoneResidencial);
 		jpnCadastroPessoa.add(jlbTelefoneCelular);
+		jpnCadastroPessoa.add(jlbEmail);
 		jpnCadastroPessoa.add(jtfNome);
 		jpnCadastroPessoa.add(jtfRg);
 		jpnCadastroPessoa.add(jtfCpf);
@@ -177,6 +221,7 @@ public class telaCadastroPessoas extends JFrame {
 		jpnCadastroPessoa.add(jcbEstadoCivil);
 		jpnCadastroPessoa.add(jtfTelefoneResidencial);
 		jpnCadastroPessoa.add(jtfTelefoneCelular);
+		jpnCadastroPessoa.add(jtfEmail);
 		getContentPane().add(jpnCadastroPessoa);
 		
 	}
@@ -231,7 +276,7 @@ public class telaCadastroPessoas extends JFrame {
 		jtfCep.setVisible(true);
 		
 		jpnCadastroEndereco = new JPanel();
-		jpnCadastroEndereco.setBounds(20, 200, 655, 90);
+		jpnCadastroEndereco.setBounds(20, 262, 655, 90);
 		jpnCadastroEndereco.setVisible(true);
 		jpnCadastroEndereco.setLayout(null);
 		jpnCadastroEndereco.setBorder(
@@ -255,5 +300,12 @@ public class telaCadastroPessoas extends JFrame {
 	public static void main(String[] args) {
 		new telaCadastroPessoas();
 	}
-
+	
+	private void verificaCampos(){
+		if(jtfNome.getText() .equals("") || jtfRg.getText() .equals("") || jtfCpf.getText() .equals("") || jtfDataNascimento.getText() .equals("") ||
+				jtfGenero.getText() .equals("") || jcbEstadoCivil.getSelectedIndex() == -1 || jtfEmail.getText().equals("")){
+			JOptionPane.showMessageDialog(null, "Todos os campos são obrigatórios e um pareçe estar vazio!\nRevise-os e tente novamente!", "Ops! Erro ao cadastrar uma nova pessoa", JOptionPane.WARNING_MESSAGE);
+			
+		}
+	}
 }

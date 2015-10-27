@@ -31,16 +31,16 @@ public class Main {
 		CorretorDAO corretorDao = DaoFactoryJDBC.get().corretorDAO();
 		UsuarioDAO usuarioDao = DaoFactoryJDBC.get().usuarioDAO();
 	
-		/*Endereco enderecoCliente = new Endereco(enderecoDao.maiorId()+1, "Rua Irineu Bornhausen", "160", "Antonio Paglia", "Ponte Serrada", "89683-000", "SC");
+		Endereco enderecoCliente = new Endereco(enderecoDao.maiorId()+1, "Rua Irineu Bornhausen", "160", "Antonio Paglia", "Ponte Serrada", "89683-000", "SC");
 		enderecoDao.inserir(enderecoCliente);
 		Endereco enderecoCorretor = new Endereco(enderecoDao.maiorId()+1, "Rua Paraná", "170", "BR-282", "Ponte Serrada", "89683-000", "SC");
 		enderecoDao.inserir(enderecoCorretor);
 		
 		Date dateCliente = new SimpleDateFormat("yyyyMMdd").parse("19970124");
 		Date dateCorretor = new SimpleDateFormat("yyyyMMdd").parse("19961020");
-		Pessoa pessoaCliente = new Pessoa(pessoaDao.maiorId()+1, "Matheus Otavio Poletto", "6.516.346", "098.676.444-81", "Casado", "Masculino", dateCliente, enderecoCliente, "3435-0000", "motaviop@gmail.com");
+		Pessoa pessoaCliente = new Pessoa(pessoaDao.maiorId()+1, "Matheus Otavio Poletto", "6.516.346", "098.676.444-81", "Casado", "Masculino", dateCliente, enderecoCliente, "3435-0000", "9954-9681", "motaviop@gmail.com");
 		pessoaDao.inserir(pessoaCliente);
-		Pessoa pessoaCorretor = new Pessoa(pessoaDao.maiorId()+1, "Matheus Arilton Ribak", "5.269.689", "158.987.458-79", "Solteiro", "Masculino", dateCorretor, enderecoCorretor, "3435-1589", "matheusribak@hotmail.com");
+		Pessoa pessoaCorretor = new Pessoa(pessoaDao.maiorId()+1, "Matheus Arilton Ribak", "5.269.689", "158.987.458-79", "Solteiro", "Masculino", dateCorretor, enderecoCorretor, "3435-1589", "9999-8888", "matheusribak@hotmail.com");
 		pessoaDao.inserir(pessoaCorretor);
 		
 		Cliente cliente = new Cliente(pessoaCliente, clienteDao.maiorId()+1); 
@@ -50,8 +50,8 @@ public class Main {
 		Corretor corretor = new Corretor(pessoaCorretor, corretorDao.maiorId()+1, 1500.00, 10.5);
 		corretorDao.inserir(corretor);
 	
-		Usuario usuario = new Usuario(usuarioDao.maiorId()+1, "MPoletto", "1234", 2, corretor);
-		usuarioDao.inserir(usuario);*/
+		Usuario usuario = new Usuario(usuarioDao.maiorId()+1, "MPoletto", "1234", corretor, 2);
+		usuarioDao.inserir(usuario);
 		
 		System.out.println("PESSOAS: ");
 		for(Pessoa pessoas : pessoaDao.todos()){

@@ -4,10 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -21,45 +18,28 @@ import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
-import com.mysql.jdbc.log.Log;
-
 import DAOFactory.DaoFactoryJDBC;
 import dao.ClienteDAO;
 import dao.CorretorDAO;
-import dao.PessoaDAO;
 import pessoa.Cliente;
 import pessoa.Corretor;
-import pessoa.Pessoa;
 
-public class telaProcurarPessoa extends JFrame {
+public class TelaProcurarPessoa extends JFrame {
 
-	private JPanel jpnFiltro;
-	private JLabel jlbNome;
-	private JLabel jlbRG;
-	private JLabel jlbCpf;
-	private JButton jbtEditarPessoa;
-	private JButton jbtRemoverPessoa;
-	private JButton jbtAtualizarPessoas;
-	private JButton jbtCriarPessoa;
-	private JButton jbtMenu;
 	private JTable jtbPessoas;
 	private DefaultTableModel dtbPessoas;
 	private JScrollPane jspPessoas;
-	private JToolBar jtbBarra;
-	private Boolean menuVisivel = false;
 	private JLabel jlbTitulo;
 	private CorretorDAO corretorDao = DaoFactoryJDBC.get().corretorDAO();
 	private ClienteDAO clienteDao = DaoFactoryJDBC.get().clienteDAO();
 
-	public telaProcurarPessoa() {
+	public TelaProcurarPessoa() {
 		setTitle("Registro de pessoas");
 		setLayout(null);
 
 		criarLabelTitulo();
 		criarTabela();
-		criarMenu();
 		
-		cliqueBotao();
 
 		setResizable(false);
 		setSize(707, 500);
@@ -67,56 +47,6 @@ public class telaProcurarPessoa extends JFrame {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
 	
-	private void cliqueBotao() {
-		//Abrir barra com menu
-		jbtMenu.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				if(menuVisivel == false){
-					jspPessoas.setBounds(110, 45, 590, 500);
-					jtbBarra.setVisible(true);
-					menuVisivel = true;
-				}else {
-					jspPessoas.setBounds(0, 45, 702, 500);
-					jtbBarra.setVisible(false);
-					menuVisivel = false;
-				}
-			}
-		});
-		
-	}
-
-	private void criarMenu() {
-		jbtMenu = new JButton();
-		jbtMenu.setBounds(0, 0, 110, 44);
-		jbtMenu.setVisible(true);
-		jbtMenu.setIcon(new ImageIcon("botoes_png/menu.png"));
-		getContentPane().add(jbtMenu);
-		
-		jbtCriarPessoa = new JButton("NOVO");
-		jbtEditarPessoa = new JButton("EDITAR");
-		jbtRemoverPessoa = new JButton("REMOVER");
-		jbtAtualizarPessoas = new JButton("ATUALIZAR");
-		
-		jbtCriarPessoa.setBounds(0,0,110,30);
-		jbtEditarPessoa.setBounds(0,90,110,30);
-		jbtRemoverPessoa.setBounds(0,30,110,30);
-		jbtAtualizarPessoas.setBounds(0,60,110,30);
-
-		jtbBarra = new JToolBar();
-		jtbBarra.setBackground(Color.white);
-		jtbBarra.setOrientation(1);
-		jtbBarra.setFloatable(false);
-		jtbBarra.setLayout(null);
-		jtbBarra.setBounds(0, 44, 110, 500);
-		jtbBarra.setVisible(false);
-		jtbBarra.add(jbtCriarPessoa);
-		jtbBarra.add(jbtEditarPessoa);
-		jtbBarra.add(jbtRemoverPessoa);
-		jtbBarra.add(jbtAtualizarPessoas);
-		getContentPane().add(jtbBarra);
-		
-	}
-
 	private void criarTabela() {
 		jtbPessoas = new JTable();
 		getContentPane().add(jtbPessoas);
@@ -125,29 +55,25 @@ public class telaProcurarPessoa extends JFrame {
 		dtbPessoas.addColumn("ID");
 		dtbPessoas.addColumn("NOME");
 		dtbPessoas.addColumn("RG");
-		dtbPessoas.addColumn("CPF");
-		dtbPessoas.addColumn("TIPO");
 		
 		jtbPessoas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		jtbPessoas.setModel(dtbPessoas);
 		jspPessoas = new JScrollPane(jtbPessoas);
-		jspPessoas.setBounds(0, 45, 702, 500);
+		jspPessoas.setBounds(0, 45, 500, 200);
 		jspPessoas.setVisible(true);
 		getContentPane().add(jspPessoas);
 		
 		jtbPessoas.getColumnModel().getColumn(0).setPreferredWidth(46);
 		jtbPessoas.getColumnModel().getColumn(1).setPreferredWidth(210);
 		jtbPessoas.getColumnModel().getColumn(2).setPreferredWidth(80);
-		jtbPessoas.getColumnModel().getColumn(3).setPreferredWidth(100);
-		jtbPessoas.getColumnModel().getColumn(4).setPreferredWidth(100);
 		
 		alimentarTabela();
 		
 	}
 	
 	private void criarLabelTitulo() {
-		jlbTitulo = new JLabel("REGISTRO DE PESSOAS", SwingConstants.CENTER);
-		jlbTitulo.setBounds(110, 0, 595, 44);
+		jlbTitulo = new JLabel("SELECIONAR PESSOA", SwingConstants.CENTER);
+		jlbTitulo.setBounds(0, 0, 500, 44);
 		jlbTitulo.setVisible(true);
 		jlbTitulo.setFont(new Font("ARIAL", Font.PLAIN, 18));
 		jlbTitulo.setOpaque(true);
@@ -171,7 +97,7 @@ public class telaProcurarPessoa extends JFrame {
 	
 
 	public static void main(String[] args) {
-		new telaProcurarPessoa();
+		new TelaProcurarPessoa();
 		
 	}
 	
