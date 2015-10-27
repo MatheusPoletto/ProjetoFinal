@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -15,6 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.JToolBar;
 import javax.swing.SwingConstants;
@@ -34,9 +36,8 @@ public class telaCadastroPessoas extends JFrame {
 	private JToolBar jtbBarra;
 	private JLabel jlbTipoRegistro;
 	private JButton jbtRegistrarCliente, jbtRegistrarCorretor;
-	private JButton jbtProcurarPessoa;
-	private JLabel jlbIconProcurar;
-	private PessoaDAO pessoaDao = DaoFactoryJDBC.get().pessoaDAO();
+	private JTabbedPane jtbTipoRegistro;
+	private JPanel jpnCliente, jpnCorretor;	
 	
 	public telaCadastroPessoas() {
 		setTitle("Cadastrar pessoa");
@@ -51,23 +52,27 @@ public class telaCadastroPessoas extends JFrame {
 		jlbTitulo.setForeground(Color.white);
 		getContentPane().add(jlbTitulo);
 		
-		jlbIconProcurar = new JLabel();
-		jlbIconProcurar.setIcon(new ImageIcon("botoes_png/search102.png"));
-		jlbIconProcurar.setBounds(24, 48, 32, 32);
-		jlbIconProcurar.setVisible(true);
-		getContentPane().add(jlbIconProcurar);
-		
-		jbtProcurarPessoa = new JButton("PROCURAR");
-		jbtProcurarPessoa.setBounds(60, 50, 100, 30);
-		jbtProcurarPessoa.setVisible(true);
-		jbtProcurarPessoa.setForeground(Color.white);
-		jbtProcurarPessoa.setFocusable(false);
-		jbtProcurarPessoa.setBackground(new Color(23, 20, 20));
-		getContentPane().add(jbtProcurarPessoa);
-		
 		criarPainelCadastroPessoa();
 		criarPainelEndereco();
+		criarPainelCadastrarComo();
 		
+		jtbTipoRegistro = new JTabbedPane();
+		jtbTipoRegistro.add(jpnCliente, "Cliente");
+		jtbTipoRegistro.add(jpnCorretor, "Corretor");
+		jtbTipoRegistro.setBounds(20, 345, 655, 120);
+		jtbTipoRegistro.setEnabled(false);
+		//getContentPane().add(jtbTipoRegistro);
+		//frame precisa ficar 707 x 503
+		//tabbedpane fica 20, 345, 655, 120
+		
+
+		setResizable(false);
+		setSize(707, 397);
+		setVisible(true);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+	}
+	
+	private void criarPainelCadastrarComo() {
 		jlbTipoRegistro = new JLabel("CADASTRAR COMO");
 		jlbTipoRegistro.setBounds(7, 6, 150, 24);
 		jlbTipoRegistro.setVisible(true);
@@ -80,7 +85,18 @@ public class telaCadastroPessoas extends JFrame {
 		jbtRegistrarCliente.setBounds(0, 0, 100, 30);
 		jbtRegistrarCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				verificaCampos();				
+				Boolean passou = verificaCampos();	
+				if(passou == true){
+					jbtRegistrarCliente.setBackground(Color.BLUE);
+					jbtRegistrarCliente.setForeground(Color.WHITE);
+					jbtRegistrarCorretor.setBackground(Color.black);
+					jbtRegistrarCorretor.setForeground(Color.WHITE);
+					
+					jtbTipoRegistro.setEnabled(true);
+					jtbTipoRegistro.setEnabledAt(1, false);
+					jtbTipoRegistro.setEnabledAt(0, true);
+					jtbTipoRegistro.setSelectedIndex(0);
+				}
 			}
 		});
 		
@@ -91,7 +107,18 @@ public class telaCadastroPessoas extends JFrame {
 		jbtRegistrarCorretor.setBounds(100, 0, 100, 30);
 		jbtRegistrarCorretor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				verificaCampos();				
+				Boolean passou = verificaCampos();	
+				if(passou == true){
+					jbtRegistrarCorretor.setBackground(Color.BLUE);
+					jbtRegistrarCorretor.setForeground(Color.WHITE);
+					jbtRegistrarCliente.setBackground(Color.black);
+					jbtRegistrarCliente.setForeground(Color.WHITE);
+					
+					jtbTipoRegistro.setEnabled(true);
+					jtbTipoRegistro.setEnabledAt(0, false);
+					jtbTipoRegistro.setEnabledAt(1, true);
+					jtbTipoRegistro.setSelectedIndex(1);
+				}			
 			}
 		});
 		
@@ -105,7 +132,7 @@ public class telaCadastroPessoas extends JFrame {
 		jtbBarra.add(jbtRegistrarCorretor);
 		
 		jpnTipoCadastro = new JPanel();
-		jpnTipoCadastro.setBounds(350, 355, 325, 35);
+		jpnTipoCadastro.setBounds(350, 325, 325, 35);
 		jpnTipoCadastro.setVisible(true);
 		jpnTipoCadastro.setLayout(null);
 		jpnTipoCadastro.add(jlbTipoRegistro);
@@ -113,13 +140,9 @@ public class telaCadastroPessoas extends JFrame {
 		jpnTipoCadastro.setBorder(
 				BorderFactory.createLineBorder(new Color(23, 20, 20),1));
 		getContentPane().add(jpnTipoCadastro);
-
-		setResizable(false);
-		setSize(707, 427);
-		setVisible(true);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		
 	}
-	
+
 	private void criarPainelCadastroPessoa() {		
 		jlbNome = new JLabel("Nome:");
 		jlbNome.setBounds(10,20,110, 30);
@@ -199,7 +222,7 @@ public class telaCadastroPessoas extends JFrame {
 		jtfEmail.setVisible(true);
 		
 		jpnCadastroPessoa = new JPanel();
-		jpnCadastroPessoa.setBounds(20, 80, 655, 182);
+		jpnCadastroPessoa.setBounds(20, 50, 655, 182);
 		jpnCadastroPessoa.setVisible(true);
 		jpnCadastroPessoa.setLayout(null);
 		jpnCadastroPessoa.setBorder(
@@ -276,7 +299,7 @@ public class telaCadastroPessoas extends JFrame {
 		jtfCep.setVisible(true);
 		
 		jpnCadastroEndereco = new JPanel();
-		jpnCadastroEndereco.setBounds(20, 262, 655, 90);
+		jpnCadastroEndereco.setBounds(20, 232, 655, 90);
 		jpnCadastroEndereco.setVisible(true);
 		jpnCadastroEndereco.setLayout(null);
 		jpnCadastroEndereco.setBorder(
@@ -301,11 +324,15 @@ public class telaCadastroPessoas extends JFrame {
 		new telaCadastroPessoas();
 	}
 	
-	private void verificaCampos(){
+	private Boolean verificaCampos(){
+		Boolean passou = false;
 		if(jtfNome.getText() .equals("") || jtfRg.getText() .equals("") || jtfCpf.getText() .equals("") || jtfDataNascimento.getText() .equals("") ||
 				jtfGenero.getText() .equals("") || jcbEstadoCivil.getSelectedIndex() == -1 || jtfEmail.getText().equals("")){
 			JOptionPane.showMessageDialog(null, "Todos os campos são obrigatórios e um pareçe estar vazio!\nRevise-os e tente novamente!", "Ops! Erro ao cadastrar uma nova pessoa", JOptionPane.WARNING_MESSAGE);
-			
+			passou = true;
+		}else {
+			passou = true;
 		}
+		return passou;
 	}
 }
