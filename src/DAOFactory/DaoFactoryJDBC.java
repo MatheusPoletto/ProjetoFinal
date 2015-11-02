@@ -12,6 +12,8 @@ import dao.ImobiliariaDAO;
 import dao.ImobliariaDAOJDBC;
 import dao.ImovelDAO;
 import dao.ImovelDAOJDBC;
+import dao.InteresseDAO;
+import dao.InteresseDAOJDBC;
 import dao.PessoaDAO;
 import dao.PessoaDAOJDBC;
 import dao.UsuarioDAO;
@@ -29,6 +31,10 @@ public class DaoFactoryJDBC implements AbstractDaoFactory {
 			factory = new DaoFactoryJDBC();
 		}
 		return factory;
+	}
+	
+	public InteresseDAO interesseDAO() {
+		return new InteresseDAOJDBC();
 	}
 	
 	@Override
@@ -77,6 +83,12 @@ public class DaoFactoryJDBC implements AbstractDaoFactory {
 	public UsuarioDAO usuarioDAO() {
 
 		return new UsuarioDAOJDBC();
+	}
+
+	@Override
+	public InteresseDAO interesseDao() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

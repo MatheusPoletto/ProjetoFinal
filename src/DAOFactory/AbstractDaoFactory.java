@@ -6,6 +6,7 @@ import dao.EnderecoDAO;
 import dao.HistoricoDAO;
 import dao.ImobiliariaDAO;
 import dao.ImovelDAO;
+import dao.InteresseDAO;
 import dao.PessoaDAO;
 import dao.UsuarioDAO;
 
@@ -21,6 +22,7 @@ public interface AbstractDaoFactory {
 	ImovelDAO imovelDAO();
 	PessoaDAO pessoaDAO();
 	UsuarioDAO usuarioDAO();
+	InteresseDAO interesseDao();
 	
 	
 }

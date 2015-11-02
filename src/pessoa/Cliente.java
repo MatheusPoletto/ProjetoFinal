@@ -5,8 +5,7 @@ import java.util.ArrayList;
 public class Cliente {
 	private Pessoa pessoa;
 	private Integer idCliente;
-	
-	private ArrayList<String> interesses;
+	private ArrayList<Interesse> interesses;
 	
 	public Cliente(){
 		super();
@@ -32,12 +31,10 @@ public class Cliente {
 		this.idCliente = idCliente;
 	}
 
-	
-
-	public ArrayList<String> getInteresses() {
+	public ArrayList<Interesse> getInteresses() {
 		return interesses;
 	}
-	public void setInteresses(ArrayList<String> interesses) {
+	public void setInteresses(ArrayList<Interesse> interesses) {
 		this.interesses = interesses;
 	}
 }

@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import javax.swing.BorderFactory;
@@ -35,6 +36,7 @@ import dao.PessoaDAO;
 import pessoa.Cliente;
 import pessoa.Corretor;
 import pessoa.Endereco;
+import pessoa.Interesse;
 import pessoa.Pessoa;
 
 public class telaCadastroPessoas extends JFrame implements ActionListener {
@@ -54,7 +56,6 @@ public class telaCadastroPessoas extends JFrame implements ActionListener {
 	private JToolBar jtbBarra;
 	private JLabel jlbTipoRegistro;
 	private JButton jbtRegistrarCliente, jbtRegistrarCorretor;
-	private JTabbedPane jtbTipoRegistro;
 	private JPanel jpnCliente, jpnCorretor;
 	private JLabel jlbInteressesCliente;
 	private JTable jtbInteresses;
@@ -67,6 +68,7 @@ public class telaCadastroPessoas extends JFrame implements ActionListener {
 	private CorretorDAO corretorDao = DaoFactoryJDBC.get().corretorDAO();
 	private JButton jbtMaisInteresses, jbtMenosInteresses, jbtAjuda, jbtSalvar, jbtCancelar;
 	private JTextField jtfInteresses;
+	private Boolean isCliente = false, isCorretor = false;
 
 	public telaCadastroPessoas() {
 		setTitle("Cadastrar pessoa");
@@ -84,12 +86,6 @@ public class telaCadastroPessoas extends JFrame implements ActionListener {
 		criarPainelCadastroPessoa();
 		criarPainelEndereco();
 		criarPainelCadastrarComo();
-
-		jtbTipoRegistro = new JTabbedPane();
-		jtbTipoRegistro.add(jpnCliente, "Cliente");
-		jtbTipoRegistro.add(jpnCorretor, "Corretor");
-		jtbTipoRegistro.setBounds(20, 345, 655, 120);
-		jtbTipoRegistro.setEnabled(false);
 
 		jlbInteressesCliente = new JLabel("ADICIONAR INTERESSES:");
 		jlbInteressesCliente.setBounds(0, 0, 325, 35);
@@ -164,6 +160,7 @@ public class telaCadastroPessoas extends JFrame implements ActionListener {
 
 		jbtSalvar = new JButton("SALVAR");
 		jbtSalvar.setBounds(5, 5, 141, 25);
+		jbtSalvar.addActionListener(this);
 		jbtSalvar.setBackground(Color.white);
 		jbtSalvar.setForeground(Color.green);
 		jbtSalvar.setVisible(true);
@@ -171,6 +168,7 @@ public class telaCadastroPessoas extends JFrame implements ActionListener {
 
 		jbtCancelar = new JButton("CANCELAR");
 		jbtCancelar.setBounds(146, 5, 141, 25);
+		jbtCancelar.addActionListener(this);
 		jbtCancelar.setBackground(Color.white);
 		jbtCancelar.setForeground(Color.red);
 		jbtCancelar.setVisible(true);
@@ -203,61 +201,14 @@ public class telaCadastroPessoas extends JFrame implements ActionListener {
 		jbtRegistrarCliente.setBackground(new Color(23, 20, 20));
 		jbtRegistrarCliente.setForeground(Color.white);
 		jbtRegistrarCliente.setBounds(0, 0, 100, 30);
-		jbtRegistrarCliente.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				Boolean passou = verificaCampos();
-				if (passou == true) {
-					jbtRegistrarCliente.setBackground(Color.BLUE);
-					jbtRegistrarCliente.setForeground(Color.WHITE);
-					jbtRegistrarCorretor.setBackground(Color.black);
-					jbtRegistrarCorretor.setForeground(Color.WHITE);
-
-					jtbTipoRegistro.setEnabled(true);
-					jtbTipoRegistro.setEnabledAt(1, false);
-					jtbTipoRegistro.setEnabledAt(0, true);
-					jtbTipoRegistro.setSelectedIndex(0);
-
-					/*
-					 * Pessoa pessoa = cadastrarPessoaEndereco(); Cliente
-					 * cliente = new Cliente(pessoa, clienteDao.maiorId()+1);
-					 * clienteDao.inserir(cliente);
-					 */
-					JOptionPane.showMessageDialog(null, "Cliente cadastrado com sucesso!", "Sucesso!",
-							JOptionPane.PLAIN_MESSAGE);
-
-					setSize(707, 500);
-
-				}
-			}
-		});
+		jbtRegistrarCliente.addActionListener(this);
 
 		jbtRegistrarCorretor = new JButton("CORRETOR");
 		jbtRegistrarCorretor.setVisible(true);
 		jbtRegistrarCorretor.setBackground(new Color(23, 20, 20));
 		jbtRegistrarCorretor.setForeground(Color.white);
 		jbtRegistrarCorretor.setBounds(100, 0, 100, 30);
-		jbtRegistrarCorretor.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				Boolean passou = verificaCampos();
-				if (passou == true) {
-					jbtRegistrarCorretor.setBackground(Color.BLUE);
-					jbtRegistrarCorretor.setForeground(Color.WHITE);
-					jbtRegistrarCliente.setBackground(Color.black);
-					jbtRegistrarCliente.setForeground(Color.WHITE);
-
-					jtbTipoRegistro.setEnabled(true);
-					jtbTipoRegistro.setEnabledAt(0, false);
-					jtbTipoRegistro.setEnabledAt(1, true);
-					jtbTipoRegistro.setSelectedIndex(1);
-
-					Pessoa pessoa = cadastrarPessoaEndereco();
-					Corretor corretor = new Corretor(pessoa, corretorDao.maiorId(), 1500.0, 10.0);
-					corretorDao.inserir(corretor);
-					JOptionPane.showMessageDialog(null, "Corretor cadastrado com sucesso!", "Sucesso!",
-							JOptionPane.PLAIN_MESSAGE);
-				}
-			}
-		});
+		jbtRegistrarCorretor.addActionListener(this);
 
 		jtbBarra = new JToolBar();
 		jtbBarra.setOrientation(0);
@@ -516,7 +467,59 @@ public class telaCadastroPessoas extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == jbtMaisInteresses) {
+		if(e.getSource() == jbtRegistrarCliente){
+			Boolean camposOk = verificaCampos();
+			if(camposOk == true){
+			jbtRegistrarCliente.setBackground(Color.BLUE);
+			jbtRegistrarCliente.setForeground(Color.WHITE);
+			jbtRegistrarCorretor.setBackground(Color.black);
+			jbtRegistrarCorretor.setForeground(Color.WHITE);
+			
+			isCliente = true;
+			isCorretor = false;
+			jpnInteresses.setVisible(true);
+			}
+		}
+		if(e.getSource() == jbtRegistrarCorretor){
+			Boolean camposOk = verificaCampos();
+			if(camposOk == true){
+			jbtRegistrarCorretor.setBackground(Color.BLUE);
+			jbtRegistrarCorretor.setForeground(Color.WHITE);
+			jbtRegistrarCliente.setBackground(Color.black);
+			jbtRegistrarCliente.setForeground(Color.WHITE);
+			
+			isCorretor = true;
+			isCliente = false;
+			jpnInteresses.setVisible(false);
+			}
+		}
+		if(e.getSource() == jbtSalvar){
+			if(isCliente == true){
+				Pessoa pessoa = cadastrarPessoaEndereco(); 
+				Cliente cliente = new Cliente(pessoa, clienteDao.maiorId()+1);
+				ArrayList<Interesse> interesses = new ArrayList<>();
+				for(int x = 0; x  < dtbInteresses.getRowCount(); x++){
+					Interesse interesse= new Interesse();
+					interesse.setDescricao(dtbInteresses.getValueAt(x, 0).toString());
+					interesse.setCliente(cliente);
+					interesses.add(interesse);
+				}
+				cliente.setInteresses(interesses);
+				clienteDao.inserir(cliente);
+				JOptionPane.showMessageDialog(null, "Cliente cadastrado com sucesso!", "Sucesso!",
+						JOptionPane.PLAIN_MESSAGE);
+
+			}
+			if(isCorretor == true){
+				Pessoa pessoa = cadastrarPessoaEndereco();
+				Corretor corretor = new Corretor(pessoa, corretorDao.maiorId(), 1500.0, 10.0);
+				corretorDao.inserir(corretor);
+				JOptionPane.showMessageDialog(null, "Corretor cadastrado com sucesso!", "Sucesso!",
+						JOptionPane.PLAIN_MESSAGE);
+			}
+		}
+		
+		if(e.getSource() == jbtMaisInteresses) {
 			if (jtfInteresses.getText().toString().equals("")) {
 				JOptionPane.showMessageDialog(null, "Insira algo no campo de interesses!", "Erro ao inserir",
 						JOptionPane.ERROR_MESSAGE);
