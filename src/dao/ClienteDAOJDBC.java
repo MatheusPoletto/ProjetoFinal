@@ -40,8 +40,15 @@ public class ClienteDAOJDBC implements ClienteDAO{
 
 	@Override
 	public void excluir(Cliente cliente) {
-		// TODO Auto-generated method stub
-		
+		String sql = "delete from Cliente where idCliente = ?";
+		try {
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, cliente.getIdCliente());
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
 	}
 
 	@Override

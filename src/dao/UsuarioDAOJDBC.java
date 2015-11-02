@@ -46,7 +46,14 @@ public class UsuarioDAOJDBC implements UsuarioDAO{
 
 	@Override
 	public void excluir(Usuario usuario) {
-		// TODO Auto-generated method stub
+		String sql = "delete from Usuario where idUsuario = ?";
+		try {
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, usuario.getIdUsuario());
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		
 	}
 

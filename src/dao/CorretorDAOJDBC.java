@@ -45,7 +45,14 @@ public class CorretorDAOJDBC implements CorretorDAO{
 
 	@Override
 	public void excluir(Corretor corretor) {
-		// TODO Auto-generated method stub
+		String sql = "delete from Corretor where idCorretor = ?";
+		try {
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, corretor.getIdCorretor());
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		
 	}
 

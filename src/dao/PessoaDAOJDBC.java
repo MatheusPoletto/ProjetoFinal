@@ -51,7 +51,14 @@ public class PessoaDAOJDBC implements PessoaDAO{
 
 	@Override
 	public void excluir(Pessoa pessoa) {
-		// TODO Auto-generated method stub
+		String sql = "delete from Pessoa where idPessoa = ?";
+		try {
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, pessoa.getId());
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		
 	}
 
