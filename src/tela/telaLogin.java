@@ -26,19 +26,15 @@ public class telaLogin extends JInternalFrame implements ActionListener{
 	private JLabel jlbUsuario, jlbSenha;
 	private JButton jbtEntrar;
 	private JLabel jlbIcon1;
-	private String nomeUsuario, senhaUsuario, tipoUsuario;
+	private Integer idUsuario;
 	private UsuarioDAO usuarioDao = DaoFactoryJDBC.get().usuarioDAO();
-	
-	public String getNomeUsuario() {
-		return nomeUsuario;
+
+	public Integer getIdUsuario() {
+		return idUsuario;
 	}
 
-	public String getSenhaUsuario() {
-		return senhaUsuario;
-	}
-
-	public String getTipoUsuario() {
-		return tipoUsuario;
+	public void setIdUsuario(Integer idUsuario) {
+		this.idUsuario = idUsuario;
 	}
 
 	telaLogin(){
@@ -100,8 +96,7 @@ public class telaLogin extends JInternalFrame implements ActionListener{
 		if(e.getSource() == jbtEntrar){
 			for(Usuario usuarios : usuarioDao.todos()){
 				if(jtfUsuario.getText().equals(usuarios.getLogin()) && jpfSenha.getText().equals(usuarios.getSenha())){
-					nomeUsuario = jtfUsuario.getText();
-					senhaUsuario = jpfSenha.getText();
+					idUsuario = usuarios.getIdUsuario();
 					telaPrincipal.getTlPrincipal().alteraVisibilidade();
 					autenticou = true;
 					this.dispose();

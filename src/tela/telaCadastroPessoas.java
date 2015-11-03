@@ -448,7 +448,7 @@ public class telaCadastroPessoas extends JInternalFrame implements ActionListene
 			JOptionPane.showMessageDialog(null,
 					"Todos os campos são obrigatórios e um pareçe estar vazio!\nRevise-os e tente novamente!",
 					"Ops! Erro ao cadastrar uma nova pessoa", JOptionPane.WARNING_MESSAGE);
-			passou = true;
+			passou = false;
 		} else {
 			passou = true;
 		}
@@ -586,14 +586,18 @@ public class telaCadastroPessoas extends JInternalFrame implements ActionListene
 
 			}
 			if (isCorretor == true) {
-				Pessoa pessoa = cadastrarPessoaEndereco();
-				Corretor corretor = new Corretor(pessoa, corretorDao.maiorId() + 1,
+				if(jtfSalario.getText().equals("") || jtfComissao.getText().equals("") || jtfUsuario.getText().equals("") || jtfSenha.getText().equals("")){
+					JOptionPane.showMessageDialog(null, "É obrigatório preencher os campos de comissão, salário. Também é necessário informar um nome de usuário e senha para esse corretor poder acessar o sistema!", "Erro ao salvar corretor", JOptionPane.WARNING_MESSAGE);
+				}else{
+					Pessoa pessoa = cadastrarPessoaEndereco();
+					Corretor corretor = new Corretor(pessoa, corretorDao.maiorId() + 1,
 						Double.valueOf(jtfSalario.getText()), Double.valueOf(jtfComissao.getText()));
-				corretorDao.inserir(corretor);
-				Usuario usuario = new Usuario(1, jtfUsuario.getText(), jtfSenha.getText(), corretor, 1);
-				usuarioDao.inserir(usuario);
-				JOptionPane.showMessageDialog(null, "Corretor cadastrado com sucesso!", "Sucesso!",
+					corretorDao.inserir(corretor);
+					Usuario usuario = new Usuario(1, jtfUsuario.getText(), jtfSenha.getText(), corretor, 1);
+					usuarioDao.inserir(usuario);
+					JOptionPane.showMessageDialog(null, "Corretor cadastrado com sucesso!", "Sucesso!",
 						JOptionPane.PLAIN_MESSAGE);
+				}
 			}
 		}
 		if (e.getSource() == jbtCancelar) {

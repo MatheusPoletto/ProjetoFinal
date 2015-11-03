@@ -66,14 +66,14 @@ public class CorretorDAOJDBC implements CorretorDAO{
 	}
 
 	@Override
-	public Corretor buscar(Integer id) {
+	public Corretor buscar(Integer idCorretor) {
 		PessoaDAO pessoaDao = new PessoaDAOJDBC();
 		Corretor corretor = null;
-		//String sql = "select * from corretor where idCorretor = ?";
-		String sql = "select * from corretor where Pessoa_idPessoa = ?";
+		String sql = "select * from corretor where idCorretor = ?";
+		//String sql = "select * from corretor where Pessoa_idPessoa = ?";
 		try {
 			PreparedStatement pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, id);
+			pstmt.setInt(1, idCorretor);
 			ResultSet rs = pstmt.executeQuery();
 			while(rs.next()){
 				corretor = new Corretor();

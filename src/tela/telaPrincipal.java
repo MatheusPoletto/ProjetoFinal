@@ -8,6 +8,11 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+
+import DAOFactory.DaoFactoryJDBC;
+import dao.UsuarioDAO;
+import pessoa.Usuario;
 
 public class telaPrincipal extends JFrame implements ActionListener{
 	private static final long serialVersionUID = 1L;
@@ -17,8 +22,10 @@ public class telaPrincipal extends JFrame implements ActionListener{
 	private TelaListaPessoa tlListaPessoas = new TelaListaPessoa();
 	private TelaAlterarPessoa tlAlterarPessoa = new TelaAlterarPessoa();
 	private static telaPrincipal tlPrincipal = new telaPrincipal();
-	private JMenu jmnImovel, jmnCadastro, jmnProcurar;
-	private JMenuItem jmiAlugar, jmiVender, jmiPessoa, jmiProcurarPessoa;
+	private JMenu jmnImovel, jmnCadastro, jmnProcurar, jmnGerenciamento;
+	private JMenuItem jmiAlugar, jmiVender, jmiPessoa, jmiProcurarPessoa, jmiContaUsuario;
+	private Integer idUsuario;
+	private UsuarioDAO usuarioDao = DaoFactoryJDBC.get().usuarioDAO();
 	
 	telaPrincipal(){		
 		setTitle("M&M Sistema Imobiliário");
@@ -58,9 +65,6 @@ public class telaPrincipal extends JFrame implements ActionListener{
 		jmiPessoa = new JMenuItem("Pessoa");
 		jmnCadastro.add(jmiPessoa);
 		jmiPessoa.addActionListener(this);
-		
-		
-		
 		barra.add(jmnCadastro);
 		
 		jmnProcurar = new JMenu("Procurar");
@@ -71,6 +75,12 @@ public class telaPrincipal extends JFrame implements ActionListener{
 		jmiProcurarPessoa.addActionListener(this);
 		barra.add(jmnProcurar);
 		
+		jmnGerenciamento = new JMenu("Gerenciamento");
+		
+		jmiContaUsuario = new JMenuItem("Contas de usuários");
+		jmiContaUsuario.addActionListener(this);
+		jmnGerenciamento.add(jmiContaUsuario);
+		barra.add(jmnGerenciamento);	
 		
 		getContentPane().setBackground(Color.white);
 		setJMenuBar(barra);
@@ -93,7 +103,9 @@ public class telaPrincipal extends JFrame implements ActionListener{
 	}
 	
 	public void alteraVisibilidade(){
+		idUsuario = telaPrincipal.getTlPrincipal().getTlLogin().getIdUsuario();
 		barra.setVisible(true);
+		
 	}
 	
 	public static void main(String[] args) {
@@ -133,6 +145,14 @@ public class telaPrincipal extends JFrame implements ActionListener{
 		if(e.getSource() == jmiProcurarPessoa){
 			esconderTelas();
 			tlListaPessoas.setVisible(true);
+		}
+		if(e.getSource() == jmiContaUsuario){
+			Usuario usuario = usuarioDao.buscar(idUsuario);
+			if(usuario.getNivelAcesso() == 0){
+				JOptionPane.showMessageDialog(null, "Possui permissão de gestor");
+			}else if(usuario.getNivelAcesso() == 1){
+				JOptionPane.showMessageDialog(null, "Não possui permissão de gestor");
+			}
 		}
 		
 	}	

@@ -58,8 +58,25 @@ public class UsuarioDAOJDBC implements UsuarioDAO{
 
 	@Override
 	public Usuario buscar(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		CorretorDAO corretorDao = new CorretorDAOJDBC();
+		Usuario usuario = null;
+		String sql = "select * from usuario where idUsuario = ?";
+		try {
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, id);
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()){
+				usuario = new  Usuario();
+				usuario.setIdUsuario(rs.getInt("idUsuario"));
+				usuario.setLogin(rs.getString("login"));
+				usuario.setSenha(rs.getString("senha"));
+				usuario.setNivelAcesso(rs.getInt("nivelAcesso"));
+				usuario.setCorretor(corretorDao.buscar(rs.getInt("Corretor_idCorretor")));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return usuario;
 	}
 
 	@Override

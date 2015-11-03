@@ -362,7 +362,7 @@ public class TelaAlterarPessoa extends JInternalFrame implements ActionListener 
 			JOptionPane.showMessageDialog(null,
 					"Todos os campos são obrigatórios e um pareçe estar vazio!\nRevise-os e tente novamente!",
 					"Ops! Erro ao cadastrar uma nova pessoa", JOptionPane.WARNING_MESSAGE);
-			passou = true;
+			passou = false;
 		} else {
 			passou = true;
 		}
@@ -409,10 +409,15 @@ public class TelaAlterarPessoa extends JInternalFrame implements ActionListener 
 			if (camposOk == true) {
 				if (tipo.equals("CLIENTE")) {
 					Pessoa pessoa = alteraPessoaEndereco();
-					Cliente cliente = clienteDao.buscar(pessoa.getId());
-					cliente.setInteresse1(jtfInteresse1.getText());
-					cliente.setInteresse2(jtfInteresse2.getText());
-					cliente.setInteresse3(jtfInteresse3.getText());
+					Cliente cliente = new Cliente();
+					for(Cliente cliente1 : clienteDao.todos()){
+						if(cliente1.getPessoa().getId() == idPessoa){
+							cliente.setIdCliente(cliente1.getIdCliente());
+							cliente.setInteresse1(jtfInteresse1.getText());
+							cliente.setInteresse2(jtfInteresse2.getText());
+							cliente.setInteresse3(jtfInteresse3.getText());
+						}
+					}
 					clienteDao.alterar(cliente);
 					JOptionPane.showMessageDialog(null, "Cliente alterado com sucesso!", "Sucesso!",
 							JOptionPane.PLAIN_MESSAGE);
@@ -420,9 +425,14 @@ public class TelaAlterarPessoa extends JInternalFrame implements ActionListener 
 				}
 				if (tipo.equals("CORRETOR")) {
 					Pessoa pessoa = alteraPessoaEndereco();
-					Corretor corretor = corretorDao.buscar(pessoa.getId());
-					corretor.setSalario(Double.valueOf(jtfSalario.getText()));
-					corretor.setPorcentagemComissao(Double.valueOf(jtfComissao.getText()));
+					Corretor corretor = new Corretor();
+					for(Corretor corretor1 : corretorDao.todos()){
+						if(corretor1.getPessoa().getId() == idPessoa){
+							corretor.setIdCorretor(corretor1.getIdCorretor());
+							corretor.setSalario(Double.valueOf(jtfSalario.getText()));
+							corretor.setPorcentagemComissao(Double.valueOf(jtfComissao.getText()));
+						}
+					}
 					corretorDao.alterar(corretor);
 					JOptionPane.showMessageDialog(null, "Corretor alterado com sucesso!", "Sucesso!",
 							JOptionPane.PLAIN_MESSAGE);
@@ -433,6 +443,10 @@ public class TelaAlterarPessoa extends JInternalFrame implements ActionListener 
 			JOptionPane.showMessageDialog(null,
 					"Sempre que adicionar um novo cliente, você pode atribuir 3 interesses a ele.\nEsses interesses definem o que seu cliente procura nos imóveis.\nPor exemplo: barato, grande, mansão.\nNÃO É OBRIGATÓRIO!",
 					"Ajuda", JOptionPane.PLAIN_MESSAGE);
+		}
+		if(e.getSource() == jbtCancelar){
+			telaPrincipal.getTlPrincipal().getTlAlterarPessoa().setVisible(false);
+			telaPrincipal.getTlPrincipal().getTlListaPessoas().setVisible(true);
 		}
 
 	}
@@ -476,16 +490,22 @@ public class TelaAlterarPessoa extends JInternalFrame implements ActionListener 
 		if (tipo.equals("CORRETOR")) {
 			jpnInfoCorretor.setVisible(true);
 			jpnInteresses.setVisible(false);
-			Corretor corretor = corretorDao.buscar(idPessoa);
-			jtfSalario.setText(corretor.getSalario().toString());
-			jtfComissao.setText(corretor.getPorcentagemComissao().toString());
+			for(Corretor corretor : corretorDao.todos()){
+				if(corretor.getPessoa().getId() == idPessoa){
+					jtfSalario.setText(corretor.getSalario().toString());
+					jtfComissao.setText(corretor.getPorcentagemComissao().toString());
+				}
+			}
 		} else if (tipo.equals("CLIENTE")) {
 			jpnInteresses.setVisible(true);
 			jpnInfoCorretor.setVisible(false);
-			Cliente cliente = clienteDao.buscar(idPessoa);
-			jtfInteresse1.setText(cliente.getInteresse1());
-			jtfInteresse2.setText(cliente.getInteresse2());
-			jtfInteresse3.setText(cliente.getInteresse3());
+			for(Cliente cliente : clienteDao.todos()){
+				if(cliente.getPessoa().getId() == idPessoa){
+					jtfInteresse1.setText(cliente.getInteresse1());
+					jtfInteresse2.setText(cliente.getInteresse2());
+					jtfInteresse3.setText(cliente.getInteresse3());
+				}
+			}
 		}
 	}
 
