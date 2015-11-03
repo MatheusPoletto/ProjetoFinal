@@ -20,10 +20,12 @@ import javax.swing.table.DefaultTableModel;
 import DAOFactory.DaoFactoryJDBC;
 import dao.ClienteDAO;
 import dao.CorretorDAO;
+import dao.EnderecoDAO;
 import dao.PessoaDAO;
 import dao.UsuarioDAO;
 import pessoa.Cliente;
 import pessoa.Corretor;
+import pessoa.Endereco;
 import pessoa.Pessoa;
 import pessoa.Usuario;
 
@@ -50,6 +52,7 @@ public class TelaListaPessoa extends JFrame implements ActionListener {
 	private CorretorDAO corretorDao = DaoFactoryJDBC.get().corretorDAO();
 	private ClienteDAO clienteDao = DaoFactoryJDBC.get().clienteDAO();
 	private UsuarioDAO usuarioDao = DaoFactoryJDBC.get().usuarioDAO();
+	private EnderecoDAO enderecoDao = DaoFactoryJDBC.get().enderecoDAO();
 
 	public TelaListaPessoa() {
 		setTitle("Registro de pessoas");
@@ -158,7 +161,6 @@ public class TelaListaPessoa extends JFrame implements ActionListener {
 
 	private void editarPessoa() {
 		TelaAlterarPessoa tlAlterar = new TelaAlterarPessoa();
-		tlAlterar.limparCampos();
 		tlAlterar.preencherCampos(Integer.valueOf(dtbPessoas.getValueAt(jtbPessoas.getSelectedRow(), 0).toString()), String.valueOf(dtbPessoas.getValueAt(jtbPessoas.getSelectedRow(),  4)));
 		
 	}
@@ -169,25 +171,26 @@ public class TelaListaPessoa extends JFrame implements ActionListener {
 			for (Cliente cliente : clienteDao.todos()) {
 				if (cliente.getPessoa().getId() == id) {
 					clienteDao.excluir(cliente);
-					System.out.println("entrou cliente");
 				}
 			}
 			for (Usuario usuario : usuarioDao.todos()) {
 				if (usuario.getCorretor().getPessoa().getId() == id) {
 					usuarioDao.excluir(usuario);
-					System.out.println("entrou usuario");
 				}
 			}
 			for (Corretor corretor : corretorDao.todos()) {
 				if (corretor.getPessoa().getId() == id) {
 					corretorDao.excluir(corretor);
-					System.out.println("entrou corretor");
 				}
 			}
 			for (Pessoa pessoa : pessoaDao.todos()) {
 				if (pessoa.getId() == id) {
 					pessoaDao.excluir(pessoa);
-					System.out.println("entrou pessoa");
+					for(Endereco endereco : enderecoDao.todos()){
+						if(endereco.getId() == pessoa.getEndereco().getId()){
+							enderecoDao.excluir(endereco);
+						}
+					}
 				}
 			}
 			JOptionPane.showMessageDialog(null, "Pessoa removida com sucesso!");

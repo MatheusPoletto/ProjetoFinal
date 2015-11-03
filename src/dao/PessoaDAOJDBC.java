@@ -45,7 +45,25 @@ public class PessoaDAOJDBC implements PessoaDAO{
 
 	@Override
 	public void alterar(Pessoa pessoa) {
-		// TODO Auto-generated method stub
+		String sql = "update Pessoa set nome = ?, rg = ?, cpf = ? , estadoCivil = ?, genero = ?, dataNascimento = ?, telefoneResidencial = ?, telefoneCelular = ?, email = ? where idPessoa = ?";
+		try {
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, pessoa.getNome());
+			pstmt.setString(2, pessoa.getRg());
+			pstmt.setString(3, pessoa.getCpf());
+			pstmt.setString(4, pessoa.getEstadoCivil());
+			pstmt.setString(5, pessoa.getGenero());
+			java.util.Date dataUtil = pessoa.getDataNascimento();
+			java.sql.Date dataSql = new java.sql.Date(dataUtil.getTime());  
+			pstmt.setDate(6, dataSql);
+			pstmt.setString(7, pessoa.getTelefoneResidencial());
+			pstmt.setString(8, pessoa.getTelefoneCelular());
+			pstmt.setString(9, pessoa.getEmail());
+			pstmt.setInt(10, pessoa.getId());
+			pstmt.executeUpdate(); 
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}	
 		
 	}
 

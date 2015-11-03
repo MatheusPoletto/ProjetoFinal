@@ -37,7 +37,17 @@ public class ClienteDAOJDBC implements ClienteDAO{
 
 	@Override
 	public void alterar(Cliente cliente) {
-		// TODO Auto-generated method stub
+		String sql = "update cliente set interesse1 = ?, interesse2 = ?, interesse3 = ? where idCliente = ?";
+		try {
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, cliente.getInteresse1());
+			pstmt.setString(2, cliente.getInteresse2());
+			pstmt.setString(3, cliente.getInteresse3());
+			pstmt.setInt(4, cliente.getIdCliente());
+			pstmt.executeUpdate(); 
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}	
 		
 	}
 

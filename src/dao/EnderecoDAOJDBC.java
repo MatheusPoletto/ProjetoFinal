@@ -6,11 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
-import DAOFactory.DaoFactoryJDBC;
-import pessoa.Cliente;
 import pessoa.Endereco;
-import pessoa.Pessoa;
 import conexao.ConexaoUtil;
 
 public class EnderecoDAOJDBC implements EnderecoDAO{
@@ -56,14 +52,34 @@ public class EnderecoDAOJDBC implements EnderecoDAO{
 
 	@Override
 	public void alterar(Endereco endereco) {
-		// TODO Auto-generated method stub
+		String sql = "update Endereco set rua=?, numero=?,"
+				+ " bairro = ?, cidade = ?, cep = ?, uf = ? where idEndereco = ?";
+		try {
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, endereco.getRua());
+			pstmt.setString(2, endereco.getNumero());
+			pstmt.setString(3, endereco.getBairro());
+			pstmt.setString(4, endereco.getCidade());
+			pstmt.setString(5, endereco.getCep());
+			pstmt.setString(6, endereco.getUf());
+			pstmt.setInt(7, endereco.getId());
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}	
 		
 	}
 
 	@Override
 	public void excluir(Endereco endereco) {
-		// TODO Auto-generated method stub
-		
+		String sql = "delete from Endereco where idEndereco = ?";
+		try {
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, endereco.getId());
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override

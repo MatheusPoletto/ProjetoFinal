@@ -39,7 +39,16 @@ public class CorretorDAOJDBC implements CorretorDAO{
 
 	@Override
 	public void alterar(Corretor corretor) {
-		// TODO Auto-generated method stub
+		String sql = "update corretor set salario = ?, comissao = ? where idCorretor = ?";
+		try {
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setDouble(1, corretor.getSalario());
+			pstmt.setDouble(2, corretor.getPorcentagemComissao());
+			pstmt.setInt(3, corretor.getIdCorretor());
+			pstmt.executeUpdate(); 
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}	
 		
 	}
 
