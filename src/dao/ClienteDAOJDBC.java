@@ -22,7 +22,7 @@ public class ClienteDAOJDBC implements ClienteDAO{
 
 	@Override
 	public void inserir(Cliente cliente) {
-		String sql = "insert into Cliente (Pessoa_idPessoa) values( ?, ?, ? , ?)";
+		String sql = "insert into Cliente (Pessoa_idPessoa, interesse1, interesse2, interesse3) values( ?, ?, ? , ?)";
 		try {
 			PreparedStatement pstmt = con.prepareStatement(sql); 
 			pstmt.setInt(1, cliente.getPessoa().getId());
@@ -58,7 +58,8 @@ public class ClienteDAOJDBC implements ClienteDAO{
 	public Cliente buscar(Integer id) {
 		PessoaDAO pessoaDao = new PessoaDAOJDBC();
 		Cliente cliente = null;
-		String sql = "select * from cliente where idCliente = ?";
+		//String sql = "select * from cliente where idCliente = ?";
+		String sql = "select * from cliente where Pessoa_idPessoa = ?";
 		try {
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, id);

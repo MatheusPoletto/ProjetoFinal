@@ -24,14 +24,13 @@ public class UsuarioDAOJDBC implements UsuarioDAO{
 	
 	@Override
 	public void inserir(Usuario usuario) {
-		String sql = "insert into Usuario(idUsuario, login, senha, Corretor_idCorretor, nivelAcesso) values(?, ?, ?, ?, ?)";
+		String sql = "insert into Usuario(login, senha, Corretor_idCorretor, nivelAcesso) values(?, ?, ?, ?)";
 		try {
 			PreparedStatement pstmt = con.prepareStatement(sql); 
-			pstmt.setInt(1, usuario.getIdUsuario());
-			pstmt.setString(2, usuario.getLogin());
-			pstmt.setString(3, usuario.getSenha());
-			pstmt.setInt(4, usuario.getCorretor().getIdCorretor());
-			pstmt.setInt(5, usuario.getNivelAcesso());
+			pstmt.setString(1, usuario.getLogin());
+			pstmt.setString(2, usuario.getSenha());
+			pstmt.setInt(3, usuario.getCorretor().getIdCorretor());
+			pstmt.setInt(4, usuario.getNivelAcesso());
 			pstmt.executeUpdate(); 
 		} catch (SQLException e){
 			e.printStackTrace();

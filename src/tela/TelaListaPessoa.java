@@ -116,17 +116,17 @@ public class TelaListaPessoa extends JFrame implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		
+
 		if (e.getSource() == jbtMenu) {
 			abrirMenu();
 		}
 
 		if (e.getSource() == jbtCriarPessoa) {
-
+			criarPessoa();
 		}
 
 		if (e.getSource() == jbtEditarPessoa) {
-			
+			editarPessoa();
 		}
 
 		if (e.getSource() == jbtRemoverPessoa) {
@@ -151,39 +151,52 @@ public class TelaListaPessoa extends JFrame implements ActionListener {
 
 	}
 
+	private void criarPessoa() {
+		telaCadastroPessoas tlCadastro = new telaCadastroPessoas();
+		
+	}
+
+	private void editarPessoa() {
+		TelaAlterarPessoa tlAlterar = new TelaAlterarPessoa();
+		tlAlterar.limparCampos();
+		tlAlterar.preencherCampos(Integer.valueOf(dtbPessoas.getValueAt(jtbPessoas.getSelectedRow(), 0).toString()), String.valueOf(dtbPessoas.getValueAt(jtbPessoas.getSelectedRow(),  4)));
+		
+	}
+
 	private void removerPessoa() {
-		if(jtbPessoas.getSelectedRow() >= 0){
+		if (jtbPessoas.getSelectedRow() >= 0) {
 			Integer id = Integer.valueOf(dtbPessoas.getValueAt(jtbPessoas.getSelectedRow(), 0).toString());
-			for(Cliente cliente : clienteDao.todos()){
-				if(cliente.getPessoa().getId() == id){
+			for (Cliente cliente : clienteDao.todos()) {
+				if (cliente.getPessoa().getId() == id) {
 					clienteDao.excluir(cliente);
 					System.out.println("entrou cliente");
 				}
 			}
-			for(Usuario usuario : usuarioDao.todos()){
-				if(usuario.getCorretor().getPessoa().getId() == id){
+			for (Usuario usuario : usuarioDao.todos()) {
+				if (usuario.getCorretor().getPessoa().getId() == id) {
 					usuarioDao.excluir(usuario);
 					System.out.println("entrou usuario");
 				}
 			}
-			for(Corretor corretor : corretorDao.todos()){
-				if(corretor.getPessoa().getId() == id){
+			for (Corretor corretor : corretorDao.todos()) {
+				if (corretor.getPessoa().getId() == id) {
 					corretorDao.excluir(corretor);
 					System.out.println("entrou corretor");
 				}
-			}			
-			for(Pessoa pessoa : pessoaDao.todos()){
-				if(pessoa.getId() == id){
+			}
+			for (Pessoa pessoa : pessoaDao.todos()) {
+				if (pessoa.getId() == id) {
 					pessoaDao.excluir(pessoa);
 					System.out.println("entrou pessoa");
 				}
 			}
 			JOptionPane.showMessageDialog(null, "Pessoa removida com sucesso!");
 			atualizarPessoas();
-			}else{
-				JOptionPane.showMessageDialog(null, "Clique sobre a pessoa/corretor que deseja remover.", "Aviso", JOptionPane.WARNING_MESSAGE);
-			}
-		
+		} else {
+			JOptionPane.showMessageDialog(null, "Clique sobre a pessoa/corretor que deseja remover.", "Aviso",
+					JOptionPane.WARNING_MESSAGE);
+		}
+
 	}
 
 	private void pesquisarRg() {
@@ -215,12 +228,12 @@ public class TelaListaPessoa extends JFrame implements ActionListener {
 				}
 			}
 			if (encontrou == false) {
-				JOptionPane.showMessageDialog(null, "Nenhuma pessoa com o RG [" + rg + "] foi encontrado!",
-						"Aviso!", JOptionPane.WARNING_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Nenhuma pessoa com o RG [" + rg + "] foi encontrado!", "Aviso!",
+						JOptionPane.WARNING_MESSAGE);
 			} else if (encontrou == true) {
 				JOptionPane.showMessageDialog(null,
-						"Durante a pesquisa foram encontradas [" + dtbPessoas.getRowCount()
-								+ "] pessoa(as) com o RG [" + rg + "]\nO resultado está sendo exibido na tabela!",
+						"Durante a pesquisa foram encontradas [" + dtbPessoas.getRowCount() + "] pessoa(as) com o RG ["
+								+ rg + "]\nO resultado está sendo exibido na tabela!",
 						"Resultado", JOptionPane.PLAIN_MESSAGE);
 			}
 		}
@@ -235,21 +248,20 @@ public class TelaListaPessoa extends JFrame implements ActionListener {
 			jspPessoas.setBounds(0, 45, 702, 500);
 			jtbBarra.setVisible(false);
 			menuVisivel = false;
-		}		
+		}
 	}
 
 	private void atualizarPessoas() {
 		dtbPessoas.setRowCount(0);
 		alimentarTabela();
-		JOptionPane.showMessageDialog(null, "Atualizado com sucesso!");		
+		JOptionPane.showMessageDialog(null, "Atualizado com sucesso!");
 	}
 
 	private void filtrarCorretor() {
 		dtbPessoas.setRowCount(0);
 		for (Corretor corretor : corretorDao.todos()) {
-			dtbPessoas
-					.addRow(new String[] { String.valueOf(corretor.getIdCorretor()), corretor.getPessoa().getNome(),
-							corretor.getPessoa().getRg(), corretor.getPessoa().getCpf(), "CORRETOR" });
+			dtbPessoas.addRow(new String[] { String.valueOf(corretor.getIdCorretor()), corretor.getPessoa().getNome(),
+					corretor.getPessoa().getRg(), corretor.getPessoa().getCpf(), "CORRETOR" });
 		}
 	}
 
@@ -258,7 +270,7 @@ public class TelaListaPessoa extends JFrame implements ActionListener {
 		for (Cliente cliente : clienteDao.todos()) {
 			dtbPessoas.addRow(new String[] { String.valueOf(cliente.getIdCliente()), cliente.getPessoa().getNome(),
 					cliente.getPessoa().getRg(), cliente.getPessoa().getCpf(), "CLIENTE" });
-		}		
+		}
 	}
 
 	private void criarTabela() {
@@ -290,8 +302,9 @@ public class TelaListaPessoa extends JFrame implements ActionListener {
 
 	private void alimentarTabela() {
 		for (Corretor corretor : corretorDao.todos()) {
-			dtbPessoas.addRow(new String[] { String.valueOf(corretor.getPessoa().getId()), corretor.getPessoa().getNome(),
-					corretor.getPessoa().getRg(), corretor.getPessoa().getCpf(), "CORRETOR" });
+			dtbPessoas
+					.addRow(new String[] { String.valueOf(corretor.getPessoa().getId()), corretor.getPessoa().getNome(),
+							corretor.getPessoa().getRg(), corretor.getPessoa().getCpf(), "CORRETOR" });
 		}
 
 		for (Cliente cliente : clienteDao.todos()) {

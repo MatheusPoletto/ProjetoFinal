@@ -60,7 +60,8 @@ public class CorretorDAOJDBC implements CorretorDAO{
 	public Corretor buscar(Integer id) {
 		PessoaDAO pessoaDao = new PessoaDAOJDBC();
 		Corretor corretor = null;
-		String sql = "select * from corretor where idCorretor = ?";
+		//String sql = "select * from corretor where idCorretor = ?";
+		String sql = "select * from corretor where Pessoa_idPessoa = ?";
 		try {
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, id);
@@ -68,6 +69,8 @@ public class CorretorDAOJDBC implements CorretorDAO{
 			while(rs.next()){
 				corretor = new Corretor();
 				corretor.setIdCorretor(rs.getInt("idCorretor"));
+				corretor.setSalario(rs.getDouble("salario"));
+				corretor.setPorcentagemComissao(rs.getDouble("comissao"));
 				corretor.setPessoa(pessoaDao.buscar(rs.getInt("Pessoa_idPessoa")));
 			}
 		} catch (SQLException e) {
