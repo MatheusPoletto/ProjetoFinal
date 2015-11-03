@@ -22,10 +22,13 @@ public class ClienteDAOJDBC implements ClienteDAO{
 
 	@Override
 	public void inserir(Cliente cliente) {
-		String sql = "insert into Cliente (Pessoa_idPessoa) values( ?)";
+		String sql = "insert into Cliente (Pessoa_idPessoa) values( ?, ?, ? , ?)";
 		try {
 			PreparedStatement pstmt = con.prepareStatement(sql); 
 			pstmt.setInt(1, cliente.getPessoa().getId());
+			pstmt.setString(2, cliente.getInteresse1());
+			pstmt.setString(3, cliente.getInteresse2());
+			pstmt.setString(4, cliente.getInteresse3());
 			pstmt.executeUpdate(); 
 		} catch (SQLException e){
 			e.printStackTrace();
@@ -63,6 +66,9 @@ public class ClienteDAOJDBC implements ClienteDAO{
 			while(rs.next()){
 				cliente = new Cliente();
 				cliente.setIdCliente(rs.getInt("idCliente"));
+				cliente.setInteresse1(rs.getString("interesse1"));
+				cliente.setInteresse2(rs.getString("interesse2"));
+				cliente.setInteresse3(rs.getString("interesse3"));
 				cliente.setPessoa(pessoaDao.buscar(rs.getInt("Pessoa_idPessoa")));
 			}
 		} catch (SQLException e) {
@@ -82,6 +88,9 @@ public class ClienteDAOJDBC implements ClienteDAO{
 			while(rs.next()){
 				Cliente cliente = new Cliente();
 				cliente.setIdCliente(rs.getInt("idCliente"));
+				cliente.setInteresse1(rs.getString("interesse1"));
+				cliente.setInteresse2(rs.getString("interesse2"));
+				cliente.setInteresse3(rs.getString("interesse3"));
 				cliente.setPessoa(pessoaDao.buscar(rs.getInt("Pessoa_idPessoa")));
 				clientes.add(cliente);
 			}

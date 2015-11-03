@@ -5,7 +5,9 @@ import java.util.ArrayList;
 public class Cliente {
 	private Pessoa pessoa;
 	private Integer idCliente;
-	private ArrayList<Interesse> interesses;
+	private String interesse1;
+	private String interesse2;
+	private String interesse3;
 	
 	public Cliente(){
 		super();
@@ -31,10 +33,28 @@ public class Cliente {
 		this.idCliente = idCliente;
 	}
 
-	public ArrayList<Interesse> getInteresses() {
-		return interesses;
+	public String getInteresse1() {
+		return interesse1;
 	}
-	public void setInteresses(ArrayList<Interesse> interesses) {
-		this.interesses = interesses;
+
+	public void setInteresse1(String interesse1) {
+		this.interesse1 = interesse1;
 	}
+
+	public String getInteresse2() {
+		return interesse2;
+	}
+
+	public void setInteresse2(String interesse2) {
+		this.interesse2 = interesse2;
+	}
+
+	public String getInteresse3() {
+		return interesse3;
+	}
+
+	public void setInteresse3(String interesse3) {
+		this.interesse3 = interesse3;
+	}
+
 }

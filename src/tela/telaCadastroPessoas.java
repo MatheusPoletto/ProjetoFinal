@@ -36,7 +36,6 @@ import dao.PessoaDAO;
 import pessoa.Cliente;
 import pessoa.Corretor;
 import pessoa.Endereco;
-import pessoa.Interesse;
 import pessoa.Pessoa;
 
 public class telaCadastroPessoas extends JFrame implements ActionListener {
@@ -44,30 +43,23 @@ public class telaCadastroPessoas extends JFrame implements ActionListener {
 	 * 
 	 */
 	private static final long serialVersionUID = 3974193162640296208L;
-	private JLabel jlbTitulo;
-	private JPanel jpnCadastroPessoa, jpnCadastroEndereco, jpnTipoCadastro;
-	private JLabel jlbNome, jlbRg, jlbCpf, jlbDataNascimento, jlbEstadoCivil, jlbGenero, jlbTelefoneResidencial,
-			jlbTelefoneCelular, jlbEmail;
-	private JLabel jlbRua, jlbNumero, jlbBairro, jlbCidade, jlbUf, jlbCep;
+	private JLabel jlbTitulo, jlbNome, jlbRg, jlbCpf, jlbDataNascimento, jlbEstadoCivil, jlbGenero,
+			jlbTelefoneResidencial, jlbTelefoneCelular, jlbEmail, jlbRua, jlbNumero, jlbBairro, jlbCidade, jlbUf,
+			jlbCep, jlbTipoRegistro, jlbInteressesCliente;
+	private JPanel jpnCadastroPessoa, jpnCadastroEndereco, jpnTipoCadastro, jpnInteresses, jpnSalvar;;
 	private JTextField jtfNome, jtfRg, jtfCpf, jtfDataNascimento, jtfGenero, jtfTelefoneResidencial, jtfTelefoneCelular,
-			jtfEmail;
-	private JTextField jtfRua, jtfNumero, jtfBairro, jtfCidade, jtfUf, jtfCep;
+			jtfEmail, jtfRua, jtfNumero, jtfBairro, jtfCidade, jtfUf, jtfCep, jtfInteresses;;
 	private JComboBox<String> jcbEstadoCivil;
 	private JToolBar jtbBarra;
-	private JLabel jlbTipoRegistro;
-	private JButton jbtRegistrarCliente, jbtRegistrarCorretor;
-	private JPanel jpnCliente, jpnCorretor;
-	private JLabel jlbInteressesCliente;
+	private JButton jbtRegistrarCliente, jbtRegistrarCorretor, jbtMaisInteresses, jbtMenosInteresses, jbtAjuda,
+			jbtSalvar, jbtCancelar;;
 	private JTable jtbInteresses;
 	private DefaultTableModel dtbInteresses;
 	private JScrollPane jspInteresses;
-	private JPanel jpnInteresses, jpnSalvar;
 	private PessoaDAO pessoaDao = DaoFactoryJDBC.get().pessoaDAO();
 	private EnderecoDAO enderecoDao = DaoFactoryJDBC.get().enderecoDAO();
 	private ClienteDAO clienteDao = DaoFactoryJDBC.get().clienteDAO();
 	private CorretorDAO corretorDao = DaoFactoryJDBC.get().corretorDAO();
-	private JButton jbtMaisInteresses, jbtMenosInteresses, jbtAjuda, jbtSalvar, jbtCancelar;
-	private JTextField jtfInteresses;
 	private Boolean isCliente = false, isCorretor = false;
 
 	public telaCadastroPessoas() {
@@ -86,7 +78,41 @@ public class telaCadastroPessoas extends JFrame implements ActionListener {
 		criarPainelCadastroPessoa();
 		criarPainelEndereco();
 		criarPainelCadastrarComo();
+		criarPainelInteressesCliente();
 
+		
+		jbtSalvar = new JButton("SALVAR");
+		jbtSalvar.setBounds(5, 5, 141, 25);
+		jbtSalvar.addActionListener(this);
+		jbtSalvar.setBackground(Color.white);
+		jbtSalvar.setForeground(Color.green);
+		jbtSalvar.setVisible(true);
+		getContentPane().add(jbtSalvar);
+
+		jbtCancelar = new JButton("CANCELAR");
+		jbtCancelar.setBounds(146, 5, 141, 25);
+		jbtCancelar.addActionListener(this);
+		jbtCancelar.setBackground(Color.white);
+		jbtCancelar.setForeground(Color.red);
+		jbtCancelar.setVisible(true);
+		getContentPane().add(jbtCancelar);
+
+		jpnSalvar = new JPanel();
+		jpnSalvar.setBounds(380, 428, 293, 35);
+		jpnSalvar.setVisible(true);
+		jpnSalvar.setLayout(null);
+		jpnSalvar.add(jbtSalvar);
+		jpnSalvar.add(jbtCancelar);
+		jpnSalvar.setBackground(new Color(23, 20, 21));
+		getContentPane().add(jpnSalvar);
+
+		setResizable(false);
+		setSize(707, 397);
+		setVisible(true);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+	}
+
+	private void criarPainelInteressesCliente() {
 		jlbInteressesCliente = new JLabel("ADICIONAR INTERESSES:");
 		jlbInteressesCliente.setBounds(0, 0, 325, 35);
 		jlbInteressesCliente.setVisible(true);
@@ -157,37 +183,7 @@ public class telaCadastroPessoas extends JFrame implements ActionListener {
 		jpnInteresses.add(jbtMenosInteresses);
 		jpnInteresses.add(jspInteresses);
 		getContentPane().add(jpnInteresses);
-
-		jbtSalvar = new JButton("SALVAR");
-		jbtSalvar.setBounds(5, 5, 141, 25);
-		jbtSalvar.addActionListener(this);
-		jbtSalvar.setBackground(Color.white);
-		jbtSalvar.setForeground(Color.green);
-		jbtSalvar.setVisible(true);
-		getContentPane().add(jbtSalvar);
-
-		jbtCancelar = new JButton("CANCELAR");
-		jbtCancelar.setBounds(146, 5, 141, 25);
-		jbtCancelar.addActionListener(this);
-		jbtCancelar.setBackground(Color.white);
-		jbtCancelar.setForeground(Color.red);
-		jbtCancelar.setVisible(true);
-		getContentPane().add(jbtCancelar);
-
-		jpnSalvar = new JPanel();
-		jpnSalvar.setBounds(380, 428, 293, 35);
-		jpnSalvar.setVisible(true);
-		jpnSalvar.setLayout(null);
-		jpnSalvar.add(jbtSalvar);
-		jpnSalvar.add(jbtCancelar);
-		jpnSalvar.setBackground(new Color(23, 20, 21));
-		getContentPane().add(jpnSalvar);
-
-		setResizable(false);
-		// setSize(707, 397);
-		setSize(707, 500);
-		setVisible(true);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		
 	}
 
 	private void criarPainelCadastrarComo() {
@@ -467,50 +463,53 @@ public class telaCadastroPessoas extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if(e.getSource() == jbtRegistrarCliente){
+		if (e.getSource() == jbtRegistrarCliente) {
 			Boolean camposOk = verificaCampos();
-			if(camposOk == true){
-			jbtRegistrarCliente.setBackground(Color.BLUE);
-			jbtRegistrarCliente.setForeground(Color.WHITE);
-			jbtRegistrarCorretor.setBackground(Color.black);
-			jbtRegistrarCorretor.setForeground(Color.WHITE);
-			
-			isCliente = true;
-			isCorretor = false;
-			jpnInteresses.setVisible(true);
+			if (camposOk == true) {
+				setSize(707, 500);
+				jbtRegistrarCliente.setBackground(Color.BLUE);
+				jbtRegistrarCliente.setForeground(Color.WHITE);
+				jbtRegistrarCorretor.setBackground(Color.black);
+				jbtRegistrarCorretor.setForeground(Color.WHITE);
+
+				isCliente = true;
+				isCorretor = false;
+				jpnInteresses.setVisible(true);
 			}
 		}
-		if(e.getSource() == jbtRegistrarCorretor){
+		if (e.getSource() == jbtRegistrarCorretor) {
 			Boolean camposOk = verificaCampos();
-			if(camposOk == true){
-			jbtRegistrarCorretor.setBackground(Color.BLUE);
-			jbtRegistrarCorretor.setForeground(Color.WHITE);
-			jbtRegistrarCliente.setBackground(Color.black);
-			jbtRegistrarCliente.setForeground(Color.WHITE);
-			
-			isCorretor = true;
-			isCliente = false;
-			jpnInteresses.setVisible(false);
+			if (camposOk == true) {
+				jbtRegistrarCorretor.setBackground(Color.BLUE);
+				jbtRegistrarCorretor.setForeground(Color.WHITE);
+				jbtRegistrarCliente.setBackground(Color.black);
+				jbtRegistrarCliente.setForeground(Color.WHITE);
+
+				isCorretor = true;
+				isCliente = false;
+				jpnInteresses.setVisible(false);
 			}
 		}
-		if(e.getSource() == jbtSalvar){
-			if(isCliente == true){
-				Pessoa pessoa = cadastrarPessoaEndereco(); 
-				Cliente cliente = new Cliente(pessoa, clienteDao.maiorId()+1);
-				ArrayList<Interesse> interesses = new ArrayList<>();
-				for(int x = 0; x  < dtbInteresses.getRowCount(); x++){
-					Interesse interesse= new Interesse();
-					interesse.setDescricao(dtbInteresses.getValueAt(x, 0).toString());
-					interesse.setCliente(cliente);
-					interesses.add(interesse);
+		if (e.getSource() == jbtSalvar) {
+			System.out.println(dtbInteresses.getValueAt(0, 0));
+			if (isCliente == true) {
+				Pessoa pessoa = cadastrarPessoaEndereco();
+				Cliente cliente = new Cliente(pessoa, clienteDao.maiorId() + 1);
+				if(dtbInteresses.getRowCount() == 1){
+					cliente.setInteresse3(dtbInteresses.getValueAt(0, 0).toString());
 				}
-				cliente.setInteresses(interesses);
+				if(dtbInteresses.getRowCount() == 2){
+					cliente.setInteresse3(dtbInteresses.getValueAt(1, 0).toString());
+				}				
+				if(dtbInteresses.getRowCount() == 3){
+					cliente.setInteresse3(dtbInteresses.getValueAt(2, 0).toString());
+				}
 				clienteDao.inserir(cliente);
 				JOptionPane.showMessageDialog(null, "Cliente cadastrado com sucesso!", "Sucesso!",
 						JOptionPane.PLAIN_MESSAGE);
 
 			}
-			if(isCorretor == true){
+			if (isCorretor == true) {
 				Pessoa pessoa = cadastrarPessoaEndereco();
 				Corretor corretor = new Corretor(pessoa, corretorDao.maiorId(), 1500.0, 10.0);
 				corretorDao.inserir(corretor);
@@ -518,8 +517,8 @@ public class telaCadastroPessoas extends JFrame implements ActionListener {
 						JOptionPane.PLAIN_MESSAGE);
 			}
 		}
-		
-		if(e.getSource() == jbtMaisInteresses) {
+
+		if (e.getSource() == jbtMaisInteresses) {
 			if (jtfInteresses.getText().toString().equals("")) {
 				JOptionPane.showMessageDialog(null, "Insira algo no campo de interesses!", "Erro ao inserir",
 						JOptionPane.ERROR_MESSAGE);
@@ -528,16 +527,18 @@ public class telaCadastroPessoas extends JFrame implements ActionListener {
 				jtfInteresses.setText("");
 			}
 		}
-		if(e.getSource() == jbtMenosInteresses){
-			if(jtbInteresses.getSelectedRow() >= 0){
+		if (e.getSource() == jbtMenosInteresses) {
+			if (jtbInteresses.getSelectedRow() >= 0) {
 				dtbInteresses.removeRow(jtbInteresses.getSelectedRow());
 			} else {
 				JOptionPane.showMessageDialog(null, "Selecione uma linha da tabela para remover.", "Erro ao remover",
 						JOptionPane.ERROR_MESSAGE);
 			}
 		}
-		if(e.getSource() == jbtAjuda){
-			JOptionPane.showMessageDialog(null, "Sempre que adicionar um novo cliente, você pode atribuir alguns interesses a ele.\nEsses interesses definem o que seu cliente procura nos imóveis.\nPor exemplo: barato, grande, mansão.\nPara adicionar um interesse digite sua descrição no campo e pressione o botão com um símbolo de + (mais/adicionar).\nNÃO É OBRIGATÓRIO!", "Ajuda", JOptionPane.PLAIN_MESSAGE);
+		if (e.getSource() == jbtAjuda) {
+			JOptionPane.showMessageDialog(null,
+					"Sempre que adicionar um novo cliente, você pode atribuir alguns interesses a ele.\nEsses interesses definem o que seu cliente procura nos imóveis.\nPor exemplo: barato, grande, mansão.\nPara adicionar um interesse digite sua descrição no campo e pressione o botão com um símbolo de + (mais/adicionar).\nNÃO É OBRIGATÓRIO!",
+					"Ajuda", JOptionPane.PLAIN_MESSAGE);
 		}
 
 	}
