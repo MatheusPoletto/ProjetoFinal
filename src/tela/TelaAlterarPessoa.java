@@ -13,7 +13,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
-import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -31,7 +31,7 @@ import pessoa.Corretor;
 import pessoa.Endereco;
 import pessoa.Pessoa;
 
-public class TelaAlterarPessoa extends JFrame implements ActionListener {
+public class TelaAlterarPessoa extends JInternalFrame implements ActionListener {
 	/**
 	 * 
 	 */
@@ -89,7 +89,8 @@ public class TelaAlterarPessoa extends JFrame implements ActionListener {
 		setResizable(false);
 		setSize(707, 397);
 		setVisible(true);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setClosable(true);
+		setDefaultCloseOperation(HIDE_ON_CLOSE);
 	}
 
 	private void criarPainelNovoCorretor() {

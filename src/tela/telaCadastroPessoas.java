@@ -13,7 +13,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
-import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -33,7 +33,7 @@ import pessoa.Endereco;
 import pessoa.Pessoa;
 import pessoa.Usuario;
 
-public class telaCadastroPessoas extends JFrame implements ActionListener {
+public class telaCadastroPessoas extends JInternalFrame implements ActionListener {
 	private static final long serialVersionUID = 3974193162640296208L;
 	private JLabel jlbTitulo, jlbNome, jlbRg, jlbCpf, jlbDataNascimento, jlbEstadoCivil, jlbGenero,
 			jlbTelefoneResidencial, jlbTelefoneCelular, jlbEmail, jlbRua, jlbNumero, jlbBairro, jlbCidade, jlbUf,
@@ -83,7 +83,8 @@ public class telaCadastroPessoas extends JFrame implements ActionListener {
 		setResizable(false);
 		setSize(707, 397);
 		setVisible(true);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setClosable(true);
+		setDefaultCloseOperation(HIDE_ON_CLOSE);
 	}
 
 	private void criarPainelFinalizar() {

@@ -46,9 +46,8 @@ public class telaLogin extends JInternalFrame implements ActionListener{
 		setLayout(null);
 		
 		adicionaComponentes();
-		jtfUsuario.setText("MPoletto");
-		jpfSenha.setText("1234");
-		setLocation(250, 130);
+		jtfUsuario.setText("match");
+		jpfSenha.setText("123456");
 		setResizable(false);
 		setSize(400, 300);
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);

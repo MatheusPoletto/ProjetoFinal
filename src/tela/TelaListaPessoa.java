@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
@@ -29,7 +29,7 @@ import pessoa.Endereco;
 import pessoa.Pessoa;
 import pessoa.Usuario;
 
-public class TelaListaPessoa extends JFrame implements ActionListener {
+public class TelaListaPessoa extends JInternalFrame implements ActionListener {
 	/**
 	 * 
 	 */
@@ -64,8 +64,10 @@ public class TelaListaPessoa extends JFrame implements ActionListener {
 
 		setResizable(false);
 		setSize(707, 500);
+		setLocation(97, 10);
+		setClosable(true);
 		setVisible(true);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setDefaultCloseOperation(HIDE_ON_CLOSE);
 	}
 
 	private void criarMenu() {
@@ -155,14 +157,15 @@ public class TelaListaPessoa extends JFrame implements ActionListener {
 	}
 
 	private void criarPessoa() {
-		telaCadastroPessoas tlCadastro = new telaCadastroPessoas();
+		telaPrincipal.getTlPrincipal().esconderTelas();
+		telaPrincipal.getTlPrincipal().getTlCadastroPessoa().setVisible(true);
 		
 	}
 
 	private void editarPessoa() {
-		TelaAlterarPessoa tlAlterar = new TelaAlterarPessoa();
-		tlAlterar.preencherCampos(Integer.valueOf(dtbPessoas.getValueAt(jtbPessoas.getSelectedRow(), 0).toString()), String.valueOf(dtbPessoas.getValueAt(jtbPessoas.getSelectedRow(),  4)));
-		
+		telaPrincipal.getTlPrincipal().esconderTelas();
+		telaPrincipal.getTlPrincipal().getTlAlterarPessoa().setVisible(true);
+		telaPrincipal.getTlPrincipal().getTlAlterarPessoa().preencherCampos(Integer.valueOf(dtbPessoas.getValueAt(jtbPessoas.getSelectedRow(), 0).toString()), String.valueOf(dtbPessoas.getValueAt(jtbPessoas.getSelectedRow(),  4)));
 	}
 
 	private void removerPessoa() {
