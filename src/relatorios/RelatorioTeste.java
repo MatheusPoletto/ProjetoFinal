@@ -2,6 +2,7 @@ package relatorios;
 
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,6 +10,7 @@ import java.util.Map;
 import DAOFactory.DaoFactoryJDBC;
 import pessoa.Cliente;
 import conexao.ConexaoUtil;
+import dao.ClienteDAO;
 
 public class RelatorioTeste {
 
@@ -25,7 +27,8 @@ public class RelatorioTeste {
 				"src/relatorios/Cherry.jasper",
 				ConexaoUtil.getCon(), parametros);
 
-		List<Cliente> clientes = DaoFactoryJDBC.get().clienteDAO().todos();
+		ClienteDAO clienteDao = DaoFactoryJDBC.get().clienteDAO();
+		List<Cliente> clientes = clienteDao.todos();
 				
 		new RelatorioUtil().compileViewReport(
 				"src/relatorios/Cherry.jrxml",

@@ -6,7 +6,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -32,9 +34,6 @@ import pessoa.Endereco;
 import pessoa.Pessoa;
 
 public class TelaAlterarPessoa extends JInternalFrame implements ActionListener {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 835773138459611748L;
 	private JLabel jlbTitulo, jlbNome, jlbRg, jlbCpf, jlbDataNascimento, jlbEstadoCivil, jlbGenero,
 			jlbTelefoneResidencial, jlbTelefoneCelular, jlbEmail, jlbRua, jlbNumero, jlbBairro, jlbCidade, jlbUf,
@@ -354,17 +353,12 @@ public class TelaAlterarPessoa extends JInternalFrame implements ActionListener 
 		new TelaAlterarPessoa();
 	}
 
-	private Boolean verificaCampos() {
-		Boolean passou = false;
-		if (jtfNome.getText().equals("") || jtfRg.getText().equals("") || jtfCpf.getText().equals("")
-				|| jtfDataNascimento.getText().equals("") || jtfGenero.getText().equals("")
-				|| jcbEstadoCivil.getSelectedIndex() == -1 || jtfEmail.getText().equals("")) {
-			JOptionPane.showMessageDialog(null,
-					"Todos os campos são obrigatórios e um pareçe estar vazio!\nRevise-os e tente novamente!",
-					"Ops! Erro ao cadastrar uma nova pessoa", JOptionPane.WARNING_MESSAGE);
-			passou = false;
-		} else {
-			passou = true;
+	private Boolean verificaCampos(List<JTextField> componentes) {
+		Boolean passou = true;
+		for (JTextField cp : componentes) {
+			if (cp.getText().equals("")) {
+				passou = false;
+			}
 		}
 		return passou;
 	}
@@ -405,13 +399,21 @@ public class TelaAlterarPessoa extends JInternalFrame implements ActionListener 
 
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == jbtSalvar) {
-			Boolean camposOk = verificaCampos();
-			if (camposOk == true) {
+			ArrayList<JTextField> jtf = new ArrayList<>();
+			jtf.add(jtfNome);
+			jtf.add(jtfRg);
+			jtf.add(jtfCpf);
+			jtf.add(jtfDataNascimento);
+			jtf.add(jtfGenero);
+			jtf.add(jtfEmail);
+			Boolean camposOk = verificaCampos(jtf);
+
+			if (camposOk) {
 				if (tipo.equals("CLIENTE")) {
 					Pessoa pessoa = alteraPessoaEndereco();
 					Cliente cliente = new Cliente();
-					for(Cliente cliente1 : clienteDao.todos()){
-						if(cliente1.getPessoa().getId() == idPessoa){
+					for (Cliente cliente1 : clienteDao.todos()) {
+						if (cliente1.getPessoa().getId() == idPessoa) {
 							cliente.setIdCliente(cliente1.getIdCliente());
 							cliente.setInteresse1(jtfInteresse1.getText());
 							cliente.setInteresse2(jtfInteresse2.getText());
@@ -426,8 +428,8 @@ public class TelaAlterarPessoa extends JInternalFrame implements ActionListener 
 				if (tipo.equals("CORRETOR")) {
 					Pessoa pessoa = alteraPessoaEndereco();
 					Corretor corretor = new Corretor();
-					for(Corretor corretor1 : corretorDao.todos()){
-						if(corretor1.getPessoa().getId() == idPessoa){
+					for (Corretor corretor1 : corretorDao.todos()) {
+						if (corretor1.getPessoa().getId() == idPessoa) {
 							corretor.setIdCorretor(corretor1.getIdCorretor());
 							corretor.setSalario(Double.valueOf(jtfSalario.getText()));
 							corretor.setPorcentagemComissao(Double.valueOf(jtfComissao.getText()));
@@ -444,7 +446,7 @@ public class TelaAlterarPessoa extends JInternalFrame implements ActionListener 
 					"Sempre que adicionar um novo cliente, você pode atribuir 3 interesses a ele.\nEsses interesses definem o que seu cliente procura nos imóveis.\nPor exemplo: barato, grande, mansão.\nNÃO É OBRIGATÓRIO!",
 					"Ajuda", JOptionPane.PLAIN_MESSAGE);
 		}
-		if(e.getSource() == jbtCancelar){
+		if (e.getSource() == jbtCancelar) {
 			telaPrincipal.getTlPrincipal().getTlAlterarPessoa().setVisible(false);
 			telaPrincipal.getTlPrincipal().getTlListaPessoas().setVisible(true);
 		}
@@ -490,8 +492,8 @@ public class TelaAlterarPessoa extends JInternalFrame implements ActionListener 
 		if (tipo.equals("CORRETOR")) {
 			jpnInfoCorretor.setVisible(true);
 			jpnInteresses.setVisible(false);
-			for(Corretor corretor : corretorDao.todos()){
-				if(corretor.getPessoa().getId() == idPessoa){
+			for (Corretor corretor : corretorDao.todos()) {
+				if (corretor.getPessoa().getId() == idPessoa) {
 					jtfSalario.setText(corretor.getSalario().toString());
 					jtfComissao.setText(corretor.getPorcentagemComissao().toString());
 				}
@@ -499,8 +501,8 @@ public class TelaAlterarPessoa extends JInternalFrame implements ActionListener 
 		} else if (tipo.equals("CLIENTE")) {
 			jpnInteresses.setVisible(true);
 			jpnInfoCorretor.setVisible(false);
-			for(Cliente cliente : clienteDao.todos()){
-				if(cliente.getPessoa().getId() == idPessoa){
+			for (Cliente cliente : clienteDao.todos()) {
+				if (cliente.getPessoa().getId() == idPessoa) {
 					jtfInteresse1.setText(cliente.getInteresse1());
 					jtfInteresse2.setText(cliente.getInteresse2());
 					jtfInteresse3.setText(cliente.getInteresse3());
