@@ -21,6 +21,7 @@ public class telaPrincipal extends JFrame implements ActionListener{
 	private telaCadastroPessoas tlCadastroPessoa = new telaCadastroPessoas();
 	private TelaListaPessoa tlListaPessoas = new TelaListaPessoa();
 	private TelaAlterarPessoa tlAlterarPessoa = new TelaAlterarPessoa();
+	private TelaListaUsuario tlListaUsuarios = new TelaListaUsuario();
 	private static telaPrincipal tlPrincipal = new telaPrincipal();
 	private JMenu jmnImovel, jmnCadastro, jmnProcurar, jmnGerenciamento;
 	private JMenuItem jmiAlugar, jmiVender, jmiPessoa, jmiProcurarPessoa, jmiContaUsuario;
@@ -46,6 +47,10 @@ public class telaPrincipal extends JFrame implements ActionListener{
 		getContentPane().add(tlAlterarPessoa);
 		tlAlterarPessoa.setVisible(false);
 		tlAlterarPessoa.setLocation(97, 10);
+		
+		getContentPane().add(tlListaUsuarios);
+		tlListaUsuarios.setVisible(false);
+		tlListaUsuarios.setLocation(190, 30);
 		
 		barra = new JMenuBar();
 		barra.setVisible(false);
@@ -127,6 +132,10 @@ public class telaPrincipal extends JFrame implements ActionListener{
 	public TelaListaPessoa getTlListaPessoas() {
 		return tlListaPessoas;
 	}
+	
+	public TelaListaUsuario getTlListaUsuarios() {
+		return tlListaUsuarios;
+	}
 
 	public static telaPrincipal getTlPrincipal() {
 		if(tlPrincipal == null){
@@ -140,7 +149,7 @@ public class telaPrincipal extends JFrame implements ActionListener{
 		if(e.getSource() == jmiPessoa){
 			esconderTelas();
 			tlCadastroPessoa.setVisible(true);
-			tlCadastroPessoa.setClosable(true);
+			//tlCadastroPessoa.setClosable(true);
 		}
 		if(e.getSource() == jmiProcurarPessoa){
 			esconderTelas();
@@ -150,6 +159,8 @@ public class telaPrincipal extends JFrame implements ActionListener{
 			Usuario usuario = usuarioDao.buscar(idUsuario);
 			if(usuario.getNivelAcesso() == 0){
 				JOptionPane.showMessageDialog(null, "Possui permissão de gestor");
+				esconderTelas();
+				tlListaUsuarios.setVisible(true);
 			}else if(usuario.getNivelAcesso() == 1){
 				JOptionPane.showMessageDialog(null, "Não possui permissão de gestor");
 			}

@@ -39,7 +39,17 @@ public class UsuarioDAOJDBC implements UsuarioDAO{
 
 	@Override
 	public void alterar(Usuario usuario) {
-		// TODO Auto-generated method stub
+		String sql = "update usuario set login = ?, senha = ?, nivelAcesso = ? where idUsuario = ?";
+		try {
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, usuario.getLogin());
+			pstmt.setString(2, usuario.getSenha());
+			pstmt.setInt(3, usuario.getNivelAcesso());
+			pstmt.setInt(4, usuario.getIdUsuario());
+			pstmt.executeUpdate(); 
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}	
 		
 	}
 

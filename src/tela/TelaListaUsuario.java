@@ -1,14 +1,18 @@
 package tela;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -27,7 +31,7 @@ import pessoa.Corretor;
 import pessoa.Pessoa;
 import pessoa.Usuario;
 
-public class TelaListaUsuario extends JFrame implements ActionListener{
+public class TelaListaUsuario extends JInternalFrame implements ActionListener{
 	private JTable jtbUsuarios;
 	private JLabel jlbTitulo;
 	private DefaultTableModel dtbUsuarios;
@@ -40,13 +44,14 @@ public class TelaListaUsuario extends JFrame implements ActionListener{
 	private JTextField jtfUsuario, jtfSenha;
 	private JComboBox<String> jcbNivel;
 	private JPanel jpnAlterar, jpnOpcoes;
+	private Integer idUsuario;
 	
 	public TelaListaUsuario() {
 		setTitle("Registro de usuarios");
 		setLayout(null);
 
 		jlbTitulo = new JLabel("Contas de usuário", SwingConstants.CENTER);
-		jlbTitulo.setBounds(0, 0, 400, 44);
+		jlbTitulo.setBounds(0, 0, 520, 44);
 		jlbTitulo.setVisible(true);
 		jlbTitulo.setFont(new Font("ARIAL", Font.PLAIN, 18));
 		jlbTitulo.setOpaque(true);
@@ -57,7 +62,7 @@ public class TelaListaUsuario extends JFrame implements ActionListener{
 		criarTabela();
 		
 		jbtEditar = new JButton("EDITAR");
-		jbtEditar.setBounds(0, 320, 400, 30);
+		jbtEditar.setBounds(0, 324, 514, 30);
 		jbtEditar.setVisible(true);
 		jbtEditar.addActionListener(this);
 		jbtEditar.setBackground(new Color(23, 20, 21));
@@ -134,9 +139,10 @@ public class TelaListaUsuario extends JFrame implements ActionListener{
 		
 
 		setResizable(false);
-		setSize(400, 378);
+		setSize(520, 390);
 		setVisible(true);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setClosable(true);
+		setDefaultCloseOperation(HIDE_ON_CLOSE);
 	}
 	
 	private void criarTabela() {
@@ -152,7 +158,7 @@ public class TelaListaUsuario extends JFrame implements ActionListener{
 		jtbUsuarios.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		jtbUsuarios.setModel(dtbUsuarios);
 		jspUsuarios = new JScrollPane(jtbUsuarios);
-		jspUsuarios.setBounds(0, 44, 397, 280);
+		jspUsuarios.setBounds(0, 44, 515, 280);
 		jspUsuarios.setVisible(true);
 		getContentPane().add(jspUsuarios);
 
@@ -162,21 +168,11 @@ public class TelaListaUsuario extends JFrame implements ActionListener{
 		jtbUsuarios.getColumnModel().getColumn(3).setPreferredWidth(250);
 		
 		alimentaTable();
-		alimentaTable();
-		alimentaTable();
-		alimentaTable();
-		alimentaTable();
-		alimentaTable();
-		alimentaTable();
-		alimentaTable();
-		alimentaTable();
-		alimentaTable();
-		alimentaTable();
-		alimentaTable();
-		alimentaTable();
+		
 	}
 	
 	public void alimentaTable() {
+		dtbUsuarios.setRowCount(0);
 		for(Usuario usuario : usuarioDao.todos()){
 			Integer idCorretor = usuario.getCorretor().getIdCorretor();
 			Corretor corretor = corretorDao.buscar(idCorretor);
@@ -195,14 +191,13 @@ public class TelaListaUsuario extends JFrame implements ActionListener{
 			if(jtbUsuarios.getSelectedRow() == -1){
 				JOptionPane.showMessageDialog(null, "Selecione uma linha para editar!", "Erro", JOptionPane.ERROR_MESSAGE);
 			}else{
-				setSize(520, 421);
-				jlbTitulo.setSize(520,44);
-				jspUsuarios.setSize(515, 280);
+				setSize(520, 431);
 				jpnAlterar.setVisible(true);
 				jpnOpcoes.setVisible(true);
 				jbtEditar.setVisible(false);
 				
-				Usuario usuario = usuarioDao.buscar(Integer.valueOf(dtbUsuarios.getValueAt(jtbUsuarios.getSelectedRow(), 0).toString()));
+				idUsuario = Integer.valueOf(dtbUsuarios.getValueAt(jtbUsuarios.getSelectedRow(), 0).toString());
+				Usuario usuario = usuarioDao.buscar(idUsuario);
 				jtfUsuario.setText(usuario.getLogin());
 				jtfSenha.setText(usuario.getSenha());
 				jcbNivel.setSelectedIndex(usuario.getNivelAcesso());
@@ -210,14 +205,43 @@ public class TelaListaUsuario extends JFrame implements ActionListener{
 			}
 		}
 		if(e.getSource() == jbtCancelar){
-			setSize(400, 378);
-			jlbTitulo.setSize(400,44);
-			jspUsuarios.setSize(397, 280);
+			setSize(520, 390);
 			jpnAlterar.setVisible(false);
 			jpnOpcoes.setVisible(false);
 			jbtEditar.setVisible(true);
 		}
+		if(e.getSource() == jbtSalvar){
+			Usuario usuario = usuarioDao.buscar(idUsuario);
+			usuario.setLogin(jtfUsuario.getText());
+			usuario.setSenha(jtfSenha.getText());
+			usuario.setNivelAcesso(jcbNivel.getSelectedIndex());
+			
+			ArrayList<JTextField> jtf = new ArrayList<>();
+			jtf.add(jtfUsuario);
+			jtf.add(jtfSenha);
+			Boolean camposOk = verificarCampos(jtf);
+			
+			if(camposOk){
+				usuarioDao.alterar(usuario);
+				JOptionPane.showMessageDialog(null, "Alterações salvas com sucesso");
+				alimentaTable();
+			}else {
+				JOptionPane.showMessageDialog(null, "Verifique se os campos login e senha foram preenchidos corretamente e tente novamente.", "Erro ao salvar", JOptionPane.ERROR_MESSAGE);
+			}
+		}
 		
 	}
+	
+	public Boolean verificarCampos(List<JTextField> componentes){
+		Boolean passou = true;
+		for(JTextField cp : componentes){
+			if(cp.getText().equals("")){
+				passou = false;
+			}
+		}
+		return passou;
+	}
+	
+
 	
 }
