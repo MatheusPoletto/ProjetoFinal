@@ -4,6 +4,9 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -15,7 +18,13 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import DAOFactory.DaoFactoryJDBC;
+import dao.CorretorDAO;
+import dao.EnderecoDAO;
+import dao.PessoaDAO;
 import dao.UsuarioDAO;
+import pessoa.Corretor;
+import pessoa.Endereco;
+import pessoa.Pessoa;
 import pessoa.Usuario;
 
 public class telaLogin extends JInternalFrame implements ActionListener{
@@ -42,8 +51,8 @@ public class telaLogin extends JInternalFrame implements ActionListener{
 		setLayout(null);
 		
 		adicionaComponentes();
-		jtfUsuario.setText("match");
-		jpfSenha.setText("123456");
+		jtfUsuario.setText("login91");
+		jpfSenha.setText("senha91");
 		setResizable(false);
 		setSize(400, 300);
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);

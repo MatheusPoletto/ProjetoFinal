@@ -1,7 +1,7 @@
-/conexao/
-/tela/
 /dao/
+/imovel/
+/model/
 /pessoa/
-/DAOFactory/
-/teste.mwb.bak
-/script10.sql
+/relatorios/
+/tela/
+/testes/

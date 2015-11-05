@@ -247,11 +247,11 @@ public class TelaListaPessoa extends JInternalFrame implements ActionListener {
 
 	private void abrirMenu() {
 		if (menuVisivel == false) {
-			jspPessoas.setBounds(110, 45, 590, 500);
+			jspPessoas.setBounds(110, 45, 590, 422);
 			jtbBarra.setVisible(true);
 			menuVisivel = true;
 		} else {
-			jspPessoas.setBounds(0, 45, 702, 500);
+			jspPessoas.setBounds(0, 45, 702, 422);
 			jtbBarra.setVisible(false);
 			menuVisivel = false;
 		}
@@ -293,7 +293,7 @@ public class TelaListaPessoa extends JInternalFrame implements ActionListener {
 		jtbPessoas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		jtbPessoas.setModel(dtbPessoas);
 		jspPessoas = new JScrollPane(jtbPessoas);
-		jspPessoas.setBounds(0, 45, 702, 500);
+		jspPessoas.setBounds(0, 45, 702, 422);
 		jspPessoas.setVisible(true);
 		getContentPane().add(jspPessoas);
 
