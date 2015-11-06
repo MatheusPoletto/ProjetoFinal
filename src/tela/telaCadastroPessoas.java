@@ -7,7 +7,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -51,6 +54,7 @@ public class telaCadastroPessoas extends JInternalFrame implements ActionListene
 	private CorretorDAO corretorDao = DaoFactoryJDBC.get().corretorDAO();
 	private UsuarioDAO usuarioDao = DaoFactoryJDBC.get().usuarioDAO();
 	private Boolean isCliente = false, isCorretor = false;
+	private ArrayList<JTextField> componentes = new ArrayList<>();
 
 	public telaCadastroPessoas() {
 		setTitle("Cadastrar pessoa");
@@ -72,13 +76,24 @@ public class telaCadastroPessoas extends JInternalFrame implements ActionListene
 		criarPainelNovoCorretor();
 		criarPainelFinalizar();
 
-		jbtLimparCampos = new JButton("LIMPAR");
-		jbtLimparCampos.setBounds(592, 330, 81, 25);
-		jbtLimparCampos.addActionListener(this);
+		jbtLimparCampos = criarBotao("LIMPAR", 592, 330, 81, 25, jbtLimparCampos);
 		jbtLimparCampos.setBackground(new Color(23, 20, 21));
 		jbtLimparCampos.setForeground(Color.white);
-		jbtLimparCampos.setVisible(true);
-		getContentPane().add(jbtLimparCampos);
+
+		componentes.add(jtfNome);
+		componentes.add(jtfRg);
+		componentes.add(jtfCpf);
+		componentes.add(jtfDataNascimento);
+		componentes.add(jtfGenero);
+		componentes.add(jtfTelefoneResidencial);
+		componentes.add(jtfTelefoneCelular);
+		componentes.add(jtfEmail);
+		componentes.add(jtfRua);
+		componentes.add(jtfNumero);
+		componentes.add(jtfBairro);
+		componentes.add(jtfCidade);
+		componentes.add(jtfUf);
+		componentes.add(jtfCep);
 
 		setResizable(false);
 		setSize(707, 397);
@@ -88,21 +103,13 @@ public class telaCadastroPessoas extends JInternalFrame implements ActionListene
 	}
 
 	private void criarPainelFinalizar() {
-		jbtSalvar = new JButton("SALVAR");
-		jbtSalvar.setBounds(5, 5, 81, 25);
-		jbtSalvar.addActionListener(this);
+		jbtSalvar = criarBotao("SALVAR", 5, 5, 81, 25, jbtSalvar);
 		jbtSalvar.setBackground(new Color(23, 20, 21));
 		jbtSalvar.setForeground(Color.green);
-		jbtSalvar.setVisible(true);
-		getContentPane().add(jbtSalvar);
 
-		jbtCancelar = new JButton("CANCELAR");
-		jbtCancelar.setBounds(84, 5, 97, 25);
-		jbtCancelar.addActionListener(this);
+		jbtCancelar = criarBotao("CANCELAR", 84, 5, 97, 25, jbtCancelar);
 		jbtCancelar.setBackground(new Color(23, 20, 21));
 		jbtCancelar.setForeground(Color.white);
-		jbtCancelar.setVisible(true);
-		getContentPane().add(jbtCancelar);
 
 		jpnSalvar = new JPanel();
 		jpnSalvar.setBounds(488, 365, 187, 35);
@@ -116,45 +123,18 @@ public class telaCadastroPessoas extends JInternalFrame implements ActionListene
 	}
 
 	private void criarPainelNovoCorretor() {
-		jlbSalario = new JLabel("Salário:");
-		jlbSalario.setBounds(10, 0, 80, 30);
-		jlbSalario.setVisible(true);
-		getContentPane().add(jlbSalario);
-
-		jtfSalario = new JTextField("1.120");
-		jtfSalario.setBounds(55, 4, 50, 27);
-		jtfSalario.setVisible(true);
-		getContentPane().add(jtfSalario);
-
-		jlbComissao = new JLabel("Comissão:");
-		jlbComissao.setBounds(105, 0, 80, 30);
-		jlbComissao.setVisible(true);
-		getContentPane().add(jlbComissao);
-
-		jtfComissao = new JTextField("10.0");
-		jtfComissao.setBounds(167, 4, 35, 27);
-		jtfComissao.setVisible(true);
-		getContentPane().add(jtfComissao);
-
-		jlbUsuario = new JLabel("Usuário:");
-		jlbUsuario.setBounds(203, 0, 80, 30);
-		jlbUsuario.setVisible(true);
-		getContentPane().add(jlbUsuario);
-
-		jtfUsuario = new JTextField();
-		jtfUsuario.setBounds(252, 4, 82, 27);
-		jtfUsuario.setVisible(true);
-		getContentPane().add(jtfUsuario);
-
-		jlbSenha = new JLabel("Senha:");
-		jlbSenha.setBounds(334, 0, 80, 30);
-		jlbSenha.setVisible(true);
-		getContentPane().add(jlbSenha);
-
-		jtfSenha = new JTextField();
-		jtfSenha.setBounds(375, 4, 80, 27);
-		jtfSenha.setVisible(true);
-		getContentPane().add(jtfSenha);
+		jlbSalario = criarLabel("Salário:", 10, 0, 80, 30, jlbSalario);
+		jlbComissao = criarLabel("Comissão:", 105, 0, 80, 30, jlbComissao);
+		jlbUsuario = criarLabel("Usuário:", 203, 0, 80, 30, jlbUsuario);
+		jlbSenha = criarLabel("Senha:", 334, 0, 80, 30, jlbSenha);
+		
+		jtfSalario = criarTextField(55, 5, 50 ,27, jtfSalario);
+		jtfComissao = criarTextField(167, 4, 35, 27, jtfComissao);
+		jtfUsuario = criarTextField(252, 4, 82, 27, jtfUsuario);
+		jtfSenha = criarTextField(375, 4, 80, 27, jtfSenha);
+		
+		jtfSalario.setText("1.120");
+		jtfComissao.setText("10.0");
 
 		jpnInfoCorretor = new JPanel();
 		jpnInfoCorretor.setBounds(20, 365, 465, 35);
@@ -174,34 +154,17 @@ public class telaCadastroPessoas extends JInternalFrame implements ActionListene
 	}
 
 	private void criarPainelNovoCliente() {
-		jlbInteresses = new JLabel("INTERESSES DE IMÓVEIS:");
-		jlbInteresses.setBounds(10, 0, 150, 30);
-		jlbInteresses.setVisible(true);
-		getContentPane().add(jlbInteresses);
+		jlbInteresses = criarLabel("INTERESSES DE IMÓVEIS:", 10, 0, 150, 30, jlbInteresses);
 
-		jtfInteresse1 = new JTextField();
-		jtfInteresse1.setBounds(160, 4, 90, 27);
-		jtfInteresse1.setVisible(true);
-		getContentPane().add(jtfInteresse1);
+		jtfInteresse1 = criarTextField(160, 4, 90, 27, jtfInteresse1);
+		jtfInteresse2 = criarTextField(251, 4, 90, 27, jtfInteresse2);
+		jtfInteresse3 = criarTextField(342, 4, 90, 27, jtfInteresse3);
 
-		jtfInteresse2 = new JTextField();
-		jtfInteresse2.setBounds(251, 4, 90, 27);
-		jtfInteresse2.setVisible(true);
-		getContentPane().add(jtfInteresse2);
-
-		jtfInteresse3 = new JTextField();
-		jtfInteresse3.setBounds(342, 4, 90, 27);
-		jtfInteresse3.setVisible(true);
-		getContentPane().add(jtfInteresse3);
-
-		jbtAjuda = new JButton();
-		jbtAjuda.setBounds(434, 4, 27, 27);
+		jbtAjuda = criarBotao("", 434, 4, 27, 27, jbtAjuda);
 		jbtAjuda.setIcon(new ImageIcon("img/question_item_24.png"));
 		jbtAjuda.setOpaque(false);
 		jbtAjuda.setBorderPainted(false);
 		jbtAjuda.setBackground(new Color(0, 0, 0, 0));
-		jbtAjuda.addActionListener(this);
-		jbtAjuda.setVisible(true);
 
 		jpnInteresses = new JPanel();
 		jpnInteresses.setBounds(20, 365, 465, 35);
@@ -218,24 +181,15 @@ public class telaCadastroPessoas extends JInternalFrame implements ActionListene
 	}
 
 	private void criarPainelCadastrarComo() {
-		jlbTipoRegistro = new JLabel("CADASTRAR COMO");
-		jlbTipoRegistro.setBounds(7, 6, 150, 24);
-		jlbTipoRegistro.setVisible(true);
-		getContentPane().add(jlbTipoRegistro);
+		jlbTipoRegistro = criarLabel("CADASTRAR COMO", 7, 6, 150, 24, jlbTipoRegistro);
 
-		jbtRegistrarCliente = new JButton("CLIENTE");
-		jbtRegistrarCliente.setVisible(true);
+		jbtRegistrarCliente = criarBotao("CLIENTE", 0, 0, 100, 30, jbtRegistrarCliente);
 		jbtRegistrarCliente.setBackground(new Color(23, 20, 20));
 		jbtRegistrarCliente.setForeground(Color.white);
-		jbtRegistrarCliente.setBounds(0, 0, 100, 30);
-		jbtRegistrarCliente.addActionListener(this);
 
-		jbtRegistrarCorretor = new JButton("CORRETOR");
-		jbtRegistrarCorretor.setVisible(true);
+		jbtRegistrarCorretor = criarBotao("CORRETOR", 100, 0, 100, 30, jbtRegistrarCorretor);
 		jbtRegistrarCorretor.setBackground(new Color(23, 20, 20));
 		jbtRegistrarCorretor.setForeground(Color.white);
-		jbtRegistrarCorretor.setBounds(100, 0, 100, 30);
-		jbtRegistrarCorretor.addActionListener(this);
 
 		jtbBarra = new JToolBar();
 		jtbBarra.setOrientation(0);
@@ -258,65 +212,23 @@ public class telaCadastroPessoas extends JInternalFrame implements ActionListene
 	}
 
 	private void criarPainelCadastroPessoa() {
-		jlbNome = new JLabel("Nome:");
-		jlbNome.setBounds(10, 20, 110, 30);
-		jlbNome.setVisible(true);
+		jlbNome = criarLabel("Nome:", 10, 20, 110, 30, jlbNome);
+		jlbRg = criarLabel("RG:", 10, 50, 110, 30, jlbRg);
+		jlbCpf = criarLabel("CPF:", 210, 50, 110, 30, jlbCpf);
+		jlbDataNascimento = criarLabel("Data de nascimento:", 420, 50, 120, 30, jlbDataNascimento);
+		jlbGenero = criarLabel("Gênero:", 10, 80, 110, 30, jlbGenero);
+		jlbEstadoCivil = criarLabel("Estado Civil:", 210, 80, 110, 30, jlbEstadoCivil);
+		jlbTelefoneResidencial = criarLabel("Tel. fixo:", 10, 110, 120, 30, jlbTelefoneResidencial);
+		jlbTelefoneCelular = criarLabel("Tel. celular:", 210, 110, 110, 30, jlbTelefoneCelular);
+		jlbEmail = criarLabel("Email:", 10, 140, 110, 30, jlbEmail);
 
-		jlbRg = new JLabel("RG:");
-		jlbRg.setBounds(10, 50, 110, 30);
-		jlbRg.setVisible(true);
-
-		jlbCpf = new JLabel("CPF:");
-		jlbCpf.setBounds(210, 50, 110, 30);
-		jlbCpf.setVisible(true);
-
-		jlbDataNascimento = new JLabel("Data de nascimento:");
-		jlbDataNascimento.setBounds(420, 50, 120, 30);
-		jlbDataNascimento.setVisible(true);
-
-		jlbGenero = new JLabel("Gênero:");
-		jlbGenero.setBounds(10, 80, 110, 30);
-		jlbGenero.setVisible(true);
-
-		jlbEstadoCivil = new JLabel("Estado Civil:");
-		jlbEstadoCivil.setBounds(210, 80, 110, 30);
-		jlbEstadoCivil.setVisible(true);
-
-		jlbTelefoneResidencial = new JLabel("Tel. fixo:");
-		jlbTelefoneResidencial.setBounds(10, 110, 120, 30);
-		jlbTelefoneResidencial.setVisible(true);
-
-		jlbTelefoneCelular = new JLabel("Tel. celular:");
-		jlbTelefoneCelular.setBounds(210, 110, 110, 30);
-		jlbTelefoneCelular.setVisible(true);
-
-		jlbEmail = new JLabel("E-mail:");
-		jlbEmail.setBounds(10, 140, 110, 30);
-		jlbEmail.setVisible(true);
-
-		jtfNome = new JTextField();
-		jtfNome.setBounds(80, 24, 560, 24);
-		jtfNome.setVisible(true);
-
-		jtfRg = new JTextField();
-		jtfRg.setBounds(80, 54, 120, 24);
-		jtfRg.setVisible(true);
-
-		jtfCpf = new JTextField();
-		jtfCpf.setBounds(280, 54, 120, 24);
-		jtfCpf.setVisible(true);
-
-		try {
-			jtfDataNascimento = new JFormattedTextField(new MaskFormatter("####-##-##"));
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		jtfDataNascimento.setBounds(550, 54, 90, 24);
-		jtfDataNascimento.setVisible(true);
-
-		jtfGenero = new JTextField();
-		jtfGenero.setBounds(80, 84, 120, 24);
-		jtfGenero.setVisible(true);
+		jtfNome = criarTextField(80, 24, 560, 24, jtfNome);
+		jtfRg = criarTextField(80, 54, 120, 24, jtfRg);
+		jtfCpf = criarTextField(280, 54, 120, 24, jtfCpf);
+		jtfGenero = criarTextField(80, 84, 120, 24, jtfGenero);
+		jtfTelefoneResidencial = criarTextField(80, 114, 120, 24, jtfTelefoneResidencial);
+		jtfTelefoneCelular = criarTextField(280, 114, 120, 24, jtfTelefoneCelular);
+		jtfEmail = criarTextField(80, 144, 320, 24, jtfEmail);
 
 		jcbEstadoCivil = new JComboBox<>();
 		jcbEstadoCivil.setBounds(280, 84, 120, 24);
@@ -327,17 +239,13 @@ public class telaCadastroPessoas extends JInternalFrame implements ActionListene
 		jcbEstadoCivil.addItem("Separado(a) Judicialmente");
 		jcbEstadoCivil.setSelectedIndex(-1);
 
-		jtfTelefoneResidencial = new JTextField();
-		jtfTelefoneResidencial.setBounds(80, 114, 120, 24);
-		jtfTelefoneResidencial.setVisible(true);
-
-		jtfTelefoneCelular = new JTextField();
-		jtfTelefoneCelular.setBounds(280, 114, 120, 24);
-		jtfTelefoneCelular.setVisible(true);
-
-		jtfEmail = new JTextField();
-		jtfEmail.setBounds(80, 144, 320, 24);
-		jtfEmail.setVisible(true);
+		try {
+			jtfDataNascimento = new JFormattedTextField(new MaskFormatter("####-##-##"));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		jtfDataNascimento.setBounds(550, 54, 90, 24);
+		jtfDataNascimento.setVisible(true);
 
 		jpnCadastroPessoa = new JPanel();
 		jpnCadastroPessoa.setBounds(20, 50, 655, 182);
@@ -367,53 +275,19 @@ public class telaCadastroPessoas extends JInternalFrame implements ActionListene
 	}
 
 	private void criarPainelEndereco() {
-		jlbRua = new JLabel("Rua:");
-		jlbRua.setBounds(10, 20, 110, 30);
-		jlbRua.setVisible(true);
+		jlbRua = criarLabel("Rua:", 10, 20, 110, 30, jlbRua);
+		jlbNumero = criarLabel("Nº:", 510, 20, 110, 30, jlbNumero);
+		jlbBairro = criarLabel("Bairro:", 10, 50, 110, 30, jlbBairro);
+		jlbCidade = criarLabel("Cidade:", 210, 50, 120, 30, jlbCidade);
+		jlbUf = criarLabel("UF:", 420, 50, 110, 30, jlbUf);
+		jlbCep = criarLabel("CEP:", 510, 50, 110, 30, jlbCep);
 
-		jlbNumero = new JLabel("Nº:");
-		jlbNumero.setBounds(510, 20, 110, 30);
-		jlbNumero.setVisible(true);
-
-		jlbBairro = new JLabel("Bairro:");
-		jlbBairro.setBounds(10, 50, 110, 30);
-		jlbBairro.setVisible(true);
-
-		jlbCidade = new JLabel("Cidade:");
-		jlbCidade.setBounds(210, 50, 120, 30);
-		jlbCidade.setVisible(true);
-
-		jlbUf = new JLabel("UF:");
-		jlbUf.setBounds(420, 50, 110, 30);
-		jlbUf.setVisible(true);
-
-		jlbCep = new JLabel("CEP:");
-		jlbCep.setBounds(510, 50, 110, 30);
-		jlbCep.setVisible(true);
-
-		jtfRua = new JTextField();
-		jtfRua.setBounds(80, 24, 420, 24);
-		jtfRua.setVisible(true);
-
-		jtfNumero = new JTextField();
-		jtfNumero.setBounds(550, 24, 90, 24);
-		jtfNumero.setVisible(true);
-
-		jtfBairro = new JTextField();
-		jtfBairro.setBounds(80, 54, 120, 24);
-		jtfBairro.setVisible(true);
-
-		jtfCidade = new JTextField();
-		jtfCidade.setBounds(280, 54, 130, 24);
-		jtfCidade.setVisible(true);
-
-		jtfUf = new JTextField();
-		jtfUf.setBounds(450, 54, 50, 24);
-		jtfUf.setVisible(true);
-
-		jtfCep = new JTextField();
-		jtfCep.setBounds(550, 54, 90, 24);
-		jtfCep.setVisible(true);
+		jtfRua = criarTextField(80, 24, 420, 24, jtfRua);
+		jtfNumero = criarTextField(550, 24, 90, 24, jtfNumero);
+		jtfBairro = criarTextField(80, 54, 120, 24, jtfBairro);
+		jtfCidade = criarTextField(280, 52, 130, 24, jtfCidade);
+		jtfUf = criarTextField(450, 54, 50, 24, jtfUf);
+		jtfCep = criarTextField(550, 54, 90, 24, jtfCep);
 
 		jpnCadastroEndereco = new JPanel();
 		jpnCadastroEndereco.setBounds(20, 232, 655, 90);
@@ -436,21 +310,49 @@ public class telaCadastroPessoas extends JInternalFrame implements ActionListene
 
 	}
 
+	public JLabel criarLabel(String texto, Integer col, Integer lin, Integer lar, Integer alt, JLabel label) {
+		label = new JLabel(texto);
+		label.setBounds(col, lin, lar, alt);
+		label.setVisible(true);
+		getContentPane().add(label);
+		return label;
+
+	}
+
+	public JTextField criarTextField(Integer col, Integer lin, Integer lar, Integer alt, JTextField textField) {
+		textField = new JTextField();
+		textField.setBounds(col, lin, lar, alt);
+		textField.setVisible(true);
+		getContentPane().add(textField);
+		return textField;
+
+	}
+
+	public JButton criarBotao(String texto, Integer col, Integer lin, Integer lar, Integer alt, JButton button) {
+		button = new JButton(texto);
+		button.setBounds(col, lin, lar, alt);
+		button.addActionListener(this);
+		button.setVisible(true);
+		getContentPane().add(button);
+		return button;
+
+	}
+
 	public static void main(String[] args) {
 		new telaCadastroPessoas();
 	}
 
-	private Boolean verificaCampos() {
-		Boolean passou = false;
-		if (jtfNome.getText().equals("") || jtfRg.getText().equals("") || jtfCpf.getText().equals("")
-				|| jtfDataNascimento.getText().equals("") || jtfGenero.getText().equals("")
-				|| jcbEstadoCivil.getSelectedIndex() == -1 || jtfEmail.getText().equals("")) {
+	public Boolean verificaCampos(List<JTextField> componentes) {
+		Boolean passou = true;
+		for (JTextField cp : componentes) {
+			if (cp.getText().equals("")) {
+				passou = false;
+			}
+		}
+		if (passou == false) {
 			JOptionPane.showMessageDialog(null,
-					"Todos os campos são obrigatórios e um pareçe estar vazio!\nRevise-os e tente novamente!",
-					"Ops! Erro ao cadastrar uma nova pessoa", JOptionPane.WARNING_MESSAGE);
-			passou = false;
-		} else {
-			passou = true;
+					"Todos os campos são obrigatorios! Preencha corretamente e tente novamente.", "Campos em branco",
+					JOptionPane.ERROR_MESSAGE);
 		}
 		return passou;
 	}
@@ -542,7 +444,7 @@ public class telaCadastroPessoas extends JInternalFrame implements ActionListene
 
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == jbtRegistrarCliente) {
-			Boolean camposOk = verificaCampos();
+			Boolean camposOk = verificaCampos(componentes);
 			if (camposOk == true) {
 				desabilitarCamposPessoais();
 				setSize(700, 435);
@@ -558,7 +460,7 @@ public class telaCadastroPessoas extends JInternalFrame implements ActionListene
 			}
 		}
 		if (e.getSource() == jbtRegistrarCorretor) {
-			Boolean camposOk = verificaCampos();
+			Boolean camposOk = verificaCampos(componentes);
 			if (camposOk == true) {
 				desabilitarCamposPessoais();
 				setSize(700, 435);
@@ -586,17 +488,20 @@ public class telaCadastroPessoas extends JInternalFrame implements ActionListene
 
 			}
 			if (isCorretor == true) {
-				if(jtfSalario.getText().equals("") || jtfComissao.getText().equals("") || jtfUsuario.getText().equals("") || jtfSenha.getText().equals("")){
-					JOptionPane.showMessageDialog(null, "É obrigatório preencher os campos de comissão, salário. Também é necessário informar um nome de usuário e senha para esse corretor poder acessar o sistema!", "Erro ao salvar corretor", JOptionPane.WARNING_MESSAGE);
-				}else{
+				if (jtfSalario.getText().equals("") || jtfComissao.getText().equals("")
+						|| jtfUsuario.getText().equals("") || jtfSenha.getText().equals("")) {
+					JOptionPane.showMessageDialog(null,
+							"É obrigatório preencher os campos de comissão, salário. Também é necessário informar um nome de usuário e senha para esse corretor poder acessar o sistema!",
+							"Erro ao salvar corretor", JOptionPane.WARNING_MESSAGE);
+				} else {
 					Pessoa pessoa = cadastrarPessoaEndereco();
 					Corretor corretor = new Corretor(pessoa, corretorDao.maiorId() + 1,
-						Double.valueOf(jtfSalario.getText()), Double.valueOf(jtfComissao.getText()));
+							Double.valueOf(jtfSalario.getText()), Double.valueOf(jtfComissao.getText()));
 					corretorDao.inserir(corretor);
 					Usuario usuario = new Usuario(1, jtfUsuario.getText(), jtfSenha.getText(), corretor, 1);
 					usuarioDao.inserir(usuario);
 					JOptionPane.showMessageDialog(null, "Corretor cadastrado com sucesso!", "Sucesso!",
-						JOptionPane.PLAIN_MESSAGE);
+							JOptionPane.PLAIN_MESSAGE);
 				}
 			}
 		}
