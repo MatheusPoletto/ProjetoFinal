@@ -111,14 +111,10 @@ public class telaCadastroPessoas extends JInternalFrame implements ActionListene
 		jbtCancelar.setBackground(new Color(23, 20, 21));
 		jbtCancelar.setForeground(Color.white);
 
-		jpnSalvar = new JPanel();
-		jpnSalvar.setBounds(488, 365, 187, 35);
-		jpnSalvar.setVisible(false);
-		jpnSalvar.setLayout(null);
+		jpnSalvar = criarPanel("", 488, 365, 187, 35, jpnSalvar, false);
 		jpnSalvar.add(jbtSalvar);
 		jpnSalvar.add(jbtCancelar);
 		jpnSalvar.setBorder(BorderFactory.createLineBorder(new Color(23, 20, 20), 1));
-		getContentPane().add(jpnSalvar);
 
 	}
 
@@ -127,19 +123,16 @@ public class telaCadastroPessoas extends JInternalFrame implements ActionListene
 		jlbComissao = criarLabel("Comissão:", 105, 0, 80, 30, jlbComissao);
 		jlbUsuario = criarLabel("Usuário:", 203, 0, 80, 30, jlbUsuario);
 		jlbSenha = criarLabel("Senha:", 334, 0, 80, 30, jlbSenha);
-		
-		jtfSalario = criarTextField(55, 5, 50 ,27, jtfSalario);
+
+		jtfSalario = criarTextField(55, 5, 50, 27, jtfSalario);
 		jtfComissao = criarTextField(167, 4, 35, 27, jtfComissao);
 		jtfUsuario = criarTextField(252, 4, 82, 27, jtfUsuario);
 		jtfSenha = criarTextField(375, 4, 80, 27, jtfSenha);
-		
+
 		jtfSalario.setText("1.120");
 		jtfComissao.setText("10.0");
 
-		jpnInfoCorretor = new JPanel();
-		jpnInfoCorretor.setBounds(20, 365, 465, 35);
-		jpnInfoCorretor.setVisible(false);
-		jpnInfoCorretor.setLayout(null);
+		jpnInfoCorretor = criarPanel("", 20, 365, 465, 35, jpnInfoCorretor, false);
 		jpnInfoCorretor.add(jlbSalario);
 		jpnInfoCorretor.add(jtfSalario);
 		jpnInfoCorretor.add(jlbComissao);
@@ -149,7 +142,6 @@ public class telaCadastroPessoas extends JInternalFrame implements ActionListene
 		jpnInfoCorretor.add(jlbSenha);
 		jpnInfoCorretor.add(jtfSenha);
 		jpnInfoCorretor.setBorder(BorderFactory.createLineBorder(new Color(23, 20, 20), 1));
-		getContentPane().add(jpnInfoCorretor);
 
 	}
 
@@ -166,17 +158,13 @@ public class telaCadastroPessoas extends JInternalFrame implements ActionListene
 		jbtAjuda.setBorderPainted(false);
 		jbtAjuda.setBackground(new Color(0, 0, 0, 0));
 
-		jpnInteresses = new JPanel();
-		jpnInteresses.setBounds(20, 365, 465, 35);
-		jpnInteresses.setVisible(false);
-		jpnInteresses.setLayout(null);
+		jpnInteresses = criarPanel("", 20, 365, 465, 35, jpnInteresses, false);
 		jpnInteresses.add(jlbInteresses);
 		jpnInteresses.add(jtfInteresse1);
 		jpnInteresses.add(jtfInteresse2);
 		jpnInteresses.add(jtfInteresse3);
 		jpnInteresses.add(jbtAjuda);
 		jpnInteresses.setBorder(BorderFactory.createLineBorder(new Color(23, 20, 20), 1));
-		getContentPane().add(jpnInteresses);
 
 	}
 
@@ -200,14 +188,10 @@ public class telaCadastroPessoas extends JInternalFrame implements ActionListene
 		jtbBarra.add(jbtRegistrarCliente);
 		jtbBarra.add(jbtRegistrarCorretor);
 
-		jpnTipoCadastro = new JPanel();
-		jpnTipoCadastro.setBounds(20, 325, 325, 35);
-		jpnTipoCadastro.setVisible(true);
-		jpnTipoCadastro.setLayout(null);
+		jpnTipoCadastro = criarPanel("", 20, 325, 325, 35, jpnTipoCadastro, true);
 		jpnTipoCadastro.add(jlbTipoRegistro);
 		jpnTipoCadastro.add(jtbBarra);
 		jpnTipoCadastro.setBorder(BorderFactory.createLineBorder(new Color(23, 20, 20), 1));
-		getContentPane().add(jpnTipoCadastro);
 
 	}
 
@@ -247,11 +231,7 @@ public class telaCadastroPessoas extends JInternalFrame implements ActionListene
 		jtfDataNascimento.setBounds(550, 54, 90, 24);
 		jtfDataNascimento.setVisible(true);
 
-		jpnCadastroPessoa = new JPanel();
-		jpnCadastroPessoa.setBounds(20, 50, 655, 182);
-		jpnCadastroPessoa.setVisible(true);
-		jpnCadastroPessoa.setLayout(null);
-		jpnCadastroPessoa.setBorder(BorderFactory.createTitledBorder("Dados pessoais"));
+		jpnCadastroPessoa = criarPanel("Dados Pessoais", 20, 50, 655, 182, jpnCadastroPessoa, true);
 		jpnCadastroPessoa.add(jlbNome);
 		jpnCadastroPessoa.add(jlbRg);
 		jpnCadastroPessoa.add(jlbCpf);
@@ -270,7 +250,6 @@ public class telaCadastroPessoas extends JInternalFrame implements ActionListene
 		jpnCadastroPessoa.add(jtfTelefoneResidencial);
 		jpnCadastroPessoa.add(jtfTelefoneCelular);
 		jpnCadastroPessoa.add(jtfEmail);
-		getContentPane().add(jpnCadastroPessoa);
 
 	}
 
@@ -289,11 +268,7 @@ public class telaCadastroPessoas extends JInternalFrame implements ActionListene
 		jtfUf = criarTextField(450, 54, 50, 24, jtfUf);
 		jtfCep = criarTextField(550, 54, 90, 24, jtfCep);
 
-		jpnCadastroEndereco = new JPanel();
-		jpnCadastroEndereco.setBounds(20, 232, 655, 90);
-		jpnCadastroEndereco.setVisible(true);
-		jpnCadastroEndereco.setLayout(null);
-		jpnCadastroEndereco.setBorder(BorderFactory.createTitledBorder("Endereço"));
+		jpnCadastroEndereco = criarPanel("Endereço", 20, 232, 655, 90, jpnCadastroEndereco, true);
 		jpnCadastroEndereco.add(jlbRua);
 		jpnCadastroEndereco.add(jlbNumero);
 		jpnCadastroEndereco.add(jlbBairro);
@@ -306,55 +281,7 @@ public class telaCadastroPessoas extends JInternalFrame implements ActionListene
 		jpnCadastroEndereco.add(jtfCidade);
 		jpnCadastroEndereco.add(jtfUf);
 		jpnCadastroEndereco.add(jtfCep);
-		getContentPane().add(jpnCadastroEndereco);
 
-	}
-
-	public JLabel criarLabel(String texto, Integer col, Integer lin, Integer lar, Integer alt, JLabel label) {
-		label = new JLabel(texto);
-		label.setBounds(col, lin, lar, alt);
-		label.setVisible(true);
-		getContentPane().add(label);
-		return label;
-
-	}
-
-	public JTextField criarTextField(Integer col, Integer lin, Integer lar, Integer alt, JTextField textField) {
-		textField = new JTextField();
-		textField.setBounds(col, lin, lar, alt);
-		textField.setVisible(true);
-		getContentPane().add(textField);
-		return textField;
-
-	}
-
-	public JButton criarBotao(String texto, Integer col, Integer lin, Integer lar, Integer alt, JButton button) {
-		button = new JButton(texto);
-		button.setBounds(col, lin, lar, alt);
-		button.addActionListener(this);
-		button.setVisible(true);
-		getContentPane().add(button);
-		return button;
-
-	}
-
-	public static void main(String[] args) {
-		new telaCadastroPessoas();
-	}
-
-	public Boolean verificaCampos(List<JTextField> componentes) {
-		Boolean passou = true;
-		for (JTextField cp : componentes) {
-			if (cp.getText().equals("")) {
-				passou = false;
-			}
-		}
-		if (passou == false) {
-			JOptionPane.showMessageDialog(null,
-					"Todos os campos são obrigatorios! Preencha corretamente e tente novamente.", "Campos em branco",
-					JOptionPane.ERROR_MESSAGE);
-		}
-		return passou;
 	}
 
 	private Pessoa cadastrarPessoaEndereco() {
@@ -440,6 +367,65 @@ public class telaCadastroPessoas extends JInternalFrame implements ActionListene
 		jtfCidade.setText("");
 		jtfCep.setText("");
 
+	}
+
+	public Boolean verificaCampos(List<JTextField> componentes) {
+		Boolean passou = true;
+		for (JTextField cp : componentes) {
+			if (cp.getText().equals("")) {
+				passou = false;
+			}
+		}
+		if (passou == false) {
+			JOptionPane.showMessageDialog(null,
+					"Todos os campos são obrigatorios! Preencha corretamente e tente novamente.", "Campos em branco",
+					JOptionPane.ERROR_MESSAGE);
+		}
+		return passou;
+	}
+
+	public JPanel criarPanel(String texto, Integer col, Integer lin, Integer lar, Integer alt, JPanel panel,
+			Boolean visibilidade) {
+		panel = new JPanel();
+		panel.setLayout(null);
+		panel.setBorder(BorderFactory.createTitledBorder(texto));
+		panel.setBounds(col, lin, lar, alt);
+		panel.setVisible(visibilidade);
+		getContentPane().add(panel);
+		return panel;
+
+	}
+
+	public JLabel criarLabel(String texto, Integer col, Integer lin, Integer lar, Integer alt, JLabel label) {
+		label = new JLabel(texto);
+		label.setBounds(col, lin, lar, alt);
+		label.setVisible(true);
+		getContentPane().add(label);
+		return label;
+
+	}
+
+	public JTextField criarTextField(Integer col, Integer lin, Integer lar, Integer alt, JTextField textField) {
+		textField = new JTextField();
+		textField.setBounds(col, lin, lar, alt);
+		textField.setVisible(true);
+		getContentPane().add(textField);
+		return textField;
+
+	}
+
+	public JButton criarBotao(String texto, Integer col, Integer lin, Integer lar, Integer alt, JButton button) {
+		button = new JButton(texto);
+		button.setBounds(col, lin, lar, alt);
+		button.addActionListener(this);
+		button.setVisible(true);
+		getContentPane().add(button);
+		return button;
+
+	}
+
+	public static void main(String[] args) {
+		new telaCadastroPessoas();
 	}
 
 	public void actionPerformed(ActionEvent e) {

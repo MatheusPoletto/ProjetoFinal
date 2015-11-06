@@ -26,7 +26,7 @@ public class telaPrincipal extends JFrame implements ActionListener {
 	private static telaPrincipal tlPrincipal = new telaPrincipal();
 	private JMenu jmnImovel, jmnCadastro, jmnProcurar, jmnGerenciamento;
 	private JMenuItem jmiAlugar, jmiVender, jmiPessoa, jmiProcurarPessoa, jmiContaUsuario;
-	private Integer idUsuario;
+	private Usuario usuario;
 	private UsuarioDAO usuarioDao = DaoFactoryJDBC.get().usuarioDAO();
 	private ArrayList<JInternalFrame> frames = new ArrayList<>();
 
@@ -107,7 +107,7 @@ public class telaPrincipal extends JFrame implements ActionListener {
 	}
 
 	public void alteraVisibilidade() {
-		idUsuario = telaPrincipal.getTlPrincipal().getTlLogin().getIdUsuario();
+		usuario = telaPrincipal.getTlPrincipal().getTlLogin().getUsuario();
 		barra.setVisible(true);
 	}
 
@@ -150,7 +150,6 @@ public class telaPrincipal extends JFrame implements ActionListener {
 		}
 
 		if (e.getSource() == jmiContaUsuario) {
-			Usuario usuario = usuarioDao.buscar(idUsuario);
 			if (usuario.getNivelAcesso() == 0) {
 				JOptionPane.showMessageDialog(null, "Possui permissão de gestor");
 				esconderTelas();

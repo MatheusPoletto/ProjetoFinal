@@ -5,7 +5,6 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
@@ -30,18 +29,9 @@ import pessoa.Pessoa;
 import pessoa.Usuario;
 
 public class TelaListaPessoa extends JInternalFrame implements ActionListener {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
-	private JButton jbtEditarPessoa;
-	private JButton jbtRemoverPessoa;
-	private JButton jbtAtualizarPessoas;
-	private JButton jbtCriarPessoa;
-	private JButton jbtMenu;
-	private JButton jbtFiltrarCliente;
-	private JButton jbtFiltraCorretor;
-	private JButton jbtPesquisarRg;
+	private JButton jbtEditarPessoa, jbtRemoverPessoa, jbtAtualizarPessoas, jbtCriarPessoa, jbtMenu, jbtFiltrarCliente,
+			jbtFiltraCorretor, jbtPesquisarRg;
 	private JTable jtbPessoas;
 	private DefaultTableModel dtbPessoas;
 	private JScrollPane jspPessoas;
@@ -71,36 +61,13 @@ public class TelaListaPessoa extends JInternalFrame implements ActionListener {
 	}
 
 	private void criarMenu() {
-		jbtMenu = new JButton();
-		jbtMenu.setBounds(0, 0, 110, 44);
-		jbtMenu.setVisible(true);
-		jbtMenu.addActionListener(this);
-		jbtMenu.setIcon(new ImageIcon("botoes_png/menu.png"));
-		getContentPane().add(jbtMenu);
-
-		jbtCriarPessoa = new JButton("NOVO");
-		jbtEditarPessoa = new JButton("EDITAR");
-		jbtRemoverPessoa = new JButton("REMOVER");
-		jbtAtualizarPessoas = new JButton("ATUALIZAR");
-		jbtFiltrarCliente = new JButton("CLIENTES");
-		jbtFiltraCorretor = new JButton("CORRETORES");
-		jbtPesquisarRg = new JButton("PROCURAR RG");
-
-		jbtCriarPessoa.setBounds(0, 0, 110, 30);
-		jbtEditarPessoa.setBounds(0, 30, 110, 30);
-		jbtRemoverPessoa.setBounds(0, 60, 110, 30);
-		jbtAtualizarPessoas.setBounds(0, 90, 110, 30);
-		jbtFiltrarCliente.setBounds(0, 120, 110, 30);
-		jbtFiltraCorretor.setBounds(0, 150, 110, 30);
-		jbtPesquisarRg.setBounds(0, 180, 110, 30);
-
-		jbtCriarPessoa.addActionListener(this);
-		jbtEditarPessoa.addActionListener(this);
-		jbtRemoverPessoa.addActionListener(this);
-		jbtAtualizarPessoas.addActionListener(this);
-		jbtFiltrarCliente.addActionListener(this);
-		jbtFiltraCorretor.addActionListener(this);
-		jbtPesquisarRg.addActionListener(this);
+		jbtCriarPessoa = criarBotao("NOVO", 0, 0, 110, 30, jbtCriarPessoa);
+		jbtEditarPessoa = criarBotao("EDITAR", 0, 30, 110, 30, jbtEditarPessoa);
+		jbtRemoverPessoa = criarBotao("REMOVER", 0, 60, 110, 30, jbtRemoverPessoa);
+		jbtAtualizarPessoas = criarBotao("ATUALIZAR", 0, 90, 110, 30, jbtAtualizarPessoas);
+		jbtFiltrarCliente = criarBotao("CLIENTES", 0, 120, 110, 30, jbtFiltraCorretor);
+		jbtFiltraCorretor = criarBotao("CORRETORES", 0, 150, 110, 30, jbtFiltraCorretor);
+		jbtPesquisarRg = criarBotao("PROCURAR RG", 0, 180, 110, 30, jbtPesquisarRg);
 
 		jtbBarra = new JToolBar();
 		jtbBarra.setBackground(Color.white);
@@ -120,38 +87,43 @@ public class TelaListaPessoa extends JInternalFrame implements ActionListener {
 
 	}
 
-	public void actionPerformed(ActionEvent e) {
+	private void criarTabela() {
+		jtbPessoas = new JTable();
+		getContentPane().add(jtbPessoas);
+		dtbPessoas = new DefaultTableModel();
 
-		if (e.getSource() == jbtMenu) {
-			abrirMenu();
+		dtbPessoas.addColumn("ID");
+		dtbPessoas.addColumn("NOME");
+		dtbPessoas.addColumn("RG");
+		dtbPessoas.addColumn("CPF");
+		dtbPessoas.addColumn("TIPO");
+
+		jtbPessoas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		jtbPessoas.setModel(dtbPessoas);
+		jspPessoas = new JScrollPane(jtbPessoas);
+		jspPessoas.setBounds(0, 45, 702, 422);
+		jspPessoas.setVisible(true);
+		getContentPane().add(jspPessoas);
+
+		jtbPessoas.getColumnModel().getColumn(0).setPreferredWidth(46);
+		jtbPessoas.getColumnModel().getColumn(1).setPreferredWidth(210);
+		jtbPessoas.getColumnModel().getColumn(2).setPreferredWidth(80);
+		jtbPessoas.getColumnModel().getColumn(3).setPreferredWidth(100);
+		jtbPessoas.getColumnModel().getColumn(4).setPreferredWidth(100);
+
+		alimentarTabela();
+	}
+
+	public void alimentarTabela() {
+		for (Corretor corretor : corretorDao.todos()) {
+			dtbPessoas
+					.addRow(new String[] { String.valueOf(corretor.getPessoa().getId()), corretor.getPessoa().getNome(),
+							corretor.getPessoa().getRg(), corretor.getPessoa().getCpf(), "CORRETOR" });
 		}
 
-		if (e.getSource() == jbtCriarPessoa) {
-			criarPessoa();
-		}
-
-		if (e.getSource() == jbtEditarPessoa) {
-			editarPessoa();
-		}
-
-		if (e.getSource() == jbtRemoverPessoa) {
-			removerPessoa();
-		}
-
-		if (e.getSource() == jbtAtualizarPessoas) {
-			atualizarPessoas();
-		}
-
-		if (e.getSource() == jbtFiltrarCliente) {
-			filtrarCliente();
-		}
-
-		if (e.getSource() == jbtFiltraCorretor) {
-			filtrarCorretor();
-		}
-
-		if (e.getSource() == jbtPesquisarRg) {
-			pesquisarRg();
+		for (Cliente cliente : clienteDao.todos()) {
+			dtbPessoas.addRow(new String[] { String.valueOf(cliente.getPessoa().getId()), cliente.getPessoa().getNome(),
+					cliente.getPessoa().getRg(), cliente.getPessoa().getCpf(), "CLIENTE" });
 		}
 
 	}
@@ -159,13 +131,15 @@ public class TelaListaPessoa extends JInternalFrame implements ActionListener {
 	private void criarPessoa() {
 		telaPrincipal.getTlPrincipal().esconderTelas();
 		telaPrincipal.getTlPrincipal().getTlCadastroPessoa().setVisible(true);
-		
+
 	}
 
 	private void editarPessoa() {
 		telaPrincipal.getTlPrincipal().esconderTelas();
 		telaPrincipal.getTlPrincipal().getTlAlterarPessoa().setVisible(true);
-		telaPrincipal.getTlPrincipal().getTlAlterarPessoa().preencherCampos(Integer.valueOf(dtbPessoas.getValueAt(jtbPessoas.getSelectedRow(), 0).toString()), String.valueOf(dtbPessoas.getValueAt(jtbPessoas.getSelectedRow(),  4)));
+		telaPrincipal.getTlPrincipal().getTlAlterarPessoa().preencherCampos(
+				Integer.valueOf(dtbPessoas.getValueAt(jtbPessoas.getSelectedRow(), 0).toString()),
+				String.valueOf(dtbPessoas.getValueAt(jtbPessoas.getSelectedRow(), 4)));
 	}
 
 	private void removerPessoa() {
@@ -189,8 +163,8 @@ public class TelaListaPessoa extends JInternalFrame implements ActionListener {
 			for (Pessoa pessoa : pessoaDao.todos()) {
 				if (pessoa.getId() == id) {
 					pessoaDao.excluir(pessoa);
-					for(Endereco endereco : enderecoDao.todos()){
-						if(endereco.getId() == pessoa.getEndereco().getId()){
+					for (Endereco endereco : enderecoDao.todos()) {
+						if (endereco.getId() == pessoa.getEndereco().getId()) {
 							enderecoDao.excluir(endereco);
 						}
 					}
@@ -245,19 +219,7 @@ public class TelaListaPessoa extends JInternalFrame implements ActionListener {
 		}
 	}
 
-	private void abrirMenu() {
-		if (menuVisivel == false) {
-			jspPessoas.setBounds(110, 45, 590, 422);
-			jtbBarra.setVisible(true);
-			menuVisivel = true;
-		} else {
-			jspPessoas.setBounds(0, 45, 702, 422);
-			jtbBarra.setVisible(false);
-			menuVisivel = false;
-		}
-	}
-
-	private void atualizarPessoas() {
+	public void atualizarPessoas() {
 		dtbPessoas.setRowCount(0);
 		alimentarTabela();
 		JOptionPane.showMessageDialog(null, "Atualizado com sucesso!");
@@ -279,45 +241,16 @@ public class TelaListaPessoa extends JInternalFrame implements ActionListener {
 		}
 	}
 
-	private void criarTabela() {
-		jtbPessoas = new JTable();
-		getContentPane().add(jtbPessoas);
-		dtbPessoas = new DefaultTableModel();
-
-		dtbPessoas.addColumn("ID");
-		dtbPessoas.addColumn("NOME");
-		dtbPessoas.addColumn("RG");
-		dtbPessoas.addColumn("CPF");
-		dtbPessoas.addColumn("TIPO");
-
-		jtbPessoas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		jtbPessoas.setModel(dtbPessoas);
-		jspPessoas = new JScrollPane(jtbPessoas);
-		jspPessoas.setBounds(0, 45, 702, 422);
-		jspPessoas.setVisible(true);
-		getContentPane().add(jspPessoas);
-
-		jtbPessoas.getColumnModel().getColumn(0).setPreferredWidth(46);
-		jtbPessoas.getColumnModel().getColumn(1).setPreferredWidth(210);
-		jtbPessoas.getColumnModel().getColumn(2).setPreferredWidth(80);
-		jtbPessoas.getColumnModel().getColumn(3).setPreferredWidth(100);
-		jtbPessoas.getColumnModel().getColumn(4).setPreferredWidth(100);
-
-		alimentarTabela();
-	}
-
-	private void alimentarTabela() {
-		for (Corretor corretor : corretorDao.todos()) {
-			dtbPessoas
-					.addRow(new String[] { String.valueOf(corretor.getPessoa().getId()), corretor.getPessoa().getNome(),
-							corretor.getPessoa().getRg(), corretor.getPessoa().getCpf(), "CORRETOR" });
+	private void abrirMenu() {
+		if (menuVisivel == false) {
+			jspPessoas.setBounds(110, 45, 590, 422);
+			jtbBarra.setVisible(true);
+			menuVisivel = true;
+		} else {
+			jspPessoas.setBounds(0, 45, 702, 422);
+			jtbBarra.setVisible(false);
+			menuVisivel = false;
 		}
-
-		for (Cliente cliente : clienteDao.todos()) {
-			dtbPessoas.addRow(new String[] { String.valueOf(cliente.getPessoa().getId()), cliente.getPessoa().getNome(),
-					cliente.getPessoa().getRg(), cliente.getPessoa().getCpf(), "CLIENTE" });
-		}
-
 	}
 
 	private void criarLabelTitulo() {
@@ -329,6 +262,51 @@ public class TelaListaPessoa extends JInternalFrame implements ActionListener {
 		jlbTitulo.setBackground(new Color(23, 20, 20));
 		jlbTitulo.setForeground(Color.white);
 		getContentPane().add(jlbTitulo);
+	}
+
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == jbtMenu) {
+			abrirMenu();
+		}
+
+		if (e.getSource() == jbtCriarPessoa) {
+			criarPessoa();
+		}
+
+		if (e.getSource() == jbtEditarPessoa) {
+			editarPessoa();
+		}
+
+		if (e.getSource() == jbtRemoverPessoa) {
+			removerPessoa();
+		}
+
+		if (e.getSource() == jbtAtualizarPessoas) {
+			atualizarPessoas();
+		}
+
+		if (e.getSource() == jbtFiltrarCliente) {
+			filtrarCliente();
+		}
+
+		if (e.getSource() == jbtFiltraCorretor) {
+			filtrarCorretor();
+		}
+
+		if (e.getSource() == jbtPesquisarRg) {
+			pesquisarRg();
+		}
+
+	}
+
+	public JButton criarBotao(String texto, Integer col, Integer lin, Integer lar, Integer alt, JButton button) {
+		button = new JButton(texto);
+		button.setBounds(col, lin, lar, alt);
+		button.addActionListener(this);
+		button.setVisible(true);
+		getContentPane().add(button);
+		return button;
+
 	}
 
 	public static void main(String[] args) {

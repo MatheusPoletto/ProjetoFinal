@@ -1,11 +1,9 @@
 package tela;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -25,7 +23,7 @@ public class telaLogin extends JInternalFrame implements ActionListener{
 	private JPasswordField jpfSenha;
 	private JLabel jlbUsuario, jlbSenha, jlbIcon1;
 	private JButton jbtEntrar;
-	private Integer idUsuario;
+	private Usuario usuario;
 	private UsuarioDAO usuarioDao = DaoFactoryJDBC.get().usuarioDAO();
 
 	telaLogin(){
@@ -90,22 +88,21 @@ public class telaLogin extends JInternalFrame implements ActionListener{
 		getContentPane().add(textField);
 
 	}
-
-	public Integer getIdUsuario() {
-		return idUsuario;
-	}
-
-	public void setIdUsuario(Integer idUsuario) {
-		this.idUsuario = idUsuario;
-	}
-
 	
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+
 	public void actionPerformed(ActionEvent e) {
 		Boolean autenticou = false;
 		if(e.getSource() == jbtEntrar){
 			for(Usuario usuarios : usuarioDao.todos()){
 				if(jtfUsuario.getText().equals(usuarios.getLogin()) && jpfSenha.getText().equals(usuarios.getSenha())){
-					idUsuario = usuarios.getIdUsuario();
+					usuario = usuarios; 
 					telaPrincipal.getTlPrincipal().alteraVisibilidade();
 					autenticou = true;
 					this.dispose();
