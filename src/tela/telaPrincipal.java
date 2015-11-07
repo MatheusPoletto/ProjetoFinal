@@ -1,16 +1,22 @@
 package tela;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.SwingConstants;
+
 import DAOFactory.DaoFactoryJDBC;
 import dao.UsuarioDAO;
 import pessoa.Usuario;
@@ -18,7 +24,7 @@ import pessoa.Usuario;
 public class telaPrincipal extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	private JMenuBar barra;
-	private telaLogin tlLogin = new telaLogin();
+	//private telaLogin tlLogin = new telaLogin();
 	private telaCadastroPessoas tlCadastroPessoa = new telaCadastroPessoas();
 	private TelaListaPessoa tlListaPessoas = new TelaListaPessoa();
 	private TelaAlterarPessoa tlAlterarPessoa = new TelaAlterarPessoa();
@@ -29,6 +35,7 @@ public class telaPrincipal extends JFrame implements ActionListener {
 	private Usuario usuario;
 	private UsuarioDAO usuarioDao = DaoFactoryJDBC.get().usuarioDAO();
 	private ArrayList<JInternalFrame> frames = new ArrayList<>();
+	private JLabel jlbLogo;
 
 	telaPrincipal() {
 		setTitle("M&M Sistema Imobiliário");
@@ -36,27 +43,36 @@ public class telaPrincipal extends JFrame implements ActionListener {
 
 		criarBarra();
 
-		getContentPane().setBackground(Color.white);
+		
+		jlbLogo = new JLabel();
+		jlbLogo.setBounds(808, 515, 175, 75);
+		//jlbLogo.setBounds(808, 0, 175, 75);
+		jlbLogo.setVisible(true);
+		jlbLogo.setOpaque(true);
+		jlbLogo.setIcon(new ImageIcon("img/logo_imo.png"));
+		getContentPane().add(jlbLogo);
+		
+		
 		setJMenuBar(barra);
 		setSize(1000, 650);
 		setVisible(true);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-		frames.add(tlLogin);
+		//frames.add(tlLogin);
 		frames.add(tlCadastroPessoa);
 		frames.add(tlListaPessoas);
 		frames.add(tlAlterarPessoa);
 		frames.add(tlListaUsuarios);
 		posicionaFrames(frames);
 
-		tlLogin.setVisible(true);
+		//tlLogin.setVisible(true);
 
 	}
 
 	private void criarBarra() {
 		barra = new JMenuBar();
-		barra.setVisible(false);
+		barra.setVisible(true);
 
 		jmnCadastro = new JMenu("Cadastro");
 		jmnImovel = new JMenu("Imóvel");
@@ -97,7 +113,7 @@ public class telaPrincipal extends JFrame implements ActionListener {
 	}
 
 	public void esconderTelas() {
-		tlLogin.setVisible(false);
+		//tlLogin.setVisible(false);
 		tlCadastroPessoa.setVisible(false);
 		tlListaPessoas.setVisible(false);
 		tlAlterarPessoa.setVisible(false);
@@ -107,13 +123,13 @@ public class telaPrincipal extends JFrame implements ActionListener {
 	}
 
 	public void alteraVisibilidade() {
-		usuario = telaPrincipal.getTlPrincipal().getTlLogin().getUsuario();
+		//usuario = telaPrincipal.getTlPrincipal().getTlLogin().getUsuario();
 		barra.setVisible(true);
 	}
 
-	public telaLogin getTlLogin() {
-		return tlLogin;
-	}
+	//public telaLogin getTlLogin() {
+		//return tlLogin;
+	//}
 
 	public telaCadastroPessoas getTlCadastroPessoa() {
 		return tlCadastroPessoa;

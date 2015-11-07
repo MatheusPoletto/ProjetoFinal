@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -17,7 +18,7 @@ import DAOFactory.DaoFactoryJDBC;
 import dao.UsuarioDAO;
 import pessoa.Usuario;
 
-public class telaLogin extends JInternalFrame implements ActionListener{
+public class telaLogin extends JFrame implements ActionListener{
 	private static final long serialVersionUID = 1L;
 	private JTextField jtfUsuario;
 	private JPasswordField jpfSenha;
@@ -27,7 +28,7 @@ public class telaLogin extends JInternalFrame implements ActionListener{
 	private UsuarioDAO usuarioDao = DaoFactoryJDBC.get().usuarioDAO();
 
 	telaLogin(){
-		setTitle("Login");
+		setTitle("ImoSoft - Login");
 		setLayout(null);
 		
 		adicionaComponentes();
@@ -37,7 +38,9 @@ public class telaLogin extends JInternalFrame implements ActionListener{
 		
 		setResizable(false);
 		setSize(400, 300);
-		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		getContentPane().setBackground(Color.white);
+		setLocationRelativeTo(null);
 		setVisible(true);
 		
 	}
@@ -51,11 +54,11 @@ public class telaLogin extends JInternalFrame implements ActionListener{
 		jtfUsuario.setBounds(125, 130, 150, 25);
 		jpfSenha.setBounds(125, 190, 150, 25);
 		jbtEntrar.setBounds(120, 220, 160, 25);
-		jlbIcon1.setBounds(168, 15, 64, 64);
+		jlbIcon1.setBounds(113, 15, 175, 75);
 
 		jbtEntrar.addActionListener(this);
-		jbtEntrar.setBackground(Color.GREEN);
-		jlbIcon1.setIcon(new ImageIcon("img/house158.png"));
+		jbtEntrar.setBackground(new Color(144,230,158));
+		jlbIcon1.setIcon(new ImageIcon("img/logo_imo.png"));
 
 		jtfUsuario.setVisible(true);
 		jpfSenha.setVisible(true);
