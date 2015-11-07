@@ -6,12 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
-import DAOFactory.DaoFactoryJDBC;
 import conexao.ConexaoUtil;
 import pessoa.Cliente;
-import pessoa.Endereco;
-import pessoa.Pessoa;
 
 public class ClienteDAOJDBC implements ClienteDAO{
 	private Connection con;

@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
@@ -61,6 +62,8 @@ public class TelaListaPessoa extends JInternalFrame implements ActionListener {
 	}
 
 	private void criarMenu() {
+		jbtMenu = criarBotao("", 0, 0, 110, 44, jbtMenu);
+		jbtMenu.setIcon(new ImageIcon("botoes_png/menu.png"));
 		jbtCriarPessoa = criarBotao("NOVO", 0, 0, 110, 30, jbtCriarPessoa);
 		jbtEditarPessoa = criarBotao("EDITAR", 0, 30, 110, 30, jbtEditarPessoa);
 		jbtRemoverPessoa = criarBotao("REMOVER", 0, 60, 110, 30, jbtRemoverPessoa);
