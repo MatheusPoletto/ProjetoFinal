@@ -24,7 +24,7 @@ public class TelaCadastroImovel extends JFrame implements ActionListener {
 	private JButton jbtProcurarCliente;
 	
 	public TelaCadastroImovel() {
-		setTitle("Cadastrar pessoa");
+		setTitle("Cadastrar imóvel");
 		setLayout(null);
 
 		jlbTitulo = new JLabel("CADASTRO DE IMÓVEL", SwingConstants.CENTER);

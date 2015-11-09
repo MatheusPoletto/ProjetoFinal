@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -57,6 +59,26 @@ public class telaLogin extends JFrame implements ActionListener{
 		jlbIcon1.setBounds(113, 15, 175, 75);
 
 		jbtEntrar.addActionListener(this);
+		jbtEntrar.addKeyListener(new KeyListener() {
+			
+			@Override
+			public void keyTyped(KeyEvent e) {
+
+			}
+			
+			@Override
+			public void keyReleased(KeyEvent e) {
+				if(e.getKeyCode() == KeyEvent.VK_ENTER ){
+					autenticarUsuario();
+				}
+				
+			}
+			
+			@Override
+			public void keyPressed(KeyEvent arg0) {
+				
+			}
+		});
 		jbtEntrar.setBackground(new Color(144,230,158));
 		jlbIcon1.setIcon(new ImageIcon("img/logo_imo.png"));
 
@@ -101,25 +123,25 @@ public class telaLogin extends JFrame implements ActionListener{
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		Boolean autenticou = false;
 		if(e.getSource() == jbtEntrar){
-			for(Usuario usuarios : usuarioDao.todos()){
-				if(jtfUsuario.getText().equals(usuarios.getLogin()) && jpfSenha.getText().equals(usuarios.getSenha())){
-					usuario = usuarios; 
-					telaPrincipal.getTlPrincipal().alteraVisibilidade();
-					autenticou = true;
-					this.dispose();
-				}
-			}
-			if(autenticou == false){
-				JOptionPane.showMessageDialog(null, "Falha ao autenticar");
-			}
+			autenticarUsuario();
 		}
 	}
 	
-	public static void main(String[] args) {
-		new telaLogin();
+	public void autenticarUsuario(){
+		Boolean autenticou = false;
+		for(Usuario usuarios : usuarioDao.todos()){
+			if(jtfUsuario.getText().equals(usuarios.getLogin()) && jpfSenha.getText().equals(usuarios.getSenha())){
+				usuario = usuarios; 
+				telaPrincipal.getTlPrincipal().alteraVisibilidade();
+				autenticou = true;
+				this.dispose();
+			}
+		}
+		if(autenticou == false){
+			JOptionPane.showMessageDialog(null, "Falha ao autenticar");
+		}
 	}
-	
 }
+
 

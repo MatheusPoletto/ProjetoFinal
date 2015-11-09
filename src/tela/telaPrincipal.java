@@ -16,6 +16,8 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
+import javax.swing.event.MenuEvent;
+import javax.swing.event.MenuListener;
 
 import DAOFactory.DaoFactoryJDBC;
 import dao.UsuarioDAO;
@@ -29,8 +31,9 @@ public class telaPrincipal extends JFrame implements ActionListener {
 	private TelaListaPessoa tlListaPessoas = new TelaListaPessoa();
 	private TelaAlterarPessoa tlAlterarPessoa = new TelaAlterarPessoa();
 	private TelaListaUsuario tlListaUsuarios = new TelaListaUsuario();
+	private telaLogin tlLogin = new telaLogin();
 	private static telaPrincipal tlPrincipal = new telaPrincipal();
-	private JMenu jmnImovel, jmnCadastro, jmnProcurar, jmnGerenciamento;
+	private JMenu jmnImovel, jmnCadastro, jmnProcurar, jmnGerenciamento, jmnSair;
 	private JMenuItem jmiAlugar, jmiVender, jmiPessoa, jmiProcurarPessoa, jmiContaUsuario;
 	private Usuario usuario;
 	private UsuarioDAO usuarioDao = DaoFactoryJDBC.get().usuarioDAO();
@@ -100,6 +103,30 @@ public class telaPrincipal extends JFrame implements ActionListener {
 		jmiContaUsuario.addActionListener(this);
 		jmnGerenciamento.add(jmiContaUsuario);
 		barra.add(jmnGerenciamento);
+		
+		jmnSair = new JMenu("Sair");
+		jmnSair.addMenuListener(new MenuListener() {
+			
+			@Override
+			public void menuSelected(MenuEvent e) {
+				telaPrincipal.getTlPrincipal().setVisible(false);
+				telaPrincipal.getTlPrincipal().getTlLogin().setVisible(true);
+				
+			}
+			
+			@Override
+			public void menuDeselected(MenuEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void menuCanceled(MenuEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		barra.add(jmnSair);
 
 	}
 
@@ -124,6 +151,8 @@ public class telaPrincipal extends JFrame implements ActionListener {
 
 	public void alteraVisibilidade() {
 		//usuario = telaPrincipal.getTlPrincipal().getTlLogin().getUsuario();
+		usuario = tlLogin.getUsuario();
+		tlPrincipal.setVisible(true);
 		barra.setVisible(true);
 	}
 
@@ -146,6 +175,11 @@ public class telaPrincipal extends JFrame implements ActionListener {
 	public TelaListaUsuario getTlListaUsuarios() {
 		return tlListaUsuarios;
 	}
+	
+	public telaLogin getTlLogin() {
+		return tlLogin;
+	}
+	
 
 	public static telaPrincipal getTlPrincipal() {
 		if (tlPrincipal == null) {
@@ -178,7 +212,8 @@ public class telaPrincipal extends JFrame implements ActionListener {
 	}
 
 	public static void main(String[] args) {
-		telaPrincipal.getTlPrincipal();
+		telaPrincipal.getTlPrincipal().getTlLogin();	
+		tlPrincipal.setVisible(false);
 	}
 
 }
