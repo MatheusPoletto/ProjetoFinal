@@ -6,7 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -14,7 +13,12 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import DAOFactory.DaoFactoryJDBC;
+import dao.ClienteDAO;
+import pessoa.Cliente;
+
 public class TelaCadastroImovel extends JFrame implements ActionListener {
+	private static final long serialVersionUID = -2193676061599572341L;
 	private JLabel jlbTitulo, jlbRua, jlbNumero, jlbBairro, jlbCidade, jlbUf, jlbCep;
 	private JTextField jtfRua, jtfNumero, jtfBairro, jtfCidade, jtfUf, jtfCep;
 	private JPanel jpnCadastroEndereco;
@@ -22,6 +26,9 @@ public class TelaCadastroImovel extends JFrame implements ActionListener {
 	private JTextField jtfProprietario;
 	private JPanel jpnProprietario;
 	private JButton jbtProcurarCliente;
+	private Cliente cliente;
+	private ClienteDAO clienteDao = DaoFactoryJDBC.get().clienteDAO();
+	private JPanel jpnMaps;
 	
 	public TelaCadastroImovel() {
 		setTitle("Cadastrar imóvel");
@@ -43,7 +50,9 @@ public class TelaCadastroImovel extends JFrame implements ActionListener {
 		jtfProprietario.setEnabled(false);
 		jbtProcurarCliente = criarBotao("PROCURAR", 520, 9, 100, 24, jbtProcurarCliente);
 		
-		jpnProprietario = criarPanel("", 22, 140, 651, 43, jpnProprietario, true);
+		jpnMaps = criarPanel("Visualização do Google Maps", 22, 140, 651, 200, jpnMaps, true);
+		
+		jpnProprietario = criarPanel("", 22, 340, 651, 43, jpnProprietario, true);
 		jpnProprietario.add(jlbProprietario);
 		jpnProprietario.add(jtfProprietario);
 		jpnProprietario.add(jbtProcurarCliente);
@@ -124,14 +133,31 @@ public class TelaCadastroImovel extends JFrame implements ActionListener {
 		return button;
 
 	}
+	
+	public void preencherCampos(Integer idCliente){
+		cliente = clienteDao.buscar(idCliente);
+		jtfProprietario.setText("");
+		jtfProprietario.setText(cliente.getPessoa().getNome() + " | RG: "+ cliente.getPessoa().getRg());
+		 
+	}
+
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
 
 	public static void main(String[] args) {
 		new TelaCadastroImovel();
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent arg0) {
-		// TODO Auto-generated method stub
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource() == jbtProcurarCliente){
+			TelaProcurarCliente tlProcurarCliente = new TelaProcurarCliente();
+		}
 		
 	}
 }

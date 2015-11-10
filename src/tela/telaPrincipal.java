@@ -1,7 +1,5 @@
 package tela;
 
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -15,28 +13,25 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-import javax.swing.SwingConstants;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
 
-import DAOFactory.DaoFactoryJDBC;
-import dao.UsuarioDAO;
 import pessoa.Usuario;
 
 public class telaPrincipal extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	private JMenuBar barra;
-	//private telaLogin tlLogin = new telaLogin();
 	private telaCadastroPessoas tlCadastroPessoa = new telaCadastroPessoas();
 	private TelaListaPessoa tlListaPessoas = new TelaListaPessoa();
 	private TelaAlterarPessoa tlAlterarPessoa = new TelaAlterarPessoa();
 	private TelaListaUsuario tlListaUsuarios = new TelaListaUsuario();
+	private TelaProcurarCliente tlProcurarCliente = new TelaProcurarCliente();
+	private TelaCadastroImovel tlCadastroImovel = new TelaCadastroImovel();
 	private telaLogin tlLogin = new telaLogin();
 	private static telaPrincipal tlPrincipal = new telaPrincipal();
 	private JMenu jmnImovel, jmnCadastro, jmnProcurar, jmnGerenciamento, jmnSair;
 	private JMenuItem jmiAlugar, jmiVender, jmiPessoa, jmiProcurarPessoa, jmiContaUsuario;
 	private Usuario usuario;
-	private UsuarioDAO usuarioDao = DaoFactoryJDBC.get().usuarioDAO();
 	private ArrayList<JInternalFrame> frames = new ArrayList<>();
 	private JLabel jlbLogo;
 
@@ -67,6 +62,7 @@ public class telaPrincipal extends JFrame implements ActionListener {
 		frames.add(tlListaPessoas);
 		frames.add(tlAlterarPessoa);
 		frames.add(tlListaUsuarios);
+		frames.add(tlProcurarCliente);
 		posicionaFrames(frames);
 
 		//tlLogin.setVisible(true);
@@ -116,13 +112,11 @@ public class telaPrincipal extends JFrame implements ActionListener {
 			
 			@Override
 			public void menuDeselected(MenuEvent e) {
-				// TODO Auto-generated method stub
 				
 			}
 			
 			@Override
 			public void menuCanceled(MenuEvent e) {
-				// TODO Auto-generated method stub
 				
 			}
 		});
@@ -145,6 +139,8 @@ public class telaPrincipal extends JFrame implements ActionListener {
 		tlListaPessoas.setVisible(false);
 		tlAlterarPessoa.setVisible(false);
 		tlListaUsuarios.setVisible(false);
+		tlCadastroImovel.setVisible(false);
+		tlProcurarCliente.setVisible(false);
 
 		posicionaFrames(frames);
 	}
@@ -163,7 +159,15 @@ public class telaPrincipal extends JFrame implements ActionListener {
 	public telaCadastroPessoas getTlCadastroPessoa() {
 		return tlCadastroPessoa;
 	}
+	
+	public TelaCadastroImovel getlTlCadastroImovel() {
+		return tlCadastroImovel;
+	}
 
+	public TelaProcurarCliente getTlProcurarCliente() {
+		return tlProcurarCliente;
+	}
+	
 	public TelaAlterarPessoa getTlAlterarPessoa() {
 		return tlAlterarPessoa;
 	}

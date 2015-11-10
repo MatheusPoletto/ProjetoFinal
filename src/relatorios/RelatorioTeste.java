@@ -16,6 +16,7 @@ public class RelatorioTeste {
 
 	public static void main(String[] args) {
 		
+
 		Map<String, Object> parametros = new HashMap<String, Object>();
 		parametros.put("codigo", 1);
 		
@@ -33,5 +34,7 @@ public class RelatorioTeste {
 		new RelatorioUtil().compileViewReport(
 				"src/relatorios/Cherry.jrxml",
 				clientes, parametros);
+		
+		
 	}
 }

@@ -215,7 +215,7 @@ public class TelaListaPessoa extends JInternalFrame implements ActionListener {
 						JOptionPane.WARNING_MESSAGE);
 			} else if (encontrou == true) {
 				JOptionPane.showMessageDialog(null,
-						"Durante a pesquisa foram encontradas [" + dtbPessoas.getRowCount() + "] pessoa(as) com o RG ["
+						"Durante a pesquisa foram encontradas [" + dtbPessoas.getRowCount()+1 + "] pessoa(as) com o RG ["
 								+ rg + "]\nO resultado está sendo exibido na tabela!",
 						"Resultado", JOptionPane.PLAIN_MESSAGE);
 			}
