@@ -4,14 +4,18 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import DAOFactory.DaoFactoryJDBC;
 import dao.ClienteDAO;
@@ -29,6 +33,7 @@ public class TelaCadastroImovel extends JFrame implements ActionListener {
 	private Cliente cliente;
 	private ClienteDAO clienteDao = DaoFactoryJDBC.get().clienteDAO();
 	private JPanel jpnMaps;
+	private JFileChooser chooser;
 	
 	public TelaCadastroImovel() {
 		setTitle("Cadastrar imóvel");
@@ -50,12 +55,20 @@ public class TelaCadastroImovel extends JFrame implements ActionListener {
 		jtfProprietario.setEnabled(false);
 		jbtProcurarCliente = criarBotao("PROCURAR", 520, 9, 100, 24, jbtProcurarCliente);
 		
-		jpnMaps = criarPanel("Visualização do Google Maps", 22, 140, 651, 200, jpnMaps, true);
+		jpnMaps = criarPanel("Imagem", 22, 140, 651, 200, jpnMaps, true);
 		
 		jpnProprietario = criarPanel("", 22, 340, 651, 43, jpnProprietario, true);
 		jpnProprietario.add(jlbProprietario);
 		jpnProprietario.add(jtfProprietario);
 		jpnProprietario.add(jbtProcurarCliente);
+	
+		chooser = new JFileChooser();
+		//chooser.setFileFilter(filter);
+		String caminho = "";
+		chooser.showOpenDialog(this);
+		
+		File file = chooser.getSelectedFile();
+		System.out.println(file.getAbsolutePath());
 		
 		setResizable(false);
 		setSize(707, 600);
