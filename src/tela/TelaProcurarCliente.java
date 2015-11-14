@@ -136,8 +136,6 @@ public class TelaProcurarCliente extends JInternalFrame implements ActionListene
 				JOptionPane.showMessageDialog(null, "Selecione uma linha para continuar!", "Alerta!", JOptionPane.ERROR_MESSAGE);
 			}else {
 			telaPrincipal.getTlPrincipal().esconderTelas();
-			telaPrincipal.getTlPrincipal().getlTlCadastroImovel().setVisible(true);
-			telaPrincipal.getTlPrincipal().getlTlCadastroImovel().preencherCampos(Integer.valueOf(dtbClientes.getValueAt(jtbClientes.getSelectedRow(), 0).toString()));
 			}
 		}
 		
