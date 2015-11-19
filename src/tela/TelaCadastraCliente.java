@@ -5,7 +5,9 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -21,6 +23,14 @@ import javax.swing.JTextField;
 import javax.swing.JToolBar;
 import javax.swing.SwingConstants;
 import javax.swing.text.MaskFormatter;
+
+import DAOFactory.DaoFactoryJDBC;
+import dao.ClienteDAO;
+import dao.EnderecoDAO;
+import dao.PessoaDAO;
+import pessoa.Cliente;
+import pessoa.Endereco;
+import pessoa.Pessoa;
 
 public class TelaCadastraCliente extends JFrame implements ActionListener{
 	
@@ -44,7 +54,9 @@ public class TelaCadastraCliente extends JFrame implements ActionListener{
 	
 	private ArrayList<JTextField> jtfsValidar = new ArrayList<>();
 	
-	
+	private PessoaDAO pessoaDao = DaoFactoryJDBC.get().pessoaDAO();
+	private EnderecoDAO enderecoDao = DaoFactoryJDBC.get().enderecoDAO();
+	private ClienteDAO clienteDao = DaoFactoryJDBC.get().clienteDAO();
 	
 	public TelaCadastraCliente() {
 		setTitle("Cadastro de cliente");
@@ -185,7 +197,6 @@ public class TelaCadastraCliente extends JFrame implements ActionListener{
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setSize(700, 450);
 		setVisible(true);
-		setLocationRelativeTo(null);
 	}
 	
 	public JPanel criarPanel(String texto, Integer col, Integer lin, Integer lar, Integer alt, JPanel panel,
@@ -246,14 +257,56 @@ public class TelaCadastraCliente extends JFrame implements ActionListener{
 	public static void main(String[] args) {
 		new TelaCadastraCliente();
 	}
+	
+	private Pessoa cadastrarPessoaEndereco() {
+		Date data = null;
+		try {
+			data = new SimpleDateFormat("yyyy-MM-dd").parse(jtfDataNascimento.getText());
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+
+		Pessoa pessoa = new Pessoa();
+		pessoa.setId(pessoaDao.maiorId() + 1);
+		pessoa.setNome(jtfNome.getText());
+		pessoa.setRg(jtfRg.getText());
+		pessoa.setCpf(jtfCpf.getText());
+		pessoa.setDataNascimento(data);
+		pessoa.setGenero(jtfGenero.getText());
+		pessoa.setEstadoCivil(jcbEstadoCivil.getSelectedItem().toString());
+		pessoa.setTelefoneResidencial(jtfTelefoneResidencial.getText());
+		pessoa.setTelefoneCelular(jtfTelefoneCelular.getText());
+		pessoa.setEmail(jtfEmail.getText());
+
+		Endereco endereco = new Endereco();
+		endereco.setId(enderecoDao.maiorId() + 1);
+		endereco.setRua(jtfRua.getText());
+		endereco.setNumero(jtfNumero.getText());
+		endereco.setBairro(jtfBairro.getText());
+		endereco.setCidade(jtfCidade.getText());
+		endereco.setUf(jtfUf.getText());
+		endereco.setCep(jtfCep.getText());
+		enderecoDao.inserir(endereco);
+
+		pessoa.setEndereco(endereco);
+		pessoaDao.inserir(pessoa);
+
+		return pessoa;
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == jbtSalvar){
 			Boolean camposPreenchidos = verificaCampos(jtfsValidar);
 			if(camposPreenchidos == true){
-				JOptionPane.showMessageDialog(null, "vou cadastrar");
-				
+				Pessoa pessoa = cadastrarPessoaEndereco();
+				Cliente cliente = new Cliente(pessoa, clienteDao.maiorId() + 1);
+				cliente.setInteresse1(jtfInteresse1.getText());
+				cliente.setInteresse2(jtfInteresse2.getText());
+				cliente.setInteresse3(jtfInteresse3.getText());
+				clienteDao.inserir(cliente);
+				JOptionPane.showMessageDialog(null, "Cliente cadastrado com sucesso!", "Sucesso!",
+						JOptionPane.PLAIN_MESSAGE);	
 				
 			}
 		}
