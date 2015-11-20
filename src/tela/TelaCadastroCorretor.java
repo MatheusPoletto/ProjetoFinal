@@ -25,17 +25,19 @@ import javax.swing.text.MaskFormatter;
 
 import DAOFactory.DaoFactoryJDBC;
 import dao.ClienteDAO;
+import dao.CorretorDAO;
 import dao.EnderecoDAO;
 import dao.PessoaDAO;
+import dao.UsuarioDAO;
 import pessoa.Cliente;
+import pessoa.Corretor;
 import pessoa.Endereco;
 import pessoa.Pessoa;
+import pessoa.Usuario;
 
-public class TelaCadastraCliente extends JFrame implements ActionListener{
-
-	private static final long serialVersionUID = -9105026681880593106L;
+public class TelaCadastroCorretor extends JFrame implements ActionListener{
+	
 	private JLabel jlbTitulo;
-	private JPanel jpnCadastroCliente;
 	private JLabel jlbNome, jlbRg, jlbCpf, jlbDataNascimento, jlbGenero, jlbEstadoCivil, jlbTelefoneResidencial, jlbTelefoneCelular, jlbEmail;
 	private JTextField jtfNome, jtfRg, jtfCpf, jtfGenero, jtfTelefoneResidencial, jtfTelefoneCelular, jtfEmail, jtfDataNascimento;
 	private JComboBox<String> jcbEstadoCivil;
@@ -44,10 +46,10 @@ public class TelaCadastraCliente extends JFrame implements ActionListener{
 	private JLabel jlbRua, jlbNumero, jlbCidade, jlbBairro, jlbUf, jlbCep;
 	private JTextField jtfRua, jtfNumero, jtfCidade, jtfBairro, jtfUf, jtfCep;
 	
-	private JLabel jlbInteresses;
-	private JTextField jtfInteresse1, jtfInteresse2, jtfInteresse3;
-	private JButton jbtAjuda;
-	private JPanel jpnInteresses;
+	private JLabel jlbSalario, jlbComissao, jlbUsuario, jlbSenha;
+	private JTextField jtfSalario, jtfComissao, jtfUsuario, jtfSenha;
+	private JPanel jpnCadastroCliente;
+	private JPanel jpnInfoCorretor;
 	
 	private JButton jbtSalvar, jbtLimpar;
 	private JPanel jpnCadastrar;
@@ -56,13 +58,14 @@ public class TelaCadastraCliente extends JFrame implements ActionListener{
 	
 	private PessoaDAO pessoaDao = DaoFactoryJDBC.get().pessoaDAO();
 	private EnderecoDAO enderecoDao = DaoFactoryJDBC.get().enderecoDAO();
-	private ClienteDAO clienteDao = DaoFactoryJDBC.get().clienteDAO();
+	private CorretorDAO corretorDao = DaoFactoryJDBC.get().corretorDAO();
+	private UsuarioDAO usuarioDao = DaoFactoryJDBC.get().usuarioDAO();
 	
-	public TelaCadastraCliente() {
-		setTitle("Cadastro de cliente");
+	public TelaCadastroCorretor() {
+		setTitle("Cadastro de corretor");
 		setLayout(null);
 		
-		jlbTitulo = new JLabel("NOVO CLIENTE", SwingConstants.CENTER);
+		jlbTitulo = new JLabel("NOVO CORRETOR", SwingConstants.CENTER);
 		jlbTitulo.setBounds(0, 0, 707, 44);
 		jlbTitulo.setVisible(true);
 		jlbTitulo.setFont(new Font("ARIAL", Font.PLAIN, 18));
@@ -154,28 +157,6 @@ public class TelaCadastraCliente extends JFrame implements ActionListener{
 		jpnCadastroEndereco.add(jtfUf);
 		jpnCadastroEndereco.add(jtfCep);
 		
-		jlbInteresses = criarLabel("INTERESSES DE IMÓVEIS:", 10, 2, 150, 30, jlbInteresses);
-
-		jtfInteresse1 = criarTextField(160, 4, 150, 27, jtfInteresse1);
-		jtfInteresse2 = criarTextField(311, 4, 150, 27, jtfInteresse2);
-		jtfInteresse3 = criarTextField(461, 4, 150, 27, jtfInteresse3);
-
-		jbtAjuda = criarBotao("", 630, 4, 27, 27, jbtAjuda);
-		jbtAjuda.setIcon(new ImageIcon("img/question_item_24.png"));
-		jbtAjuda.setOpaque(false);
-		jbtAjuda.setBorderPainted(false);
-		jbtAjuda.setBackground(new Color(0, 0, 0, 0));
-
-		jpnInteresses = criarPanel("", 0, 330, 684, 35, jpnInteresses, true);
-		jpnInteresses.add(jlbInteresses);
-		jpnInteresses.add(jtfInteresse1);
-		jpnInteresses.add(jtfInteresse2);
-		jpnInteresses.add(jtfInteresse3);
-		jpnInteresses.add(jbtAjuda);
-		jpnInteresses.setBorder(BorderFactory.createLineBorder(new Color(23, 20, 20), 1));
-		
-		
-		
 		jbtSalvar = criarBotao("SALVAR", 110, 2, 100, 30, jbtSalvar);
 		jbtSalvar.setBackground(new Color(23, 20, 20));
 		jbtSalvar.setForeground(Color.white);
@@ -189,6 +170,26 @@ public class TelaCadastraCliente extends JFrame implements ActionListener{
 		jpnCadastrar.add(jbtSalvar);
 		jpnCadastrar.add(jbtLimpar);
 		jpnCadastrar.setBorder(BorderFactory.createLineBorder(new Color(23, 20, 20), 1));
+		
+		jlbSalario = criarLabel("Salário:", 10, 12, 80, 30, jlbSalario);
+		jlbComissao = criarLabel("Comissão:", 135, 12, 80, 30, jlbComissao);
+		jlbUsuario = criarLabel("Usuário:", 280, 12, 80, 30, jlbUsuario);
+		jlbSenha = criarLabel("Senha:", 495, 12, 80, 30, jlbSenha);
+		
+		jtfSalario = criarTextField(60, 15, 70, 27, jtfSalario);
+		jtfComissao = criarTextField(200, 14, 70, 27, jtfComissao);
+		jtfUsuario = criarTextField(335, 14, 150, 27, jtfUsuario);
+		jtfSenha = criarTextField(540, 14, 130, 27, jtfSenha);
+		
+		jpnInfoCorretor = criarPanel("Criar usuário", 0, 325, 684, 50, jpnInfoCorretor, true);
+		jpnInfoCorretor.add(jlbSalario);
+		jpnInfoCorretor.add(jtfSalario);
+		jpnInfoCorretor.add(jlbComissao);
+		jpnInfoCorretor.add(jtfComissao);
+		jpnInfoCorretor.add(jlbUsuario);
+		jpnInfoCorretor.add(jtfUsuario);
+		jpnInfoCorretor.add(jlbSenha);
+		jpnInfoCorretor.add(jtfSenha);
 		
 		jtfsValidar.add(jtfNome);
 		jtfsValidar.add(jtfRg);
@@ -256,7 +257,7 @@ public class TelaCadastraCliente extends JFrame implements ActionListener{
 	}
 	
 	public static void main(String[] args) {
-		new TelaCadastraCliente();
+		new TelaCadastroCorretor();
 	}
 	
 	private Pessoa cadastrarPessoaEndereco() {
@@ -301,20 +302,15 @@ public class TelaCadastraCliente extends JFrame implements ActionListener{
 			Boolean camposPreenchidos = verificaCampos(jtfsValidar);
 			if(camposPreenchidos == true){
 				Pessoa pessoa = cadastrarPessoaEndereco();
-				Cliente cliente = new Cliente(pessoa, clienteDao.maiorId() + 1);
-				cliente.setInteresse1(jtfInteresse1.getText());
-				cliente.setInteresse2(jtfInteresse2.getText());
-				cliente.setInteresse3(jtfInteresse3.getText());
-				clienteDao.inserir(cliente);
-				JOptionPane.showMessageDialog(null, "Cliente cadastrado com sucesso!", "Sucesso!",
+				Corretor corretor = new Corretor(pessoa, corretorDao.maiorId() + 1,
+						Double.valueOf(jtfSalario.getText()), Double.valueOf(jtfComissao.getText()));
+				corretorDao.inserir(corretor);
+				Usuario usuario = new Usuario(1, jtfUsuario.getText(), jtfSenha.getText(), corretor, 1);
+				usuarioDao.inserir(usuario);
+				JOptionPane.showMessageDialog(null, "Corretor cadastrado com sucesso!", "Sucesso!",
 						JOptionPane.PLAIN_MESSAGE);	
 				
 			}
-		}
-		if (e.getSource() == jbtAjuda) {
-			JOptionPane.showMessageDialog(null,
-					"Sempre que adicionar um novo cliente, você pode atribuir 3 interesses a ele.\nEsses interesses definem o que seu cliente procura nos imóveis.\nPor exemplo: barato, grande, mansão.\nNÃO É OBRIGATÓRIO!",
-					"Ajuda", JOptionPane.PLAIN_MESSAGE);
 		}
 		
 	}
