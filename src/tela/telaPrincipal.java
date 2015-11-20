@@ -21,15 +21,14 @@ import pessoa.Usuario;
 public class telaPrincipal extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	private JMenuBar barra;
-	private telaCadastroPessoas tlCadastroPessoa = new telaCadastroPessoas();
 	private TelaListaPessoa tlListaPessoas = new TelaListaPessoa();
 	private TelaAlterarPessoa tlAlterarPessoa = new TelaAlterarPessoa();
 	private TelaListaUsuario tlListaUsuarios = new TelaListaUsuario();
 	private TelaProcurarCliente tlProcurarCliente = new TelaProcurarCliente();
 	private telaLogin tlLogin = new telaLogin();
 	private static telaPrincipal tlPrincipal = new telaPrincipal();
-	private JMenu jmnImovel, jmnCadastro, jmnProcurar, jmnGerenciamento, jmnSair;
-	private JMenuItem jmiAlugar, jmiVender, jmiPessoa, jmiProcurarPessoa, jmiContaUsuario;
+	private JMenu jmnImovel, jmnCadastro, jmnProcurar, jmnGerenciamento, jmnRelatorios, jmnSair;
+	private JMenuItem jmiAlugar, jmiVender, jmiPessoa, jmiProcurarPessoa, jmiContaUsuario, jmiRelatorioCliente, jmiRelatorioCorretor;
 	private Usuario usuario;
 	private ArrayList<JInternalFrame> frames = new ArrayList<>();
 	private JLabel jlbLogo;
@@ -57,7 +56,6 @@ public class telaPrincipal extends JFrame implements ActionListener {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
 		//frames.add(tlLogin);
-		frames.add(tlCadastroPessoa);
 		frames.add(tlListaPessoas);
 		frames.add(tlAlterarPessoa);
 		frames.add(tlListaUsuarios);
@@ -99,22 +97,25 @@ public class telaPrincipal extends JFrame implements ActionListener {
 		jmnGerenciamento.add(jmiContaUsuario);
 		barra.add(jmnGerenciamento);
 		
+		jmnRelatorios = new JMenu("Relatórios");
+		jmiRelatorioCliente = new JMenuItem("Gerar relatório de clientes cadastrados");
+		jmiRelatorioCorretor = new JMenuItem("Gerar relatório de corretores cadastrados");
+		jmiRelatorioCliente.addActionListener(this);
+		jmiRelatorioCorretor.addActionListener(this);
+		jmnRelatorios.add(jmiRelatorioCliente);
+		jmnRelatorios.add(jmiRelatorioCorretor);
+		barra.add(jmnRelatorios);
+		
 		jmnSair = new JMenu("Sair");
 		jmnSair.addMenuListener(new MenuListener() {
-			
-			@Override
 			public void menuSelected(MenuEvent e) {
 				telaPrincipal.getTlPrincipal().setVisible(false);
 				telaPrincipal.getTlPrincipal().getTlLogin().setVisible(true);
 				
 			}
-			
-			@Override
 			public void menuDeselected(MenuEvent e) {
 				
 			}
-			
-			@Override
 			public void menuCanceled(MenuEvent e) {
 				
 			}
@@ -134,7 +135,6 @@ public class telaPrincipal extends JFrame implements ActionListener {
 
 	public void esconderTelas() {
 		//tlLogin.setVisible(false);
-		tlCadastroPessoa.setVisible(false);
 		tlListaPessoas.setVisible(false);
 		tlAlterarPessoa.setVisible(false);
 		tlListaUsuarios.setVisible(false);
@@ -154,9 +154,6 @@ public class telaPrincipal extends JFrame implements ActionListener {
 		//return tlLogin;
 	//}
 
-	public telaCadastroPessoas getTlCadastroPessoa() {
-		return tlCadastroPessoa;
-	}
 
 	public TelaProcurarCliente getTlProcurarCliente() {
 		return tlProcurarCliente;
@@ -189,7 +186,6 @@ public class telaPrincipal extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == jmiPessoa) {
 			esconderTelas();
-			tlCadastroPessoa.setVisible(true);
 		}
 
 		if (e.getSource() == jmiProcurarPessoa) {
@@ -205,6 +201,14 @@ public class telaPrincipal extends JFrame implements ActionListener {
 			} else if (usuario.getNivelAcesso() == 1) {
 				JOptionPane.showMessageDialog(null, "Não possui permissão de gestor");
 			}
+		}
+		
+		if(e.getSource() == jmiRelatorioCliente){
+			// aqui o que faz para gerar relatorio de clientes
+		}
+		
+		if(e.getSource() == jmiRelatorioCorretor){
+			// aqui o que faz para gerar relatorio de corretores
 		}
 
 	}

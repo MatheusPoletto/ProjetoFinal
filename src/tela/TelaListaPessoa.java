@@ -133,7 +133,6 @@ public class TelaListaPessoa extends JInternalFrame implements ActionListener {
 
 	private void criarPessoa() {
 		telaPrincipal.getTlPrincipal().esconderTelas();
-		telaPrincipal.getTlPrincipal().getTlCadastroPessoa().setVisible(true);
 
 	}
 
