@@ -34,64 +34,40 @@ import pessoa.Endereco;
 import pessoa.Pessoa;
 
 public class TelaAlterarPessoa extends JInternalFrame implements ActionListener {
+
 	private static final long serialVersionUID = 835773138459611748L;
+
+	private JPanel jpnCadastroPessoa;
 	private JLabel jlbTitulo, jlbNome, jlbRg, jlbCpf, jlbDataNascimento, jlbEstadoCivil, jlbGenero,
-			jlbTelefoneResidencial, jlbTelefoneCelular, jlbEmail, jlbRua, jlbNumero, jlbBairro, jlbCidade, jlbUf,
-			jlbCep, jlbInteresses, jlbSalario, jlbComissao;
-	private JPanel jpnCadastroPessoa, jpnCadastroEndereco, jpnInteresses, jpnInfoCorretor;
+			jlbTelefoneResidencial, jlbTelefoneCelular, jlbEmail;
 	private JTextField jtfNome, jtfRg, jtfCpf, jtfDataNascimento, jtfGenero, jtfTelefoneResidencial, jtfTelefoneCelular,
-			jtfEmail, jtfRua, jtfNumero, jtfBairro, jtfCidade, jtfUf, jtfCep, jtfInteresse1, jtfInteresse2,
-			jtfInteresse3, jtfSalario, jtfComissao;
+			jtfEmail;
 	private JComboBox<String> jcbEstadoCivil;
+
+	private JPanel jpnCadastroEndereco;
+	private JLabel jlbRua, jlbNumero, jlbBairro, jlbCidade, jlbUf, jlbCep;
+	private JTextField jtfRua, jtfNumero, jtfBairro, jtfCidade, jtfUf, jtfCep;
+
+	private JPanel jpnInteresses;
+	private JLabel jlbInteresses;
+	private JTextField jtfInteresse1, jtfInteresse2, jtfInteresse3;
+
+	private JPanel jpnInfoCorretor;
+	private JLabel jlbSalario, jlbComissao;
+	private JTextField jtfSalario, jtfComissao;
+
 	private JButton jbtAjuda, jbtSalvar, jbtCancelar;
+
 	private PessoaDAO pessoaDao = DaoFactoryJDBC.get().pessoaDAO();
 	private EnderecoDAO enderecoDao = DaoFactoryJDBC.get().enderecoDAO();
 	private ClienteDAO clienteDao = DaoFactoryJDBC.get().clienteDAO();
 	private CorretorDAO corretorDao = DaoFactoryJDBC.get().corretorDAO();
+
 	private Integer idPessoa = null;
 	private String tipo = null;
-	private ArrayList<JTextField> componentes = new ArrayList<>();
 
-	public JPanel criarPanel(String texto, Integer col, Integer lin, Integer lar, Integer alt, JPanel panel,
-			Boolean visibilidade) {
-		panel = new JPanel();
-		panel.setLayout(null);
-		panel.setBorder(BorderFactory.createTitledBorder(texto));
-		panel.setBounds(col, lin, lar, alt);
-		panel.setVisible(visibilidade);
-		getContentPane().add(panel);
-		return panel;
+	private ArrayList<JTextField> jtfsValidar = new ArrayList<>();
 
-	}
-
-	public JLabel criarLabel(String texto, Integer col, Integer lin, Integer lar, Integer alt, JLabel label) {
-		label = new JLabel(texto);
-		label.setBounds(col, lin, lar, alt);
-		label.setVisible(true);
-		getContentPane().add(label);
-		return label;
-
-	}
-
-	public JTextField criarTextField(Integer col, Integer lin, Integer lar, Integer alt, JTextField textField) {
-		textField = new JTextField();
-		textField.setBounds(col, lin, lar, alt);
-		textField.setVisible(true);
-		getContentPane().add(textField);
-		return textField;
-
-	}
-
-	public JButton criarBotao(String texto, Integer col, Integer lin, Integer lar, Integer alt, JButton button) {
-		button = new JButton(texto);
-		button.setBounds(col, lin, lar, alt);
-		button.addActionListener(this);
-		button.setVisible(true);
-		getContentPane().add(button);
-		return button;
-
-	}
-	
 	public TelaAlterarPessoa() {
 		setTitle("Alterar pessoa");
 		setLayout(null);
@@ -110,34 +86,39 @@ public class TelaAlterarPessoa extends JInternalFrame implements ActionListener 
 		criarPainelNovoCliente();
 		criarPainelNovoCorretor();
 
-		jbtSalvar = criarBotao("SALVAR", 497, 330, 81, 25, jbtSalvar);
-		jbtSalvar.setBackground(new Color(23, 20, 21));
-		jbtSalvar.setForeground(Color.green);
-		
-		jbtCancelar = criarBotao("CANCELAR", 579, 330, 97, 25, jbtCancelar);
-		jbtCancelar.setBackground(new Color(23, 20, 21));
-		jbtCancelar.setForeground(Color.white);
-		
-		componentes.add(jtfNome);
-		componentes.add(jtfRg);
-		componentes.add(jtfCpf);
-		componentes.add(jtfDataNascimento);
-		componentes.add(jtfGenero);
-		componentes.add(jtfTelefoneResidencial);
-		componentes.add(jtfTelefoneCelular);
-		componentes.add(jtfEmail);
-		componentes.add(jtfRua);
-		componentes.add(jtfNumero);
-		componentes.add(jtfBairro);
-		componentes.add(jtfCidade);
-		componentes.add(jtfUf);
-		componentes.add(jtfCep);
+		criarSalvarCancelar();
+
+		jtfsValidar.add(jtfNome);
+		jtfsValidar.add(jtfRg);
+		jtfsValidar.add(jtfCpf);
+		jtfsValidar.add(jtfDataNascimento);
+		jtfsValidar.add(jtfGenero);
+		jtfsValidar.add(jtfTelefoneResidencial);
+		jtfsValidar.add(jtfTelefoneCelular);
+		jtfsValidar.add(jtfEmail);
+		jtfsValidar.add(jtfRua);
+		jtfsValidar.add(jtfNumero);
+		jtfsValidar.add(jtfBairro);
+		jtfsValidar.add(jtfCidade);
+		jtfsValidar.add(jtfUf);
+		jtfsValidar.add(jtfCep);
 
 		setResizable(false);
 		setSize(707, 397);
 		setVisible(true);
 		setClosable(true);
 		setDefaultCloseOperation(HIDE_ON_CLOSE);
+	}
+
+	private void criarSalvarCancelar() {
+		jbtSalvar = criarBotao("SALVAR", 497, 330, 81, 25, jbtSalvar);
+		jbtSalvar.setBackground(new Color(23, 20, 21));
+		jbtSalvar.setForeground(Color.green);
+
+		jbtCancelar = criarBotao("CANCELAR", 579, 330, 97, 25, jbtCancelar);
+		jbtCancelar.setBackground(new Color(23, 20, 21));
+		jbtCancelar.setForeground(Color.white);
+
 	}
 
 	private void criarPainelNovoCorretor() {
@@ -160,9 +141,9 @@ public class TelaAlterarPessoa extends JInternalFrame implements ActionListener 
 		jlbInteresses = criarLabel("INTERESSES DE IMÓVEIS:", 10, 0, 150, 30, jlbInteresses);
 
 		jtfInteresse1 = criarTextField(160, 4, 90, 27, jtfInteresse1);
-		jtfInteresse2  = criarTextField(251, 4, 90, 27, jtfInteresse2);
+		jtfInteresse2 = criarTextField(251, 4, 90, 27, jtfInteresse2);
 		jtfInteresse3 = criarTextField(324, 4, 90, 27, jtfInteresse3);
-		
+
 		jbtAjuda = criarBotao("", 434, 4, 27, 27, jbtAjuda);
 		jbtAjuda.setIcon(new ImageIcon("img/question_item_24.png"));
 		jbtAjuda.setOpaque(false);
@@ -205,8 +186,8 @@ public class TelaAlterarPessoa extends JInternalFrame implements ActionListener 
 		jcbEstadoCivil.addItem("Divorciado(a)");
 		jcbEstadoCivil.addItem("Viúvo(a)");
 		jcbEstadoCivil.addItem("Separado(a) Judicialmente");
-		jcbEstadoCivil.setSelectedIndex(-1);		
-		
+		jcbEstadoCivil.setSelectedIndex(-1);
+
 		try {
 			jtfDataNascimento = new JFormattedTextField(new MaskFormatter("####-##-##"));
 		} catch (ParseException e) {
@@ -234,7 +215,7 @@ public class TelaAlterarPessoa extends JInternalFrame implements ActionListener 
 		jpnCadastroPessoa.add(jtfTelefoneResidencial);
 		jpnCadastroPessoa.add(jtfTelefoneCelular);
 		jpnCadastroPessoa.add(jtfEmail);
-		
+
 	}
 
 	private void criarPainelEndereco() {
@@ -268,8 +249,44 @@ public class TelaAlterarPessoa extends JInternalFrame implements ActionListener 
 
 	}
 
-	public static void main(String[] args) {
-		new TelaAlterarPessoa();
+	private JPanel criarPanel(String texto, Integer col, Integer lin, Integer lar, Integer alt, JPanel panel,
+			Boolean visibilidade) {
+		panel = new JPanel();
+		panel.setLayout(null);
+		panel.setBorder(BorderFactory.createTitledBorder(texto));
+		panel.setBounds(col, lin, lar, alt);
+		panel.setVisible(visibilidade);
+		getContentPane().add(panel);
+		return panel;
+
+	}
+
+	private JLabel criarLabel(String texto, Integer col, Integer lin, Integer lar, Integer alt, JLabel label) {
+		label = new JLabel(texto);
+		label.setBounds(col, lin, lar, alt);
+		label.setVisible(true);
+		getContentPane().add(label);
+		return label;
+
+	}
+
+	private JTextField criarTextField(Integer col, Integer lin, Integer lar, Integer alt, JTextField textField) {
+		textField = new JTextField();
+		textField.setBounds(col, lin, lar, alt);
+		textField.setVisible(true);
+		getContentPane().add(textField);
+		return textField;
+
+	}
+
+	private JButton criarBotao(String texto, Integer col, Integer lin, Integer lar, Integer alt, JButton button) {
+		button = new JButton(texto);
+		button.setBounds(col, lin, lar, alt);
+		button.addActionListener(this);
+		button.setVisible(true);
+		getContentPane().add(button);
+		return button;
+
 	}
 
 	private Boolean verificaCampos(List<JTextField> componentes) {
@@ -318,59 +335,74 @@ public class TelaAlterarPessoa extends JInternalFrame implements ActionListener 
 
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == jbtSalvar) {
-			ArrayList<JTextField> jtf = new ArrayList<>();
-			jtf.add(jtfNome);
-			jtf.add(jtfRg);
-			jtf.add(jtfCpf);
-			jtf.add(jtfDataNascimento);
-			jtf.add(jtfGenero);
-			jtf.add(jtfEmail);
-			Boolean camposOk = verificaCampos(jtf);
-
-			if (camposOk) {
-				if (tipo.equals("CLIENTE")) {
-					Pessoa pessoa = alteraPessoaEndereco();
-					Cliente cliente = new Cliente();
-					for (Cliente cliente1 : clienteDao.todos()) {
-						if (cliente1.getPessoa().getId() == idPessoa) {
-							cliente.setIdCliente(cliente1.getIdCliente());
-							cliente.setInteresse1(jtfInteresse1.getText());
-							cliente.setInteresse2(jtfInteresse2.getText());
-							cliente.setInteresse3(jtfInteresse3.getText());
-						}
-					}
-					clienteDao.alterar(cliente);
-					JOptionPane.showMessageDialog(null, "Cliente alterado com sucesso!", "Sucesso!",
-							JOptionPane.PLAIN_MESSAGE);
-
-				}
-				if (tipo.equals("CORRETOR")) {
-					Pessoa pessoa = alteraPessoaEndereco();
-					Corretor corretor = new Corretor();
-					for (Corretor corretor1 : corretorDao.todos()) {
-						if (corretor1.getPessoa().getId() == idPessoa) {
-							corretor.setIdCorretor(corretor1.getIdCorretor());
-							corretor.setSalario(Double.valueOf(jtfSalario.getText()));
-							corretor.setPorcentagemComissao(Double.valueOf(jtfComissao.getText()));
-						}
-					}
-					corretorDao.alterar(corretor);
-					JOptionPane.showMessageDialog(null, "Corretor alterado com sucesso!", "Sucesso!",
-							JOptionPane.PLAIN_MESSAGE);
-				}
-				telaPrincipal.getTlPrincipal().getTlAlterarPessoa().setVisible(false);
-				telaPrincipal.getTlPrincipal().getTlListaPessoas().setVisible(true);
-				telaPrincipal.getTlPrincipal().getTlListaPessoas().atualizarPessoas();
-			}
+			salvarAlteracoes();
 		}
 		if (e.getSource() == jbtAjuda) {
-			JOptionPane.showMessageDialog(null,
-					"Sempre que adicionar um novo cliente, você pode atribuir 3 interesses a ele.\nEsses interesses definem o que seu cliente procura nos imóveis.\nPor exemplo: barato, grande, mansão.\nNÃO É OBRIGATÓRIO!",
-					"Ajuda", JOptionPane.PLAIN_MESSAGE);
+			botaoAjuda();
 		}
 		if (e.getSource() == jbtCancelar) {
+			cancelar();
+		}
+
+	}
+
+	private void cancelar() {
+		telaPrincipal.getTlPrincipal().getTlAlterarPessoa().setVisible(false);
+		telaPrincipal.getTlPrincipal().getTlListaPessoas().setVisible(true);
+
+	}
+
+	private void botaoAjuda() {
+		JOptionPane.showMessageDialog(null,
+				"Você pode atribuir 3 interesses a ele.\nEsses interesses definem o que seu cliente procura nos imóveis.\nPor exemplo: barato, grande, mansão.\nNÃO É OBRIGATÓRIO!",
+				"Ajuda", JOptionPane.PLAIN_MESSAGE);
+
+	}
+
+	private void salvarAlteracoes() {
+		ArrayList<JTextField> jtf = new ArrayList<>();
+		jtf.add(jtfNome);
+		jtf.add(jtfRg);
+		jtf.add(jtfCpf);
+		jtf.add(jtfDataNascimento);
+		jtf.add(jtfGenero);
+		jtf.add(jtfEmail);
+		Boolean camposOk = verificaCampos(jtf);
+
+		if (camposOk) {
+			if (tipo.equals("CLIENTE")) {
+				Pessoa pessoa = alteraPessoaEndereco();
+				Cliente cliente = new Cliente();
+				for (Cliente cliente1 : clienteDao.todos()) {
+					if (cliente1.getPessoa().getId() == idPessoa) {
+						cliente.setIdCliente(cliente1.getIdCliente());
+						cliente.setInteresse1(jtfInteresse1.getText());
+						cliente.setInteresse2(jtfInteresse2.getText());
+						cliente.setInteresse3(jtfInteresse3.getText());
+					}
+				}
+				clienteDao.alterar(cliente);
+				JOptionPane.showMessageDialog(null, "Cliente alterado com sucesso!", "Sucesso!",
+						JOptionPane.PLAIN_MESSAGE);
+
+			}
+			if (tipo.equals("CORRETOR")) {
+				Pessoa pessoa = alteraPessoaEndereco();
+				Corretor corretor = new Corretor();
+				for (Corretor corretor1 : corretorDao.todos()) {
+					if (corretor1.getPessoa().getId() == idPessoa) {
+						corretor.setIdCorretor(corretor1.getIdCorretor());
+						corretor.setSalario(Double.valueOf(jtfSalario.getText()));
+						corretor.setPorcentagemComissao(Double.valueOf(jtfComissao.getText()));
+					}
+				}
+				corretorDao.alterar(corretor);
+				JOptionPane.showMessageDialog(null, "Corretor alterado com sucesso!", "Sucesso!",
+						JOptionPane.PLAIN_MESSAGE);
+			}
 			telaPrincipal.getTlPrincipal().getTlAlterarPessoa().setVisible(false);
 			telaPrincipal.getTlPrincipal().getTlListaPessoas().setVisible(true);
+			telaPrincipal.getTlPrincipal().getTlListaPessoas().atualizarPessoas();
 		}
 
 	}
@@ -431,6 +463,10 @@ public class TelaAlterarPessoa extends JInternalFrame implements ActionListener 
 				}
 			}
 		}
+	}
+
+	public static void main(String[] args) {
+		new TelaAlterarPessoa();
 	}
 
 }

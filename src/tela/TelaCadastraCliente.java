@@ -15,7 +15,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
-import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -31,37 +31,41 @@ import pessoa.Cliente;
 import pessoa.Endereco;
 import pessoa.Pessoa;
 
-public class TelaCadastraCliente extends JFrame implements ActionListener{
+public class TelaCadastraCliente extends JInternalFrame implements ActionListener {
 
 	private static final long serialVersionUID = -9105026681880593106L;
+
 	private JLabel jlbTitulo;
+
 	private JPanel jpnCadastroCliente;
-	private JLabel jlbNome, jlbRg, jlbCpf, jlbDataNascimento, jlbGenero, jlbEstadoCivil, jlbTelefoneResidencial, jlbTelefoneCelular, jlbEmail;
-	private JTextField jtfNome, jtfRg, jtfCpf, jtfGenero, jtfTelefoneResidencial, jtfTelefoneCelular, jtfEmail, jtfDataNascimento;
+	private JLabel jlbNome, jlbRg, jlbCpf, jlbDataNascimento, jlbGenero, jlbEstadoCivil, jlbTelefoneResidencial,
+			jlbTelefoneCelular, jlbEmail;
+	private JTextField jtfNome, jtfRg, jtfCpf, jtfGenero, jtfTelefoneResidencial, jtfTelefoneCelular, jtfEmail,
+			jtfDataNascimento;
 	private JComboBox<String> jcbEstadoCivil;
-	
+
 	private JPanel jpnCadastroEndereco;
 	private JLabel jlbRua, jlbNumero, jlbCidade, jlbBairro, jlbUf, jlbCep;
 	private JTextField jtfRua, jtfNumero, jtfCidade, jtfBairro, jtfUf, jtfCep;
-	
+
+	private JPanel jpnInteresses;
 	private JLabel jlbInteresses;
 	private JTextField jtfInteresse1, jtfInteresse2, jtfInteresse3;
 	private JButton jbtAjuda;
-	private JPanel jpnInteresses;
-	
-	private JButton jbtSalvar, jbtLimpar;
+
 	private JPanel jpnCadastrar;
-	
+	private JButton jbtSalvar, jbtLimpar;
+
 	private ArrayList<JTextField> jtfsValidar = new ArrayList<>();
-	
+
 	private PessoaDAO pessoaDao = DaoFactoryJDBC.get().pessoaDAO();
 	private EnderecoDAO enderecoDao = DaoFactoryJDBC.get().enderecoDAO();
 	private ClienteDAO clienteDao = DaoFactoryJDBC.get().clienteDAO();
-	
+
 	public TelaCadastraCliente() {
 		setTitle("Cadastro de cliente");
 		setLayout(null);
-		
+
 		jlbTitulo = new JLabel("NOVO CLIENTE", SwingConstants.CENTER);
 		jlbTitulo.setBounds(0, 0, 707, 44);
 		jlbTitulo.setVisible(true);
@@ -70,7 +74,96 @@ public class TelaCadastraCliente extends JFrame implements ActionListener{
 		jlbTitulo.setBackground(new Color(23, 20, 20));
 		jlbTitulo.setForeground(Color.white);
 		getContentPane().add(jlbTitulo);
-		
+
+		criarPanelCadastroCliente();
+
+		criarPanelCadastroEndereco();
+
+		criarPanelInteresses();
+
+		criarPanelCadastrar();
+
+		jtfsValidar.add(jtfNome);
+		jtfsValidar.add(jtfRg);
+		jtfsValidar.add(jtfCpf);
+
+		setResizable(false);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setSize(700, 450);
+		setVisible(true);
+	}
+
+	private void criarPanelCadastrar() {
+		jbtSalvar = criarBotao("SALVAR", 110, 2, 100, 30, jbtSalvar);
+		jbtSalvar.setBackground(new Color(23, 20, 20));
+		jbtSalvar.setForeground(Color.white);
+
+		jbtLimpar = criarBotao("LIMPAR", 10, 2, 100, 30, jbtLimpar);
+		jbtLimpar.setBackground(new Color(23, 20, 20));
+		jbtLimpar.setForeground(Color.white);
+
+		jpnCadastrar = criarPanel("", 463, 372, 220, 34, jpnCadastrar, true);
+		jpnCadastrar.add(jbtSalvar);
+		jpnCadastrar.add(jbtLimpar);
+		jpnCadastrar.setBorder(BorderFactory.createLineBorder(new Color(23, 20, 20), 1));
+
+	}
+
+	private void criarPanelInteresses() {
+		jlbInteresses = criarLabel("INTERESSES DE IMÓVEIS:", 10, 2, 150, 30, jlbInteresses);
+
+		jtfInteresse1 = criarTextField(160, 4, 150, 27, jtfInteresse1);
+		jtfInteresse2 = criarTextField(311, 4, 150, 27, jtfInteresse2);
+		jtfInteresse3 = criarTextField(461, 4, 150, 27, jtfInteresse3);
+
+		jbtAjuda = criarBotao("", 630, 4, 27, 27, jbtAjuda);
+		jbtAjuda.setIcon(new ImageIcon("img/question_item_24.png"));
+		jbtAjuda.setOpaque(false);
+		jbtAjuda.setBorderPainted(false);
+		jbtAjuda.setBackground(new Color(0, 0, 0, 0));
+
+		jpnInteresses = criarPanel("", 0, 330, 684, 35, jpnInteresses, true);
+		jpnInteresses.add(jlbInteresses);
+		jpnInteresses.add(jtfInteresse1);
+		jpnInteresses.add(jtfInteresse2);
+		jpnInteresses.add(jtfInteresse3);
+		jpnInteresses.add(jbtAjuda);
+		jpnInteresses.setBorder(BorderFactory.createLineBorder(new Color(23, 20, 20), 1));
+
+	}
+
+	private void criarPanelCadastroEndereco() {
+		jlbRua = criarLabel("Rua:", 10, 20, 110, 30, jlbRua);
+		jlbNumero = criarLabel("Nº:", 510, 20, 110, 30, jlbNumero);
+		jlbBairro = criarLabel("Bairro:", 10, 50, 110, 30, jlbBairro);
+		jlbCidade = criarLabel("Cidade:", 210, 50, 120, 30, jlbCidade);
+		jlbUf = criarLabel("UF:", 420, 50, 110, 30, jlbUf);
+		jlbCep = criarLabel("CEP:", 510, 50, 110, 30, jlbCep);
+
+		jtfRua = criarTextField(80, 24, 420, 24, jtfRua);
+		jtfNumero = criarTextField(550, 24, 90, 24, jtfNumero);
+		jtfBairro = criarTextField(80, 54, 120, 24, jtfBairro);
+		jtfCidade = criarTextField(280, 52, 130, 24, jtfCidade);
+		jtfUf = criarTextField(450, 54, 50, 24, jtfUf);
+		jtfCep = criarTextField(550, 54, 90, 24, jtfCep);
+
+		jpnCadastroEndereco = criarPanel("Endereço", 0, 232, 684, 90, jpnCadastroEndereco, true);
+		jpnCadastroEndereco.add(jlbRua);
+		jpnCadastroEndereco.add(jlbNumero);
+		jpnCadastroEndereco.add(jlbBairro);
+		jpnCadastroEndereco.add(jlbCidade);
+		jpnCadastroEndereco.add(jlbUf);
+		jpnCadastroEndereco.add(jlbCep);
+		jpnCadastroEndereco.add(jtfRua);
+		jpnCadastroEndereco.add(jtfNumero);
+		jpnCadastroEndereco.add(jtfBairro);
+		jpnCadastroEndereco.add(jtfCidade);
+		jpnCadastroEndereco.add(jtfUf);
+		jpnCadastroEndereco.add(jtfCep);
+
+	}
+
+	private void criarPanelCadastroCliente() {
 		jlbNome = criarLabel("Nome:", 10, 20, 110, 30, jlbNome);
 		jlbRg = criarLabel("RG:", 10, 50, 110, 30, jlbRg);
 		jlbCpf = criarLabel("CPF:", 210, 50, 110, 30, jlbCpf);
@@ -125,81 +218,9 @@ public class TelaCadastraCliente extends JFrame implements ActionListener{
 		jpnCadastroCliente.add(jtfTelefoneResidencial);
 		jpnCadastroCliente.add(jtfTelefoneCelular);
 		jpnCadastroCliente.add(jtfEmail);
-		
-		jlbRua = criarLabel("Rua:", 10, 20, 110, 30, jlbRua);
-		jlbNumero = criarLabel("Nº:", 510, 20, 110, 30, jlbNumero);
-		jlbBairro = criarLabel("Bairro:", 10, 50, 110, 30, jlbBairro);
-		jlbCidade = criarLabel("Cidade:", 210, 50, 120, 30, jlbCidade);
-		jlbUf = criarLabel("UF:", 420, 50, 110, 30, jlbUf);
-		jlbCep = criarLabel("CEP:", 510, 50, 110, 30, jlbCep);
 
-		jtfRua = criarTextField(80, 24, 420, 24, jtfRua);
-		jtfNumero = criarTextField(550, 24, 90, 24, jtfNumero);
-		jtfBairro = criarTextField(80, 54, 120, 24, jtfBairro);
-		jtfCidade = criarTextField(280, 52, 130, 24, jtfCidade);
-		jtfUf = criarTextField(450, 54, 50, 24, jtfUf);
-		jtfCep = criarTextField(550, 54, 90, 24, jtfCep);
-
-		jpnCadastroEndereco = criarPanel("Endereço", 0, 232, 684, 90, jpnCadastroEndereco, true);
-		jpnCadastroEndereco.add(jlbRua);
-		jpnCadastroEndereco.add(jlbNumero);
-		jpnCadastroEndereco.add(jlbBairro);
-		jpnCadastroEndereco.add(jlbCidade);
-		jpnCadastroEndereco.add(jlbUf);
-		jpnCadastroEndereco.add(jlbCep);
-		jpnCadastroEndereco.add(jtfRua);
-		jpnCadastroEndereco.add(jtfNumero);
-		jpnCadastroEndereco.add(jtfBairro);
-		jpnCadastroEndereco.add(jtfCidade);
-		jpnCadastroEndereco.add(jtfUf);
-		jpnCadastroEndereco.add(jtfCep);
-		
-		jlbInteresses = criarLabel("INTERESSES DE IMÓVEIS:", 10, 2, 150, 30, jlbInteresses);
-
-		jtfInteresse1 = criarTextField(160, 4, 150, 27, jtfInteresse1);
-		jtfInteresse2 = criarTextField(311, 4, 150, 27, jtfInteresse2);
-		jtfInteresse3 = criarTextField(461, 4, 150, 27, jtfInteresse3);
-
-		jbtAjuda = criarBotao("", 630, 4, 27, 27, jbtAjuda);
-		jbtAjuda.setIcon(new ImageIcon("img/question_item_24.png"));
-		jbtAjuda.setOpaque(false);
-		jbtAjuda.setBorderPainted(false);
-		jbtAjuda.setBackground(new Color(0, 0, 0, 0));
-
-		jpnInteresses = criarPanel("", 0, 330, 684, 35, jpnInteresses, true);
-		jpnInteresses.add(jlbInteresses);
-		jpnInteresses.add(jtfInteresse1);
-		jpnInteresses.add(jtfInteresse2);
-		jpnInteresses.add(jtfInteresse3);
-		jpnInteresses.add(jbtAjuda);
-		jpnInteresses.setBorder(BorderFactory.createLineBorder(new Color(23, 20, 20), 1));
-		
-		
-		
-		jbtSalvar = criarBotao("SALVAR", 110, 2, 100, 30, jbtSalvar);
-		jbtSalvar.setBackground(new Color(23, 20, 20));
-		jbtSalvar.setForeground(Color.white);
-
-		jbtLimpar = criarBotao("LIMPAR", 10, 2, 100, 30, jbtLimpar);
-		jbtLimpar.setBackground(new Color(23, 20, 20));
-		jbtLimpar.setForeground(Color.white);
-
-
-		jpnCadastrar = criarPanel("", 463, 372, 220, 34, jpnCadastrar, true);
-		jpnCadastrar.add(jbtSalvar);
-		jpnCadastrar.add(jbtLimpar);
-		jpnCadastrar.setBorder(BorderFactory.createLineBorder(new Color(23, 20, 20), 1));
-		
-		jtfsValidar.add(jtfNome);
-		jtfsValidar.add(jtfRg);
-		jtfsValidar.add(jtfCpf);
-		
-		setResizable(false);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setSize(700, 450);
-		setVisible(true);
 	}
-	
+
 	public JPanel criarPanel(String texto, Integer col, Integer lin, Integer lar, Integer alt, JPanel panel,
 			Boolean visibilidade) {
 		panel = new JPanel();
@@ -239,7 +260,7 @@ public class TelaCadastraCliente extends JFrame implements ActionListener{
 		return button;
 
 	}
-	
+
 	public Boolean verificaCampos(List<JTextField> componentes) {
 		Boolean passou = true;
 		for (JTextField cp : componentes) {
@@ -249,16 +270,37 @@ public class TelaCadastraCliente extends JFrame implements ActionListener{
 		}
 		if (passou == false) {
 			JOptionPane.showMessageDialog(null,
-					"Todos os campos são obrigatorios! Preencha corretamente e tente novamente.", "Campos em branco",
-					JOptionPane.ERROR_MESSAGE);
+					"Os campos de NOME, RG E CPF são obrigatorios! Preencha-os corretamente e tente novamente.",
+					"Campo(os) em branco", JOptionPane.ERROR_MESSAGE);
 		}
 		return passou;
 	}
-	
-	public static void main(String[] args) {
-		new TelaCadastraCliente();
+
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == jbtSalvar) {
+			salvarCliente();
+		}
+		if (e.getSource() == jbtAjuda) {
+			botaoAjuda();
+		}
+
 	}
-	
+
+	private void salvarCliente() {
+		Boolean camposPreenchidos = verificaCampos(jtfsValidar);
+		if (camposPreenchidos == true) {
+			Pessoa pessoa = cadastrarPessoaEndereco();
+			Cliente cliente = new Cliente(pessoa, clienteDao.maiorId() + 1);
+			cliente.setInteresse1(jtfInteresse1.getText());
+			cliente.setInteresse2(jtfInteresse2.getText());
+			cliente.setInteresse3(jtfInteresse3.getText());
+			clienteDao.inserir(cliente);
+			JOptionPane.showMessageDialog(null, "Cliente cadastrado com sucesso!", "Sucesso!",
+					JOptionPane.PLAIN_MESSAGE);
+
+		}
+	}
+
 	private Pessoa cadastrarPessoaEndereco() {
 		Date data = null;
 		try {
@@ -295,28 +337,14 @@ public class TelaCadastraCliente extends JFrame implements ActionListener{
 		return pessoa;
 	}
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		if(e.getSource() == jbtSalvar){
-			Boolean camposPreenchidos = verificaCampos(jtfsValidar);
-			if(camposPreenchidos == true){
-				Pessoa pessoa = cadastrarPessoaEndereco();
-				Cliente cliente = new Cliente(pessoa, clienteDao.maiorId() + 1);
-				cliente.setInteresse1(jtfInteresse1.getText());
-				cliente.setInteresse2(jtfInteresse2.getText());
-				cliente.setInteresse3(jtfInteresse3.getText());
-				clienteDao.inserir(cliente);
-				JOptionPane.showMessageDialog(null, "Cliente cadastrado com sucesso!", "Sucesso!",
-						JOptionPane.PLAIN_MESSAGE);	
-				
-			}
-		}
-		if (e.getSource() == jbtAjuda) {
-			JOptionPane.showMessageDialog(null,
-					"Sempre que adicionar um novo cliente, você pode atribuir 3 interesses a ele.\nEsses interesses definem o que seu cliente procura nos imóveis.\nPor exemplo: barato, grande, mansão.\nNÃO É OBRIGATÓRIO!",
-					"Ajuda", JOptionPane.PLAIN_MESSAGE);
-		}
-		
+	private void botaoAjuda() {
+		JOptionPane.showMessageDialog(null,
+				"Sempre que adicionar um novo cliente, você pode atribuir 3 interesses a ele.\nEsses interesses definem o que seu cliente procura nos imóveis.\nPor exemplo: barato, grande, mansão.\nNÃO É OBRIGATÓRIO!",
+				"Ajuda", JOptionPane.PLAIN_MESSAGE);
+	}
+
+	public static void main(String[] args) {
+		new TelaCadastraCliente();
 	}
 
 }

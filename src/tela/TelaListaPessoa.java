@@ -30,15 +30,24 @@ import pessoa.Pessoa;
 import pessoa.Usuario;
 
 public class TelaListaPessoa extends JInternalFrame implements ActionListener {
-	private static final long serialVersionUID = 1L;
+
+	private static final long serialVersionUID = 7740174946149044157L;
+
 	private JButton jbtEditarPessoa, jbtRemoverPessoa, jbtAtualizarPessoas, jbtCriarPessoa, jbtMenu, jbtFiltrarCliente,
 			jbtFiltraCorretor, jbtPesquisarRg;
+
 	private JTable jtbPessoas;
+
 	private DefaultTableModel dtbPessoas;
+
 	private JScrollPane jspPessoas;
+
 	private JToolBar jtbBarra;
+
 	private Boolean menuVisivel = false;
+
 	private JLabel jlbTitulo;
+
 	private PessoaDAO pessoaDao = DaoFactoryJDBC.get().pessoaDAO();
 	private CorretorDAO corretorDao = DaoFactoryJDBC.get().corretorDAO();
 	private ClienteDAO clienteDao = DaoFactoryJDBC.get().clienteDAO();
@@ -59,6 +68,41 @@ public class TelaListaPessoa extends JInternalFrame implements ActionListener {
 		setClosable(true);
 		setVisible(true);
 		setDefaultCloseOperation(HIDE_ON_CLOSE);
+	}
+
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == jbtMenu) {
+			abrirMenu();
+		}
+
+		if (e.getSource() == jbtCriarPessoa) {
+			criarPessoa();
+		}
+
+		if (e.getSource() == jbtEditarPessoa) {
+			editarPessoa();
+		}
+
+		if (e.getSource() == jbtRemoverPessoa) {
+			removerPessoa();
+		}
+
+		if (e.getSource() == jbtAtualizarPessoas) {
+			atualizarPessoas();
+		}
+
+		if (e.getSource() == jbtFiltrarCliente) {
+			filtrarCliente();
+		}
+
+		if (e.getSource() == jbtFiltraCorretor) {
+			filtrarCorretor();
+		}
+
+		if (e.getSource() == jbtPesquisarRg) {
+			pesquisarRg();
+		}
+
 	}
 
 	private void criarMenu() {
@@ -214,8 +258,8 @@ public class TelaListaPessoa extends JInternalFrame implements ActionListener {
 						JOptionPane.WARNING_MESSAGE);
 			} else if (encontrou == true) {
 				JOptionPane.showMessageDialog(null,
-						"Durante a pesquisa foram encontradas [" + dtbPessoas.getRowCount()+1 + "] pessoa(as) com o RG ["
-								+ rg + "]\nO resultado está sendo exibido na tabela!",
+						"Durante a pesquisa foram encontradas [" + dtbPessoas.getRowCount() + 1
+								+ "] pessoa(as) com o RG [" + rg + "]\nO resultado está sendo exibido na tabela!",
 						"Resultado", JOptionPane.PLAIN_MESSAGE);
 			}
 		}
@@ -266,42 +310,7 @@ public class TelaListaPessoa extends JInternalFrame implements ActionListener {
 		getContentPane().add(jlbTitulo);
 	}
 
-	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == jbtMenu) {
-			abrirMenu();
-		}
-
-		if (e.getSource() == jbtCriarPessoa) {
-			criarPessoa();
-		}
-
-		if (e.getSource() == jbtEditarPessoa) {
-			editarPessoa();
-		}
-
-		if (e.getSource() == jbtRemoverPessoa) {
-			removerPessoa();
-		}
-
-		if (e.getSource() == jbtAtualizarPessoas) {
-			atualizarPessoas();
-		}
-
-		if (e.getSource() == jbtFiltrarCliente) {
-			filtrarCliente();
-		}
-
-		if (e.getSource() == jbtFiltraCorretor) {
-			filtrarCorretor();
-		}
-
-		if (e.getSource() == jbtPesquisarRg) {
-			pesquisarRg();
-		}
-
-	}
-
-	public JButton criarBotao(String texto, Integer col, Integer lin, Integer lar, Integer alt, JButton button) {
+	private JButton criarBotao(String texto, Integer col, Integer lin, Integer lar, Integer alt, JButton button) {
 		button = new JButton(texto);
 		button.setBounds(col, lin, lar, alt);
 		button.addActionListener(this);

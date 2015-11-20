@@ -1,4 +1,4 @@
-	package tela;
+package tela;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -28,7 +28,8 @@ public class telaPrincipal extends JFrame implements ActionListener {
 	private telaLogin tlLogin = new telaLogin();
 	private static telaPrincipal tlPrincipal = new telaPrincipal();
 	private JMenu jmnImovel, jmnCadastro, jmnProcurar, jmnGerenciamento, jmnRelatorios, jmnSair;
-	private JMenuItem jmiAlugar, jmiVender, jmiPessoa, jmiProcurarPessoa, jmiContaUsuario, jmiRelatorioCliente, jmiRelatorioCorretor;
+	private JMenuItem jmiAlugar, jmiVender, jmiPessoa, jmiProcurarPessoa, jmiContaUsuario, jmiRelatorioCliente,
+			jmiRelatorioCorretor;
 	private Usuario usuario;
 	private ArrayList<JInternalFrame> frames = new ArrayList<>();
 	private JLabel jlbLogo;
@@ -39,30 +40,28 @@ public class telaPrincipal extends JFrame implements ActionListener {
 
 		criarBarra();
 
-		
 		jlbLogo = new JLabel();
 		jlbLogo.setBounds(808, 515, 175, 75);
-		//jlbLogo.setBounds(808, 0, 175, 75);
+		// jlbLogo.setBounds(808, 0, 175, 75);
 		jlbLogo.setVisible(true);
 		jlbLogo.setOpaque(true);
 		jlbLogo.setIcon(new ImageIcon("img/logo_imo.png"));
 		getContentPane().add(jlbLogo);
-		
-		
+
 		setJMenuBar(barra);
 		setSize(1000, 650);
 		setVisible(true);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-		//frames.add(tlLogin);
+		// frames.add(tlLogin);
 		frames.add(tlListaPessoas);
 		frames.add(tlAlterarPessoa);
 		frames.add(tlListaUsuarios);
 		frames.add(tlProcurarCliente);
 		posicionaFrames(frames);
 
-		//tlLogin.setVisible(true);
+		// tlLogin.setVisible(true);
 
 	}
 
@@ -96,7 +95,7 @@ public class telaPrincipal extends JFrame implements ActionListener {
 		jmiContaUsuario.addActionListener(this);
 		jmnGerenciamento.add(jmiContaUsuario);
 		barra.add(jmnGerenciamento);
-		
+
 		jmnRelatorios = new JMenu("Relatórios");
 		jmiRelatorioCliente = new JMenuItem("Gerar relatório de clientes cadastrados");
 		jmiRelatorioCorretor = new JMenuItem("Gerar relatório de corretores cadastrados");
@@ -105,19 +104,21 @@ public class telaPrincipal extends JFrame implements ActionListener {
 		jmnRelatorios.add(jmiRelatorioCliente);
 		jmnRelatorios.add(jmiRelatorioCorretor);
 		barra.add(jmnRelatorios);
-		
+
 		jmnSair = new JMenu("Sair");
 		jmnSair.addMenuListener(new MenuListener() {
 			public void menuSelected(MenuEvent e) {
 				telaPrincipal.getTlPrincipal().setVisible(false);
 				telaPrincipal.getTlPrincipal().getTlLogin().setVisible(true);
-				
+
 			}
+
 			public void menuDeselected(MenuEvent e) {
-				
+
 			}
+
 			public void menuCanceled(MenuEvent e) {
-				
+
 			}
 		});
 		barra.add(jmnSair);
@@ -134,7 +135,6 @@ public class telaPrincipal extends JFrame implements ActionListener {
 	}
 
 	public void esconderTelas() {
-		//tlLogin.setVisible(false);
 		tlListaPessoas.setVisible(false);
 		tlAlterarPessoa.setVisible(false);
 		tlListaUsuarios.setVisible(false);
@@ -144,21 +144,16 @@ public class telaPrincipal extends JFrame implements ActionListener {
 	}
 
 	public void alteraVisibilidade() {
-		//usuario = telaPrincipal.getTlPrincipal().getTlLogin().getUsuario();
+		// usuario = telaPrincipal.getTlPrincipal().getTlLogin().getUsuario();
 		usuario = tlLogin.getUsuario();
 		tlPrincipal.setVisible(true);
 		barra.setVisible(true);
 	}
 
-	//public telaLogin getTlLogin() {
-		//return tlLogin;
-	//}
-
-
 	public TelaProcurarCliente getTlProcurarCliente() {
 		return tlProcurarCliente;
 	}
-	
+
 	public TelaAlterarPessoa getTlAlterarPessoa() {
 		return tlAlterarPessoa;
 	}
@@ -170,11 +165,10 @@ public class telaPrincipal extends JFrame implements ActionListener {
 	public TelaListaUsuario getTlListaUsuarios() {
 		return tlListaUsuarios;
 	}
-	
+
 	public telaLogin getTlLogin() {
 		return tlLogin;
 	}
-	
 
 	public static telaPrincipal getTlPrincipal() {
 		if (tlPrincipal == null) {
@@ -202,19 +196,19 @@ public class telaPrincipal extends JFrame implements ActionListener {
 				JOptionPane.showMessageDialog(null, "Não possui permissão de gestor");
 			}
 		}
-		
-		if(e.getSource() == jmiRelatorioCliente){
+
+		if (e.getSource() == jmiRelatorioCliente) {
 			// aqui o que faz para gerar relatorio de clientes
 		}
-		
-		if(e.getSource() == jmiRelatorioCorretor){
+
+		if (e.getSource() == jmiRelatorioCorretor) {
 			// aqui o que faz para gerar relatorio de corretores
 		}
 
 	}
 
 	public static void main(String[] args) {
-		telaPrincipal.getTlPrincipal().getTlLogin();	
+		telaPrincipal.getTlPrincipal().getTlLogin();
 		tlPrincipal.setVisible(false);
 	}
 
