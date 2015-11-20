@@ -14,7 +14,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
-import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -32,7 +32,7 @@ import pessoa.Endereco;
 import pessoa.Pessoa;
 import pessoa.Usuario;
 
-public class TelaCadastroCorretor extends JFrame implements ActionListener {
+public class TelaCadastroCorretor extends JInternalFrame implements ActionListener {
 
 	private static final long serialVersionUID = -4618300901528138050L;
 
@@ -88,9 +88,10 @@ public class TelaCadastroCorretor extends JFrame implements ActionListener {
 		jtfsValidar.add(jtfCpf);
 
 		setResizable(false);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setSize(700, 450);
 		setVisible(true);
+		setClosable(true);
+		setDefaultCloseOperation(HIDE_ON_CLOSE);
 	}
 
 	private void criarPanelCadastroCliente() {

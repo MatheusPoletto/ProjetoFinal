@@ -21,6 +21,8 @@ import pessoa.Usuario;
 public class telaPrincipal extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	private JMenuBar barra;
+	private TelaCadastroCorretor tlCadastroCorretor = new TelaCadastroCorretor();
+	private TelaCadastraCliente tlCadastraCliente = new TelaCadastraCliente();
 	private TelaListaPessoa tlListaPessoas = new TelaListaPessoa();
 	private TelaAlterarPessoa tlAlterarPessoa = new TelaAlterarPessoa();
 	private TelaListaUsuario tlListaUsuarios = new TelaListaUsuario();
@@ -28,7 +30,7 @@ public class telaPrincipal extends JFrame implements ActionListener {
 	private telaLogin tlLogin = new telaLogin();
 	private static telaPrincipal tlPrincipal = new telaPrincipal();
 	private JMenu jmnImovel, jmnCadastro, jmnProcurar, jmnGerenciamento, jmnRelatorios, jmnSair;
-	private JMenuItem jmiAlugar, jmiVender, jmiPessoa, jmiProcurarPessoa, jmiContaUsuario, jmiRelatorioCliente,
+	private JMenuItem jmiAlugar, jmiVender, jmiCliente, jmiCorretor, jmiProcurarPessoa, jmiContaUsuario, jmiRelatorioCliente,
 			jmiRelatorioCorretor;
 	private Usuario usuario;
 	private ArrayList<JInternalFrame> frames = new ArrayList<>();
@@ -54,14 +56,13 @@ public class telaPrincipal extends JFrame implements ActionListener {
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-		// frames.add(tlLogin);
+		frames.add(tlCadastroCorretor);
+		frames.add(tlCadastraCliente);
 		frames.add(tlListaPessoas);
 		frames.add(tlAlterarPessoa);
 		frames.add(tlListaUsuarios);
 		frames.add(tlProcurarCliente);
 		posicionaFrames(frames);
-
-		// tlLogin.setVisible(true);
 
 	}
 
@@ -78,9 +79,12 @@ public class telaPrincipal extends JFrame implements ActionListener {
 		jmnImovel.addSeparator();
 		jmnImovel.add(jmiVender);
 		jmnCadastro.addSeparator();
-		jmiPessoa = new JMenuItem("Cliente	");
-		jmnCadastro.add(jmiPessoa);
-		jmiPessoa.addActionListener(this);
+		jmiCliente = new JMenuItem("Cliente");
+		jmnCadastro.add(jmiCliente);
+		jmiCliente.addActionListener(this);
+		jmiCorretor = new JMenuItem("Corretor");
+		jmnCadastro.add(jmiCorretor);
+		jmiCorretor.addActionListener(this);
 		barra.add(jmnCadastro);
 
 		jmnProcurar = new JMenu("Procurar");
@@ -135,6 +139,8 @@ public class telaPrincipal extends JFrame implements ActionListener {
 	}
 
 	public void esconderTelas() {
+		tlCadastroCorretor.setVisible(false);
+		tlCadastraCliente.setVisible(false);
 		tlListaPessoas.setVisible(false);
 		tlAlterarPessoa.setVisible(false);
 		tlListaUsuarios.setVisible(false);
@@ -144,10 +150,17 @@ public class telaPrincipal extends JFrame implements ActionListener {
 	}
 
 	public void alteraVisibilidade() {
-		// usuario = telaPrincipal.getTlPrincipal().getTlLogin().getUsuario();
 		usuario = tlLogin.getUsuario();
 		tlPrincipal.setVisible(true);
 		barra.setVisible(true);
+	}
+
+	public TelaCadastroCorretor getTlCadastroCorretor() {
+		return tlCadastroCorretor;
+	}
+
+	public TelaCadastraCliente getTlCadastraCliente() {
+		return tlCadastraCliente;
 	}
 
 	public TelaProcurarCliente getTlProcurarCliente() {
@@ -178,8 +191,14 @@ public class telaPrincipal extends JFrame implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == jmiPessoa) {
+		if (e.getSource() == jmiCliente) {
 			esconderTelas();
+			tlCadastraCliente.setVisible(true);
+		}
+		
+		if (e.getSource() == jmiCorretor){
+			esconderTelas();
+			tlCadastroCorretor.setVisible(true);
 		}
 
 		if (e.getSource() == jmiProcurarPessoa) {

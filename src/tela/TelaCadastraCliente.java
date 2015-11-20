@@ -88,9 +88,10 @@ public class TelaCadastraCliente extends JInternalFrame implements ActionListene
 		jtfsValidar.add(jtfCpf);
 
 		setResizable(false);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setSize(700, 450);
 		setVisible(true);
+		setClosable(true);
+		setDefaultCloseOperation(HIDE_ON_CLOSE);
 	}
 
 	private void criarPanelCadastrar() {
