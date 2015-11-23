@@ -6,8 +6,6 @@ import dao.CorretorDAO;
 import dao.CorretorDAOJDBC;
 import dao.EnderecoDAO;
 import dao.EnderecoDAOJDBC;
-import dao.HistoricoDAO;
-import dao.HistoricoDAOJDBC;
 import dao.ImobiliariaDAO;
 import dao.ImobliariaDAOJDBC;
 import dao.ImovelDAO;
@@ -16,6 +14,8 @@ import dao.PessoaDAO;
 import dao.PessoaDAOJDBC;
 import dao.UsuarioDAO;
 import dao.UsuarioDAOJDBC;
+import dao.VendaDAO;
+import dao.VendaDAOJDBC;
 
 // tem que digitar como ta se colocar letra minuscula e no dao ta maiscula vai dar erro. 
 
@@ -50,13 +50,6 @@ public class DaoFactoryJDBC implements AbstractDaoFactory {
 	}
 
 	@Override
-	public HistoricoDAO historicoDAO() {
-	
-		 return new HistoricoDAOJDBC(); //falta fazer historico dao jdbc 
-	//return null; 
-	}
-
-	@Override
 	public ImobiliariaDAO imobiliariaDAO() {
 		
 		return new ImobliariaDAOJDBC();  //criado sem o i , não quiz mudar 
@@ -78,6 +71,11 @@ public class DaoFactoryJDBC implements AbstractDaoFactory {
 	public UsuarioDAO usuarioDAO() {
 
 		return new UsuarioDAOJDBC();
+	}
+
+	@Override
+	public VendaDAO vendaDAO() {
+		return new VendaDAOJDBC();
 	}
 
 

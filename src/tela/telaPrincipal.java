@@ -42,14 +42,6 @@ public class telaPrincipal extends JFrame implements ActionListener {
 
 		criarBarra();
 
-		jlbLogo = new JLabel();
-		jlbLogo.setBounds(808, 515, 175, 75);
-		// jlbLogo.setBounds(808, 0, 175, 75);
-		jlbLogo.setVisible(true);
-		jlbLogo.setOpaque(true);
-		jlbLogo.setIcon(new ImageIcon("img/logo_imo.png"));
-		getContentPane().add(jlbLogo);
-
 		setJMenuBar(barra);
 		setSize(1000, 650);
 		setVisible(true);
@@ -63,6 +55,14 @@ public class telaPrincipal extends JFrame implements ActionListener {
 		frames.add(tlListaUsuarios);
 		frames.add(tlProcurarCliente);
 		posicionaFrames(frames);
+		
+		jlbLogo = new JLabel();
+		jlbLogo.setBounds(780, 510, 175, 75);
+		// jlbLogo.setBounds(808, 0, 175, 75);
+		jlbLogo.setVisible(true);
+		jlbLogo.setOpaque(true);
+		jlbLogo.setIcon(new ImageIcon("img/logo_imo.png"));
+		getContentPane().add(jlbLogo);
 
 	}
 

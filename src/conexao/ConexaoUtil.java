@@ -13,7 +13,7 @@ public class ConexaoUtil {
 	
 	static {
 		
-		String endereco = "jdbc:mysql://localhost:3306/mydb"; // colocar aqui depois que criar o banco de dados 
+		String endereco = "jdbc:mysql://localhost:3306/dbprojeto";
 		String usuario = "root";
 		String senha = "root";
 		
