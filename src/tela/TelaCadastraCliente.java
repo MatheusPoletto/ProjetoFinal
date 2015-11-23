@@ -123,13 +123,18 @@ public class TelaCadastraCliente extends JInternalFrame implements ActionListene
 		jbtAjuda.setBorderPainted(false);
 		jbtAjuda.setBackground(new Color(0, 0, 0, 0));
 
-		jpnInteresses = criarPanel("", 0, 330, 684, 35, jpnInteresses, true);
+		CriarCamponentes cp = new CriarCamponentes();
+		
+		
+		//jpnInteresses = criarPanel("", 0, 330, 684, 35, jpnInteresses, true);
+		jpnInteresses = cp.criarPanel("", 0, 330, 684, 35, jpnInteresses, true);
 		jpnInteresses.add(jlbInteresses);
 		jpnInteresses.add(jtfInteresse1);
 		jpnInteresses.add(jtfInteresse2);
 		jpnInteresses.add(jtfInteresse3);
 		jpnInteresses.add(jbtAjuda);
 		jpnInteresses.setBorder(BorderFactory.createLineBorder(new Color(23, 20, 20), 1));
+		getContentPane().add(jpnInteresses);
 
 	}
 
