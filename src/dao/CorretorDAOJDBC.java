@@ -24,13 +24,12 @@ public class CorretorDAOJDBC implements CorretorDAO{
 
 	@Override
 	public void inserir(Corretor corretor) {
-		String sql = "insert into Corretor (salario, comissao, Pessoa_idPessoa) values(? ,? ,?)";
+		String sql = "insert into Corretor (salario, Pessoa_idPessoa) values(? ,? ,?)";
 		try {
 			PreparedStatement pstmt = con.prepareStatement(sql); 
 			
 			pstmt.setDouble(1, corretor.getSalario());
-			pstmt.setDouble(2, corretor.getPorcentagemComissao());
-			pstmt.setInt(3, corretor.getPessoa().getId());
+			pstmt.setInt(2, corretor.getPessoa().getId());
 			pstmt.executeUpdate(); 
 		} catch (SQLException e){
 			e.printStackTrace();
@@ -39,12 +38,11 @@ public class CorretorDAOJDBC implements CorretorDAO{
 
 	@Override
 	public void alterar(Corretor corretor) {
-		String sql = "update corretor set salario = ?, comissao = ? where idCorretor = ?";
+		String sql = "update corretor set salario = ? where idCorretor = ?";
 		try {
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setDouble(1, corretor.getSalario());
-			pstmt.setDouble(2, corretor.getPorcentagemComissao());
-			pstmt.setInt(3, corretor.getIdCorretor());
+			pstmt.setInt(2, corretor.getIdCorretor());
 			pstmt.executeUpdate(); 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -79,7 +77,6 @@ public class CorretorDAOJDBC implements CorretorDAO{
 				corretor = new Corretor();
 				corretor.setIdCorretor(rs.getInt("idCorretor"));
 				corretor.setSalario(rs.getDouble("salario"));
-				corretor.setPorcentagemComissao(rs.getDouble("comissao"));
 				corretor.setPessoa(pessoaDao.buscar(rs.getInt("Pessoa_idPessoa")));
 			}
 		} catch (SQLException e) {
@@ -100,7 +97,6 @@ public class CorretorDAOJDBC implements CorretorDAO{
 				Corretor corretor = new Corretor();
 				corretor.setIdCorretor(rs.getInt("idCorretor"));
 				corretor.setSalario(rs.getDouble("salario"));
-				corretor.setPorcentagemComissao(rs.getDouble("comissao"));
 				corretor.setPessoa(pessoaDao.buscar(rs.getInt("Pessoa_idPessoa")));
 				corretores.add(corretor);
 			}

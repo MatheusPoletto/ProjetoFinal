@@ -393,7 +393,6 @@ public class TelaAlterarPessoa extends JInternalFrame implements ActionListener 
 					if (corretor1.getPessoa().getId() == idPessoa) {
 						corretor.setIdCorretor(corretor1.getIdCorretor());
 						corretor.setSalario(Double.valueOf(jtfSalario.getText()));
-						corretor.setPorcentagemComissao(Double.valueOf(jtfComissao.getText()));
 					}
 				}
 				corretorDao.alterar(corretor);
@@ -449,7 +448,6 @@ public class TelaAlterarPessoa extends JInternalFrame implements ActionListener 
 			for (Corretor corretor : corretorDao.todos()) {
 				if (corretor.getPessoa().getId() == idPessoa) {
 					jtfSalario.setText(corretor.getSalario().toString());
-					jtfComissao.setText(corretor.getPorcentagemComissao().toString());
 				}
 			}
 		} else if (tipo.equals("CLIENTE")) {

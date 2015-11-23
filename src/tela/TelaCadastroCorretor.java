@@ -322,8 +322,7 @@ public class TelaCadastroCorretor extends JInternalFrame implements ActionListen
 		Boolean camposPreenchidos = verificaCampos(jtfsValidar);
 		if (camposPreenchidos == true) {
 			Pessoa pessoa = cadastrarPessoaEndereco();
-			Corretor corretor = new Corretor(pessoa, corretorDao.maiorId() + 1, Double.valueOf(jtfSalario.getText()),
-					Double.valueOf(jtfComissao.getText()));
+			Corretor corretor = new Corretor(pessoa, corretorDao.maiorId() + 1, Double.valueOf(jtfSalario.getText()));
 			corretorDao.inserir(corretor);
 			Usuario usuario = new Usuario(1, jtfUsuario.getText(), jtfSenha.getText(), corretor, 1);
 			usuarioDao.inserir(usuario);

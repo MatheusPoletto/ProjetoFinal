@@ -4,7 +4,7 @@ public class Corretor {
 	private Pessoa pessoa;
 	private Integer idCorretor;
 	private Double salario;
-	private Double porcentagemComissao;
+
 	
 	// teste de metodo para calcular o salario
 	public Double calculaSalario(Double valor){
@@ -17,13 +17,11 @@ public class Corretor {
 	}
 	
 	
-	public Corretor(Pessoa pessoa, Integer idCorretor, Double salario,
-			Double porcentagemComissao) {
+	public Corretor(Pessoa pessoa, Integer idCorretor, Double salario) {
 		super();
 		this.pessoa = pessoa;
 		this.idCorretor = idCorretor;
 		this.salario = salario;
-		this.porcentagemComissao = porcentagemComissao;
 	}
 
 
@@ -35,14 +33,6 @@ public class Corretor {
 
 	public void setPessoa(Pessoa pessoa) {
 		this.pessoa = pessoa;
-	}
-
-	public Double getPorcentagemComissao() {
-		return porcentagemComissao;
-	}
-
-	public void setPorcentagemComissao(Double porcentagemComissao) {
-		this.porcentagemComissao = porcentagemComissao;
 	}
 
 	public Integer getIdCorretor() {
