@@ -1,26 +1,19 @@
 package tela;
 
-import java.awt.Button;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -30,11 +23,11 @@ import javax.swing.JRadioButton;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import javax.swing.border.Border;
 
-public class TelaCadastroImovel extends JFrame implements ActionListener{
-
-	private JLabel jlbTitulo;
+public class TelaAlterarImovel extends JFrame implements ActionListener {
+	
+	
+private JLabel jlbTitulo;
 	
 	private JPanel jpnLocalizador, jpnTab1;
 	private JLabel jlbNovo, jlbRG, jlbNome, jlbCpf;
@@ -71,11 +64,11 @@ public class TelaCadastroImovel extends JFrame implements ActionListener{
 	private JLabel jlbRua, jlbNumero, jlbCidade, jlbBairro, jlbUf, jlbCep;
 	private JTextField jtfRua, jtfNumero, jtfCidade, jtfBairro, jtfUf, jtfCep;
 	
-	public TelaCadastroImovel() {
-		setTitle("CADASTRO DE IMOVEL");
+	public TelaAlterarImovel() {
+		setTitle("Alterar Imovel");
 		setLayout(null);
 
-		jlbTitulo = new JLabel("CADASTRO DE IMÓVEL", SwingConstants.CENTER);
+		jlbTitulo = new JLabel("ALTERAÇÃO DE IMÓVEL", SwingConstants.CENTER);
 		jlbTitulo.setBounds(0, 0, 707, 44);
 		jlbTitulo.setVisible(true);
 		jlbTitulo.setFont(new Font("ARIAL", Font.PLAIN, 18));
@@ -244,7 +237,7 @@ public class TelaCadastroImovel extends JFrame implements ActionListener{
 	}
 
 	public static void main(String[] args) {
-		new TelaCadastroImovel();
+		new TelaAlterarImovel();
 	}
 
 	@Override
@@ -343,5 +336,5 @@ public class TelaCadastroImovel extends JFrame implements ActionListener{
 		
 		jtfValorTotal.setEnabled(false);
 	}
-	
+
 }
