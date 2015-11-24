@@ -54,7 +54,7 @@ public class TelaCadastroCorretor extends JInternalFrame implements ActionListen
 
 	private JButton jbtSalvar, jbtLimpar;
 	private JPanel jpnCadastrar;
-
+ 
 	private ArrayList<JTextField> jtfsValidar = new ArrayList<>();
 
 	private PessoaDAO pessoaDao = DaoFactoryJDBC.get().pessoaDAO();

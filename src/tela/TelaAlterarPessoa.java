@@ -51,7 +51,7 @@ public class TelaAlterarPessoa extends JInternalFrame implements ActionListener 
 	private JPanel jpnInteresses;
 	private JLabel jlbInteresses;
 	private JTextField jtfInteresse1, jtfInteresse2, jtfInteresse3;
-
+ 
 	private JPanel jpnInfoCorretor;
 	private JLabel jlbSalario, jlbComissao;
 	private JTextField jtfSalario, jtfComissao;

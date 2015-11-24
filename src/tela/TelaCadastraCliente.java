@@ -51,7 +51,7 @@ public class TelaCadastraCliente extends JInternalFrame implements ActionListene
 	private JPanel jpnInteresses;
 	private JLabel jlbInteresses;
 	private JTextField jtfInteresse1, jtfInteresse2, jtfInteresse3;
-	private JButton jbtAjuda;
+	private JButton jbtAjuda; 
 
 	private JPanel jpnCadastrar;
 	private JButton jbtSalvar, jbtLimpar;
