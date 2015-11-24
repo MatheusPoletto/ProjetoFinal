@@ -25,9 +25,10 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 public class TelaAlterarImovel extends JFrame implements ActionListener {
-	
-	
-private JLabel jlbTitulo;
+
+	private static final long serialVersionUID = 2404426739863880445L;
+
+	private JLabel jlbTitulo;
 	
 	private JPanel jpnLocalizador, jpnTab1;
 	private JLabel jlbNovo, jlbRG, jlbNome, jlbCpf;
