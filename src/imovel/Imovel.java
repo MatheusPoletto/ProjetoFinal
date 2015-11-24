@@ -13,7 +13,12 @@ public class Imovel {
 	private Integer mesesContrato;
 	private Endereco endereco; 
 	private Cliente cliente; 
-	
+	private String imagem1;
+	private String imagem2;
+	private String imagem3;
+	private String descricao1;
+	private String descricao2;
+	private String descricao3;
 	
 	
 	
@@ -21,7 +26,7 @@ public class Imovel {
 		return idImovel;
 	}
 	
-	public void setIdImovel(Integer idimovel) {
+	public void setIdImovel(Integer idimovel) {	
 		this.idImovel = idimovel;
 	}
 	
@@ -76,8 +81,59 @@ public class Imovel {
 		this.mesesContrato = mesesContrato;
 	}
 
+	public String getImagem1() {
+		return imagem1;
+	}
+
+	public void setImagem1(String imagem1) {
+		this.imagem1 = imagem1;
+	}
+
+	public String getImagem2() {
+		return imagem2;
+	}
+
+	public void setImagem2(String imagem2) {
+		this.imagem2 = imagem2;
+	}
+
+	public String getImagem3() {
+		return imagem3;
+	}
+
+	public void setImagem3(String imagem3) {
+		this.imagem3 = imagem3;
+	}
+
+	public String getDescricao1() {
+		return descricao1;
+	}
+
+	public void setDescricao1(String descricao1) {
+		this.descricao1 = descricao1;
+	}
+
+	public String getDescricao2() {
+		return descricao2;
+	}
+
+	public void setDescricao2(String descricao2) {
+		this.descricao2 = descricao2;
+	}
+
+	public String getDescricao3() {
+		return descricao3;
+	}
+
+	public void setDescricao3(String descricao3) {
+		this.descricao3 = descricao3;
+	}
+	
+	
+
 	public Imovel(Integer idImovel, String metrosquadrados, Double valorTotal, Double valorMensal,
-			Integer mesesContrato, Endereco endereco, Cliente cliente) {
+			Integer mesesContrato, Endereco endereco, Cliente cliente, String imagem1, String imagem2, String imagem3,
+			String descricao1, String descricao2, String descricao3) {
 		super();
 		this.idImovel = idImovel;
 		this.metrosquadrados = metrosquadrados;
@@ -86,6 +142,12 @@ public class Imovel {
 		this.mesesContrato = mesesContrato;
 		this.endereco = endereco;
 		this.cliente = cliente;
+		this.imagem1 = imagem1;
+		this.imagem2 = imagem2;
+		this.imagem3 = imagem3;
+		this.descricao1 = descricao1;
+		this.descricao2 = descricao2;
+		this.descricao3 = descricao3;
 	}
 
 	public Imovel() {
