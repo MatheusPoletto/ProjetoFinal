@@ -7,8 +7,11 @@ import pessoa.Pessoa;
 
 public class Imovel {
 	private Integer idImovel;
-	private Endereco endereco; 
 	private String metrosquadrados; 
+	private Double valorTotal;
+	private Double valorMensal;
+	private Integer mesesContrato;
+	private Endereco endereco; 
 	private Cliente cliente; 
 	
 	
@@ -47,11 +50,41 @@ public class Imovel {
 		this.cliente = cliente;
 	}
 
-	public Imovel(Integer idImovel, Endereco endereco, String metrosquadrados, Cliente cliente) {
+	
+
+	public Double getValorTotal() {
+		return valorTotal;
+	}
+
+	public void setValorTotal(Double valorTotal) {
+		this.valorTotal = valorTotal;
+	}
+
+	public Double getValorMensal() {
+		return valorMensal;
+	}
+
+	public void setValorMensal(Double valorMensal) {
+		this.valorMensal = valorMensal;
+	}
+
+	public Integer getMesesContrato() {
+		return mesesContrato;
+	}
+
+	public void setMesesContrato(Integer mesesContrato) {
+		this.mesesContrato = mesesContrato;
+	}
+
+	public Imovel(Integer idImovel, String metrosquadrados, Double valorTotal, Double valorMensal,
+			Integer mesesContrato, Endereco endereco, Cliente cliente) {
 		super();
 		this.idImovel = idImovel;
-		this.endereco = endereco;
 		this.metrosquadrados = metrosquadrados;
+		this.valorTotal = valorTotal;
+		this.valorMensal = valorMensal;
+		this.mesesContrato = mesesContrato;
+		this.endereco = endereco;
 		this.cliente = cliente;
 	}
 

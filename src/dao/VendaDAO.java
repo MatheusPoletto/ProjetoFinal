@@ -1,6 +1,6 @@
 package dao;
 
-import imovel.Venda;
+import model.Venda;
 
 public interface VendaDAO extends GenericDAO<Venda>{
 

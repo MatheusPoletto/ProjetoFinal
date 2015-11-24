@@ -2,7 +2,8 @@ package dao;
 
 import java.util.List;
 
-import imovel.Venda;
+import model.Venda;
+
 
 public class VendaDAOJDBC implements VendaDAO{
 

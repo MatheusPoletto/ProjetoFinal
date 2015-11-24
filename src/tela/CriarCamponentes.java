@@ -4,6 +4,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
 public class CriarCamponentes {
@@ -41,5 +42,12 @@ public class CriarCamponentes {
 		button.setVisible(true);
 		return button;
 
+	}
+	
+	public JRadioButton criarRadioButton(String texto, Integer col, Integer lin, Integer lar, Integer alt, JRadioButton radioButton){
+		radioButton = new JRadioButton(texto);
+		radioButton.setBounds(col, lin, lar, alt);
+		radioButton.setVisible(true);
+		return radioButton;
 	}
 }
