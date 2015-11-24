@@ -47,6 +47,18 @@ public class TelaCadastroImovel extends JFrame implements ActionListener{
 	private JLabel jlbImagem1;
 	private JFileChooser jfcProcurar;
 	
+	private JPanel jpnTab3;
+	private JButton jbtProcurar2;
+	private JLabel jlbImagem2;
+	
+	private JPanel jpnTab4;
+	private JButton jbtProcurar3;
+	private JLabel jlbImagem3;
+	
+	private JPanel jpnTab5;
+	private JButton jbtProcurar4;
+	private JLabel jlbImagem4;
+	
 	private JPanel jpnImovel;
 	private JRadioButton jrbAlugar, jrbVender;
 	private ButtonGroup btgTipoVenda;
@@ -129,12 +141,39 @@ public class TelaCadastroImovel extends JFrame implements ActionListener{
 		jpnTab2.add(jbtProcurar1);
 		jpnTab2.add(jlbImagem1);
 		
+		jbtProcurar2 = cp.criarBotao("PROCURAR", 590, 0, 100, 24, jbtProcurar2);
+		jbtProcurar2.addActionListener(this);
+		
+		jlbImagem2 = cp.criarLabel("", 0, 0, 700, 420, jlbImagem2);
+		
+		jpnTab3 = cp.criarPanel("", 0, 0, 700, 420, jpnTab3, true);
+		jpnTab3.add(jbtProcurar2);
+		jpnTab3.add(jlbImagem2);
+		
+		jbtProcurar3 = cp.criarBotao("PROCURAR", 590, 0, 100, 24, jbtProcurar3);
+		jbtProcurar3.addActionListener(this);
+		
+		jlbImagem3 = cp.criarLabel("", 0, 0, 700, 420, jlbImagem3);
+		
+		jpnTab4 = cp.criarPanel("", 0, 0, 700, 420, jpnTab4, true);
+		jpnTab4.add(jbtProcurar3);
+		jpnTab4.add(jlbImagem3);
+		
+		jbtProcurar4 = cp.criarBotao("PROCURAR", 590, 0, 100, 24, jbtProcurar4);
+		jbtProcurar4.addActionListener(this);
+		
+		jlbImagem4 = cp.criarLabel("", 0, 0, 700, 420, jlbImagem4);
+		
+		jpnTab5 = cp.criarPanel("", 0, 0, 700, 420, jpnTab5, true);
+		jpnTab5.add(jbtProcurar4);
+		jpnTab5.add(jlbImagem4);
+		
 		jtbPrincipal = new JTabbedPane();
 		jtbPrincipal.add("Principal", jpnTab1);
 		jtbPrincipal.add("Imagem 1", jpnTab2);
-		jtbPrincipal.add("Imagem 2", new JPanel());
-		jtbPrincipal.add("Imagem 3", new JPanel());
-		jtbPrincipal.add("Imagem 4", new JPanel());
+		jtbPrincipal.add("Imagem 2", jpnTab3);
+		jtbPrincipal.add("Imagem 3", jpnTab4);
+		jtbPrincipal.add("Imagem 4", jpnTab5);
 		jtbPrincipal.setBounds(0,50,693,420);
 		getContentPane().add(jtbPrincipal);
 
@@ -227,6 +266,60 @@ public class TelaCadastroImovel extends JFrame implements ActionListener{
 					AffineTransform at = AffineTransform.getScaleInstance((double) 700 / bi.getWidth(), (double) 420 / bi.getHeight());
 					g.drawRenderedImage(bi, at);
 					jlbImagem1.setIcon(new ImageIcon(aux));
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}	
+			}else{
+				JOptionPane.showMessageDialog(null, "Permitido somente imagens com extensão .JPG!", "Aviso!", JOptionPane.WARNING_MESSAGE);
+			}
+		}
+		if(e.getSource() == jbtProcurar2){
+			jfcProcurar.showOpenDialog(null);
+			if(jfcProcurar.getSelectedFile().getAbsolutePath().toString().toLowerCase().endsWith(".jpg")){				
+				File arquivo = jfcProcurar.getSelectedFile();
+				try {
+					BufferedImage bi = ImageIO.read(arquivo);
+					BufferedImage aux= new BufferedImage(700, 420, bi.getType());
+					Graphics2D g = aux.createGraphics();
+					AffineTransform at = AffineTransform.getScaleInstance((double) 700 / bi.getWidth(), (double) 420 / bi.getHeight());
+					g.drawRenderedImage(bi, at);
+					jlbImagem2.setIcon(new ImageIcon(aux));
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}	
+			}else{
+				JOptionPane.showMessageDialog(null, "Permitido somente imagens com extensão .JPG!", "Aviso!", JOptionPane.WARNING_MESSAGE);
+			}
+		}
+		if(e.getSource() == jbtProcurar3){
+			jfcProcurar.showOpenDialog(null);
+			if(jfcProcurar.getSelectedFile().getAbsolutePath().toString().toLowerCase().endsWith(".jpg")){				
+				File arquivo = jfcProcurar.getSelectedFile();
+				try {
+					BufferedImage bi = ImageIO.read(arquivo);
+					BufferedImage aux= new BufferedImage(700, 420, bi.getType());
+					Graphics2D g = aux.createGraphics();
+					AffineTransform at = AffineTransform.getScaleInstance((double) 700 / bi.getWidth(), (double) 420 / bi.getHeight());
+					g.drawRenderedImage(bi, at);
+					jlbImagem3.setIcon(new ImageIcon(aux));
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}	
+			}else{
+				JOptionPane.showMessageDialog(null, "Permitido somente imagens com extensão .JPG!", "Aviso!", JOptionPane.WARNING_MESSAGE);
+			}
+		}
+		if(e.getSource() == jbtProcurar4){
+			jfcProcurar.showOpenDialog(null);
+			if(jfcProcurar.getSelectedFile().getAbsolutePath().toString().toLowerCase().endsWith(".jpg")){				
+				File arquivo = jfcProcurar.getSelectedFile();
+				try {
+					BufferedImage bi = ImageIO.read(arquivo);
+					BufferedImage aux= new BufferedImage(700, 420, bi.getType());
+					Graphics2D g = aux.createGraphics();
+					AffineTransform at = AffineTransform.getScaleInstance((double) 700 / bi.getWidth(), (double) 420 / bi.getHeight());
+					g.drawRenderedImage(bi, at);
+					jlbImagem4.setIcon(new ImageIcon(aux));
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}	
