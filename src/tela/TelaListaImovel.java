@@ -17,6 +17,14 @@ import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
+import DAOFactory.DaoFactory;
+import DAOFactory.DaoFactoryJDBC;
+import dao.ImovelDAO;
+import imovel.Imovel;
+import pessoa.Corretor;
+import pessoa.Pessoa;
+import pessoa.Usuario;
+
 public class TelaListaImovel extends JFrame {
 
 	private JLabel jlbTitulo;
@@ -37,6 +45,8 @@ public class TelaListaImovel extends JFrame {
 	private JLabel jlbImg1, jlbImg2, jlbImg3, jlbImg4;
 	
 	private JButton jbtInfo, jbtAlterar, jbtVender, jbtRemover;
+	
+	private ImovelDAO imovelDao = DaoFactoryJDBC.get().imovelDAO();
 	
 	
 	
@@ -133,10 +143,20 @@ public class TelaListaImovel extends JFrame {
 		setSize(650, 550);
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		
+		alimentaTable();
 	}
 	
 	public static void main(String[] args) {
 		new TelaListaImovel();
+	}
+	
+	public void alimentaTable() {
+		dtbImovel.setRowCount(0);
+		for (Imovel imovel : imovelDao.todos()) {
+			dtbImovel.addRow(new String[] { imovel.getEndereco().getBairro(), imovel.getEndereco().getCidade(),
+					imovel.getMetrosquadrados(), String.valueOf(imovel.getValorTotal()) });
+		}
 	}
 	
 }
