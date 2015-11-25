@@ -19,9 +19,27 @@ public class Imovel {
 	private String descricao1;
 	private String descricao2;
 	private String descricao3;
+	private String imagem4;
+	private Integer possui;
 	
 	
 	
+	public String getImagem4() {
+		return imagem4;
+	}
+
+	public void setImagem4(String imagem4) {
+		this.imagem4 = imagem4;
+	}
+
+	public Integer getPossui() {
+		return possui;
+	}
+
+	public void setPossui(Integer possui) {
+		this.possui = possui;
+	}
+
 	public Integer getIdImovel() {
 		return idImovel;
 	}
@@ -133,7 +151,7 @@ public class Imovel {
 
 	public Imovel(Integer idImovel, String metrosquadrados, Double valorTotal, Double valorMensal,
 			Integer mesesContrato, Endereco endereco, Cliente cliente, String imagem1, String imagem2, String imagem3,
-			String descricao1, String descricao2, String descricao3) {
+			String descricao1, String descricao2, String descricao3, String imagem4, Integer possui) {
 		super();
 		this.idImovel = idImovel;
 		this.metrosquadrados = metrosquadrados;
@@ -148,6 +166,8 @@ public class Imovel {
 		this.descricao1 = descricao1;
 		this.descricao2 = descricao2;
 		this.descricao3 = descricao3;
+		this.imagem4 = imagem4;
+		this.possui = possui;
 	}
 
 	public Imovel() {
