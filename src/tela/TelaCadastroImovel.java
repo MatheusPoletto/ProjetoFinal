@@ -65,6 +65,8 @@ public class TelaCadastroImovel extends JFrame implements ActionListener{
 	private JLabel jlbRua, jlbNumero, jlbCidade, jlbBairro, jlbUf, jlbCep;
 	private JTextField jtfRua, jtfNumero, jtfCidade, jtfBairro, jtfUf, jtfCep;
 	
+	private File arquivo1, arquivo2, arquivo3, arquivo4;
+	
 	public TelaCadastroImovel() {
 		setTitle("CADASTRO DE IMOVEL");
 		setLayout(null);
@@ -252,17 +254,9 @@ public class TelaCadastroImovel extends JFrame implements ActionListener{
 		if(e.getSource() == jbtProcurar1){
 			jfcProcurar.showOpenDialog(null);
 			if(jfcProcurar.getSelectedFile().getAbsolutePath().toString().toLowerCase().endsWith(".jpg")){				
-				File arquivo = jfcProcurar.getSelectedFile();
-				try {
-					BufferedImage bi = ImageIO.read(arquivo);
-					BufferedImage aux= new BufferedImage(700, 420, bi.getType());
-					Graphics2D g = aux.createGraphics();
-					AffineTransform at = AffineTransform.getScaleInstance((double) 700 / bi.getWidth(), (double) 420 / bi.getHeight());
-					g.drawRenderedImage(bi, at);
-					jlbImagem1.setIcon(new ImageIcon(aux));
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}	
+				arquivo1 = jfcProcurar.getSelectedFile();
+				BufferedImage img1 = cp.redimensionarImagem(arquivo1.getAbsolutePath(), 700, 420);
+				jlbImagem1.setIcon(new ImageIcon(img1));
 			}else{
 				JOptionPane.showMessageDialog(null, "Permitido somente imagens com extensão .JPG!", "Aviso!", JOptionPane.WARNING_MESSAGE);
 			}
@@ -270,17 +264,9 @@ public class TelaCadastroImovel extends JFrame implements ActionListener{
 		if(e.getSource() == jbtProcurar2){
 			jfcProcurar.showOpenDialog(null);
 			if(jfcProcurar.getSelectedFile().getAbsolutePath().toString().toLowerCase().endsWith(".jpg")){				
-				File arquivo = jfcProcurar.getSelectedFile();
-				try {
-					BufferedImage bi = ImageIO.read(arquivo);
-					BufferedImage aux= new BufferedImage(700, 420, bi.getType());
-					Graphics2D g = aux.createGraphics();
-					AffineTransform at = AffineTransform.getScaleInstance((double) 700 / bi.getWidth(), (double) 420 / bi.getHeight());
-					g.drawRenderedImage(bi, at);
-					jlbImagem2.setIcon(new ImageIcon(aux));
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}	
+				arquivo2 = jfcProcurar.getSelectedFile();
+				BufferedImage img2 = cp.redimensionarImagem(arquivo2.getAbsolutePath(), 700, 420);
+				jlbImagem2.setIcon(new ImageIcon(img2));			
 			}else{
 				JOptionPane.showMessageDialog(null, "Permitido somente imagens com extensão .JPG!", "Aviso!", JOptionPane.WARNING_MESSAGE);
 			}
@@ -288,17 +274,10 @@ public class TelaCadastroImovel extends JFrame implements ActionListener{
 		if(e.getSource() == jbtProcurar3){
 			jfcProcurar.showOpenDialog(null);
 			if(jfcProcurar.getSelectedFile().getAbsolutePath().toString().toLowerCase().endsWith(".jpg")){				
-				File arquivo = jfcProcurar.getSelectedFile();
-				try {
-					BufferedImage bi = ImageIO.read(arquivo);
-					BufferedImage aux= new BufferedImage(700, 420, bi.getType());
-					Graphics2D g = aux.createGraphics();
-					AffineTransform at = AffineTransform.getScaleInstance((double) 700 / bi.getWidth(), (double) 420 / bi.getHeight());
-					g.drawRenderedImage(bi, at);
-					jlbImagem3.setIcon(new ImageIcon(aux));
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}	
+				arquivo3 = jfcProcurar.getSelectedFile();
+				BufferedImage img3 = cp.redimensionarImagem(arquivo3.getAbsolutePath(), 700, 420);
+				jlbImagem3.setIcon(new ImageIcon(img3));	
+				
 			}else{
 				JOptionPane.showMessageDialog(null, "Permitido somente imagens com extensão .JPG!", "Aviso!", JOptionPane.WARNING_MESSAGE);
 			}
@@ -306,17 +285,9 @@ public class TelaCadastroImovel extends JFrame implements ActionListener{
 		if(e.getSource() == jbtProcurar4){
 			jfcProcurar.showOpenDialog(null);
 			if(jfcProcurar.getSelectedFile().getAbsolutePath().toString().toLowerCase().endsWith(".jpg")){				
-				File arquivo = jfcProcurar.getSelectedFile();
-				try {
-					BufferedImage bi = ImageIO.read(arquivo);
-					BufferedImage aux= new BufferedImage(700, 420, bi.getType());
-					Graphics2D g = aux.createGraphics();
-					AffineTransform at = AffineTransform.getScaleInstance((double) 700 / bi.getWidth(), (double) 420 / bi.getHeight());
-					g.drawRenderedImage(bi, at);
-					jlbImagem4.setIcon(new ImageIcon(aux));
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}	
+				arquivo4 = jfcProcurar.getSelectedFile();
+				BufferedImage img4 = cp.redimensionarImagem(arquivo4.getAbsolutePath(), 700, 420);
+				jlbImagem4.setIcon(new ImageIcon(img4));	
 			}else{
 				JOptionPane.showMessageDialog(null, "Permitido somente imagens com extensão .JPG!", "Aviso!", JOptionPane.WARNING_MESSAGE);
 			}

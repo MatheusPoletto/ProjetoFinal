@@ -2,8 +2,17 @@ package tela;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Graphics2D;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -25,7 +34,7 @@ import pessoa.Corretor;
 import pessoa.Pessoa;
 import pessoa.Usuario;
 
-public class TelaListaImovel extends JFrame {
+public class TelaListaImovel extends JFrame implements ActionListener {
 
 	private JLabel jlbTitulo;
 	private CriarCamponentes cp = new CriarCamponentes();
@@ -91,6 +100,7 @@ public class TelaListaImovel extends JFrame {
 		getContentPane().add(jtbImovel);
 		dtbImovel = new DefaultTableModel();
 
+		dtbImovel.addColumn("ID");
 		dtbImovel.addColumn("Bairro");
 		dtbImovel.addColumn("Cidade");
 		dtbImovel.addColumn("M²");
@@ -103,10 +113,11 @@ public class TelaListaImovel extends JFrame {
 		jspImovel.setVisible(true);
 		getContentPane().add(jspImovel);
 
-		jtbImovel.getColumnModel().getColumn(0).setPreferredWidth(170);
+		jtbImovel.getColumnModel().getColumn(1).setPreferredWidth(50);
 		jtbImovel.getColumnModel().getColumn(1).setPreferredWidth(170);
-		jtbImovel.getColumnModel().getColumn(2).setPreferredWidth(50);
-		jtbImovel.getColumnModel().getColumn(3).setPreferredWidth(70);
+		jtbImovel.getColumnModel().getColumn(2).setPreferredWidth(170);
+		jtbImovel.getColumnModel().getColumn(3).setPreferredWidth(50);
+		jtbImovel.getColumnModel().getColumn(4).setPreferredWidth(70);
 		
 		jbtInfo = cp.criarBotao("INFO.", 523, 140, 110, 24, jbtInfo);
 		getContentPane().add(jbtInfo);
@@ -145,6 +156,8 @@ public class TelaListaImovel extends JFrame {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
 		alimentaTable();
+		
+		jbtInfo.addActionListener(this);
 	}
 	
 	public static void main(String[] args) {
@@ -154,8 +167,28 @@ public class TelaListaImovel extends JFrame {
 	public void alimentaTable() {
 		dtbImovel.setRowCount(0);
 		for (Imovel imovel : imovelDao.todos()) {
-			dtbImovel.addRow(new String[] { imovel.getEndereco().getBairro(), imovel.getEndereco().getCidade(),
+			dtbImovel.addRow(new String[] { String.valueOf(imovel.getIdImovel()), imovel.getEndereco().getBairro(), imovel.getEndereco().getCidade(),
 					imovel.getMetrosquadrados(), String.valueOf(imovel.getValorTotal()) });
+		}
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource() == jbtInfo){
+			String id = String.valueOf(dtbImovel.getValueAt(jtbImovel.getSelectedRow(), 0));
+			Imovel imovel = imovelDao.buscar(Integer.valueOf(id));
+			
+			BufferedImage img1 = cp.redimensionarImagem(imovel.getImagem1(), 125, 125);
+			jlbImg1.setIcon(new ImageIcon(img1));
+			
+			BufferedImage img2 = cp.redimensionarImagem(imovel.getImagem2(), 125, 125);
+			jlbImg2.setIcon(new ImageIcon(img2));
+			
+			BufferedImage img3 = cp.redimensionarImagem(imovel.getImagem3(), 125, 125);
+			jlbImg3.setIcon(new ImageIcon(img3));
+			
+			BufferedImage img4 = cp.redimensionarImagem(imovel.getImagem4(), 125, 125);
+			jlbImg4.setIcon(new ImageIcon(img4));			
 		}
 	}
 	

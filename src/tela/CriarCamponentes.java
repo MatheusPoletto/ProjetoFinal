@@ -1,6 +1,14 @@
 package tela;
 
+import java.awt.Graphics2D;
+import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -49,5 +57,22 @@ public class CriarCamponentes {
 		radioButton.setBounds(col, lin, lar, alt);
 		radioButton.setVisible(true);
 		return radioButton;
+	}
+	
+	public BufferedImage redimensionarImagem(String endereco, Integer larg, Integer altu){
+		File arquivo = new File(endereco);
+		BufferedImage aux = null;
+		try {
+			BufferedImage bi;
+			bi = ImageIO.read(arquivo);
+			aux= new BufferedImage(larg, altu, bi.getType());
+			Graphics2D g = aux.createGraphics();
+			AffineTransform at = AffineTransform.getScaleInstance((double) larg / bi.getWidth(), (double) altu / bi.getHeight());
+			g.drawRenderedImage(bi, at);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return aux;
 	}
 }
