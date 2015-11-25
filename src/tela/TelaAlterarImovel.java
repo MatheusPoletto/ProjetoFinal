@@ -24,6 +24,8 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import imovel.Imovel;
+
 public class TelaAlterarImovel extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 2404426739863880445L;
@@ -336,6 +338,46 @@ public class TelaAlterarImovel extends JFrame implements ActionListener {
 		jtfMesesContrato.setEnabled(true);
 		
 		jtfValorTotal.setEnabled(false);
+	}
+	
+	public void preencherCampos(Imovel imovel){
+		
+		jtfRua.setText(imovel.getEndereco().getRua());
+		jtfBairro.setText(imovel.getEndereco().getBairro());
+		jtfNumero.setText(imovel.getEndereco().getNumero());
+		jtfCidade.setText(imovel.getEndereco().getCidade());
+		jtfUf.setText(imovel.getEndereco().getUf());
+		jtfCep.setText(imovel.getEndereco().getCep());
+		jtfMetrosQuadrados.setText(imovel.getMetrosquadrados());
+		
+		if((imovel.getValorTotal() > 0) && (imovel.getValorMensal() == 0)){
+			rbAlugar();
+			jtfMesesContrato.setText(String.valueOf(imovel.getMesesContrato()));
+			jtfValorMensal.setText(String.valueOf(imovel.getValorMensal()));
+		}else if((imovel.getValorMensal() > 0) && (imovel.getValorTotal() == 0)){
+			rbVender();
+			jtfValorTotal.setText(String.valueOf(imovel.getValorTotal()));
+		}
+		
+		jbtNovo.setEnabled(false);
+		jbtProcurar.setEnabled(false);
+		jtfRg.setEnabled(false);
+		
+		jtfNome.setText(imovel.getCliente().getPessoa().getNome());
+		jtfCpf.setText(imovel.getCliente().getPessoa().getCpf());
+		
+		BufferedImage img1 = cp.redimensionarImagem(imovel.getImagem1(), 700, 420);
+		jlbImagem1.setIcon(new ImageIcon(img1));
+		
+		BufferedImage img2 = cp.redimensionarImagem(imovel.getImagem2(), 700, 420);
+		jlbImagem2.setIcon(new ImageIcon(img2));
+		
+		BufferedImage img3 = cp.redimensionarImagem(imovel.getImagem3(), 700, 420);
+		jlbImagem3.setIcon(new ImageIcon(img3));
+		
+		BufferedImage img4 = cp.redimensionarImagem(imovel.getImagem4(), 700, 420);
+		jlbImagem4.setIcon(new ImageIcon(img4));
+		
 	}
 
 }

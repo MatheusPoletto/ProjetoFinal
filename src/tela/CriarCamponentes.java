@@ -1,5 +1,6 @@
 package tela;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
@@ -14,6 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 public class CriarCamponentes {
 
@@ -30,6 +32,14 @@ public class CriarCamponentes {
 	
 	public JLabel criarLabel(String texto, Integer col, Integer lin, Integer lar, Integer alt, JLabel label) {
 		label = new JLabel(texto);
+		label.setBounds(col, lin, lar, alt);
+		label.setVisible(true);
+		return label;
+
+	}
+	
+	public JLabel criarLabelCentralizada(String texto, Integer col, Integer lin, Integer lar, Integer alt, JLabel label) {
+		label = new JLabel(texto, SwingConstants.CENTER);
 		label.setBounds(col, lin, lar, alt);
 		label.setVisible(true);
 		return label;
@@ -75,4 +85,11 @@ public class CriarCamponentes {
 		
 		return aux;
 	}
+	
+	public JButton alterarCorBotoes(JButton button){
+		button.setBackground(new Color(23, 20, 20));
+		button.setForeground(Color.white);
+		return button;
+	}
+	
 }
