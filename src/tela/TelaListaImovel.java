@@ -2,62 +2,46 @@ package tela;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
-import javax.imageio.ImageIO;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
-import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
-import DAOFactory.DaoFactory;
 import DAOFactory.DaoFactoryJDBC;
 import dao.ImovelDAO;
 import imovel.Imovel;
-import pessoa.Corretor;
-import pessoa.Pessoa;
-import pessoa.Usuario;
 
 public class TelaListaImovel extends JFrame implements ActionListener {
 
+	private static final long serialVersionUID = 1L;
 	private JLabel jlbTitulo;
 	private CriarCamponentes cp = new CriarCamponentes();
-
 	private JRadioButton jrbCidade, jrbBairro, jrbValor, jrbMetros;
 	private JPanel jpnProcurar;
-	private JLabel jlbProcurarPor;
 	private JTextField jtfPesquisa;
 	private ButtonGroup btgFiltro;
 	private JButton jbtFiltrar;
-
 	private JTable jtbImovel;
 	private DefaultTableModel dtbImovel;
 	private JScrollPane jspImovel;
-
 	private JPanel jpnImagem;
 	private JLabel jlbImg1, jlbImg2, jlbImg3, jlbImg4;
-
 	private JButton jbtInfo, jbtAlterar, jbtVender, jbtRemover, jbtTodos;
-
 	private ImovelDAO imovelDao = DaoFactoryJDBC.get().imovelDAO();
-
 	private Imovel imovelSelecionado;
 	private JPanel jpnTipoVenda;
 	private JLabel jlbVenda;
@@ -68,76 +52,28 @@ public class TelaListaImovel extends JFrame implements ActionListener {
 		setTitle("Meus imóveis");
 		setLayout(null);
 
-		jlbTitulo = new JLabel("Meus Imóveis", SwingConstants.CENTER);
-		jlbTitulo.setBounds(0, 0, 650, 44);
-		jlbTitulo.setVisible(true);
-		jlbTitulo.setFont(new Font("ARIAL", Font.PLAIN, 18));
-		jlbTitulo.setOpaque(true);
-		jlbTitulo.setBackground(new Color(23, 20, 20));
-		jlbTitulo.setForeground(Color.white);
-		jlbTitulo.setBackground(new Color(23, 20, 20));
-		jlbTitulo.setForeground(Color.white);
+		jlbTitulo = cp.criarLabelTitulo("Meus Imóveis", 0, 0, 650, 44, jlbTitulo);
 		getContentPane().add(jlbTitulo);
 
-		jrbCidade = cp.criarRadioButton("Cidade", 150, 10, 100, 24, jrbCidade);
-		jrbBairro = cp.criarRadioButton("Bairro", 250, 10, 100, 24, jrbBairro);
-		jrbMetros = cp.criarRadioButton("m²", 350, 10, 100, 24, jrbMetros);
-		jrbValor = cp.criarRadioButton("Valor", 450, 10, 100, 24, jrbValor);
-		jtfPesquisa = cp.criarTextField(185, 40, 250, 24, jtfPesquisa);
-		jbtFiltrar = cp.criarBotao("Procurar", 435, 40, 100, 24, jbtFiltrar);
-		jbtFiltrar = cp.alterarCorBotoes(jbtFiltrar);
+		criarPanelProcurar();
 
-		btgFiltro = new ButtonGroup();
-		btgFiltro.add(jrbCidade);
-		btgFiltro.add(jrbBairro);
-		btgFiltro.add(jrbMetros);
-		btgFiltro.add(jrbValor);
+		criarTableImoveis();
 
-		jpnProcurar = cp.criarPanel("", 10, 50, 625, 80, jpnProcurar, true);
-		jpnProcurar.add(jrbCidade);
-		jpnProcurar.add(jrbBairro);
-		jpnProcurar.add(jrbMetros);
-		jpnProcurar.add(jrbValor);
-		jpnProcurar.add(jtfPesquisa);
-		jpnProcurar.add(jbtFiltrar);
-		getContentPane().add(jpnProcurar);
+		criarMenuBotoes();
 
-		jtbImovel = new JTable();
-		getContentPane().add(jtbImovel);
-		dtbImovel = new DefaultTableModel();
+		criarParteInferior();
 
-		dtbImovel.addColumn("ID");
-		dtbImovel.addColumn("Bairro");
-		dtbImovel.addColumn("Cidade");
-		dtbImovel.addColumn("M²");
-		dtbImovel.addColumn("Valor");
+		alimentaTable();
+		
+		//setClosable(true);
+		setResizable(false);
+		setSize(650, 550);
+		setVisible(true);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		
+	}
 
-		jtbImovel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		jtbImovel.setModel(dtbImovel);
-		jspImovel = new JScrollPane(jtbImovel);
-		jspImovel.setBounds(10, 140, 500, 100);
-		jspImovel.setVisible(true);
-		getContentPane().add(jspImovel);
-
-		jtbImovel.getColumnModel().getColumn(1).setPreferredWidth(30);
-		jtbImovel.getColumnModel().getColumn(1).setPreferredWidth(170);
-		jtbImovel.getColumnModel().getColumn(2).setPreferredWidth(170);
-		jtbImovel.getColumnModel().getColumn(3).setPreferredWidth(50);
-		jtbImovel.getColumnModel().getColumn(4).setPreferredWidth(120);
-
-		jbtInfo = cp.criarBotao("INFO.", 523, 140, 110, 24, jbtInfo);
-		getContentPane().add(jbtInfo);
-		jbtRemover = cp.criarBotao("REMOVER", 523, 164, 110, 24, jbtRemover);
-		getContentPane().add(jbtRemover);
-		jbtAlterar = cp.criarBotao("ALTERAR", 523, 188, 110, 24, jbtAlterar);
-		getContentPane().add(jbtAlterar);
-		jbtTodos = cp.criarBotao("TODOS", 523, 212, 110, 24, jbtTodos);
-		getContentPane().add(jbtTodos);
-		jbtInfo = cp.alterarCorBotoes(jbtInfo);
-		jbtRemover = cp.alterarCorBotoes(jbtRemover);
-		jbtAlterar = cp.alterarCorBotoes(jbtAlterar);
-		jbtTodos = cp.alterarCorBotoes(jbtTodos);
-
+	private void criarParteInferior() {
 		jlbImg1 = cp.criarLabel("", 10, 10, 125, 125, jlbImg1);
 		jlbImg2 = cp.criarLabel("", 140, 10, 125, 125, jlbImg2);
 		jlbImg3 = cp.criarLabel("", 10, 140, 125, 125, jlbImg3);
@@ -157,9 +93,9 @@ public class TelaListaImovel extends JFrame implements ActionListener {
 		getContentPane().add(jbtVender);
 
 		jpnTipoVenda = cp.criarPanel("", 270, 10, 345, 230, jpnTipoVenda, true);
+		
 		jlbVenda = cp.criarLabelCentralizada("", 10, 5, 325, 24, jlbVenda);
-		jlbVendaPreco = cp.criarLabelCentralizada("", 10, 30, 325, 24,
-				jlbVendaPreco);
+		jlbVendaPreco = cp.criarLabelCentralizada("", 10, 30, 325, 24, jlbVendaPreco);
 		jlbVendaRua = cp.criarLabelCentralizada("", 10, 70, 325, 24, jlbVendaPreco);
 		jlbVendaNumero = cp.criarLabelCentralizada("", 10, 95, 325, 24, jlbVendaNumero);
 		jlbVendaBairro = cp.criarLabelCentralizada("", 10, 120, 325, 24, jlbVendaBairro);
@@ -192,25 +128,87 @@ public class TelaListaImovel extends JFrame implements ActionListener {
 		jpnImagem.add(jpnTipoVenda);
 		getContentPane().add(jpnImagem);
 
-		setResizable(false);
-		setSize(650, 550);
-		setVisible(true);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
+	}
 
-		alimentaTable();
-
+	private void criarMenuBotoes() {
+		jbtInfo = cp.criarBotao("INFO.", 523, 140, 110, 24, jbtInfo);
+		jbtRemover = cp.criarBotao("REMOVER", 523, 164, 110, 24, jbtRemover);
+		jbtAlterar = cp.criarBotao("ALTERAR", 523, 188, 110, 24, jbtAlterar);
+		jbtTodos = cp.criarBotao("TODOS", 523, 212, 110, 24, jbtTodos);
+		
+		jbtInfo = cp.alterarCorBotoes(jbtInfo);
+		jbtRemover = cp.alterarCorBotoes(jbtRemover);
+		jbtAlterar = cp.alterarCorBotoes(jbtAlterar);
+		jbtTodos = cp.alterarCorBotoes(jbtTodos);
+		
 		jbtInfo.addActionListener(this);
 		jbtRemover.addActionListener(this);
 		jbtAlterar.addActionListener(this);
 		jbtTodos.addActionListener(this);
+		
+		getContentPane().add(jbtInfo);
+		getContentPane().add(jbtRemover);
+		getContentPane().add(jbtAlterar);
+		getContentPane().add(jbtTodos);
+
+	}
+
+	private void criarTableImoveis() {
+		jtbImovel = new JTable();
+		getContentPane().add(jtbImovel);
+		dtbImovel = new DefaultTableModel();
+
+		dtbImovel.addColumn("ID");
+		dtbImovel.addColumn("Bairro");
+		dtbImovel.addColumn("Cidade");
+		dtbImovel.addColumn("M²");
+		dtbImovel.addColumn("Valor");
+
+		jtbImovel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		jtbImovel.setModel(dtbImovel);
+		jspImovel = new JScrollPane(jtbImovel);
+		jspImovel.setBounds(10, 140, 500, 100);
+		jspImovel.setVisible(true);
+		getContentPane().add(jspImovel);
+
+		jtbImovel.getColumnModel().getColumn(1).setPreferredWidth(30);
+		jtbImovel.getColumnModel().getColumn(1).setPreferredWidth(170);
+		jtbImovel.getColumnModel().getColumn(2).setPreferredWidth(170);
+		jtbImovel.getColumnModel().getColumn(3).setPreferredWidth(50);
+		jtbImovel.getColumnModel().getColumn(4).setPreferredWidth(120);
+
+	}
+
+	private void criarPanelProcurar() {
+		jrbCidade = cp.criarRadioButton("Cidade", 150, 10, 100, 24, jrbCidade);
+		jrbBairro = cp.criarRadioButton("Bairro", 250, 10, 100, 24, jrbBairro);
+		jrbMetros = cp.criarRadioButton("m²", 350, 10, 100, 24, jrbMetros);
+		jrbValor = cp.criarRadioButton("Valor", 450, 10, 100, 24, jrbValor);
+		
+		jtfPesquisa = cp.criarTextField(185, 40, 250, 24, jtfPesquisa);
+		
+		jbtFiltrar = cp.criarBotao("Procurar", 435, 40, 100, 24, jbtFiltrar);
+		jbtFiltrar = cp.alterarCorBotoes(jbtFiltrar);
 		jbtFiltrar.addActionListener(this);
+
+		btgFiltro = new ButtonGroup();
+		btgFiltro.add(jrbCidade);
+		btgFiltro.add(jrbBairro);
+		btgFiltro.add(jrbMetros);
+		btgFiltro.add(jrbValor);
+
+		jpnProcurar = cp.criarPanel("", 10, 50, 625, 80, jpnProcurar, true);
+		jpnProcurar.add(jrbCidade);
+		jpnProcurar.add(jrbBairro);
+		jpnProcurar.add(jrbMetros);
+		jpnProcurar.add(jrbValor);
+		jpnProcurar.add(jtfPesquisa);
+		jpnProcurar.add(jbtFiltrar);
+		getContentPane().add(jpnProcurar);
+
 	}
 
-	public static void main(String[] args) {
-		new TelaListaImovel();
-	}
-
-	public void alimentaTable() {
+	private void alimentaTable() {
 		dtbImovel.setRowCount(0);
 		for (Imovel imovel : imovelDao.todos()) {
 			if (imovel.getPossui() == 1) {
@@ -229,160 +227,192 @@ public class TelaListaImovel extends JFrame implements ActionListener {
 		}
 	}
 
-	@Override
 	public void actionPerformed(ActionEvent e) {
-		if(e.getSource() == jbtFiltrar){
-			dtbImovel.setRowCount(0);
-			if(jrbBairro.isSelected()){
-				for(Imovel imovel : imovelDao.todos()){
-					if(imovel.getEndereco().getBairro().toString().toLowerCase().contains(jtfPesquisa.getText())){
-						if (imovel.getPossui() == 1) {
-							if (imovel.getValorTotal() > 0) {
-								dtbImovel.addRow(new String[] { String.valueOf(imovel.getIdImovel()),
-										imovel.getEndereco().getBairro(), imovel.getEndereco().getCidade(),
-										imovel.getMetrosquadrados(), String.valueOf(imovel.getValorTotal()) + " [Venda]" });
-							} else if (imovel.getValorMensal() > 0) {
-								if (imovel.getPossui() == 1) {
-									dtbImovel.addRow(new String[] { String.valueOf(imovel.getIdImovel()),
-											imovel.getEndereco().getBairro(), imovel.getEndereco().getCidade(),
-											imovel.getMetrosquadrados(), String.valueOf(imovel.getValorMensal()) + " [Alugar]" });
-								}
-							}
-						}
-					}
-				}
-			}
-			
-			if(jrbCidade.isSelected()){
-				for(Imovel imovel : imovelDao.todos()){
-					if(imovel.getEndereco().getCidade().toString().toLowerCase().contains(jtfPesquisa.getText())){
-						if (imovel.getPossui() == 1) {
-							if (imovel.getValorTotal() > 0) {
-								dtbImovel.addRow(new String[] { String.valueOf(imovel.getIdImovel()),
-										imovel.getEndereco().getBairro(), imovel.getEndereco().getCidade(),
-										imovel.getMetrosquadrados(), String.valueOf(imovel.getValorTotal()) + " [Venda]" });
-							} else if (imovel.getValorMensal() > 0) {
-								if (imovel.getPossui() == 1) {
-									dtbImovel.addRow(new String[] { String.valueOf(imovel.getIdImovel()),
-											imovel.getEndereco().getBairro(), imovel.getEndereco().getCidade(),
-											imovel.getMetrosquadrados(), String.valueOf(imovel.getValorMensal()) + " [Alugar]" });
-								}
-							}
-						}
-					}
-				}
-			}
-			
-			if(jrbMetros.isSelected()){
-				for(Imovel imovel : imovelDao.todos()){
-					if(imovel.getMetrosquadrados().toString().toLowerCase().contains(jtfPesquisa.getText())){
-						if (imovel.getPossui() == 1) {
-							if (imovel.getValorTotal() > 0) {
-								dtbImovel.addRow(new String[] { String.valueOf(imovel.getIdImovel()),
-										imovel.getEndereco().getBairro(), imovel.getEndereco().getCidade(),
-										imovel.getMetrosquadrados(), String.valueOf(imovel.getValorTotal()) + " [Venda]" });
-							} else if (imovel.getValorMensal() > 0) {
-								if (imovel.getPossui() == 1) {
-									dtbImovel.addRow(new String[] { String.valueOf(imovel.getIdImovel()),
-											imovel.getEndereco().getBairro(), imovel.getEndereco().getCidade(),
-											imovel.getMetrosquadrados(), String.valueOf(imovel.getValorMensal()) + " [Alugar]" });
-								}
-							}
-						}
-					}
-				}
-			}
-			
-			if(jrbValor.isSelected()){
-				for(Imovel imovel : imovelDao.todos()){
-					if(imovel.getValorTotal().toString().toLowerCase().contains(jtfPesquisa.getText()) || imovel.getValorMensal().toString().toLowerCase().contains(jtfPesquisa.getText())){
-						if (imovel.getPossui() == 1) {
-							if (imovel.getValorTotal() > 0) {
-								dtbImovel.addRow(new String[] { String.valueOf(imovel.getIdImovel()),
-										imovel.getEndereco().getBairro(), imovel.getEndereco().getCidade(),
-										imovel.getMetrosquadrados(), String.valueOf(imovel.getValorTotal()) + " [Venda]" });
-							} else if (imovel.getValorMensal() > 0) {
-								if (imovel.getPossui() == 1) {
-									dtbImovel.addRow(new String[] { String.valueOf(imovel.getIdImovel()),
-											imovel.getEndereco().getBairro(), imovel.getEndereco().getCidade(),
-											imovel.getMetrosquadrados(), String.valueOf(imovel.getValorMensal()) + " [Alugar]" });
-								}
-							}
-						}
-					}
-				}
-			}
+		if (e.getSource() == jbtFiltrar) {
+			filtrar();
 		}
-		
 		if (e.getSource() == jbtInfo) {
-			if (jtbImovel.getSelectedRow() == -1) {
-				JOptionPane.showMessageDialog(null, "Selecione um imóvel da tabela!", "Erro",
-						JOptionPane.ERROR_MESSAGE);
-			} else {
-				String id = String.valueOf(dtbImovel.getValueAt(jtbImovel.getSelectedRow(), 0));
-				Imovel imovel = imovelDao.buscar(Integer.valueOf(id));
-				imovelSelecionado = imovel;
-
-				if ((imovelSelecionado.getValorTotal() > 0) && (imovelSelecionado.getValorMensal() == 0)) {
-					jlbVenda.setText("DISPONÍVEL PARA VENDER");
-					jlbVendaPreco.setText("R$ " + imovelSelecionado.getValorTotal() + " EM ATÉ 12X SEM JUROS!");
-					jbtVender.setEnabled(true);
-				} else if ((imovelSelecionado.getValorMensal() > 0) && (imovelSelecionado.getValorTotal() == 0)) {
-					jlbVenda.setText("DISPONÍVEL PARA ALUGAR");
-					jlbVendaPreco.setText("R$ " + imovelSelecionado.getValorMensal() + " MENSAIS! "
-							+ imovelSelecionado.getMesesContrato() + " MESES DE CONTRATO!");
-					jbtVender.setEnabled(true);
-				}
-
-				jlbVendaRua.setText("Rua " + imovelSelecionado.getEndereco().getRua());
-				jlbVendaNumero.setText("Número " + imovelSelecionado.getEndereco().getNumero());
-				jlbVendaBairro.setText("Bairro " + imovelSelecionado.getEndereco().getBairro());
-				jlbVendaCidade.setText("Cidade " + imovelSelecionado.getEndereco().getCidade());
-				jlbVendaCep.setText("CEP " + imovelSelecionado.getEndereco().getCep());
-
-				BufferedImage img1 = cp.redimensionarImagem(imovel.getImagem1(), 125, 125);
-				jlbImg1.setIcon(new ImageIcon(img1));
-
-				BufferedImage img2 = cp.redimensionarImagem(imovel.getImagem2(), 125, 125);
-				jlbImg2.setIcon(new ImageIcon(img2));
-
-				BufferedImage img3 = cp.redimensionarImagem(imovel.getImagem3(), 125, 125);
-				jlbImg3.setIcon(new ImageIcon(img3));
-
-				BufferedImage img4 = cp.redimensionarImagem(imovel.getImagem4(), 125, 125);
-				jlbImg4.setIcon(new ImageIcon(img4));
-			}
+			mostrarInformações();
 		}
-		
-		if(e.getSource() == jbtRemover){
-			if (jtbImovel.getSelectedRow() == -1) {
-				JOptionPane.showMessageDialog(null, "Selecione um imóvel para remover!", "Erro", JOptionPane.ERROR_MESSAGE);
-			} else {
-				String id = String.valueOf(dtbImovel.getValueAt(jtbImovel.getSelectedRow(), 0));
-				Imovel imovel = imovelDao.buscar(Integer.valueOf(id));
-				imovelDao.excluir(imovel);
-				JOptionPane.showMessageDialog(null, "Removido com sucesso!");
-				alimentaTable();
-			}
+
+		if (e.getSource() == jbtRemover) {
+			remover();
 		}
-		
-		if(e.getSource() == jbtTodos){
+
+		if (e.getSource() == jbtTodos) {
 			alimentaTable();
 			JOptionPane.showMessageDialog(null, "Tabela de imóveis atualizada com sucesso!");
 		}
-		
-		if(e.getSource() == jbtAlterar){
-			if (jtbImovel.getSelectedRow() == -1) {
-				JOptionPane.showMessageDialog(null, "Selecione um imóvel para alterar!", "Erro", JOptionPane.ERROR_MESSAGE);
-			} else {
+
+		if (e.getSource() == jbtAlterar) {
+			alterar();
+
+		}
+	}
+
+	private void alterar() {
+		if (jtbImovel.getSelectedRow() == -1) {
+			JOptionPane.showMessageDialog(null, "Selecione um imóvel para alterar!", "Erro",
+					JOptionPane.ERROR_MESSAGE);
+		} else {
 			TelaAlterarImovel tlAlterarImovel = new TelaAlterarImovel();
 			String id = String.valueOf(dtbImovel.getValueAt(jtbImovel.getSelectedRow(), 0));
 			Imovel imovel = imovelDao.buscar(Integer.valueOf(id));
 			tlAlterarImovel.preencherCampos(imovel);
+		}
+		
+	}
+
+	private void remover() {
+		if (jtbImovel.getSelectedRow() == -1) {
+			JOptionPane.showMessageDialog(null, "Selecione um imóvel para remover!", "Erro",
+					JOptionPane.ERROR_MESSAGE);
+		} else {
+			String id = String.valueOf(dtbImovel.getValueAt(jtbImovel.getSelectedRow(), 0));
+			Imovel imovel = imovelDao.buscar(Integer.valueOf(id));
+			imovelDao.excluir(imovel);
+			JOptionPane.showMessageDialog(null, "Removido com sucesso!");
+			alimentaTable();
+		}
+		
+	}
+
+	private void mostrarInformações() {
+		if (jtbImovel.getSelectedRow() == -1) {
+			JOptionPane.showMessageDialog(null, "Selecione um imóvel da tabela!", "Erro",
+					JOptionPane.ERROR_MESSAGE);
+		} else {
+			String id = String.valueOf(dtbImovel.getValueAt(jtbImovel.getSelectedRow(), 0));
+			Imovel imovel = imovelDao.buscar(Integer.valueOf(id));
+			imovelSelecionado = imovel;
+
+			if ((imovelSelecionado.getValorTotal() > 0) && (imovelSelecionado.getValorMensal() == 0)) {
+				jlbVenda.setText("DISPONÍVEL PARA VENDER");
+				jlbVendaPreco.setText("R$ " + imovelSelecionado.getValorTotal() + " EM ATÉ 12X SEM JUROS!");
+				jbtVender.setEnabled(true);
+			} else if ((imovelSelecionado.getValorMensal() > 0) && (imovelSelecionado.getValorTotal() == 0)) {
+				jlbVenda.setText("DISPONÍVEL PARA ALUGAR");
+				jlbVendaPreco.setText("R$ " + imovelSelecionado.getValorMensal() + " MENSAIS! "
+						+ imovelSelecionado.getMesesContrato() + " MESES DE CONTRATO!");
+				jbtVender.setEnabled(true);
 			}
-			
+
+			jlbVendaRua.setText("Rua " + imovelSelecionado.getEndereco().getRua());
+			jlbVendaNumero.setText("Número " + imovelSelecionado.getEndereco().getNumero());
+			jlbVendaBairro.setText("Bairro " + imovelSelecionado.getEndereco().getBairro());
+			jlbVendaCidade.setText("Cidade " + imovelSelecionado.getEndereco().getCidade());
+			jlbVendaCep.setText("CEP " + imovelSelecionado.getEndereco().getCep());
+
+			BufferedImage img1 = cp.redimensionarImagem(imovel.getImagem1(), 125, 125);
+			jlbImg1.setIcon(new ImageIcon(img1));
+
+			BufferedImage img2 = cp.redimensionarImagem(imovel.getImagem2(), 125, 125);
+			jlbImg2.setIcon(new ImageIcon(img2));
+
+			BufferedImage img3 = cp.redimensionarImagem(imovel.getImagem3(), 125, 125);
+			jlbImg3.setIcon(new ImageIcon(img3));
+
+			BufferedImage img4 = cp.redimensionarImagem(imovel.getImagem4(), 125, 125);
+			jlbImg4.setIcon(new ImageIcon(img4));
 		}
+		
+	}
+
+	private void filtrar() {
+		dtbImovel.setRowCount(0);
+		if (jrbBairro.isSelected()) {
+			for (Imovel imovel : imovelDao.todos()) {
+				if (imovel.getEndereco().getBairro().toString().toLowerCase().contains(jtfPesquisa.getText())) {
+					if (imovel.getPossui() == 1) {
+						if (imovel.getValorTotal() > 0) {
+							dtbImovel.addRow(new String[] { String.valueOf(imovel.getIdImovel()),
+									imovel.getEndereco().getBairro(), imovel.getEndereco().getCidade(),
+									imovel.getMetrosquadrados(),
+									String.valueOf(imovel.getValorTotal()) + " [Venda]" });
+						} else if (imovel.getValorMensal() > 0) {
+							if (imovel.getPossui() == 1) {
+								dtbImovel.addRow(new String[] { String.valueOf(imovel.getIdImovel()),
+										imovel.getEndereco().getBairro(), imovel.getEndereco().getCidade(),
+										imovel.getMetrosquadrados(),
+										String.valueOf(imovel.getValorMensal()) + " [Alugar]" });
+							}
+						}
+					}
+				}
+			}
 		}
-	
+
+		if (jrbCidade.isSelected()) {
+			for (Imovel imovel : imovelDao.todos()) {
+				if (imovel.getEndereco().getCidade().toString().toLowerCase().contains(jtfPesquisa.getText())) {
+					if (imovel.getPossui() == 1) {
+						if (imovel.getValorTotal() > 0) {
+							dtbImovel.addRow(new String[] { String.valueOf(imovel.getIdImovel()),
+									imovel.getEndereco().getBairro(), imovel.getEndereco().getCidade(),
+									imovel.getMetrosquadrados(),
+									String.valueOf(imovel.getValorTotal()) + " [Venda]" });
+						} else if (imovel.getValorMensal() > 0) {
+							if (imovel.getPossui() == 1) {
+								dtbImovel.addRow(new String[] { String.valueOf(imovel.getIdImovel()),
+										imovel.getEndereco().getBairro(), imovel.getEndereco().getCidade(),
+										imovel.getMetrosquadrados(),
+										String.valueOf(imovel.getValorMensal()) + " [Alugar]" });
+							}
+						}
+					}
+				}
+			}
+		}
+
+		if (jrbMetros.isSelected()) {
+			for (Imovel imovel : imovelDao.todos()) {
+				if (imovel.getMetrosquadrados().toString().toLowerCase().contains(jtfPesquisa.getText())) {
+					if (imovel.getPossui() == 1) {
+						if (imovel.getValorTotal() > 0) {
+							dtbImovel.addRow(new String[] { String.valueOf(imovel.getIdImovel()),
+									imovel.getEndereco().getBairro(), imovel.getEndereco().getCidade(),
+									imovel.getMetrosquadrados(),
+									String.valueOf(imovel.getValorTotal()) + " [Venda]" });
+						} else if (imovel.getValorMensal() > 0) {
+							if (imovel.getPossui() == 1) {
+								dtbImovel.addRow(new String[] { String.valueOf(imovel.getIdImovel()),
+										imovel.getEndereco().getBairro(), imovel.getEndereco().getCidade(),
+										imovel.getMetrosquadrados(),
+										String.valueOf(imovel.getValorMensal()) + " [Alugar]" });
+							}
+						}
+					}
+				}
+			}
+		}
+
+		if (jrbValor.isSelected()) {
+			for (Imovel imovel : imovelDao.todos()) {
+				if (imovel.getValorTotal().toString().toLowerCase().contains(jtfPesquisa.getText())
+						|| imovel.getValorMensal().toString().toLowerCase().contains(jtfPesquisa.getText())) {
+					if (imovel.getPossui() == 1) {
+						if (imovel.getValorTotal() > 0) {
+							dtbImovel.addRow(new String[] { String.valueOf(imovel.getIdImovel()),
+									imovel.getEndereco().getBairro(), imovel.getEndereco().getCidade(),
+									imovel.getMetrosquadrados(),
+									String.valueOf(imovel.getValorTotal()) + " [Venda]" });
+						} else if (imovel.getValorMensal() > 0) {
+							if (imovel.getPossui() == 1) {
+								dtbImovel.addRow(new String[] { String.valueOf(imovel.getIdImovel()),
+										imovel.getEndereco().getBairro(), imovel.getEndereco().getCidade(),
+										imovel.getMetrosquadrados(),
+										String.valueOf(imovel.getValorMensal()) + " [Alugar]" });
+							}
+						}
+					}
+				}
+			}
+		}
+		
+	}
+
+	public static void main(String[] args) {
+		new TelaListaImovel();
+	}
 
 }

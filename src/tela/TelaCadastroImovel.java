@@ -2,18 +2,15 @@ package tela;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 
-import javax.imageio.ImageIO;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -23,6 +20,14 @@ import javax.swing.JRadioButton;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+
+import DAOFactory.DaoFactoryJDBC;
+import dao.ClienteDAO;
+import dao.EnderecoDAO;
+import dao.ImovelDAO;
+import imovel.Imovel;
+import pessoa.Cliente;
+import pessoa.Endereco;
 
 public class TelaCadastroImovel extends JFrame implements ActionListener{
 	
@@ -67,6 +72,22 @@ public class TelaCadastroImovel extends JFrame implements ActionListener{
 	
 	private File arquivo1, arquivo2, arquivo3, arquivo4;
 	
+	private JButton jbtSalvar;
+	
+	private JLabel jlbPossui;
+	private JComboBox<String> jcbPossui;
+	
+	private JButton jbtAjudaDescricao;
+	
+	private JLabel jlbDescricao1, jlbDescricao2, jlbDescricao3;
+	private JTextField jtfDescricao1, jtfDescricao2, jtfDescricao3;
+	private JPanel jpnTab6;
+	
+	private ImovelDAO imovelDao = DaoFactoryJDBC.get().imovelDAO();
+	private EnderecoDAO enderecoDao = DaoFactoryJDBC.get().enderecoDAO();
+	private ClienteDAO clienteDao = DaoFactoryJDBC.get().clienteDAO();
+	private Cliente clienteEncontrado;
+	
 	public TelaCadastroImovel() {
 		setTitle("CADASTRO DE IMOVEL");
 		setLayout(null);
@@ -85,6 +106,14 @@ public class TelaCadastroImovel extends JFrame implements ActionListener{
 		
 		jlbMetrosQuadrados = cp.criarLabel("METROS QUADRADOS:", 10, 20, 200, 24, jlbMetrosQuadrados);
 		jtfMetrosQuadrados = cp.criarTextField(170, 20, 150, 24, jtfMetrosQuadrados);
+		
+		jlbPossui = cp.criarLabel("DISPONÍVEL:", 465, 20, 200, 24, jlbPossui);
+		jcbPossui = new JComboBox<>();
+		jcbPossui.addItem("NÃO");
+		jcbPossui.addItem("SIM");
+		jcbPossui.setBounds(550, 20, 90, 24);
+		jcbPossui.setVisible(true);
+		getContentPane().add(jcbPossui);
 		
 		jrbAlugar = cp.criarRadioButton("IMÓVEL PARA ALUGAR", 10, 60, 200, 24, jrbAlugar);
 		jrbAlugar.addActionListener(this);
@@ -112,6 +141,8 @@ public class TelaCadastroImovel extends JFrame implements ActionListener{
 		jpnImovel.add(jrbVender);
 		jpnImovel.add(jlbMesesContrato);
 		jpnImovel.add(jtfMesesContrato);
+		jpnImovel.add(jlbPossui);
+		jpnImovel.add(jcbPossui);
 		jpnImovel.add(jlbValorMensal);
 		jpnImovel.add(jtfValorMensal);
 		jpnImovel.add(jlbValorTotal);
@@ -119,50 +150,70 @@ public class TelaCadastroImovel extends JFrame implements ActionListener{
 		jpnImovel.add(jlbMetrosQuadrados);
 		jpnImovel.add(jtfMetrosQuadrados);
 		
+		jbtProcurar1 = cp.criarBotao("PROCURAR", 590, 0, 100, 24, jbtProcurar1);
+		jbtProcurar2 = cp.criarBotao("PROCURAR", 590, 0, 100, 24, jbtProcurar2);
+		jbtProcurar3 = cp.criarBotao("PROCURAR", 590, 0, 100, 24, jbtProcurar3);
+		jbtProcurar4 = cp.criarBotao("PROCURAR", 590, 0, 100, 24, jbtProcurar4);
+	
+		jlbImagem1 = cp.criarLabel("", 0, 0, 700, 420, jlbImagem1);
+		jlbImagem2 = cp.criarLabel("", 0, 0, 700, 420, jlbImagem2);
+		jlbImagem3 = cp.criarLabel("", 0, 0, 700, 420, jlbImagem3);
+		jlbImagem4 = cp.criarLabel("", 0, 0, 700, 420, jlbImagem4);
 		
+		jbtProcurar1.addActionListener(this);
+		jbtProcurar2.addActionListener(this);
+		jbtProcurar3.addActionListener(this);
+		jbtProcurar4.addActionListener(this);	
+		
+		jlbImagem1 = cp.criarLabel("", 0, 0, 700, 420, jlbImagem1);
+		jlbImagem2 = cp.criarLabel("", 0, 0, 700, 420, jlbImagem2);
+		jlbImagem3 = cp.criarLabel("", 0, 0, 700, 420, jlbImagem3);
+		jlbImagem4 = cp.criarLabel("", 0, 0, 700, 420, jlbImagem4);
+		
+		jlbDescricao1 = cp.criarLabel("Descrição 1:", 10, 10, 100, 24, jlbDescricao1);
+		jlbDescricao2 = cp.criarLabel("Descrição 2:", 10, 40, 100, 24, jlbDescricao2);
+		jlbDescricao3 = cp.criarLabel("Descrição 3:", 10, 70, 100, 24, jlbDescricao3);
+		
+		jtfDescricao1 = cp.criarTextField(100, 10, 470, 24, jtfDescricao1);
+		jtfDescricao2 = cp.criarTextField(100, 40, 470, 24, jtfDescricao2);
+		jtfDescricao3 = cp.criarTextField(100, 70, 470, 24, jtfDescricao3);
+
+		jbtAjudaDescricao = cp.criarBotao("", 660, 4, 27, 27, jbtAjudaDescricao);
+		jbtAjudaDescricao.setIcon(new ImageIcon("img/question_item_24.png"));
+		jbtAjudaDescricao.setOpaque(false);
+		jbtAjudaDescricao.setBorderPainted(false);
+		jbtAjudaDescricao.setBackground(new Color(0, 0, 0, 0));
+		jbtAjudaDescricao.addActionListener(this);
 		
 		jpnTab1 = cp.criarPanel("", 0, 0, 700, 300, jpnTab1, true);
 		jpnTab1.add(jpnLocalizador);
 		jpnTab1.add(jpnCadastroEndereco);
 		jpnTab1.add(jpnImovel);
 		
-		jbtProcurar1 = cp.criarBotao("PROCURAR", 590, 0, 100, 24, jbtProcurar1);
-		jbtProcurar1.addActionListener(this);
-		
-		jlbImagem1 = cp.criarLabel("", 0, 0, 700, 420, jlbImagem1);
-		
-		jfcProcurar = new JFileChooser();
-		
 		jpnTab2 = cp.criarPanel("", 0, 0, 700, 420, jpnTab2, true);
 		jpnTab2.add(jbtProcurar1);
 		jpnTab2.add(jlbImagem1);
-		
-		jbtProcurar2 = cp.criarBotao("PROCURAR", 590, 0, 100, 24, jbtProcurar2);
-		jbtProcurar2.addActionListener(this);
-		
-		jlbImagem2 = cp.criarLabel("", 0, 0, 700, 420, jlbImagem2);
 		
 		jpnTab3 = cp.criarPanel("", 0, 0, 700, 420, jpnTab3, true);
 		jpnTab3.add(jbtProcurar2);
 		jpnTab3.add(jlbImagem2);
 		
-		jbtProcurar3 = cp.criarBotao("PROCURAR", 590, 0, 100, 24, jbtProcurar3);
-		jbtProcurar3.addActionListener(this);
-		
-		jlbImagem3 = cp.criarLabel("", 0, 0, 700, 420, jlbImagem3);
-		
 		jpnTab4 = cp.criarPanel("", 0, 0, 700, 420, jpnTab4, true);
 		jpnTab4.add(jbtProcurar3);
 		jpnTab4.add(jlbImagem3);
 		
-		jbtProcurar4 = cp.criarBotao("PROCURAR", 590, 0, 100, 24, jbtProcurar4);
-		jbtProcurar4.addActionListener(this);
-		
-		jlbImagem4 = cp.criarLabel("", 0, 0, 700, 420, jlbImagem4);
-		
 		jpnTab5 = cp.criarPanel("", 0, 0, 700, 420, jpnTab5, true);
 		jpnTab5.add(jbtProcurar4);
 		jpnTab5.add(jlbImagem4);
+		
+		jpnTab6 = cp.criarPanel("", 0, 0, 700, 420, jpnTab6, true);
+		jpnTab6.add(jlbDescricao1);
+		jpnTab6.add(jlbDescricao2);
+		jpnTab6.add(jlbDescricao3);
+		jpnTab6.add(jtfDescricao1);
+		jpnTab6.add(jtfDescricao2);
+		jpnTab6.add(jtfDescricao3);
+		jpnTab6.add(jbtAjudaDescricao);
 		
 		jtbPrincipal = new JTabbedPane();
 		jtbPrincipal.add("Principal", jpnTab1);
@@ -170,14 +221,25 @@ public class TelaCadastroImovel extends JFrame implements ActionListener{
 		jtbPrincipal.add("Imagem 2", jpnTab3);
 		jtbPrincipal.add("Imagem 3", jpnTab4);
 		jtbPrincipal.add("Imagem 4", jpnTab5);
+		jtbPrincipal.add("Descrição do Imóvel", jpnTab6);
 		jtbPrincipal.setBounds(0,50,693,420);
 		getContentPane().add(jtbPrincipal);
+		
+		jfcProcurar = new JFileChooser();
 
-
+		criarBotoesInferiores();
+		
 		setResizable(false);
-		setSize(700, 500);
+		setSize(700, 530);
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
+	}
+	
+	private void criarBotoesInferiores() {
+		jbtSalvar = cp.criarBotao("CADASTRAR", 540, 473, 150, 27, jbtSalvar);
+		jbtSalvar = cp.alterarCorBotoes(jbtSalvar);
+		jbtSalvar.addActionListener(this);
+		getContentPane().add(jbtSalvar);
 	}
 	
 	private void criarPanelCadastroEndereco() {
@@ -226,6 +288,9 @@ public class TelaCadastroImovel extends JFrame implements ActionListener{
 		jbtProcurar = cp.criarBotao("LOCALIZAR", 500, 20, 100, 24, jbtProcurar);
 		jbtNovo = cp.criarBotao("CLIENTE", 100, 20, 105, 24, jbtNovo);
 
+		jbtProcurar.addActionListener(this);
+		jbtNovo.addActionListener(this);
+		
 		jpnLocalizador = cp.criarPanel("PROPRIETÁRIO", 0, 310, 684, 80, jpnLocalizador, true);
 		jpnLocalizador.add(jlbNovo);
 		jpnLocalizador.add(jlbRG);
@@ -245,6 +310,53 @@ public class TelaCadastroImovel extends JFrame implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		if(e.getSource() == jbtSalvar){
+			Imovel imovel = new Imovel();
+			Endereco endereco = new Endereco();
+			Cliente cliente = clienteEncontrado;
+			
+			endereco.setId(enderecoDao.maiorId()+1);
+			endereco.setRua(jtfRua.getText());
+			endereco.setNumero(jtfNumero.getText());
+			endereco.setBairro(jtfBairro.getText());
+			endereco.setCidade(jtfCidade.getText());
+			endereco.setUf(jtfUf.getText());
+			endereco.setCep(jtfCep.getText());
+			enderecoDao.inserir(endereco);
+			
+			imovel.setIdImovel(imovelDao.maiorId()+1);
+			imovel.setMetrosquadrados(jtfMetrosQuadrados.getText());
+			imovel.setCliente(cliente);
+			if(jrbVender.isSelected()){
+				imovel.setValorTotal(Double.valueOf(jtfValorTotal.getText()));
+				imovel.setValorMensal(0.0);
+				imovel.setMesesContrato(0);
+			}else if(jrbAlugar.isSelected()){
+				imovel.setValorMensal(Double.valueOf(jtfValorMensal.getText()));
+				imovel.setMesesContrato(Integer.valueOf(jtfMesesContrato.getText()));
+				imovel.setValorTotal(0.0);
+			}
+			imovel.setEndereco(endereco);
+			imovel.setImagem1(arquivo1.getAbsolutePath());
+			imovel.setImagem2(arquivo2.getAbsolutePath());
+			imovel.setImagem3(arquivo3.getAbsolutePath());
+			imovel.setImagem4(arquivo4.getAbsolutePath());
+			imovel.setDescricao1(jtfDescricao1.getText());
+			imovel.setDescricao2(jtfDescricao2.getText());
+			imovel.setDescricao3(jtfDescricao3.getText());
+			imovel.setPossui(jcbPossui.getSelectedIndex());
+			imovelDao.inserir(imovel);
+		}
+		if(e.getSource() == jbtProcurar){
+			for(Cliente cliente : clienteDao.todos()){
+				if(cliente.getPessoa().getRg().equals(jtfRg.getText())){
+					this.clienteEncontrado = cliente;
+					jtfNome.setText(cliente.getPessoa().getNome());
+					jtfCpf.setText(cliente.getPessoa().getCpf());
+				}
+			}
+			
+		}
 		if(e.getSource() == jrbAlugar){
 			rbAlugar();
 		}
@@ -291,6 +403,11 @@ public class TelaCadastroImovel extends JFrame implements ActionListener{
 			}else{
 				JOptionPane.showMessageDialog(null, "Permitido somente imagens com extensão .JPG!", "Aviso!", JOptionPane.WARNING_MESSAGE);
 			}
+		}
+		if(e.getSource() == jbtAjudaDescricao){
+			JOptionPane.showMessageDialog(null,
+					"Sempre que adicionar um imóvel, você pode atribuir 3 descrições a ele.\nEssas descrições definem o que seu imóvel possui.\nPor exemplo: Luxo, Imobiliado, Confortável.\nNÃO É OBRIGATÓRIO!",
+					"Ajuda", JOptionPane.PLAIN_MESSAGE);
 		}
 		
 	}

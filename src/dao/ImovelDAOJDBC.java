@@ -66,6 +66,7 @@ public class ImovelDAOJDBC implements ImovelDAO{
 			pstmt.setString(10, imovel.getDescricao2());
 			pstmt.setString(11, imovel.getDescricao3());
 			pstmt.setInt(12, imovel.getPossui());
+			pstmt.setInt(13, imovel.getIdImovel());
 			pstmt.executeUpdate(); 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -161,7 +162,7 @@ public class ImovelDAOJDBC implements ImovelDAO{
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			ResultSet rs = pstmt.executeQuery();
 			while(rs.next()){
-				maior = rs.getInt("max(idImovel");
+				maior = rs.getInt("max(idImovel)");
 			}
 		}catch (SQLException e){
 			e.printStackTrace();

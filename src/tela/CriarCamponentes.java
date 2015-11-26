@@ -1,6 +1,7 @@
 package tela;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
@@ -18,6 +19,19 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 public class CriarCamponentes {
+	
+	public JLabel criarLabelTitulo(String texto, Integer col, Integer lin, Integer lar, Integer alt, JLabel label){
+		label = new JLabel(texto, SwingConstants.CENTER);
+		label.setBounds(col, lin, lar, alt);
+		label.setVisible(true);
+		label.setFont(new Font("ARIAL", Font.PLAIN, 18));
+		label.setOpaque(true);
+		label.setBackground(new Color(23, 20, 20));
+		label.setForeground(Color.white);
+		label.setBackground(new Color(23, 20, 20));
+		label.setForeground(Color.white);
+		return label;
+	}
 
 	public JPanel criarPanel(String texto, Integer col, Integer lin, Integer lar, Integer alt, JPanel panel,
 			Boolean visibilidade) {
