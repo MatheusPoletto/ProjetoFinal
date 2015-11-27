@@ -12,6 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -20,10 +21,13 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
 import DAOFactory.DaoFactoryJDBC;
+import dao.EnderecoDAO;
 import dao.ImovelDAO;
 import imovel.Imovel;
+import pessoa.Endereco;
+import utilitario.CriarCamponentes;
 
-public class TelaAlterarImovel extends JFrame implements ActionListener {
+public class TelaAlterarImovel extends JInternalFrame implements ActionListener {
 	private static final long serialVersionUID = 2404426739863880445L;
 	private JLabel jlbTitulo;
 	private JPanel jpnLocalizador, jpnTab1;
@@ -62,6 +66,8 @@ public class TelaAlterarImovel extends JFrame implements ActionListener {
 	private JButton jbtAjudaDescricao;
 	private JLabel jlbPossui;
 	private JComboBox<String> jcbPossui;
+	private Endereco enderecoAlterar;
+	private EnderecoDAO enderecoDao = DaoFactoryJDBC.get().enderecoDAO();
 	private ImovelDAO imovelDao = DaoFactoryJDBC.get().imovelDAO();
 
 	public TelaAlterarImovel() {
@@ -80,7 +86,8 @@ public class TelaAlterarImovel extends JFrame implements ActionListener {
 		setResizable(false);
 		setSize(700, 530);
 		setVisible(true);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setClosable(true);
+		setDefaultCloseOperation(HIDE_ON_CLOSE);
 	}
 
 	private void criarBotoesInferiores() {
@@ -293,26 +300,8 @@ public class TelaAlterarImovel extends JFrame implements ActionListener {
 
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == jbtSalvarAlteracoes){
-			imovelAlterar.setMetrosquadrados(jtfMetrosQuadrados.getText());
-			imovelAlterar.setImagem1(arquivo1.getAbsolutePath());
-			imovelAlterar.setImagem2(arquivo2.getAbsolutePath());
-			imovelAlterar.setImagem3(arquivo3.getAbsolutePath());
-			imovelAlterar.setImagem4(arquivo4.getAbsolutePath());
-			imovelAlterar.setDescricao1(jtfDescricao1.getText());
-			imovelAlterar.setDescricao2(jtfDescricao2.getText());
-			imovelAlterar.setDescricao3(jtfDescricao3.getText());
-			imovelAlterar.setPossui(jcbPossui.getSelectedIndex());
-			if(jrbAlugar.isSelected()){
-				imovelAlterar.setMesesContrato(Integer.valueOf(jtfMesesContrato.getText()));
-				imovelAlterar.setValorMensal(Double.valueOf(jtfValorMensal.getText()));
-				imovelAlterar.setValorTotal(0.0);
-			}else if(jrbVender.isSelected()){
-				imovelAlterar.setValorTotal(Double.valueOf(jtfValorTotal.getText()));
-				imovelAlterar.setMesesContrato(0);
-				imovelAlterar.setValorMensal(0.0);
-			}
-			
-			imovelDao.alterar(imovelAlterar);
+			salvarAlteracoes();
+
 		}
 		
 		if (e.getSource() == jrbAlugar) {
@@ -366,6 +355,37 @@ public class TelaAlterarImovel extends JFrame implements ActionListener {
 
 	}
 
+	private void salvarAlteracoes() {
+		enderecoAlterar.setRua(jtfRua.getText());
+		enderecoAlterar.setBairro(jtfBairro.getText());
+		enderecoAlterar.setNumero(jtfNumero.getText());
+		enderecoAlterar.setCidade(jtfCidade.getText());
+		enderecoAlterar.setUf(jtfUf.getText());
+		enderecoAlterar.setCep(jtfCep.getText());
+		
+		imovelAlterar.setMetrosquadrados(jtfMetrosQuadrados.getText());
+		imovelAlterar.setImagem1(arquivo1.getAbsolutePath());
+		imovelAlterar.setImagem2(arquivo2.getAbsolutePath());
+		imovelAlterar.setImagem3(arquivo3.getAbsolutePath());
+		imovelAlterar.setImagem4(arquivo4.getAbsolutePath());
+		imovelAlterar.setDescricao1(jtfDescricao1.getText());
+		imovelAlterar.setDescricao2(jtfDescricao2.getText());
+		imovelAlterar.setDescricao3(jtfDescricao3.getText());
+		imovelAlterar.setPossui(jcbPossui.getSelectedIndex());
+		if(jrbAlugar.isSelected()){
+			imovelAlterar.setMesesContrato(Integer.valueOf(jtfMesesContrato.getText()));
+			imovelAlterar.setValorMensal(Double.valueOf(jtfValorMensal.getText()));
+			imovelAlterar.setValorTotal(0.0);
+		}else if(jrbVender.isSelected()){
+			imovelAlterar.setValorTotal(Double.valueOf(jtfValorTotal.getText()));
+			imovelAlterar.setMesesContrato(0);
+			imovelAlterar.setValorMensal(0.0);
+		}
+		enderecoDao.alterar(enderecoAlterar);		
+		imovelDao.alterar(imovelAlterar);
+		
+	}
+
 	private void rbVender() {
 		jtfValorTotal.setEnabled(true);
 		jtfValorMensal.setEnabled(false);
@@ -379,6 +399,7 @@ public class TelaAlterarImovel extends JFrame implements ActionListener {
 	}
 
 	public void preencherCampos(Imovel imovel) {
+		this.enderecoAlterar = enderecoDao.buscar(imovel.getEndereco().getId());
 		this.imovelAlterar = imovel;
 		jtfRua.setText(imovel.getEndereco().getRua());
 		jtfBairro.setText(imovel.getEndereco().getBairro());

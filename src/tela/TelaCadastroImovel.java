@@ -25,6 +25,7 @@ import dao.ImovelDAO;
 import imovel.Imovel;
 import pessoa.Cliente;
 import pessoa.Endereco;
+import utilitario.CriarCamponentes;
 
 public class TelaCadastroImovel extends JInternalFrame implements ActionListener{
 	
@@ -74,7 +75,7 @@ public class TelaCadastroImovel extends JInternalFrame implements ActionListener
 		setTitle("CADASTRO DE IMOVEL");
 		setLayout(null);
 
-		jlbTitulo = cp.criarLabelCentralizada("CADASTRO DE IMÓVEL", 0, 0, 707, 44, jlbTitulo);
+		jlbTitulo = cp.criarLabelTitulo("CADASTRO DE IMÓVEL", 0, 0, 707, 44, jlbTitulo);
 		getContentPane().add(jlbTitulo);
 		
 		criarPanelCadastroEndereco();

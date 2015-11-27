@@ -23,6 +23,7 @@ import javax.swing.table.DefaultTableModel;
 import DAOFactory.DaoFactoryJDBC;
 import dao.ImovelDAO;
 import imovel.Imovel;
+import utilitario.CriarCamponentes;
 
 public class TelaListaImovel extends JInternalFrame implements ActionListener {
 
@@ -254,10 +255,11 @@ public class TelaListaImovel extends JInternalFrame implements ActionListener {
 			JOptionPane.showMessageDialog(null, "Selecione um imóvel para alterar!", "Erro",
 					JOptionPane.ERROR_MESSAGE);
 		} else {
-			TelaAlterarImovel tlAlterarImovel = new TelaAlterarImovel();
 			String id = String.valueOf(dtbImovel.getValueAt(jtbImovel.getSelectedRow(), 0));
 			Imovel imovel = imovelDao.buscar(Integer.valueOf(id));
-			tlAlterarImovel.preencherCampos(imovel);
+			telaPrincipal.getTlPrincipal().esconderTelas();
+			telaPrincipal.getTlPrincipal().getTlAlterarImovel().setVisible(true);
+			telaPrincipal.getTlPrincipal().getTlAlterarImovel().preencherCampos(imovel);			
 		}
 		
 	}

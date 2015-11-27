@@ -27,6 +27,7 @@ public class telaPrincipal extends JFrame implements ActionListener {
 	private TelaAlterarPessoa tlAlterarPessoa = new TelaAlterarPessoa();
 	private TelaListaUsuario tlListaUsuarios = new TelaListaUsuario();
 	private TelaProcurarCliente tlProcurarCliente = new TelaProcurarCliente();
+	private TelaAlterarImovel tlAlterarImovel = new TelaAlterarImovel();
 	private telaLogin tlLogin = new telaLogin();
 	private TelaListaImovel tlListaImovel = new TelaListaImovel();
 	private TelaCadastroImovel tlCadastroImovel = new TelaCadastroImovel();
@@ -58,6 +59,7 @@ public class telaPrincipal extends JFrame implements ActionListener {
 		frames.add(tlProcurarCliente);
 		frames.add(tlListaImovel);
 		frames.add(tlCadastroImovel);
+		frames.add(tlAlterarImovel);
 		posicionaFrames(frames);
 		
 	}
@@ -143,6 +145,7 @@ public class telaPrincipal extends JFrame implements ActionListener {
 		tlProcurarCliente.setVisible(false);
 		tlCadastroImovel.setVisible(false);
 		tlListaImovel.setVisible(false);
+		tlAlterarImovel.setVisible(false);
 
 		posicionaFrames(frames);
 	}
@@ -151,6 +154,10 @@ public class telaPrincipal extends JFrame implements ActionListener {
 		usuario = tlLogin.getUsuario();
 		tlPrincipal.setVisible(true);
 		barra.setVisible(true);
+	}
+
+	public TelaAlterarImovel getTlAlterarImovel() {
+		return tlAlterarImovel;
 	}
 
 	public TelaCadastroCorretor getTlCadastroCorretor() {

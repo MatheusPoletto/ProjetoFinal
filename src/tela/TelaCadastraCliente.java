@@ -28,6 +28,7 @@ import dao.PessoaDAO;
 import pessoa.Cliente;
 import pessoa.Endereco;
 import pessoa.Pessoa;
+import utilitario.CriarCamponentes;
 
 public class TelaCadastraCliente extends JInternalFrame implements ActionListener {
 
