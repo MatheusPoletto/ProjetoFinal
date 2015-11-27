@@ -28,10 +28,12 @@ public class telaPrincipal extends JFrame implements ActionListener {
 	private TelaListaUsuario tlListaUsuarios = new TelaListaUsuario();
 	private TelaProcurarCliente tlProcurarCliente = new TelaProcurarCliente();
 	private telaLogin tlLogin = new telaLogin();
+	private TelaListaImovel tlListaImovel = new TelaListaImovel();
+	private TelaCadastroImovel tlCadastroImovel = new TelaCadastroImovel();
 	private static telaPrincipal tlPrincipal = new telaPrincipal();
-	private JMenu jmnImovel, jmnCadastro, jmnProcurar, jmnGerenciamento, jmnRelatorios, jmnSair;
-	private JMenuItem jmiAlugar, jmiVender, jmiCliente, jmiCorretor, jmiProcurarPessoa, jmiContaUsuario, jmiRelatorioCliente,
-			jmiRelatorioCorretor;
+	private JMenu jmnCadastro, jmnProcurar, jmnGerenciamento, jmnRelatorios, jmnSair;
+	private JMenuItem  jmiCliente, jmiCorretor, jmiProcurarPessoa, jmiContaUsuario, jmiRelatorioCliente,
+			jmiRelatorioCorretor, jmiProcurarImovel, jmiImovel;
 	private Usuario usuario;
 	private ArrayList<JInternalFrame> frames = new ArrayList<>();
 	private JLabel jlbLogo;
@@ -54,16 +56,10 @@ public class telaPrincipal extends JFrame implements ActionListener {
 		frames.add(tlAlterarPessoa);
 		frames.add(tlListaUsuarios);
 		frames.add(tlProcurarCliente);
+		frames.add(tlListaImovel);
+		frames.add(tlCadastroImovel);
 		posicionaFrames(frames);
 		
-		jlbLogo = new JLabel();
-		jlbLogo.setBounds(780, 510, 175, 75);
-		// jlbLogo.setBounds(808, 0, 175, 75);
-		jlbLogo.setVisible(true);
-		jlbLogo.setOpaque(true);
-		jlbLogo.setIcon(new ImageIcon("img/logo_imo.png"));
-		getContentPane().add(jlbLogo);
-
 	}
 
 	private void criarBarra() {
@@ -71,18 +67,15 @@ public class telaPrincipal extends JFrame implements ActionListener {
 		barra.setVisible(true);
 
 		jmnCadastro = new JMenu("Cadastro");
-		jmnImovel = new JMenu("Imóvel");
-		jmnCadastro.add(jmnImovel);
-		jmiAlugar = new JMenuItem("Alugar");
-		jmiVender = new JMenuItem("Vender");
-		jmnImovel.add(jmiAlugar);
-		jmnImovel.addSeparator();
-		jmnImovel.add(jmiVender);
+		jmiImovel = new JMenuItem("Cadastro de imóvel");
+		jmiImovel.addActionListener(this);
+		jmnCadastro.add(jmiImovel);
+		
 		jmnCadastro.addSeparator();
-		jmiCliente = new JMenuItem("Cliente");
+		jmiCliente = new JMenuItem("Cadastro de cliente");
 		jmnCadastro.add(jmiCliente);
 		jmiCliente.addActionListener(this);
-		jmiCorretor = new JMenuItem("Corretor");
+		jmiCorretor = new JMenuItem("Cadastro de corretor");
 		jmnCadastro.add(jmiCorretor);
 		jmiCorretor.addActionListener(this);
 		barra.add(jmnCadastro);
@@ -91,7 +84,10 @@ public class telaPrincipal extends JFrame implements ActionListener {
 		jmiProcurarPessoa = new JMenuItem("Cliente/Corretor");
 		jmiProcurarPessoa.addActionListener(this);
 		jmnProcurar.add(jmiProcurarPessoa);
-		jmiProcurarPessoa.addActionListener(this);
+		jmiProcurarImovel = new JMenuItem("Imóvel");
+		jmiProcurarImovel.addActionListener(this);
+		jmnProcurar.addSeparator();
+		jmnProcurar.add(jmiProcurarImovel);
 		barra.add(jmnProcurar);
 
 		jmnGerenciamento = new JMenu("Gerenciamento");
@@ -145,6 +141,8 @@ public class telaPrincipal extends JFrame implements ActionListener {
 		tlAlterarPessoa.setVisible(false);
 		tlListaUsuarios.setVisible(false);
 		tlProcurarCliente.setVisible(false);
+		tlCadastroImovel.setVisible(false);
+		tlListaImovel.setVisible(false);
 
 		posicionaFrames(frames);
 	}
@@ -157,6 +155,14 @@ public class telaPrincipal extends JFrame implements ActionListener {
 
 	public TelaCadastroCorretor getTlCadastroCorretor() {
 		return tlCadastroCorretor;
+	}
+	
+	public TelaListaImovel getTlListaImovel() {
+		return tlListaImovel;
+	}
+
+	public TelaCadastroImovel getTlCadastroImovel() {
+		return tlCadastroImovel;
 	}
 
 	public TelaCadastraCliente getTlCadastraCliente() {
@@ -191,6 +197,14 @@ public class telaPrincipal extends JFrame implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent e) {
+		if(e.getSource() == jmiProcurarImovel){
+			esconderTelas();
+			tlListaImovel.setVisible(true);
+		}
+		if(e.getSource() == jmiImovel){
+			esconderTelas();
+			tlCadastroImovel.setVisible(true);
+		}
 		if (e.getSource() == jmiCliente) {
 			esconderTelas();
 			tlCadastraCliente.setVisible(true);

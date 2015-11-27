@@ -59,6 +59,7 @@ public class TelaCadastraCliente extends JInternalFrame implements ActionListene
 		setLayout(null);
 
 		jlbTitulo = cp.criarLabelTitulo("NOVO CLIENTE", 0, 0, 707, 44, jlbTitulo);
+		getContentPane().add(jlbTitulo);
 
 		criarPanelCadastroCliente();
 
@@ -92,6 +93,7 @@ public class TelaCadastraCliente extends JInternalFrame implements ActionListene
 		jpnCadastrar.add(jbtSalvar);
 		jpnCadastrar.add(jbtLimpar);
 		jpnCadastrar.setBorder(BorderFactory.createLineBorder(new Color(23, 20, 20), 1));
+		getContentPane().add(jpnCadastrar);
 
 	}
 
@@ -147,6 +149,7 @@ public class TelaCadastraCliente extends JInternalFrame implements ActionListene
 		jpnCadastroEndereco.add(jtfCidade);
 		jpnCadastroEndereco.add(jtfUf);
 		jpnCadastroEndereco.add(jtfCep);
+		getContentPane().add(jpnCadastroEndereco);
 
 	}
 
@@ -205,6 +208,7 @@ public class TelaCadastraCliente extends JInternalFrame implements ActionListene
 		jpnCadastroCliente.add(jtfTelefoneResidencial);
 		jpnCadastroCliente.add(jtfTelefoneCelular);
 		jpnCadastroCliente.add(jtfEmail);
+		getContentPane().add(jpnCadastroCliente);
 
 	}
 

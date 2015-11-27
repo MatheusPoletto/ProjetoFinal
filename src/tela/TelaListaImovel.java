@@ -9,7 +9,6 @@ import java.awt.image.BufferedImage;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -25,7 +24,7 @@ import DAOFactory.DaoFactoryJDBC;
 import dao.ImovelDAO;
 import imovel.Imovel;
 
-public class TelaListaImovel extends JFrame implements ActionListener {
+public class TelaListaImovel extends JInternalFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	private JLabel jlbTitulo;
@@ -65,11 +64,11 @@ public class TelaListaImovel extends JFrame implements ActionListener {
 
 		alimentaTable();
 		
-		//setClosable(true);
+		setClosable(true);
 		setResizable(false);
 		setSize(650, 550);
 		setVisible(true);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setDefaultCloseOperation(HIDE_ON_CLOSE);
 		
 	}
 
