@@ -20,6 +20,10 @@ public class MetodosCheck {
 			break;
 		case "adicionar_jpg":
 			erro.erroFormatoJpg();
+			break;
+		case "cadastro_imovel":
+			erro.erroCadastroImovel();
+			break;
 		default:
 			break;
 		}
