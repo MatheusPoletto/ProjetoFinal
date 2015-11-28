@@ -26,6 +26,10 @@ import imovel.Imovel;
 import pessoa.Cliente;
 import pessoa.Endereco;
 import utilitario.CriarCamponentes;
+import utilitario.MensagemAjuda;
+import utilitario.MensagemErro;
+import utilitario.MensagemSucesso;
+import utilitario.MetodosCheck;
 
 public class TelaCadastroImovel extends JInternalFrame implements ActionListener{
 	
@@ -70,6 +74,10 @@ public class TelaCadastroImovel extends JInternalFrame implements ActionListener
 	private EnderecoDAO enderecoDao = DaoFactoryJDBC.get().enderecoDAO();
 	private ClienteDAO clienteDao = DaoFactoryJDBC.get().clienteDAO();
 	private Cliente clienteEncontrado;
+	private MetodosCheck mc = new MetodosCheck();
+	private MensagemSucesso ms = new MensagemSucesso();
+	private MensagemAjuda ma = new MensagemAjuda();
+	
 	
 	public TelaCadastroImovel() {
 		setTitle("CADASTRO DE IMOVEL");
@@ -323,57 +331,50 @@ public class TelaCadastroImovel extends JInternalFrame implements ActionListener
 	}
 	
 	private void criarBotaAjudaDescricao() {
-		JOptionPane.showMessageDialog(null,
-				"Sempre que adicionar um imóvel, você pode atribuir 3 descrições a ele.\nEssas descrições definem o que seu imóvel possui.\nPor exemplo: Luxo, Imobiliado, Confortável.\nNÃO É OBRIGATÓRIO!",
-				"Ajuda", JOptionPane.PLAIN_MESSAGE);
+		ma.ajudaCadastroImovelDescricoes();
 		
 	}
 
 	private void criarImg4() {
 		jfcProcurar.showOpenDialog(null);
-		if(jfcProcurar.getSelectedFile().getAbsolutePath().toString().toLowerCase().endsWith(".jpg")){				
+		Boolean isJpg = mc.verificaExtensaoJpg(jfcProcurar, "adicionar_jpg");
+		if(isJpg){				
 			arquivo4 = jfcProcurar.getSelectedFile();
 			BufferedImage img4 = cp.redimensionarImagem(arquivo4.getAbsolutePath(), 700, 420);
 			jlbImagem4.setIcon(new ImageIcon(img4));	
-		}else{
-			JOptionPane.showMessageDialog(null, "Permitido somente imagens com extensão .JPG!", "Aviso!", JOptionPane.WARNING_MESSAGE);
 		}
 		
 	}
 
 	private void criarImg3() {
 		jfcProcurar.showOpenDialog(null);
-		if(jfcProcurar.getSelectedFile().getAbsolutePath().toString().toLowerCase().endsWith(".jpg")){				
+		Boolean isJpg = mc.verificaExtensaoJpg(jfcProcurar, "adicionar_jpg");
+		if(isJpg){				
 			arquivo3 = jfcProcurar.getSelectedFile();
 			BufferedImage img3 = cp.redimensionarImagem(arquivo3.getAbsolutePath(), 700, 420);
-			jlbImagem3.setIcon(new ImageIcon(img3));	
-			
-		}else{
-			JOptionPane.showMessageDialog(null, "Permitido somente imagens com extensão .JPG!", "Aviso!", JOptionPane.WARNING_MESSAGE);
+			jlbImagem3.setIcon(new ImageIcon(img3));
 		}
 		
 	}
 
 	private void procurarImg2() {
 		jfcProcurar.showOpenDialog(null);
-		if(jfcProcurar.getSelectedFile().getAbsolutePath().toString().toLowerCase().endsWith(".jpg")){				
+		Boolean isJpg = mc.verificaExtensaoJpg(jfcProcurar, "adicionar_jpg");
+		if(isJpg){				
 			arquivo2 = jfcProcurar.getSelectedFile();
 			BufferedImage img2 = cp.redimensionarImagem(arquivo2.getAbsolutePath(), 700, 420);
 			jlbImagem2.setIcon(new ImageIcon(img2));			
-		}else{
-			JOptionPane.showMessageDialog(null, "Permitido somente imagens com extensão .JPG!", "Aviso!", JOptionPane.WARNING_MESSAGE);
 		}
 		
 	}
 
 	private void procurarImg1() {
 		jfcProcurar.showOpenDialog(null);
-		if(jfcProcurar.getSelectedFile().getAbsolutePath().toString().toLowerCase().endsWith(".jpg")){				
+		Boolean isJpg = mc.verificaExtensaoJpg(jfcProcurar, "adicionar_jpg");
+		if(isJpg){				
 			arquivo1 = jfcProcurar.getSelectedFile();
 			BufferedImage img1 = cp.redimensionarImagem(arquivo1.getAbsolutePath(), 700, 420);
 			jlbImagem1.setIcon(new ImageIcon(img1));
-		}else{
-			JOptionPane.showMessageDialog(null, "Permitido somente imagens com extensão .JPG!", "Aviso!", JOptionPane.WARNING_MESSAGE);
 		}
 		
 	}

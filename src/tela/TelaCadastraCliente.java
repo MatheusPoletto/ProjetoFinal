@@ -7,7 +7,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -16,7 +15,6 @@ import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.text.MaskFormatter;
@@ -29,6 +27,9 @@ import pessoa.Cliente;
 import pessoa.Endereco;
 import pessoa.Pessoa;
 import utilitario.CriarCamponentes;
+import utilitario.MensagemAjuda;
+import utilitario.MensagemSucesso;
+import utilitario.MetodosCheck;
 
 public class TelaCadastraCliente extends JInternalFrame implements ActionListener {
 
@@ -54,6 +55,9 @@ public class TelaCadastraCliente extends JInternalFrame implements ActionListene
 	private EnderecoDAO enderecoDao = DaoFactoryJDBC.get().enderecoDAO();
 	private ClienteDAO clienteDao = DaoFactoryJDBC.get().clienteDAO();
 	private CriarCamponentes cp = new CriarCamponentes();
+	private MetodosCheck mc = new MetodosCheck();
+	private MensagemSucesso ms = new MensagemSucesso();
+	private MensagemAjuda ma= new MensagemAjuda();
 
 	public TelaCadastraCliente() {
 		setTitle("Cadastro de cliente");
@@ -70,10 +74,6 @@ public class TelaCadastraCliente extends JInternalFrame implements ActionListene
 
 		criarPanelCadastrar();
 
-		jtfsValidar.add(jtfNome);
-		jtfsValidar.add(jtfRg);
-		jtfsValidar.add(jtfCpf);
-
 		setResizable(false);
 		setSize(700, 450);
 		setVisible(true);
@@ -85,11 +85,13 @@ public class TelaCadastraCliente extends JInternalFrame implements ActionListene
 		jbtSalvar = cp.criarBotao("SALVAR", 110, 2, 100, 30, jbtSalvar);
 		jbtSalvar.setBackground(new Color(23, 20, 20));
 		jbtSalvar.setForeground(Color.white);
+		jbtSalvar.addActionListener(this);
 
 		jbtLimpar = cp.criarBotao("LIMPAR", 10, 2, 100, 30, jbtLimpar);
 		jbtLimpar.setBackground(new Color(23, 20, 20));
 		jbtLimpar.setForeground(Color.white);
-
+		jbtSalvar.addActionListener(this);
+		
 		jpnCadastrar = cp.criarPanel("", 463, 372, 220, 34, jpnCadastrar, true);
 		jpnCadastrar.add(jbtSalvar);
 		jpnCadastrar.add(jbtLimpar);
@@ -213,21 +215,6 @@ public class TelaCadastraCliente extends JInternalFrame implements ActionListene
 
 	}
 
-	public Boolean verificaCampos(List<JTextField> componentes) {
-		Boolean passou = true;
-		for (JTextField cp : componentes) {
-			if (cp.getText().equals("")) {
-				passou = false;
-			}
-		}
-		if (passou == false) {
-			JOptionPane.showMessageDialog(null,
-					"Os campos de NOME, RG E CPF são obrigatorios! Preencha-os corretamente e tente novamente.",
-					"Campo(os) em branco", JOptionPane.ERROR_MESSAGE);
-		}
-		return passou;
-	}
-
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == jbtSalvar) {
 			salvarCliente();
@@ -235,11 +222,16 @@ public class TelaCadastraCliente extends JInternalFrame implements ActionListene
 		if (e.getSource() == jbtAjuda) {
 			botaoAjuda();
 		}
-
+		if(e.getSource() == jbtLimpar){
+			
+		}
 	}
 
 	private void salvarCliente() {
-		Boolean camposPreenchidos = verificaCampos(jtfsValidar);
+		jtfsValidar.add(jtfNome);
+		jtfsValidar.add(jtfRg);
+		jtfsValidar.add(jtfCpf);		
+		Boolean camposPreenchidos = mc.verificaCampos(jtfsValidar, "cadastro_cliente");
 		if (camposPreenchidos == true) {
 			Pessoa pessoa = cadastrarPessoaEndereco();
 			Cliente cliente = new Cliente(pessoa, clienteDao.maiorId() + 1);
@@ -247,8 +239,7 @@ public class TelaCadastraCliente extends JInternalFrame implements ActionListene
 			cliente.setInteresse2(jtfInteresse2.getText());
 			cliente.setInteresse3(jtfInteresse3.getText());
 			clienteDao.inserir(cliente);
-			JOptionPane.showMessageDialog(null, "Cliente cadastrado com sucesso!", "Sucesso!",
-					JOptionPane.PLAIN_MESSAGE);
+			ms.sucessoCadastrarCliente();
 
 		}
 	}
@@ -290,9 +281,7 @@ public class TelaCadastraCliente extends JInternalFrame implements ActionListene
 	}
 
 	private void botaoAjuda() {
-		JOptionPane.showMessageDialog(null,
-				"Sempre que adicionar um novo cliente, você pode atribuir 3 interesses a ele.\nEsses interesses definem o que seu cliente procura nos imóveis.\nPor exemplo: barato, grande, mansão.\nNÃO É OBRIGATÓRIO!",
-				"Ajuda", JOptionPane.PLAIN_MESSAGE);
+		ma.ajudaCadastroClienteInteresses();
 	}
 
 	public static void main(String[] args) {

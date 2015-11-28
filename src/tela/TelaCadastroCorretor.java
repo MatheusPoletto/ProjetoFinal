@@ -31,6 +31,9 @@ import pessoa.Corretor;
 import pessoa.Endereco;
 import pessoa.Pessoa;
 import pessoa.Usuario;
+import utilitario.CriarCamponentes;
+import utilitario.MensagemSucesso;
+import utilitario.MetodosCheck;
 
 public class TelaCadastroCorretor extends JInternalFrame implements ActionListener {
 
@@ -61,6 +64,11 @@ public class TelaCadastroCorretor extends JInternalFrame implements ActionListen
 	private EnderecoDAO enderecoDao = DaoFactoryJDBC.get().enderecoDAO();
 	private CorretorDAO corretorDao = DaoFactoryJDBC.get().corretorDAO();
 	private UsuarioDAO usuarioDao = DaoFactoryJDBC.get().usuarioDAO();
+	
+	private MetodosCheck mc = new MetodosCheck();
+	private MensagemSucesso ms = new MensagemSucesso();
+	
+	private CriarCamponentes cp = new CriarCamponentes();
 
 	public TelaCadastroCorretor() {
 		setTitle("Cadastro de corretor");
@@ -83,9 +91,6 @@ public class TelaCadastroCorretor extends JInternalFrame implements ActionListen
 
 		criarPanelInfoCorretor();
 
-		jtfsValidar.add(jtfNome);
-		jtfsValidar.add(jtfRg);
-		jtfsValidar.add(jtfCpf);
 
 		setResizable(false);
 		setSize(700, 450);
@@ -95,23 +100,23 @@ public class TelaCadastroCorretor extends JInternalFrame implements ActionListen
 	}
 
 	private void criarPanelCadastroCliente() {
-		jlbNome = criarLabel("Nome:", 10, 20, 110, 30, jlbNome);
-		jlbRg = criarLabel("RG:", 10, 50, 110, 30, jlbRg);
-		jlbCpf = criarLabel("CPF:", 210, 50, 110, 30, jlbCpf);
-		jlbDataNascimento = criarLabel("Data de nascimento:", 420, 50, 120, 30, jlbDataNascimento);
-		jlbGenero = criarLabel("Gênero:", 10, 80, 110, 30, jlbGenero);
-		jlbEstadoCivil = criarLabel("Estado Civil:", 210, 80, 110, 30, jlbEstadoCivil);
-		jlbTelefoneResidencial = criarLabel("Tel. fixo:", 10, 110, 120, 30, jlbTelefoneResidencial);
-		jlbTelefoneCelular = criarLabel("Tel. celular:", 210, 110, 110, 30, jlbTelefoneCelular);
-		jlbEmail = criarLabel("Email:", 10, 140, 110, 30, jlbEmail);
+		jlbNome = cp.criarLabel("Nome:", 10, 20, 110, 30, jlbNome);
+		jlbRg = cp.criarLabel("RG:", 10, 50, 110, 30, jlbRg);
+		jlbCpf = cp.criarLabel("CPF:", 210, 50, 110, 30, jlbCpf);
+		jlbDataNascimento = cp.criarLabel("Data de nascimento:", 420, 50, 120, 30, jlbDataNascimento);
+		jlbGenero = cp.criarLabel("Gênero:", 10, 80, 110, 30, jlbGenero);
+		jlbEstadoCivil = cp.criarLabel("Estado Civil:", 210, 80, 110, 30, jlbEstadoCivil);
+		jlbTelefoneResidencial = cp.criarLabel("Tel. fixo:", 10, 110, 120, 30, jlbTelefoneResidencial);
+		jlbTelefoneCelular = cp.criarLabel("Tel. celular:", 210, 110, 110, 30, jlbTelefoneCelular);
+		jlbEmail = cp.criarLabel("Email:", 10, 140, 110, 30, jlbEmail);
 
-		jtfNome = criarTextField(80, 24, 560, 24, jtfNome);
-		jtfRg = criarTextField(80, 54, 120, 24, jtfRg);
-		jtfCpf = criarTextField(280, 54, 120, 24, jtfCpf);
-		jtfGenero = criarTextField(80, 84, 120, 24, jtfGenero);
-		jtfTelefoneResidencial = criarTextField(80, 114, 120, 24, jtfTelefoneResidencial);
-		jtfTelefoneCelular = criarTextField(280, 114, 120, 24, jtfTelefoneCelular);
-		jtfEmail = criarTextField(80, 144, 320, 24, jtfEmail);
+		jtfNome = cp.criarTextField(80, 24, 560, 24, jtfNome);
+		jtfRg = cp.criarTextField(80, 54, 120, 24, jtfRg);
+		jtfCpf = cp.criarTextField(280, 54, 120, 24, jtfCpf);
+		jtfGenero = cp.criarTextField(80, 84, 120, 24, jtfGenero);
+		jtfTelefoneResidencial = cp.criarTextField(80, 114, 120, 24, jtfTelefoneResidencial);
+		jtfTelefoneCelular = cp.criarTextField(280, 114, 120, 24, jtfTelefoneCelular);
+		jtfEmail = cp.criarTextField(80, 144, 320, 24, jtfEmail);
 
 		jcbEstadoCivil = new JComboBox<>();
 		jcbEstadoCivil.setBounds(280, 84, 120, 24);
@@ -130,7 +135,7 @@ public class TelaCadastroCorretor extends JInternalFrame implements ActionListen
 		jtfDataNascimento.setBounds(550, 54, 90, 24);
 		jtfDataNascimento.setVisible(true);
 
-		jpnCadastroCliente = criarPanel("Dados Pessoais", 0, 50, 684, 182, jpnCadastroCliente, true);
+		jpnCadastroCliente = cp.criarPanel("Dados Pessoais", 0, 50, 684, 182, jpnCadastroCliente, true);
 		jpnCadastroCliente.add(jlbNome);
 		jpnCadastroCliente.add(jlbRg);
 		jpnCadastroCliente.add(jlbCpf);
@@ -149,24 +154,25 @@ public class TelaCadastroCorretor extends JInternalFrame implements ActionListen
 		jpnCadastroCliente.add(jtfTelefoneResidencial);
 		jpnCadastroCliente.add(jtfTelefoneCelular);
 		jpnCadastroCliente.add(jtfEmail);
+		getContentPane().add(jpnCadastroCliente);
 	}
 
 	private void criarPanelCadastroEndereco() {
-		jlbRua = criarLabel("Rua:", 10, 20, 110, 30, jlbRua);
-		jlbNumero = criarLabel("Nº:", 510, 20, 110, 30, jlbNumero);
-		jlbBairro = criarLabel("Bairro:", 10, 50, 110, 30, jlbBairro);
-		jlbCidade = criarLabel("Cidade:", 210, 50, 120, 30, jlbCidade);
-		jlbUf = criarLabel("UF:", 420, 50, 110, 30, jlbUf);
-		jlbCep = criarLabel("CEP:", 510, 50, 110, 30, jlbCep);
+		jlbRua = cp.criarLabel("Rua:", 10, 20, 110, 30, jlbRua);
+		jlbNumero = cp.criarLabel("Nº:", 510, 20, 110, 30, jlbNumero);
+		jlbBairro = cp.criarLabel("Bairro:", 10, 50, 110, 30, jlbBairro);
+		jlbCidade = cp.criarLabel("Cidade:", 210, 50, 120, 30, jlbCidade);
+		jlbUf = cp.criarLabel("UF:", 420, 50, 110, 30, jlbUf);
+		jlbCep = cp.criarLabel("CEP:", 510, 50, 110, 30, jlbCep);
 
-		jtfRua = criarTextField(80, 24, 420, 24, jtfRua);
-		jtfNumero = criarTextField(550, 24, 90, 24, jtfNumero);
-		jtfBairro = criarTextField(80, 54, 120, 24, jtfBairro);
-		jtfCidade = criarTextField(280, 52, 130, 24, jtfCidade);
-		jtfUf = criarTextField(450, 54, 50, 24, jtfUf);
-		jtfCep = criarTextField(550, 54, 90, 24, jtfCep);
+		jtfRua = cp.criarTextField(80, 24, 420, 24, jtfRua);
+		jtfNumero = cp.criarTextField(550, 24, 90, 24, jtfNumero);
+		jtfBairro = cp.criarTextField(80, 54, 120, 24, jtfBairro);
+		jtfCidade = cp.criarTextField(280, 52, 130, 24, jtfCidade);
+		jtfUf = cp.criarTextField(450, 54, 50, 24, jtfUf);
+		jtfCep = cp.criarTextField(550, 54, 90, 24, jtfCep);
 
-		jpnCadastroEndereco = criarPanel("Endereço", 0, 232, 684, 90, jpnCadastroEndereco, true);
+		jpnCadastroEndereco = cp.criarPanel("Endereço", 0, 232, 684, 90, jpnCadastroEndereco, true);
 		jpnCadastroEndereco.add(jlbRua);
 		jpnCadastroEndereco.add(jlbNumero);
 		jpnCadastroEndereco.add(jlbBairro);
@@ -179,37 +185,41 @@ public class TelaCadastroCorretor extends JInternalFrame implements ActionListen
 		jpnCadastroEndereco.add(jtfCidade);
 		jpnCadastroEndereco.add(jtfUf);
 		jpnCadastroEndereco.add(jtfCep);
-
+		getContentPane().add(jpnCadastroEndereco);
+		
 	}
 
 	private void criarPanelCadastrar() {
-		jbtSalvar = criarBotao("SALVAR", 110, 2, 100, 30, jbtSalvar);
+		jbtSalvar = cp.criarBotao("SALVAR", 110, 2, 100, 30, jbtSalvar);
 		jbtSalvar.setBackground(new Color(23, 20, 20));
 		jbtSalvar.setForeground(Color.white);
+		jbtSalvar.addActionListener(this);
 
-		jbtLimpar = criarBotao("LIMPAR", 10, 2, 100, 30, jbtLimpar);
+		jbtLimpar = cp.criarBotao("LIMPAR", 10, 2, 100, 30, jbtLimpar);
 		jbtLimpar.setBackground(new Color(23, 20, 20));
 		jbtLimpar.setForeground(Color.white);
-
-		jpnCadastrar = criarPanel("", 463, 372, 220, 34, jpnCadastrar, true);
+		jbtLimpar.addActionListener(this);
+		
+		jpnCadastrar = cp.criarPanel("", 463, 372, 220, 34, jpnCadastrar, true);
 		jpnCadastrar.add(jbtSalvar);
 		jpnCadastrar.add(jbtLimpar);
 		jpnCadastrar.setBorder(BorderFactory.createLineBorder(new Color(23, 20, 20), 1));
+		getContentPane().add(jpnCadastrar);
 
 	}
 
 	private void criarPanelInfoCorretor() {
-		jlbSalario = criarLabel("Salário:", 10, 12, 80, 30, jlbSalario);
-		jlbComissao = criarLabel("Comissão:", 135, 12, 80, 30, jlbComissao);
-		jlbUsuario = criarLabel("Usuário:", 280, 12, 80, 30, jlbUsuario);
-		jlbSenha = criarLabel("Senha:", 495, 12, 80, 30, jlbSenha);
+		jlbSalario = cp.criarLabel("Salário:", 10, 12, 80, 30, jlbSalario);
+		jlbComissao = cp.criarLabel("Comissão:", 135, 12, 80, 30, jlbComissao);
+		jlbUsuario = cp.criarLabel("Usuário:", 280, 12, 80, 30, jlbUsuario);
+		jlbSenha = cp.criarLabel("Senha:", 495, 12, 80, 30, jlbSenha);
 
-		jtfSalario = criarTextField(60, 15, 70, 27, jtfSalario);
-		jtfComissao = criarTextField(200, 14, 70, 27, jtfComissao);
-		jtfUsuario = criarTextField(335, 14, 150, 27, jtfUsuario);
-		jtfSenha = criarTextField(540, 14, 130, 27, jtfSenha);
+		jtfSalario = cp.criarTextField(60, 15, 70, 27, jtfSalario);
+		jtfComissao = cp.criarTextField(200, 14, 70, 27, jtfComissao);
+		jtfUsuario = cp.criarTextField(335, 14, 150, 27, jtfUsuario);
+		jtfSenha = cp.criarTextField(540, 14, 130, 27, jtfSenha);
 
-		jpnInfoCorretor = criarPanel("Criar usuário", 0, 325, 684, 50, jpnInfoCorretor, true);
+		jpnInfoCorretor = cp.criarPanel("Criar usuário", 0, 325, 684, 50, jpnInfoCorretor, true);
 		jpnInfoCorretor.add(jlbSalario);
 		jpnInfoCorretor.add(jtfSalario);
 		jpnInfoCorretor.add(jlbComissao);
@@ -218,62 +228,8 @@ public class TelaCadastroCorretor extends JInternalFrame implements ActionListen
 		jpnInfoCorretor.add(jtfUsuario);
 		jpnInfoCorretor.add(jlbSenha);
 		jpnInfoCorretor.add(jtfSenha);
+		getContentPane().add(jpnInfoCorretor);
 
-	}
-
-	private JPanel criarPanel(String texto, Integer col, Integer lin, Integer lar, Integer alt, JPanel panel,
-			Boolean visibilidade) {
-		panel = new JPanel();
-		panel.setLayout(null);
-		panel.setBorder(BorderFactory.createTitledBorder(texto));
-		panel.setBounds(col, lin, lar, alt);
-		panel.setVisible(visibilidade);
-		getContentPane().add(panel);
-		return panel;
-
-	}
-
-	private JLabel criarLabel(String texto, Integer col, Integer lin, Integer lar, Integer alt, JLabel label) {
-		label = new JLabel(texto);
-		label.setBounds(col, lin, lar, alt);
-		label.setVisible(true);
-		getContentPane().add(label);
-		return label;
-
-	}
-
-	private JTextField criarTextField(Integer col, Integer lin, Integer lar, Integer alt, JTextField textField) {
-		textField = new JTextField();
-		textField.setBounds(col, lin, lar, alt);
-		textField.setVisible(true);
-		getContentPane().add(textField);
-		return textField;
-
-	}
-
-	private JButton criarBotao(String texto, Integer col, Integer lin, Integer lar, Integer alt, JButton button) {
-		button = new JButton(texto);
-		button.setBounds(col, lin, lar, alt);
-		button.addActionListener(this);
-		button.setVisible(true);
-		getContentPane().add(button);
-		return button;
-
-	}
-
-	private Boolean verificaCampos(List<JTextField> componentes) {
-		Boolean passou = true;
-		for (JTextField cp : componentes) {
-			if (cp.getText().equals("")) {
-				passou = false;
-			}
-		}
-		if (passou == false) {
-			JOptionPane.showMessageDialog(null,
-					"Todos os campos são obrigatorios! Preencha corretamente e tente novamente.", "Campos em branco",
-					JOptionPane.ERROR_MESSAGE);
-		}
-		return passou;
 	}
 
 	private Pessoa cadastrarPessoaEndereco() {
@@ -319,15 +275,32 @@ public class TelaCadastroCorretor extends JInternalFrame implements ActionListen
 	}
 
 	private void salvarCorretor() {
-		Boolean camposPreenchidos = verificaCampos(jtfsValidar);
+		jtfsValidar.add(jtfNome);
+		jtfsValidar.add(jtfRg);
+		jtfsValidar.add(jtfCpf);
+		jtfsValidar.add(jtfDataNascimento);
+		jtfsValidar.add(jtfGenero);
+		jtfsValidar.add(jtfTelefoneCelular);
+		jtfsValidar.add(jtfTelefoneResidencial);
+		jtfsValidar.add(jtfEmail);
+		jtfsValidar.add(jtfRua);
+		jtfsValidar.add(jtfNumero);
+		jtfsValidar.add(jtfBairro);
+		jtfsValidar.add(jtfCidade);
+		jtfsValidar.add(jtfUf);
+		jtfsValidar.add(jtfCep);
+		jtfsValidar.add(jtfSalario);
+		jtfsValidar.add(jtfComissao);
+		jtfsValidar.add(jtfUsuario);
+		jtfsValidar.add(jtfSenha);
+		Boolean camposPreenchidos = mc.verificaCampos(jtfsValidar, "cadastro_corretor");
 		if (camposPreenchidos == true) {
 			Pessoa pessoa = cadastrarPessoaEndereco();
 			Corretor corretor = new Corretor(pessoa, corretorDao.maiorId() + 1, Double.valueOf(jtfSalario.getText()));
 			corretorDao.inserir(corretor);
 			Usuario usuario = new Usuario(1, jtfUsuario.getText(), jtfSenha.getText(), corretor, 1);
 			usuarioDao.inserir(usuario);
-			JOptionPane.showMessageDialog(null, "Corretor cadastrado com sucesso!", "Sucesso!",
-					JOptionPane.PLAIN_MESSAGE);
+			ms.sucessoCadastrarCorretor();
 
 		}
 
