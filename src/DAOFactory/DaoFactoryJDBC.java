@@ -10,6 +10,8 @@ import dao.ImobiliariaDAO;
 import dao.ImobliariaDAOJDBC;
 import dao.ImovelDAO;
 import dao.ImovelDAOJDBC;
+import dao.NotaFiscalDAO;
+import dao.NotaFiscalDAOJDBC;
 import dao.PessoaDAO;
 import dao.PessoaDAOJDBC;
 import dao.UsuarioDAO;
@@ -35,6 +37,10 @@ public class DaoFactoryJDBC implements AbstractDaoFactory {
 	@Override
 	public ClienteDAO clienteDAO() {
 		return new ClienteDAOJDBC();
+	}
+	
+	public NotaFiscalDAO notaFiscalDAO() {
+		return new NotaFiscalDAOJDBC();
 	}
 
 	@Override

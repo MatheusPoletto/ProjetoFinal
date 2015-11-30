@@ -389,7 +389,7 @@ public class TelaCadastroImovel extends JInternalFrame implements ActionListener
 		if(jtfRg.getText().equals("") || (jtfRg.getText().isEmpty())){
 			telaPrincipal.getTlPrincipal().getTlProcurarCliente().setVisible(true);
 			telaPrincipal.getTlPrincipal().getTlProcurarCliente().setLocation(telaPrincipal.getTlPrincipal().getTlProcurarCliente().getX(), 10);
-			
+			telaPrincipal.getTlPrincipal().getTlProcurarCliente().setIsVenda(0);
 		}else{
 		for (Cliente cliente : clienteDao.todos()) {
 			if (cliente.getPessoa().getRg().equals(jtfRg.getText())) {

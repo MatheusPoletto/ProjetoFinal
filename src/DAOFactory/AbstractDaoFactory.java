@@ -5,6 +5,7 @@ import dao.CorretorDAO;
 import dao.EnderecoDAO;
 import dao.ImobiliariaDAO;
 import dao.ImovelDAO;
+import dao.NotaFiscalDAO;
 import dao.PessoaDAO;
 import dao.UsuarioDAO;
 import dao.VendaDAO;
@@ -18,6 +19,7 @@ public interface AbstractDaoFactory {
 	PessoaDAO pessoaDAO();
 	UsuarioDAO usuarioDAO();
 	VendaDAO vendaDAO();
+	NotaFiscalDAO notaFiscalDAO();
 	
 	
 }

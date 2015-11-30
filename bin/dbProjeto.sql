@@ -198,7 +198,38 @@ CREATE TABLE IF NOT EXISTS `dbProjeto`.`Usuario` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
+-- -----------------------------------------------------
+-- Table `mydb`.`Imobiliaria`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `dbprojeto`.`Imobiliaria` (
+  `idImobiliaria` INT NOT NULL AUTO_INCREMENT COMMENT '',
+  `nomeFantasia` VARCHAR(150) NULL COMMENT '',
+  `razaoSocial` VARCHAR(150) NULL COMMENT '',
+  `cnpj` VARCHAR(120) NULL COMMENT '',
+  PRIMARY KEY (`idImobiliaria`)  COMMENT '')
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`NotaFiscal`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `dbprojeto`.`NotaFiscal` (
+  idNotaFiscal INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  dataEmissao VARCHAR(90),
+  valorTotal DOUBLE(10,2),
+  idImobiliaria INTEGER,
+  idVenda INTEGER,
+  foreign key (idImobiliaria) references imobiliaria(idImobiliaria),
+  foreign key (idVenda) references venda(idVenda)
+);
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+ALTER TABLE IMOBILIARIA ADD COLUMN idEndereco INTEGER;
+ALTER TABLE IMOBILIARIA ADD COLUMN telefone VARCHAR(45);
+
+ALTER TABLE IMOBILIARIA
+ADD CONSTRAINT idEndereco FOREIGN KEY (idEndereco)
+    REFERENCES endereco(idEndereco);

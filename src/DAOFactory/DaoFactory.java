@@ -5,6 +5,7 @@ import dao.CorretorDAO;
 import dao.EnderecoDAO;
 import dao.ImobiliariaDAO;
 import dao.ImovelDAO;
+import dao.NotaFiscalDAO;
 import dao.PessoaDAO;
 import dao.UsuarioDAO;
 import dao.VendaDAO;
@@ -28,8 +29,12 @@ public class DaoFactory implements AbstractDaoFactory {
 		
 		
 	public ClienteDAO clienteDAO() {
-		// TODO Auto-generated method stub
 		return daoFactory.clienteDAO();
+	}
+	
+	public NotaFiscalDAO notaFiscalDAO() {
+		// TODO Auto-generated method stub
+		return daoFactory.notaFiscalDAO();
 	}
 
 	@Override

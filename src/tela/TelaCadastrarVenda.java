@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -18,8 +19,12 @@ import javax.swing.JTextField;
 
 import DAOFactory.DaoFactoryJDBC;
 import dao.ClienteDAO;
+import dao.ImobiliariaDAO;
+import dao.NotaFiscalDAO;
 import dao.VendaDAO;
 import imovel.Imovel;
+import model.Imobiliaria;
+import model.NotaFiscal;
 import model.Venda;
 import pessoa.Cliente;
 import pessoa.Corretor;
@@ -202,7 +207,7 @@ public class TelaCadastrarVenda extends JInternalFrame implements ActionListener
 			if(jtfRg.getText().equals("") || (jtfRg.getText().isEmpty())){
 				telaPrincipal.getTlPrincipal().getTlProcurarCliente().setVisible(true);
 				telaPrincipal.getTlPrincipal().getTlProcurarCliente().setLocation(telaPrincipal.getTlPrincipal().getTlProcurarCliente().getX(), 10);
-				
+				telaPrincipal.getTlPrincipal().getTlProcurarCliente().setIsVenda(1);
 			}else{
 			for (Cliente cliente : clienteDao.todos()) {
 				if (cliente.getPessoa().getRg().equals(jtfRg.getText())) {
@@ -223,17 +228,21 @@ public class TelaCadastrarVenda extends JInternalFrame implements ActionListener
 			java.util.Date dt = new java.util.Date();
 			SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			String horaAgora = sdf.format(dt);
-			Venda venda = new Venda(vendaDao.maiorId()+1, horaAgora, Double.valueOf(jtfComissaoImobiliaria.getText()), Double.valueOf(jtfComissaoCorretor.getText()), imovelVenda, ClienteComprador, CorretorResponsavel);
+			Venda venda = new Venda(vendaDao.maiorId()+1, horaAgora, Double.valueOf(jtfComissaoImobiliaria.getText()), Double.valueOf(jtfComissaoCorretor.getText()), imovelVenda, clienteProprietario, CorretorResponsavel);
 			vendaDao.inserir(venda);
 			
-			Integer querNota = JOptionPane.showConfirmDialog(null, "Deseja visualizar/imprimir a nota fiscal agora?");
-			if(querNota == 0){
-				JOptionPane.showMessageDialog(null, "sim");
-				//telaPrincipal.getTlPrincipal().getTlAlterarNota().setVisible(true);
-			}else{
-				JOptionPane.showMessageDialog(null, "nao");
+				NotaFiscalDAO nfDao = DaoFactoryJDBC.get().notaFiscalDAO();
+				ImobiliariaDAO imoDao = DaoFactoryJDBC.get().imobiliariaDAO();
+				Imobiliaria imobiliaria = imoDao.buscar(1);
+				Double total = Double.valueOf(String.format(Locale.US, "%.2f", Math.floor(Double.valueOf(jtfValorImovel.getText()) + Double.valueOf(jtfComissaoCorretor.getText()) + Double.valueOf(jtfComissaoImobiliaria.getText()))));
+				NotaFiscal nf = new NotaFiscal(nfDao.maiorId()+1, horaAgora, total, imobiliaria, venda);
+				nfDao.inserir(nf);
+				
 				telaPrincipal.getTlPrincipal().esconderTelas();
-			}
+				telaPrincipal.getTlPrincipal().getTlAlterarNota().preencherCampos(venda, nf, total);
+				telaPrincipal.getTlPrincipal().getTlAlterarNota().setVisible(true);
+			
+			
 		}
 	}
 	

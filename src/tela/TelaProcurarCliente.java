@@ -29,6 +29,17 @@ public class TelaProcurarCliente extends JInternalFrame implements ActionListene
 	private JLabel jlbTitulo;
 	private JButton jbtSelecionar, jbtPesquisar, jbtAtualizar;
 	private ClienteDAO clienteDao = DaoFactoryJDBC.get().clienteDAO();
+	private Integer isVenda;
+	
+	
+
+	public Integer getIsVenda() {
+		return isVenda;
+	}
+
+	public void setIsVenda(Integer isVenda) {
+		this.isVenda = isVenda;
+	}
 
 	public TelaProcurarCliente() {
 		setTitle("Selecione proprietário");
@@ -141,10 +152,17 @@ public class TelaProcurarCliente extends JInternalFrame implements ActionListene
 				JOptionPane.showMessageDialog(null, "Selecione uma linha para continuar!", "Alerta!",
 						JOptionPane.ERROR_MESSAGE);
 			} else {
+				if(isVenda == 1){
 				String id = String.valueOf(dtbClientes.getValueAt(jtbClientes.getSelectedRow(), 0));
 				Cliente cliente = clienteDao.buscar(Integer.valueOf(id));
 				telaPrincipal.getTlPrincipal().getTlCadastrarVenda().selecionouProprietario(cliente);
 				this.setVisible(false);
+				}else if(isVenda == 0){
+					String id = String.valueOf(dtbClientes.getValueAt(jtbClientes.getSelectedRow(), 0));
+					Cliente cliente = clienteDao.buscar(Integer.valueOf(id));
+					telaPrincipal.getTlPrincipal().getTlCadastroImovel().selecionouProprietario(cliente);
+					this.setVisible(false);
+				}
 			}
 		}
 

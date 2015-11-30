@@ -7,13 +7,9 @@ public class Imobiliaria  {
 	private String razaoSocial;
 	private String nomeFantasia;
 	private String cnpj;
-	//Tinhamos esquecido de colocar endereco endereco aqui e tava tudo os atributos grandes de antes
 	private Endereco endereco; 
-
-
-
 	private String telefone;
-	private String nomeProprietario;
+
 	public Integer getIdImobiliaria() {
 		return idImobiliaria;
 	}
@@ -50,16 +46,10 @@ public class Imobiliaria  {
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
 	}
-	public String getNomeProprietario() {
-		return nomeProprietario;
-	}
-	public void setNomeProprietario(String nomeProprietario) {
-		this.nomeProprietario = nomeProprietario;
-	}
 	
 	public Imobiliaria(Integer idImobiliaria, String razaoSocial,
 			String nomeFantasia, String cnpj, Endereco endereco,
-			String telefone, String nomeProprietario) {
+			String telefone) {
 		super();
 		this.idImobiliaria = idImobiliaria;
 		this.razaoSocial = razaoSocial;
@@ -67,7 +57,6 @@ public class Imobiliaria  {
 		this.cnpj = cnpj;
 		this.endereco = endereco;
 		this.telefone = telefone;
-		this.nomeProprietario = nomeProprietario;
 	}
 
 	
