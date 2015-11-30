@@ -1,5 +1,6 @@
 package model;
 
+import java.sql.Date;
 import java.time.LocalDate;
 
 import imovel.Imovel;
@@ -8,14 +9,14 @@ import pessoa.Corretor;
 
 public class Venda {
 	private Integer idhistorico;
-	private LocalDate data;
+	private String data;
 	private Double comissaoImobiliaria;
 	private Double comissaoCorretor;	
 	private Imovel imovel;
 	private Cliente cliente;
 	private Corretor corretor;
 	
-	public Venda(Integer idhistorico, LocalDate data, Double comissaoImobiliaria, Double comissaoCorretor,
+	public Venda(Integer idhistorico, String data, Double comissaoImobiliaria, Double comissaoCorretor,
 			Imovel imovel, Cliente cliente, Corretor corretor) {
 		super();
 		this.idhistorico = idhistorico;
@@ -35,11 +36,11 @@ public class Venda {
 	public void setIdhistorico(Integer idhistorico) {
 		this.idhistorico = idhistorico;
 	}
-	public LocalDate getData() {
+	public String getData() {
 		return data;
 	}
-	public void setData(LocalDate data) {
-		this.data = data;
+	public void setData(String date) {
+		this.data = date;
 	}
 	public Double getComissaoImobiliaria() {
 		return comissaoImobiliaria;

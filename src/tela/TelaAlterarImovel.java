@@ -5,6 +5,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
@@ -26,6 +28,9 @@ import dao.ImovelDAO;
 import imovel.Imovel;
 import pessoa.Endereco;
 import utilitario.CriarCamponentes;
+import utilitario.MensagemAjuda;
+import utilitario.MensagemSucesso;
+import utilitario.MetodosCheck;
 
 public class TelaAlterarImovel extends JInternalFrame implements ActionListener {
 	private static final long serialVersionUID = 2404426739863880445L;
@@ -69,6 +74,11 @@ public class TelaAlterarImovel extends JInternalFrame implements ActionListener 
 	private Endereco enderecoAlterar;
 	private EnderecoDAO enderecoDao = DaoFactoryJDBC.get().enderecoDAO();
 	private ImovelDAO imovelDao = DaoFactoryJDBC.get().imovelDAO();
+	private MetodosCheck mc = new MetodosCheck();
+	private MensagemSucesso ms = new MensagemSucesso();
+	private MensagemAjuda ma = new MensagemAjuda();
+	private List<JTextField> jtfsValidar = new ArrayList<>();
+	private Boolean btgSelecionado = false;
 
 	public TelaAlterarImovel() {
 		setTitle("Alterar Imovel");
@@ -288,16 +298,6 @@ public class TelaAlterarImovel extends JInternalFrame implements ActionListener 
 		new TelaAlterarImovel();
 	}
 
-	private Boolean verificaExtensaoImagem() {
-		Boolean isJpg;
-		if (jfcProcurar.getSelectedFile().getAbsolutePath().toString().toLowerCase().endsWith(".jpg")) {
-			isJpg = true;
-		} else {
-			isJpg = false;
-		}
-		return isJpg;
-	}
-
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == jbtSalvarAlteracoes){
 			salvarAlteracoes();
@@ -313,7 +313,7 @@ public class TelaAlterarImovel extends JInternalFrame implements ActionListener 
 		if (e.getSource() == jbtProcurar1) {
 			jfcProcurar.showOpenDialog(null);
 			arquivo1 = jfcProcurar.getSelectedFile();
-			Boolean verificaExtensao = verificaExtensaoImagem();
+			Boolean verificaExtensao = mc.verificaExtensaoJpg(jfcProcurar, "adicionar_jpg");
 			if (verificaExtensao) {
 				BufferedImage img1 = cp.redimensionarImagem(arquivo1.getAbsolutePath(), 700, 420);
 				jlbImagem1.setIcon(new ImageIcon(img1));
@@ -322,7 +322,7 @@ public class TelaAlterarImovel extends JInternalFrame implements ActionListener 
 		if (e.getSource() == jbtProcurar2) {
 			jfcProcurar.showOpenDialog(null);
 			arquivo2 = jfcProcurar.getSelectedFile();
-			Boolean verificaExtensao = verificaExtensaoImagem();
+			Boolean verificaExtensao = mc.verificaExtensaoJpg(jfcProcurar, "adicionar_jpg");
 			if (verificaExtensao) {
 				BufferedImage img2 = cp.redimensionarImagem(arquivo2.getAbsolutePath(), 700, 420);
 				jlbImagem2.setIcon(new ImageIcon(img2));
@@ -332,7 +332,7 @@ public class TelaAlterarImovel extends JInternalFrame implements ActionListener 
 		if (e.getSource() == jbtProcurar3) {
 			jfcProcurar.showOpenDialog(null);
 			arquivo3 = jfcProcurar.getSelectedFile();
-			Boolean verificaExtensao = verificaExtensaoImagem();
+			Boolean verificaExtensao = mc.verificaExtensaoJpg(jfcProcurar, "adicionar_jpg");
 			if (verificaExtensao) {
 				BufferedImage img3 = cp.redimensionarImagem(arquivo3.getAbsolutePath(), 700, 420);
 				jlbImagem3.setIcon(new ImageIcon(img3));
@@ -341,16 +341,14 @@ public class TelaAlterarImovel extends JInternalFrame implements ActionListener 
 		if (e.getSource() == jbtProcurar4) {
 			jfcProcurar.showOpenDialog(null);
 			arquivo4 = jfcProcurar.getSelectedFile();
-			Boolean verificaExtensao = verificaExtensaoImagem();
+			Boolean verificaExtensao = mc.verificaExtensaoJpg(jfcProcurar, "adicionar_jpg");
 			if (verificaExtensao) {
 				BufferedImage img4 = cp.redimensionarImagem(arquivo4.getAbsolutePath(), 700, 420);
 				jlbImagem4.setIcon(new ImageIcon(img4));
 			}
 		}
 		if(e.getSource() == jbtAjudaDescricao){
-			JOptionPane.showMessageDialog(null,
-					"Sempre que adicionar/alterar um imóvel, você pode atribuir 3 descrições a ele.\nEssas descrições definem o que seu imóvel possui.\nPor exemplo: Luxo, Imobiliado, Confortável.\nNÃO É OBRIGATÓRIO!",
-					"Ajuda", JOptionPane.PLAIN_MESSAGE);
+			ma.ajudaCadastroImovelDescricoes();
 		}
 
 	}
@@ -409,13 +407,19 @@ public class TelaAlterarImovel extends JInternalFrame implements ActionListener 
 		jtfCep.setText(imovel.getEndereco().getCep());
 		jtfMetrosQuadrados.setText(imovel.getMetrosquadrados());
 
-		if ((imovel.getValorTotal() > 0) && (imovel.getValorMensal() == 0)) {
-			rbAlugar();
-			jtfMesesContrato.setText(String.valueOf(imovel.getMesesContrato()));
-			jtfValorMensal.setText(String.valueOf(imovel.getValorMensal()));
-		} else if ((imovel.getValorMensal() > 0) && (imovel.getValorTotal() == 0)) {
+		jtfMesesContrato.setText(String.valueOf(imovel.getMesesContrato()));
+		jtfValorMensal.setText(String.valueOf(imovel.getValorMensal()));
+		jtfValorTotal.setText(String.valueOf(imovel.getValorTotal()));
+		
+		
+		if ((imovel.getValorTotal() > 1) && (imovel.getValorMensal() < 1)) {
 			rbVender();
-			jtfValorTotal.setText(String.valueOf(imovel.getValorTotal()));
+			jrbVender.setSelected(true);
+			jrbAlugar.setEnabled(false);
+		} else if ((imovel.getValorMensal() > 1) && (imovel.getValorTotal() < 1)) {			
+			rbAlugar();
+			jrbAlugar.setSelected(true);
+			jrbVender.setEnabled(false);
 		}
 		
 		if(imovel.getPossui() == 0){

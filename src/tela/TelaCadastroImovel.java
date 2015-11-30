@@ -330,6 +330,9 @@ public class TelaCadastroImovel extends JInternalFrame implements ActionListener
 		if (e.getSource() == jbtAjudaDescricao) {
 			criarBotaAjudaDescricao();
 		}
+		if(e.getSource() == jbtNovo){
+			telaPrincipal.getTlPrincipal().getTlCadastraCliente().setVisible(true);
+		}
 
 	}
 
@@ -383,6 +386,11 @@ public class TelaCadastroImovel extends JInternalFrame implements ActionListener
 	}
 
 	private void procorarProprietario() {
+		if(jtfRg.getText().equals("") || (jtfRg.getText().isEmpty())){
+			telaPrincipal.getTlPrincipal().getTlProcurarCliente().setVisible(true);
+			telaPrincipal.getTlPrincipal().getTlProcurarCliente().setLocation(telaPrincipal.getTlPrincipal().getTlProcurarCliente().getX(), 10);
+			
+		}else{
 		for (Cliente cliente : clienteDao.todos()) {
 			if (cliente.getPessoa().getRg().equals(jtfRg.getText())) {
 				this.clienteEncontrado = cliente;
@@ -390,7 +398,15 @@ public class TelaCadastroImovel extends JInternalFrame implements ActionListener
 				jtfCpf.setText(cliente.getPessoa().getCpf());
 			}
 		}
+		}
 
+	}
+	
+	public void selecionouProprietario(Cliente cliente){
+		this.clienteEncontrado = cliente;
+		jtfNome.setText(cliente.getPessoa().getNome());
+		jtfCpf.setText(cliente.getPessoa().getCpf());
+		jtfRg.setText(cliente.getPessoa().getRg());
 	}
 
 	private void salvarImovel(){

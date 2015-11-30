@@ -10,7 +10,7 @@ import javax.swing.JTextField;
 public class MetodosCheck {
 	MensagemErro erro = new MensagemErro();
 
-	private void selecionaMensagemRetorno(String tela){
+	public void selecionaMensagemRetorno(String tela){
 		switch (tela) {
 		case "cadastro_cliente":
 			erro.erroCadastrarCliente();
@@ -23,6 +23,9 @@ public class MetodosCheck {
 			break;
 		case "cadastro_imovel":
 			erro.erroCadastroImovel();
+			break;
+		case "pesquisa_rg":
+			erro.erroPesquisarRg();
 			break;
 		default:
 			break;

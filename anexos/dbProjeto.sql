@@ -104,9 +104,9 @@ CREATE TABLE IF NOT EXISTS `dbProjeto`.`Imovel` (
   `valorMensal` DOUBLE NULL COMMENT '',
   `mesesContrato` INT NULL COMMENT '',
   `Endereco_idEndereco` INT NOT NULL COMMENT '',
-  `imagem1` VARCHAR(90) NULL COMMENT '',
-  `imagem2` VARCHAR(90) NULL COMMENT '',
-  `imagem3` VARCHAR(90) NULL COMMENT '',
+  `imagem1` VARCHAR(400) NULL COMMENT '',
+  `imagem2` VARCHAR(400) NULL COMMENT '',
+  `imagem3` VARCHAR(400) NULL COMMENT '',
   `descricao1` VARCHAR(45) NULL COMMENT '',
   `descricao2` VARCHAR(45) NULL COMMENT '',
   `descricao3` VARCHAR(45) NULL COMMENT '',
@@ -122,7 +122,9 @@ CREATE TABLE IF NOT EXISTS `dbProjeto`.`Imovel` (
     FOREIGN KEY (`Endereco_idEndereco`)
     REFERENCES `dbProjeto`.`Endereco` (`idEndereco`)
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON UPDATE NO ACTION,
+    `imagem4` VARCHAR(400) NULL COMMENT '',
+    `possui` INT NOT NULL COMMENT '')
 ENGINE = InnoDB;
 
 
@@ -164,34 +166,18 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `dbProjeto`.`Venda`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `dbProjeto`.`Venda` (
-  `idHistorico` INT NOT NULL AUTO_INCREMENT COMMENT '',
-  `data` DATETIME NULL COMMENT '',
-  `comissaoImobiliaria` DOUBLE NULL COMMENT '',
-  `comissaoCorretor` DOUBLE NULL COMMENT '',
-  `Cliente_idCliente` INT NOT NULL COMMENT '',
-  `Imovel_idImovel` INT NOT NULL COMMENT '',
-  `Corretor_idCorretor` INT NOT NULL COMMENT '',
-  PRIMARY KEY (`idHistorico`)  COMMENT '',
-  INDEX `fk_Historico_Cliente1_idx` (`Cliente_idCliente` ASC)  COMMENT '',
-  INDEX `fk_Historico_Imovel1_idx` (`Imovel_idImovel` ASC)  COMMENT '',
-  INDEX `fk_Historico_Corretor1_idx` (`Corretor_idCorretor` ASC)  COMMENT '',
-  CONSTRAINT `fk_Historico_Cliente1`
-    FOREIGN KEY (`Cliente_idCliente`)
-    REFERENCES `dbProjeto`.`Cliente` (`idCliente`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Historico_Imovel1`
-    FOREIGN KEY (`Imovel_idImovel`)
-    REFERENCES `dbProjeto`.`Imovel` (`idImovel`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Historico_Corretor1`
-    FOREIGN KEY (`Corretor_idCorretor`)
-    REFERENCES `dbProjeto`.`Corretor` (`idCorretor`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+create table venda(
+	idVenda integer not null primary key auto_increment,
+    data date,
+    comissaoImobiliaria DOUBLE(10,2),
+    comissaoCorretor DOUBLE(10,2),
+    idCliente integer, 
+    idImovel integer,
+    idCorretor integer,
+    foreign key (idCliente) references cliente(idCliente),
+    foreign key (idImovel) references imovel(idImovel),
+    foreign key (idCorretor) references corretor(idCorretor)
+);
 
 
 -- -----------------------------------------------------

@@ -25,6 +25,12 @@ import javax.swing.JOptionPane;
 				JOptionPane.ERROR_MESSAGE);
 	}
 	
+	//erros de pesquisa
+	protected void erroPesquisarRg(){
+		JOptionPane.showMessageDialog(null, "Impossível pesquisar por um RG vazio!", 
+				"Alerta!",
+				JOptionPane.ERROR_MESSAGE);
+	}
 	
 	//erro de file chooser
 	protected void erroFormatoJpg(){
@@ -33,5 +39,6 @@ import javax.swing.JOptionPane;
 				"Aviso!", 
 				JOptionPane.WARNING_MESSAGE);
 	}
+	
 	
 }

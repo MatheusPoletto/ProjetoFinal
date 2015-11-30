@@ -28,6 +28,8 @@ import pessoa.Corretor;
 import pessoa.Endereco;
 import pessoa.Pessoa;
 import pessoa.Usuario;
+import utilitario.CriarCamponentes;
+import utilitario.MetodosCheck;
 
 public class TelaListaPessoa extends JInternalFrame implements ActionListener {
 
@@ -53,6 +55,9 @@ public class TelaListaPessoa extends JInternalFrame implements ActionListener {
 	private ClienteDAO clienteDao = DaoFactoryJDBC.get().clienteDAO();
 	private UsuarioDAO usuarioDao = DaoFactoryJDBC.get().usuarioDAO();
 	private EnderecoDAO enderecoDao = DaoFactoryJDBC.get().enderecoDAO();
+	
+	private CriarCamponentes cp = new CriarCamponentes();
+	private MetodosCheck mc = new MetodosCheck();
 
 	public TelaListaPessoa() {
 		setTitle("Registro de pessoas");
@@ -228,15 +233,15 @@ public class TelaListaPessoa extends JInternalFrame implements ActionListener {
 	private void pesquisarRg() {
 		String rg = null;
 		Boolean encontrou = false;
-		rg = JOptionPane.showInputDialog("Insira o RG que deseja pesquisa.");
+		rg = JOptionPane.showInputDialog("Insira o RG que deseja pesquisar.");
 		if (rg == null || rg.equals("")) {
 			JOptionPane.showMessageDialog(null, "Impossível pesquisar por um RG vazio!", "Alerta!",
 					JOptionPane.ERROR_MESSAGE);
 		} else {
+			dtbPessoas.setRowCount(0);
 			for (Pessoa pessoa : pessoaDao.todos()) {
 				if (pessoa.getRg().toString().equals(rg)) {
 					encontrou = true;
-					dtbPessoas.setRowCount(0);
 					for (Corretor corretor1 : corretorDao.todos()) {
 						if (corretor1.getPessoa().getId() == pessoa.getId()) {
 							dtbPessoas.addRow(new String[] { String.valueOf(corretor1.getIdCorretor()),
@@ -254,8 +259,7 @@ public class TelaListaPessoa extends JInternalFrame implements ActionListener {
 				}
 			}
 			if (encontrou == false) {
-				JOptionPane.showMessageDialog(null, "Nenhuma pessoa com o RG [" + rg + "] foi encontrado!", "Aviso!",
-						JOptionPane.WARNING_MESSAGE);
+					mc.selecionaMensagemRetorno("pesquisa_rg_sem_resultado");
 			} else if (encontrou == true) {
 				JOptionPane.showMessageDialog(null,
 						"Durante a pesquisa foram encontradas [" + dtbPessoas.getRowCount() + 1
@@ -300,13 +304,7 @@ public class TelaListaPessoa extends JInternalFrame implements ActionListener {
 	}
 
 	private void criarLabelTitulo() {
-		jlbTitulo = new JLabel("REGISTRO DE PESSOAS", SwingConstants.CENTER);
-		jlbTitulo.setBounds(110, 0, 595, 44);
-		jlbTitulo.setVisible(true);
-		jlbTitulo.setFont(new Font("ARIAL", Font.PLAIN, 18));
-		jlbTitulo.setOpaque(true);
-		jlbTitulo.setBackground(new Color(23, 20, 20));
-		jlbTitulo.setForeground(Color.white);
+		jlbTitulo = cp.criarLabelTitulo("REGISTRO DE PESSOAS", 110, 0, 595, 44, jlbTitulo);
 		getContentPane().add(jlbTitulo);
 	}
 

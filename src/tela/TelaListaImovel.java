@@ -90,6 +90,7 @@ public class TelaListaImovel extends JInternalFrame implements ActionListener {
 
 		jbtVender = cp.criarBotao("VENDER", 270, 240, 345, 24, jbtVender);
 		jbtVender = cp.alterarCorBotoes(jbtVender);
+		jbtVender.addActionListener(this);
 		getContentPane().add(jbtVender);
 
 		jpnTipoVenda = cp.criarPanel("", 270, 10, 345, 230, jpnTipoVenda, true);
@@ -246,7 +247,20 @@ public class TelaListaImovel extends JInternalFrame implements ActionListener {
 
 		if (e.getSource() == jbtAlterar) {
 			alterar();
-
+		}
+		
+		if(e.getSource() == jbtVender){
+			if (jtbImovel.getSelectedRow() == -1) {
+				JOptionPane.showMessageDialog(null, "Selecione um imóvel para vender!", "Erro",
+						JOptionPane.ERROR_MESSAGE);
+			} else {
+				String id = String.valueOf(dtbImovel.getValueAt(jtbImovel.getSelectedRow(), 0));
+				Imovel imovel = imovelDao.buscar(Integer.valueOf(id));
+				telaPrincipal.getTlPrincipal().esconderTelas();
+				telaPrincipal.getTlPrincipal().getTlCadastrarVenda().setVisible(true);
+				telaPrincipal.getTlPrincipal().getTlCadastrarVenda().preencherCampos(imovel);
+				
+			}
 		}
 	}
 

@@ -34,7 +34,7 @@ public class TelaProcurarCliente extends JInternalFrame implements ActionListene
 		setTitle("Selecione proprietário");
 		setLayout(null);
 
-		jlbTitulo = new JLabel("SELECIONE UM CLIENTE", SwingConstants.CENTER);
+		jlbTitulo = new JLabel("LOCALIZAR UM CLIENTE", SwingConstants.CENTER);
 		jlbTitulo.setBounds(0, 0, 465, 44);
 		jlbTitulo.setVisible(true);
 		jlbTitulo.setFont(new Font("ARIAL", Font.PLAIN, 18));
@@ -45,22 +45,23 @@ public class TelaProcurarCliente extends JInternalFrame implements ActionListene
 
 		criarTabela();
 
-		jbtPesquisar = criarBotao("PESQUISAR", 0, 543, 155, 30, jbtPesquisar);
+		jbtPesquisar = criarBotao("PESQUISAR", 0, 493, 155, 30, jbtPesquisar);
 		jbtPesquisar.setBackground(new Color(23, 20, 21));
 		jbtPesquisar.setForeground(Color.white);
 
-		jbtAtualizar = criarBotao("ATUALIZAR", 155, 543, 155, 30, jbtPesquisar);
+		jbtAtualizar = criarBotao("ATUALIZAR", 155, 493, 155, 30, jbtPesquisar);
 		jbtAtualizar.setBackground(new Color(23, 20, 21));
 		jbtAtualizar.setForeground(Color.white);
 
-		jbtSelecionar = criarBotao("SELECIONAR", 310, 543, 155, 30, jbtSelecionar);
+		jbtSelecionar = criarBotao("SELECIONAR", 310, 493, 155, 30, jbtSelecionar);
 		jbtSelecionar.setBackground(new Color(23, 20, 21));
 		jbtSelecionar.setForeground(Color.white);
 
 		setResizable(false);
-		setSize(465, 600);
+		setClosable(true);
+		setSize(475, 560);
 		setVisible(true);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setDefaultCloseOperation(HIDE_ON_CLOSE);
 	}
 
 	private void criarTabela() {
@@ -75,7 +76,7 @@ public class TelaProcurarCliente extends JInternalFrame implements ActionListene
 		jtbClientes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		jtbClientes.setModel(dtbClientes);
 		jspClientes = new JScrollPane(jtbClientes);
-		jspClientes.setBounds(0, 44, 465, 500);
+		jspClientes.setBounds(0, 44, 465, 450);
 		jspClientes.setVisible(true);
 		getContentPane().add(jspClientes);
 
@@ -140,7 +141,10 @@ public class TelaProcurarCliente extends JInternalFrame implements ActionListene
 				JOptionPane.showMessageDialog(null, "Selecione uma linha para continuar!", "Alerta!",
 						JOptionPane.ERROR_MESSAGE);
 			} else {
-				telaPrincipal.getTlPrincipal().esconderTelas();
+				String id = String.valueOf(dtbClientes.getValueAt(jtbClientes.getSelectedRow(), 0));
+				Cliente cliente = clienteDao.buscar(Integer.valueOf(id));
+				telaPrincipal.getTlPrincipal().getTlCadastrarVenda().selecionouProprietario(cliente);
+				this.setVisible(false);
 			}
 		}
 
