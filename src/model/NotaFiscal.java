@@ -6,36 +6,7 @@ public class NotaFiscal {
 	private Double valorTotal;
 	private Imobiliaria imobiliaria;
 	private Venda venda;
-	public Integer getIdNotaFiscal() {
-		return idNotaFiscal;
-	}
-	public void setIdNotaFiscal(Integer idNotaFiscal) {
-		this.idNotaFiscal = idNotaFiscal;
-	}
-	public String getDataEmissao() {
-		return dataEmissao;
-	}
-	public void setDataEmissao(String dataEmissao) {
-		this.dataEmissao = dataEmissao;
-	}
-	public Double getValorTotal() {
-		return valorTotal;
-	}
-	public void setValorTotal(Double valorTotal) {
-		this.valorTotal = valorTotal;
-	}
-	public Imobiliaria getImobiliaria() {
-		return imobiliaria;
-	}
-	public void setImobiliaria(Imobiliaria imobiliaria) {
-		this.imobiliaria = imobiliaria;
-	}
-	public Venda getVenda() {
-		return venda;
-	}
-	public void setVenda(Venda venda) {
-		this.venda = venda;
-	}
+
 	public NotaFiscal(Integer idNotaFiscal, String dataEmissao, Double valorTotal, Imobiliaria imobiliaria,
 			Venda venda) {
 		super();
@@ -45,11 +16,49 @@ public class NotaFiscal {
 		this.imobiliaria = imobiliaria;
 		this.venda = venda;
 	}
+
 	public NotaFiscal() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
-	
-	
+
+	public Integer getIdNotaFiscal() {
+		return idNotaFiscal;
+	}
+
+	public void setIdNotaFiscal(Integer idNotaFiscal) {
+		this.idNotaFiscal = idNotaFiscal;
+	}
+
+	public String getDataEmissao() {
+		return dataEmissao;
+	}
+
+	public void setDataEmissao(String dataEmissao) {
+		this.dataEmissao = dataEmissao;
+	}
+
+	public Double getValorTotal() {
+		return valorTotal;
+	}
+
+	public void setValorTotal(Double valorTotal) {
+		this.valorTotal = valorTotal;
+	}
+
+	public Imobiliaria getImobiliaria() {
+		return imobiliaria;
+	}
+
+	public void setImobiliaria(Imobiliaria imobiliaria) {
+		this.imobiliaria = imobiliaria;
+	}
+
+	public Venda getVenda() {
+		return venda;
+	}
+
+	public void setVenda(Venda venda) {
+		this.venda = venda;
+	}
 
 }

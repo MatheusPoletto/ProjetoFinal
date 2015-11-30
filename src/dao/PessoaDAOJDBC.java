@@ -7,43 +7,38 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import DAOFactory.DaoFactoryJDBC;
 import conexao.ConexaoUtil;
-import pessoa.Cliente;
-import pessoa.Endereco;
 import pessoa.Pessoa;
 
-public class PessoaDAOJDBC implements PessoaDAO{
+public class PessoaDAOJDBC implements PessoaDAO {
 	private Connection con;
 
-	public  PessoaDAOJDBC(){
+	public PessoaDAOJDBC() {
 		con = ConexaoUtil.getCon();
 	}
 
-	@Override
 	public void inserir(Pessoa pessoa) {
 		String sql = "insert into Pessoa(nome, rg, cpf, estadoCivil, genero, dataNascimento, telefoneResidencial, telefoneCelular, email, Endereco_idEndereco) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		try {
-			PreparedStatement pstmt = con.prepareStatement(sql); 
+			PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, pessoa.getNome());
 			pstmt.setString(2, pessoa.getRg());
 			pstmt.setString(3, pessoa.getCpf());
 			pstmt.setString(4, pessoa.getEstadoCivil());
 			pstmt.setString(5, pessoa.getGenero());
 			java.util.Date dataUtil = pessoa.getDataNascimento();
-			java.sql.Date dataSql = new java.sql.Date(dataUtil.getTime());  
+			java.sql.Date dataSql = new java.sql.Date(dataUtil.getTime());
 			pstmt.setDate(6, dataSql);
 			pstmt.setString(7, pessoa.getTelefoneResidencial());
 			pstmt.setString(8, pessoa.getTelefoneCelular());
 			pstmt.setString(9, pessoa.getEmail());
 			pstmt.setInt(10, pessoa.getEndereco().getId());
-			pstmt.executeUpdate(); 
-		} catch (SQLException e){
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
 			e.printStackTrace();
-		}	
+		}
 	}
 
-	@Override
 	public void alterar(Pessoa pessoa) {
 		String sql = "update Pessoa set nome = ?, rg = ?, cpf = ? , estadoCivil = ?, genero = ?, dataNascimento = ?, telefoneResidencial = ?, telefoneCelular = ?, email = ? where idPessoa = ?";
 		try {
@@ -54,17 +49,17 @@ public class PessoaDAOJDBC implements PessoaDAO{
 			pstmt.setString(4, pessoa.getEstadoCivil());
 			pstmt.setString(5, pessoa.getGenero());
 			java.util.Date dataUtil = pessoa.getDataNascimento();
-			java.sql.Date dataSql = new java.sql.Date(dataUtil.getTime());  
+			java.sql.Date dataSql = new java.sql.Date(dataUtil.getTime());
 			pstmt.setDate(6, dataSql);
 			pstmt.setString(7, pessoa.getTelefoneResidencial());
 			pstmt.setString(8, pessoa.getTelefoneCelular());
 			pstmt.setString(9, pessoa.getEmail());
 			pstmt.setInt(10, pessoa.getId());
-			pstmt.executeUpdate(); 
+			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}	
-		
+		}
+
 	}
 
 	@Override
@@ -77,10 +72,9 @@ public class PessoaDAOJDBC implements PessoaDAO{
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 
-	@Override
 	public Pessoa buscar(Integer id) {
 		EnderecoDAO enderecoDao = new EnderecoDAOJDBC();
 		Pessoa pessoa = null;
@@ -89,7 +83,7 @@ public class PessoaDAOJDBC implements PessoaDAO{
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, id);
 			ResultSet rs = pstmt.executeQuery();
-			while(rs.next()){
+			while (rs.next()) {
 				pessoa = new Pessoa();
 				pessoa.setId(rs.getInt("idPessoa"));
 				pessoa.setNome(rs.getString("nome"));
@@ -109,7 +103,6 @@ public class PessoaDAOJDBC implements PessoaDAO{
 		return pessoa;
 	}
 
-	@Override
 	public List<Pessoa> todos() {
 		EnderecoDAO enderecoDao = new EnderecoDAOJDBC();
 		List<Pessoa> pessoas = new ArrayList<>();
@@ -117,7 +110,7 @@ public class PessoaDAOJDBC implements PessoaDAO{
 		try {
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			ResultSet rs = pstmt.executeQuery();
-			while(rs.next()){
+			while (rs.next()) {
 				Pessoa pessoa = new Pessoa();
 				pessoa.setId(rs.getInt("idPessoa"));
 				pessoa.setNome(rs.getString("nome"));
@@ -138,15 +131,13 @@ public class PessoaDAOJDBC implements PessoaDAO{
 		return pessoas;
 	}
 
-
-	@Override
 	public Integer maiorId() {
 		Integer maior = null;
 		String sql = "select max(idPessoa) from pessoa";
 		try {
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			ResultSet rs = pstmt.executeQuery();
-			while(rs.next()){
+			while (rs.next()) {
 				maior = rs.getInt("max(idPessoa)");
 
 			}

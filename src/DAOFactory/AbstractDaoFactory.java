@@ -10,16 +10,23 @@ import dao.PessoaDAO;
 import dao.UsuarioDAO;
 import dao.VendaDAO;
 
-public interface AbstractDaoFactory {	
-	ClienteDAO clienteDAO(); 
+public interface AbstractDaoFactory {
+	ClienteDAO clienteDAO();
+
 	CorretorDAO corretorDAO();
+
 	EnderecoDAO enderecoDAO();
-	ImobiliariaDAO imobiliariaDAO(); 
+
+	ImobiliariaDAO imobiliariaDAO();
+
 	ImovelDAO imovelDAO();
+
 	PessoaDAO pessoaDAO();
+
 	UsuarioDAO usuarioDAO();
+
 	VendaDAO vendaDAO();
+
 	NotaFiscalDAO notaFiscalDAO();
-	
-	
+
 }

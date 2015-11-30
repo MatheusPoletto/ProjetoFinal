@@ -1,34 +1,34 @@
 package pessoa;
 
-import java.util.ArrayList;
-
 public class Cliente {
 	private Pessoa pessoa;
 	private Integer idCliente;
 	private String interesse1;
 	private String interesse2;
 	private String interesse3;
-	
-	public Cliente(){
-		super();
-	}
 
 	public Cliente(Pessoa pessoa, Integer idCliente) {
 		super();
 		this.pessoa = pessoa;
 		this.idCliente = idCliente;
-
-		
 	}
+
+	public Cliente() {
+		super();
+	}
+
 	public Pessoa getPessoa() {
 		return pessoa;
 	}
+
 	public void setPessoa(Pessoa pessoa) {
 		this.pessoa = pessoa;
 	}
+
 	public Integer getIdCliente() {
 		return idCliente;
 	}
+
 	public void setIdCliente(Integer idCliente) {
 		this.idCliente = idCliente;
 	}

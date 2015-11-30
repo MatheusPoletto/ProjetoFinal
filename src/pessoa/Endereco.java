@@ -9,7 +9,6 @@ public class Endereco {
 	private String cep;
 	private String uf;
 
-	
 	public Endereco(Integer id, String rua, String numero, String bairro, String cidade, String cep, String uf) {
 		super();
 		this.id = id;
@@ -19,17 +18,12 @@ public class Endereco {
 		this.cidade = cidade;
 		this.cep = cep;
 		this.uf = uf;
-		
+
 	}
-	
-	
 
 	public Endereco() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
-
-
 
 	public Integer getId() {
 		return id;
@@ -78,7 +72,7 @@ public class Endereco {
 	public void setCep(String cep) {
 		this.cep = cep;
 	}
-	
+
 	public String getUf() {
 		return uf;
 	}
@@ -86,6 +80,5 @@ public class Endereco {
 	public void setUf(String uf) {
 		this.uf = uf;
 	}
-
 
 }

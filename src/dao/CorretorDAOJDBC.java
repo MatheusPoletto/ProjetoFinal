@@ -7,50 +7,43 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import DAOFactory.DaoFactoryJDBC;
 import conexao.ConexaoUtil;
-import pessoa.Cliente;
 import pessoa.Corretor;
-import pessoa.Endereco;
-import pessoa.Pessoa;
 
-public class CorretorDAOJDBC implements CorretorDAO{
+public class CorretorDAOJDBC implements CorretorDAO {
 
 	private Connection con;
 
-	public  CorretorDAOJDBC(){
+	public CorretorDAOJDBC() {
 		con = ConexaoUtil.getCon();
 	}
 
-	@Override
 	public void inserir(Corretor corretor) {
 		String sql = "insert into Corretor (salario, Pessoa_idPessoa) values(? ,? ,?)";
 		try {
-			PreparedStatement pstmt = con.prepareStatement(sql); 
-			
+			PreparedStatement pstmt = con.prepareStatement(sql);
+
 			pstmt.setDouble(1, corretor.getSalario());
 			pstmt.setInt(2, corretor.getPessoa().getId());
-			pstmt.executeUpdate(); 
-		} catch (SQLException e){
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 
-	@Override
 	public void alterar(Corretor corretor) {
 		String sql = "update corretor set salario = ? where idCorretor = ?";
 		try {
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setDouble(1, corretor.getSalario());
 			pstmt.setInt(2, corretor.getIdCorretor());
-			pstmt.executeUpdate(); 
+			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}	
-		
+		}
+
 	}
 
-	@Override
 	public void excluir(Corretor corretor) {
 		String sql = "delete from Corretor where idCorretor = ?";
 		try {
@@ -60,20 +53,18 @@ public class CorretorDAOJDBC implements CorretorDAO{
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 
-	@Override
 	public Corretor buscar(Integer idCorretor) {
 		PessoaDAO pessoaDao = new PessoaDAOJDBC();
 		Corretor corretor = null;
 		String sql = "select * from corretor where idCorretor = ?";
-		//String sql = "select * from corretor where Pessoa_idPessoa = ?";
 		try {
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, idCorretor);
 			ResultSet rs = pstmt.executeQuery();
-			while(rs.next()){
+			while (rs.next()) {
 				corretor = new Corretor();
 				corretor.setIdCorretor(rs.getInt("idCorretor"));
 				corretor.setSalario(rs.getDouble("salario"));
@@ -85,7 +76,6 @@ public class CorretorDAOJDBC implements CorretorDAO{
 		return corretor;
 	}
 
-	@Override
 	public List<Corretor> todos() {
 		PessoaDAO pessoaDao = new PessoaDAOJDBC();
 		List<Corretor> corretores = new ArrayList<>();
@@ -93,7 +83,7 @@ public class CorretorDAOJDBC implements CorretorDAO{
 		try {
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			ResultSet rs = pstmt.executeQuery();
-			while(rs.next()){
+			while (rs.next()) {
 				Corretor corretor = new Corretor();
 				corretor.setIdCorretor(rs.getInt("idCorretor"));
 				corretor.setSalario(rs.getDouble("salario"));
@@ -106,14 +96,13 @@ public class CorretorDAOJDBC implements CorretorDAO{
 		return corretores;
 	}
 
-	@Override
 	public Integer maiorId() {
 		Integer maior = null;
 		String sql = "select max(idCorretor) from corretor";
 		try {
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			ResultSet rs = pstmt.executeQuery();
-			while(rs.next()){
+			while (rs.next()) {
 				maior = rs.getInt("max(idCorretor)");
 
 			}
@@ -122,5 +111,5 @@ public class CorretorDAOJDBC implements CorretorDAO{
 		}
 		return maior;
 	}
-	
+
 }

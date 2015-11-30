@@ -7,27 +7,22 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import conexao.ConexaoUtil;
 import imovel.Imovel;
 
-public class ImovelDAOJDBC implements ImovelDAO{
+public class ImovelDAOJDBC implements ImovelDAO {
 
-	
-	
 	private Connection con;
 
-	public  ImovelDAOJDBC(){
+	public ImovelDAOJDBC() {
 		con = ConexaoUtil.getCon();
-		
 
 	}
 
-	@Override
 	public void inserir(Imovel imovel) {
 		String sql = "insert into Imovel (metrosQuadrados, Cliente_idCliente, valorTotal, valorMensal, mesesContrato, Endereco_idEndereco, imagem1, imagem2, imagem3, descricao1, descricao2, descricao3, imagem4, possui) values(?, ? , ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		try {
-			PreparedStatement pstmt = con.prepareStatement(sql); 
+			PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, imovel.getMetrosquadrados());
 			pstmt.setInt(2, imovel.getCliente().getIdCliente());
 			pstmt.setDouble(3, imovel.getValorTotal());
@@ -42,14 +37,13 @@ public class ImovelDAOJDBC implements ImovelDAO{
 			pstmt.setString(12, imovel.getDescricao3());
 			pstmt.setString(13, imovel.getImagem4());
 			pstmt.setInt(14, imovel.getPossui());
-			pstmt.executeUpdate(); 
-		} catch (SQLException e){
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
 			e.printStackTrace();
-		}	
-		
+		}
+
 	}
 
-	@Override
 	public void alterar(Imovel imovel) {
 		String sql = "update imovel set metrosQuadrados = ?, valorTotal = ?, valorMensal = ?, mesesContrato = ?, imagem1 = ?, imagem2 = ?, imagem3 = ?, imagem4 = ?, descricao1 = ?, descricao2 = ?, descricao3 = ?, possui = ? where idImovel = ?";
 		try {
@@ -67,13 +61,12 @@ public class ImovelDAOJDBC implements ImovelDAO{
 			pstmt.setString(11, imovel.getDescricao3());
 			pstmt.setInt(12, imovel.getPossui());
 			pstmt.setInt(13, imovel.getIdImovel());
-			pstmt.executeUpdate(); 
+			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}	
+		}
 	}
 
-	@Override
 	public void excluir(Imovel imovel) {
 		String sql = "delete from Imovel where idImovel = ?";
 		try {
@@ -83,20 +76,19 @@ public class ImovelDAOJDBC implements ImovelDAO{
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 
-	@Override
 	public Imovel buscar(Integer id) {
 		ClienteDAO clienteDao = new ClienteDAOJDBC();
 		EnderecoDAO enderecoDao = new EnderecoDAOJDBC();
 		Imovel imovel = null;
 		String sql = "select * from imovel where idImovel = ?";
-		try{
+		try {
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, id);
 			ResultSet rs = pstmt.executeQuery();
-			while(rs.next()){
+			while (rs.next()) {
 				imovel = new Imovel();
 				imovel.setIdImovel(rs.getInt("idImovel"));
 				imovel.setMetrosquadrados(rs.getString("metrosQuadrados"));
@@ -114,22 +106,21 @@ public class ImovelDAOJDBC implements ImovelDAO{
 				imovel.setDescricao3(rs.getString("descricao3"));
 				imovel.setPossui(rs.getInt("possui"));
 			}
-		}catch (SQLException e){
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return imovel;
 	}
 
-	@Override
 	public List<Imovel> todos() {
 		ClienteDAO clienteDao = new ClienteDAOJDBC();
 		EnderecoDAO enderecoDao = new EnderecoDAOJDBC();
 		List<Imovel> imoveis = new ArrayList<>();
 		String sql = "select * from imovel";
-		try{
+		try {
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			ResultSet rs = pstmt.executeQuery();
-			while(rs.next()){
+			while (rs.next()) {
 				Imovel imovel = new Imovel();
 				imovel.setIdImovel(rs.getInt("idImovel"));
 				imovel.setMetrosquadrados(rs.getString("metrosQuadrados"));
@@ -148,26 +139,25 @@ public class ImovelDAOJDBC implements ImovelDAO{
 				imovel.setPossui(rs.getInt("possui"));
 				imoveis.add(imovel);
 			}
-		}catch (SQLException e){
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return imoveis;
 	}
 
-	@Override
 	public Integer maiorId() {
 		Integer maior = null;
 		String sql = "select max(idImovel) from imovel";
-		try{
+		try {
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			ResultSet rs = pstmt.executeQuery();
-			while(rs.next()){
+			while (rs.next()) {
 				maior = rs.getInt("max(idImovel)");
 			}
-		}catch (SQLException e){
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return maior;
 	}
-	
+
 }

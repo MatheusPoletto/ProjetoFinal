@@ -9,29 +9,27 @@ import java.util.List;
 import conexao.ConexaoUtil;
 import pessoa.Cliente;
 
-public class ClienteDAOJDBC implements ClienteDAO{
+public class ClienteDAOJDBC implements ClienteDAO {
 	private Connection con;
 
-	public  ClienteDAOJDBC(){
+	public ClienteDAOJDBC() {
 		con = ConexaoUtil.getCon();
 	}
 
-	@Override
 	public void inserir(Cliente cliente) {
 		String sql = "insert into Cliente (Pessoa_idPessoa, interesse1, interesse2, interesse3) values( ?, ?, ? , ?)";
 		try {
-			PreparedStatement pstmt = con.prepareStatement(sql); 
+			PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, cliente.getPessoa().getId());
 			pstmt.setString(2, cliente.getInteresse1());
 			pstmt.setString(3, cliente.getInteresse2());
 			pstmt.setString(4, cliente.getInteresse3());
-			pstmt.executeUpdate(); 
-		} catch (SQLException e){
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
 			e.printStackTrace();
-		}	
+		}
 	}
 
-	@Override
 	public void alterar(Cliente cliente) {
 		String sql = "update cliente set interesse1 = ?, interesse2 = ?, interesse3 = ? where idCliente = ?";
 		try {
@@ -40,14 +38,13 @@ public class ClienteDAOJDBC implements ClienteDAO{
 			pstmt.setString(2, cliente.getInteresse2());
 			pstmt.setString(3, cliente.getInteresse3());
 			pstmt.setInt(4, cliente.getIdCliente());
-			pstmt.executeUpdate(); 
+			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}	
-		
+		}
+
 	}
 
-	@Override
 	public void excluir(Cliente cliente) {
 		String sql = "delete from Cliente where idCliente = ?";
 		try {
@@ -60,17 +57,15 @@ public class ClienteDAOJDBC implements ClienteDAO{
 
 	}
 
-	@Override
 	public Cliente buscar(Integer id) {
 		PessoaDAO pessoaDao = new PessoaDAOJDBC();
 		Cliente cliente = null;
-		//String sql = "select * from cliente where idCliente = ?";
 		String sql = "select * from cliente where Pessoa_idPessoa = ?";
 		try {
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, id);
 			ResultSet rs = pstmt.executeQuery();
-			while(rs.next()){
+			while (rs.next()) {
 				cliente = new Cliente();
 				cliente.setIdCliente(rs.getInt("idCliente"));
 				cliente.setInteresse1(rs.getString("interesse1"));
@@ -84,7 +79,6 @@ public class ClienteDAOJDBC implements ClienteDAO{
 		return cliente;
 	}
 
-	@Override
 	public List<Cliente> todos() {
 		PessoaDAO pessoaDao = new PessoaDAOJDBC();
 		List<Cliente> clientes = new ArrayList<>();
@@ -92,7 +86,7 @@ public class ClienteDAOJDBC implements ClienteDAO{
 		try {
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			ResultSet rs = pstmt.executeQuery();
-			while(rs.next()){
+			while (rs.next()) {
 				Cliente cliente = new Cliente();
 				cliente.setIdCliente(rs.getInt("idCliente"));
 				cliente.setInteresse1(rs.getString("interesse1"));
@@ -107,14 +101,13 @@ public class ClienteDAOJDBC implements ClienteDAO{
 		return clientes;
 	}
 
-	@Override
 	public Integer maiorId() {
 		Integer maior = null;
 		String sql = "select max(idCliente) from cliente";
 		try {
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			ResultSet rs = pstmt.executeQuery();
-			while(rs.next()){
+			while (rs.next()) {
 				maior = rs.getInt("max(idCliente)");
 
 			}
@@ -123,6 +116,5 @@ public class ClienteDAOJDBC implements ClienteDAO{
 		}
 		return maior;
 	}
-	
-	
+
 }

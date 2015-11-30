@@ -2,17 +2,15 @@ package imovel;
 
 import pessoa.Cliente;
 import pessoa.Endereco;
-import pessoa.Pessoa;
-
 
 public class Imovel {
 	private Integer idImovel;
-	private String metrosquadrados; 
+	private String metrosquadrados;
 	private Double valorTotal;
 	private Double valorMensal;
 	private Integer mesesContrato;
-	private Endereco endereco; 
-	private Cliente cliente; 
+	private Endereco endereco;
+	private Cliente cliente;
 	private String imagem1;
 	private String imagem2;
 	private String imagem3;
@@ -21,9 +19,32 @@ public class Imovel {
 	private String descricao3;
 	private String imagem4;
 	private Integer possui;
-	
-	
-	
+
+	public Imovel(Integer idImovel, String metrosquadrados, Double valorTotal, Double valorMensal,
+			Integer mesesContrato, Endereco endereco, Cliente cliente, String imagem1, String imagem2, String imagem3,
+			String descricao1, String descricao2, String descricao3, String imagem4, Integer possui) {
+		super();
+		this.idImovel = idImovel;
+		this.metrosquadrados = metrosquadrados;
+		this.valorTotal = valorTotal;
+		this.valorMensal = valorMensal;
+		this.mesesContrato = mesesContrato;
+		this.endereco = endereco;
+		this.cliente = cliente;
+		this.imagem1 = imagem1;
+		this.imagem2 = imagem2;
+		this.imagem3 = imagem3;
+		this.descricao1 = descricao1;
+		this.descricao2 = descricao2;
+		this.descricao3 = descricao3;
+		this.imagem4 = imagem4;
+		this.possui = possui;
+	}
+
+	public Imovel() {
+		super();
+	}
+
 	public String getImagem4() {
 		return imagem4;
 	}
@@ -43,11 +64,10 @@ public class Imovel {
 	public Integer getIdImovel() {
 		return idImovel;
 	}
-	
-	public void setIdImovel(Integer idimovel) {	
+
+	public void setIdImovel(Integer idimovel) {
 		this.idImovel = idimovel;
 	}
-	
 
 	public String getMetrosquadrados() {
 		return metrosquadrados;
@@ -72,8 +92,6 @@ public class Imovel {
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
-
-	
 
 	public Double getValorTotal() {
 		return valorTotal;
@@ -146,34 +164,5 @@ public class Imovel {
 	public void setDescricao3(String descricao3) {
 		this.descricao3 = descricao3;
 	}
-	
-	
 
-	public Imovel(Integer idImovel, String metrosquadrados, Double valorTotal, Double valorMensal,
-			Integer mesesContrato, Endereco endereco, Cliente cliente, String imagem1, String imagem2, String imagem3,
-			String descricao1, String descricao2, String descricao3, String imagem4, Integer possui) {
-		super();
-		this.idImovel = idImovel;
-		this.metrosquadrados = metrosquadrados;
-		this.valorTotal = valorTotal;
-		this.valorMensal = valorMensal;
-		this.mesesContrato = mesesContrato;
-		this.endereco = endereco;
-		this.cliente = cliente;
-		this.imagem1 = imagem1;
-		this.imagem2 = imagem2;
-		this.imagem3 = imagem3;
-		this.descricao1 = descricao1;
-		this.descricao2 = descricao2;
-		this.descricao3 = descricao3;
-		this.imagem4 = imagem4;
-		this.possui = possui;
-	}
-
-	public Imovel() {
-		super();
-		// TODO Auto-generated constructor stub
-	}	
-	
-	
 }
