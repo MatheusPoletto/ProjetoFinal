@@ -20,6 +20,7 @@ import javax.swing.JTextField;
 import DAOFactory.DaoFactoryJDBC;
 import dao.ClienteDAO;
 import dao.ImobiliariaDAO;
+import dao.ImovelDAO;
 import dao.NotaFiscalDAO;
 import dao.VendaDAO;
 import imovel.Imovel;
@@ -230,6 +231,11 @@ public class TelaCadastrarVenda extends JInternalFrame implements ActionListener
 			String horaAgora = sdf.format(dt);
 			Venda venda = new Venda(vendaDao.maiorId()+1, horaAgora, Double.valueOf(jtfComissaoImobiliaria.getText()), Double.valueOf(jtfComissaoCorretor.getText()), imovelVenda, clienteProprietario, CorretorResponsavel);
 			vendaDao.inserir(venda);
+			
+				ImovelDAO imovelDao = DaoFactoryJDBC.get().imovelDAO();
+				Imovel imovel = imovelVenda;
+				imovel.setPossui(0);
+				imovelDao.alterar(imovel);
 			
 				NotaFiscalDAO nfDao = DaoFactoryJDBC.get().notaFiscalDAO();
 				ImobiliariaDAO imoDao = DaoFactoryJDBC.get().imobiliariaDAO();

@@ -29,6 +29,7 @@ public class telaPrincipal extends JFrame implements ActionListener {
 	private TelaProcurarCliente tlProcurarCliente = new TelaProcurarCliente();
 	private TelaAlterarImovel tlAlterarImovel = new TelaAlterarImovel();
 	private TelaAlterarNota tlAlterarNota = new TelaAlterarNota();
+	private TelaListaNota tlListaNota= new TelaListaNota();
 	private telaLogin tlLogin = new telaLogin();
 	private TelaListaImovel tlListaImovel = new TelaListaImovel();
 	private TelaCadastroImovel tlCadastroImovel = new TelaCadastroImovel();
@@ -36,8 +37,8 @@ public class telaPrincipal extends JFrame implements ActionListener {
 	private TelaCadastrarVenda tlCadastrarVenda = new TelaCadastrarVenda();
 	private static telaPrincipal tlPrincipal = new telaPrincipal();
 	
-	private JMenu jmnCadastro, jmnProcurar, jmnGerenciamento, jmnRelatorios, jmnSair;
-	private JMenuItem  jmiCliente, jmiCorretor, jmiProcurarPessoa, jmiContaUsuario, jmiRelatorioCliente,
+	private JMenu jmnCadastro, jmnProcurar, jmnGerenciamento, jmnRelatorios, jmnSair, jmnVendas;
+	private JMenuItem  jmiCliente, jmiCorretor, jmiProcurarPessoa, jmiContaUsuario, jmiRelatorioCliente, jmiNotas,
 			jmiRelatorioCorretor, jmiProcurarImovel, jmiImovel;
 	private Usuario usuario;
 	private ArrayList<JInternalFrame> frames = new ArrayList<>();
@@ -67,6 +68,7 @@ public class telaPrincipal extends JFrame implements ActionListener {
 		frames.add(tlProcurarCorretor);
 		frames.add(tlCadastrarVenda);
 		frames.add(tlAlterarNota);
+		frames.add(tlListaNota);
 		posicionaFrames(frames);
 		
 		
@@ -99,6 +101,15 @@ public class telaPrincipal extends JFrame implements ActionListener {
 		jmnProcurar.addSeparator();
 		jmnProcurar.add(jmiProcurarImovel);
 		barra.add(jmnProcurar);
+		
+		jmnVendas = new JMenu("Vendas");
+		jmiNotas = new JMenuItem("Vendas/Notas Fiscais");
+		jmnVendas.add(jmiNotas);
+		jmiNotas.addActionListener(this);
+		
+		barra.add(jmnVendas);
+		
+		
 
 		jmnGerenciamento = new JMenu("Gerenciamento");
 		jmiContaUsuario = new JMenuItem("Contas de usuários");
@@ -157,6 +168,7 @@ public class telaPrincipal extends JFrame implements ActionListener {
 		tlProcurarCorretor.setVisible(false);
 		tlCadastrarVenda.setVisible(false);
 		tlAlterarNota.setVisible(true);
+		tlListaNota.setVisible(false);
 		posicionaFrames(frames);
 	}
 
@@ -166,6 +178,11 @@ public class telaPrincipal extends JFrame implements ActionListener {
 		barra.setVisible(true);
 	}
 	
+	
+	public TelaListaNota getTlListaNota() {
+		return tlListaNota;
+	}
+
 	public TelaAlterarNota getTlAlterarNota() {
 		return tlAlterarNota;
 	}
@@ -265,6 +282,11 @@ public class telaPrincipal extends JFrame implements ActionListener {
 
 		if (e.getSource() == jmiRelatorioCorretor) {
 			// aqui o que faz para gerar relatorio de corretores
+		}
+		
+		if(e.getSource() == jmiNotas){
+			telaPrincipal.getTlPrincipal().esconderTelas();
+			telaPrincipal.getTlPrincipal().getTlListaNota().setVisible(true);
 		}
 
 	}

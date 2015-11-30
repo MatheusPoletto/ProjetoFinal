@@ -11,6 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -21,6 +22,9 @@ import javax.swing.table.DefaultTableModel;
 import DAOFactory.DaoFactoryJDBC;
 import dao.ImobiliariaDAO;
 import dao.ImovelDAO;
+import dao.NotaFiscalDAO;
+import dao.VendaDAO;
+import dao.VendaDAOJDBC;
 import model.Imobiliaria;
 import model.NotaFiscal;
 import model.Venda;
@@ -44,9 +48,17 @@ public class TelaAlterarNota extends JInternalFrame implements ActionListener{
 	private JButton jbtImprimir, jbtEstorno;
 	private JLabel jlbCodigo;
 	private JTextField jtfCodigo;
+	private ImobiliariaDAO imoDao = DaoFactoryJDBC.get().imobiliariaDAO();
+	private Imobiliaria imobiliaria = imoDao.buscar(1);
 	
 	private JPanel jpnEnderecoImo;
 	private JLabel jlbEnderecoImo;
+	
+	private VendaDAO vendaDao = DaoFactoryJDBC.get().vendaDAO();
+	private NotaFiscalDAO nfDao = DaoFactoryJDBC.get().notaFiscalDAO();
+	
+	private Venda vendaRem;
+	private NotaFiscal nfRem;
 	
 	public TelaAlterarNota() {
 		setTitle("NOTA FISCAL");
@@ -56,13 +68,14 @@ public class TelaAlterarNota extends JInternalFrame implements ActionListener{
 		jlbLogo.setIcon(new ImageIcon("img/logo_imo.png"));
 		jlbLogo.setBorder(BorderFactory.createBevelBorder(1));
 		
-		jlbNomeFantasia = cp.criarLabelCentralizada("M&M Sistema Imobiliário", 0, 1, 285, 24, jlbNomeFantasia);
+		jlbNomeFantasia = cp.criarLabelCentralizada(imobiliaria.getNomeFantasia(), 0, 1, 285, 24, jlbNomeFantasia);
 		jlbNomeFantasia.setFont(new Font("Dialog", Font.BOLD, 16));
 		
-		jlbRazaoSocial = cp.criarLabelCentralizada("Matheus e matheus sistema de corretores", 0, 20, 285, 24, jlbRazaoSocial);
+		jlbRazaoSocial = cp.criarLabelCentralizada("", 0, 25, 285, 30, jlbRazaoSocial);
+		jlbRazaoSocial.setText("<html><p align = 'center'>"+imobiliaria.getRazaoSocial()+"</p></html>");
 		jlbRazaoSocial.setFont(new Font("Dialog", Font.PLAIN, 14));
 		
-		jlbCnpj = cp.criarLabelCentralizada("CNPJ: 057.6598/578.65-64", 0, 40, 285, 24, jlbCnpj);
+		jlbCnpj = cp.criarLabelCentralizada(imobiliaria.getCnpj(), 0, 40, 285, 24, jlbCnpj);
 		jlbCnpj.setFont(new Font("Dialog", Font.PLAIN, 13));
 		
 		jpnImobiliaria = cp.criarPanel("", 180, 1, 285, 75, jpnImobiliaria, true);
@@ -122,8 +135,6 @@ public class TelaAlterarNota extends JInternalFrame implements ActionListener{
 		jtfValorTotal = cp.criarTextField(385, 283, 78, 24, jtfValorTotal);
 		
 		jlbEnderecoImo = cp.criarLabelCentralizada("", 0, 0, 460, 40, jlbEnderecoImo);
-		ImobiliariaDAO imobiliariaDao = DaoFactoryJDBC.get().imobiliariaDAO();
-		Imobiliaria imobiliaria = imobiliariaDao.buscar(1);
 		jlbEnderecoImo.setText("<html><p align = 'center'>Rua: "+imobiliaria.getEndereco().getRua()+" | N°: "+imobiliaria.getEndereco().getNumero()+" | Bairro: "+imobiliaria.getEndereco().getBairro()+" <br> Cidade: "+imobiliaria.getEndereco().getCidade()+" | CEP: "+imobiliaria.getEndereco().getCep()+" | Telefone: "+imobiliaria.getTelefone()+"</p></html>");
 		jpnEnderecoImo = cp.criarPanel("", 3, 310, 460, 40, jpnEnderecoImo, true);
 		jpnEnderecoImo.setFont(new Font("Dialog", Font.PLAIN, 12));
@@ -155,9 +166,11 @@ public class TelaAlterarNota extends JInternalFrame implements ActionListener{
 		jtfCodigo.setEnabled(false);
 		
 		jbtImprimir = cp.criarBotao("IMPRIMIR", 375, 370, 100, 24, jbtImprimir);
+		jbtImprimir.addActionListener(this);
 		getContentPane().add(jbtImprimir);
 		
 		jbtEstorno = cp.criarBotao("ESTORNAR", 10, 370, 100, 24, jbtEstorno);
+		jbtEstorno.addActionListener(this);
 		getContentPane().add(jbtEstorno);
 
 		setSize(500, 430);
@@ -173,6 +186,8 @@ public class TelaAlterarNota extends JInternalFrame implements ActionListener{
 	}
 
 	public void preencherCampos(Venda venda, NotaFiscal nf, Double valorTotal){
+		vendaRem = venda;
+		nfRem = nf;
 		jtfCodigo.setText(String.valueOf(nf.getIdNotaFiscal()));
 		jtfNome.setText(venda.getCliente().getPessoa().getNome());
 		jtfEndereco.setText(venda.getCliente().getPessoa().getEndereco().getRua() + " - " + venda.getCliente().getPessoa().getEndereco().getNumero() + " - " + venda.getCliente().getPessoa().getEndereco().getBairro() + " - " + venda.getCliente().getPessoa().getEndereco().getCidade() + " - " + venda.getCliente().getPessoa().getEndereco().getUf() + " - " + venda.getCliente().getPessoa().getEndereco().getCep());
@@ -192,7 +207,15 @@ public class TelaAlterarNota extends JInternalFrame implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-	
+		if(e.getSource() == jbtImprimir){
+			JOptionPane.showMessageDialog(null, "Imprimindo...");
+		}
+		if(e.getSource() == jbtEstorno){
+			nfDao.excluir(nfRem);
+			vendaDao.excluir(vendaRem);
+			this.setVisible(false);
+			telaPrincipal.getTlPrincipal().getTlListaNota().alimentarTabela();
+		}
 		
 	}
 	

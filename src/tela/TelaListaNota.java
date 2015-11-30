@@ -2,9 +2,11 @@ package tela;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Locale;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayer;
 import javax.swing.JScrollPane;
@@ -14,10 +16,11 @@ import javax.swing.table.DefaultTableModel;
 
 import DAOFactory.DaoFactoryJDBC;
 import dao.NotaFiscalDAO;
+import dao.VendaDAO;
 import model.NotaFiscal;
 import utilitario.CriarCamponentes;
 
-public class TelaListaNota extends JFrame implements ActionListener{
+public class TelaListaNota extends JInternalFrame implements ActionListener{
 	private CriarCamponentes cp = new CriarCamponentes();
 	private JTable jtbNotas;
 	private DefaultTableModel dtbNotas;
@@ -25,12 +28,13 @@ public class TelaListaNota extends JFrame implements ActionListener{
 	private JButton jbtVer;
 	private JLabel jlbTitulo;
 	private NotaFiscalDAO nfDao = DaoFactoryJDBC.get().notaFiscalDAO();
+	private JLabel jlbTotalVendas;
 	
 	public TelaListaNota() {
 		setTitle("Notas Fiscais");
 		setLayout(null);
 
-		jlbTitulo = cp.criarLabelTitulo("NOTAS FISCAIS GERADAS", 0, 0, 400, 44, jlbTitulo);
+		jlbTitulo = cp.criarLabelTitulo("VENDAS GERADAS", 0, 0, 400, 44, jlbTitulo);
 		getContentPane().add(jlbTitulo);
 		
 		jtbNotas = new JTable();
@@ -57,14 +61,18 @@ public class TelaListaNota extends JFrame implements ActionListener{
 		jbtVer = cp.criarBotao("VISUALIZAR", 250, 443, 130, 24, jbtVer);
 		getContentPane().add(jbtVer);
 		
+		jlbTotalVendas = cp.criarLabel("", 3, 443, 250, 24, jlbTotalVendas);
+		getContentPane().add(jlbTotalVendas);
+		
 		jbtVer.addActionListener(this);
 		
 		alimentarTabela();
 
 		setSize(400, 510);
 		setVisible(true);
-		setLocationRelativeTo(null);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setResizable(false);
+		setClosable(true);
+		setDefaultCloseOperation(HIDE_ON_CLOSE);
 	}
 	public static void main(String[] args) {
 		new TelaListaNota();
@@ -72,14 +80,23 @@ public class TelaListaNota extends JFrame implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == jbtVer){
-			
+			NotaFiscalDAO nfDao = DaoFactoryJDBC.get().notaFiscalDAO();
+			String id =  String.valueOf(dtbNotas.getValueAt(jtbNotas.getSelectedRow(), 0));
+			NotaFiscal nf = nfDao.buscar(Integer.valueOf(id));
+			telaPrincipal.getTlPrincipal().getTlAlterarNota().setVisible(true);
+			telaPrincipal.getTlPrincipal().getTlAlterarNota().preencherCampos(nf.getVenda(), nf, nf.getValorTotal());
 		}
 		
 	}
 	
-	private void alimentarTabela(){
+	public void alimentarTabela(){
+		Double total = 0.0;
+		dtbNotas.setRowCount(0);
 		for(NotaFiscal nf : nfDao.todos()){
-		dtbNotas.addRow(new String[]{String.valueOf(nf.getIdNotaFiscal()), nf.getDataEmissao(), String.valueOf(nf.getValorTotal()), nf.getVenda().getCorretor().getPessoa().getNome()});
+			total += Double.valueOf(String.format(Locale.US, "%.2g", Math.floor(nf.getValorTotal())));
+			dtbNotas.addRow(new String[]{String.valueOf(nf.getIdNotaFiscal()), nf.getDataEmissao(), String.valueOf(nf.getValorTotal()), nf.getVenda().getCorretor().getPessoa().getNome()});
 		}
+		
+		jlbTotalVendas.setText("TOTAL DE VENDAS: R$ "+total);
 	}
 }

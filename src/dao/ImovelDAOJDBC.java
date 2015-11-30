@@ -51,7 +51,7 @@ public class ImovelDAOJDBC implements ImovelDAO{
 
 	@Override
 	public void alterar(Imovel imovel) {
-		String sql = "update imovel set metrosQuadrados = ?, valorTotal = ?, valorMensal = ?, mesesContrato = ?, imagem1 = ?, imagem 2 = ?, imagem 3 = ?, imagem 4 = ?, descricao1 = ?, descricao2 = ?, descricao3 = ?, possui = ? where idCliente = ?";
+		String sql = "update imovel set metrosQuadrados = ?, valorTotal = ?, valorMensal = ?, mesesContrato = ?, imagem1 = ?, imagem2 = ?, imagem3 = ?, imagem4 = ?, descricao1 = ?, descricao2 = ?, descricao3 = ?, possui = ? where idImovel = ?";
 		try {
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, imovel.getMetrosquadrados());
