@@ -58,13 +58,7 @@ public class TelaAlterarNota extends JInternalFrame implements ActionListener {
 	private NotaFiscal nfRem;
 
 	private void criarComponentes() {
-		jlbLogo.setIcon(new ImageIcon("img/logo_imo.png"));
-		jlbLogo.setBorder(BorderFactory.createBevelBorder(1));
-		jlbNomeFantasia.setFont(new Font("Dialog", Font.BOLD, 16));
-		jlbRazaoSocial.setText("<html><p align = 'center'>" + imobiliaria.getRazaoSocial() + "</p></html>");
-		jlbRazaoSocial.setFont(new Font("Dialog", Font.PLAIN, 14));
 		jlbCnpj = cp.criarLabelCentralizada(imobiliaria.getCnpj(), 0, 40, 285, 24, jlbCnpj);
-		jlbCnpj.setFont(new Font("Dialog", Font.PLAIN, 13));
 		jlbLogo = cp.criarLabelCentralizada("", 3, 1, 175, 75, jlbLogo);
 		jlbNomeFantasia = cp.criarLabelCentralizada(imobiliaria.getNomeFantasia(), 0, 1, 285, 24, jlbNomeFantasia);
 		jlbRazaoSocial = cp.criarLabelCentralizada("", 0, 25, 285, 30, jlbRazaoSocial);
@@ -74,7 +68,7 @@ public class TelaAlterarNota extends JInternalFrame implements ActionListener {
 		jlbEndereco = cp.criarLabel("Endereço:", 3, 31, 100, 24, jlbEndereco);
 		jlbCpf = cp.criarLabel("CPF:", 3, 61, 100, 24, jlbCpf);
 		jlbFone = cp.criarLabel("Fone:", 250, 61, 100, 24, jlbFone);
-
+		
 		jtfDataEmissao = cp.criarTextField(290, 78, 173, 24, jtfDataEmissao);
 
 		jtfCodigo = cp.criarTextField(120, 78, 60, 24, jtfCodigo);
@@ -98,6 +92,13 @@ public class TelaAlterarNota extends JInternalFrame implements ActionListener {
 		jpnClienteComprador.add(jtfEndereco);
 		jpnClienteComprador.add(jtfCpf);
 		jpnClienteComprador.add(jtfFone);
+		
+		jlbLogo.setIcon(new ImageIcon("img/logo_imo.png"));
+		jlbLogo.setBorder(BorderFactory.createBevelBorder(1));
+		jlbNomeFantasia.setFont(new Font("Dialog", Font.BOLD, 16));
+		jlbRazaoSocial.setText("<html><p align = 'center'>" + imobiliaria.getRazaoSocial() + "</p></html>");
+		jlbRazaoSocial.setFont(new Font("Dialog", Font.PLAIN, 14));
+		jlbCnpj.setFont(new Font("Dialog", Font.PLAIN, 13));
 	}
 
 	public TelaAlterarNota() {
