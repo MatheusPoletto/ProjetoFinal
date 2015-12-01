@@ -3,7 +3,9 @@ package tela;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -16,7 +18,9 @@ import javax.swing.JOptionPane;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
 
+import conexao.ConexaoUtil;
 import pessoa.Usuario;
+import relatorios.RelatorioUtil;
 
 public class telaPrincipal extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
@@ -277,7 +281,8 @@ public class telaPrincipal extends JFrame implements ActionListener {
 		}
 
 		if (e.getSource() == jmiRelatorioCliente) {
-			// aqui o que faz para gerar relatorio de clientes
+			Map<String, Object> parametros = new HashMap<String, Object>();
+			new RelatorioUtil().viewReport("src/relatorios/Cherry_Landscape.jasper", ConexaoUtil.getCon(), parametros);
 		}
 
 		if (e.getSource() == jmiRelatorioCorretor) {
