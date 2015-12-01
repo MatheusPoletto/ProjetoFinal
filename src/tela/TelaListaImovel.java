@@ -30,7 +30,7 @@ public class TelaListaImovel extends JInternalFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	private JLabel jlbTitulo;
 	private CriarCamponentes cp = new CriarCamponentes();
-	private JRadioButton jrbCidade, jrbBairro, jrbValor, jrbMetros;
+	private JRadioButton jrbValor, jrbMetros;
 	private JPanel jpnProcurar;
 	private JTextField jtfPesquisa;
 	private ButtonGroup btgFiltro;
@@ -181,10 +181,8 @@ public class TelaListaImovel extends JInternalFrame implements ActionListener {
 	}
 
 	private void criarPanelProcurar() {
-		jrbCidade = cp.criarRadioButton("Cidade", 150, 10, 100, 24, jrbCidade);
-		jrbBairro = cp.criarRadioButton("Bairro", 250, 10, 100, 24, jrbBairro);
-		jrbMetros = cp.criarRadioButton("m²", 350, 10, 100, 24, jrbMetros);
-		jrbValor = cp.criarRadioButton("Valor", 450, 10, 100, 24, jrbValor);
+		jrbMetros = cp.criarRadioButton("m²", 250, 10, 100, 24, jrbMetros);
+		jrbValor = cp.criarRadioButton("Valor", 350, 10, 100, 24, jrbValor);
 		
 		jtfPesquisa = cp.criarTextField(185, 40, 250, 24, jtfPesquisa);
 		
@@ -193,14 +191,10 @@ public class TelaListaImovel extends JInternalFrame implements ActionListener {
 		jbtFiltrar.addActionListener(this);
 
 		btgFiltro = new ButtonGroup();
-		btgFiltro.add(jrbCidade);
-		btgFiltro.add(jrbBairro);
 		btgFiltro.add(jrbMetros);
 		btgFiltro.add(jrbValor);
 
 		jpnProcurar = cp.criarPanel("", 10, 50, 625, 80, jpnProcurar, true);
-		jpnProcurar.add(jrbCidade);
-		jpnProcurar.add(jrbBairro);
 		jpnProcurar.add(jrbMetros);
 		jpnProcurar.add(jrbValor);
 		jpnProcurar.add(jtfPesquisa);
@@ -335,50 +329,7 @@ public class TelaListaImovel extends JInternalFrame implements ActionListener {
 
 	private void filtrar() {
 		dtbImovel.setRowCount(0);
-		if (jrbBairro.isSelected()) {
-			for (Imovel imovel : imovelDao.todos()) {
-				if (imovel.getEndereco().getBairro().toString().toLowerCase().contains(jtfPesquisa.getText())) {
-					if (imovel.getPossui() == 1) {
-						if (imovel.getValorTotal() > 0) {
-							dtbImovel.addRow(new String[] { String.valueOf(imovel.getIdImovel()),
-									imovel.getEndereco().getBairro(), imovel.getEndereco().getCidade(),
-									imovel.getMetrosquadrados(),
-									String.valueOf(imovel.getValorTotal()) + " [Venda]" });
-						} else if (imovel.getValorMensal() > 0) {
-							if (imovel.getPossui() == 1) {
-								dtbImovel.addRow(new String[] { String.valueOf(imovel.getIdImovel()),
-										imovel.getEndereco().getBairro(), imovel.getEndereco().getCidade(),
-										imovel.getMetrosquadrados(),
-										String.valueOf(imovel.getValorMensal()) + " [Alugar]" });
-							}
-						}
-					}
-				}
-			}
-		}
-
-		if (jrbCidade.isSelected()) {
-			for (Imovel imovel : imovelDao.todos()) {
-				if (imovel.getEndereco().getCidade().toString().toLowerCase().contains(jtfPesquisa.getText())) {
-					if (imovel.getPossui() == 1) {
-						if (imovel.getValorTotal() > 0) {
-							dtbImovel.addRow(new String[] { String.valueOf(imovel.getIdImovel()),
-									imovel.getEndereco().getBairro(), imovel.getEndereco().getCidade(),
-									imovel.getMetrosquadrados(),
-									String.valueOf(imovel.getValorTotal()) + " [Venda]" });
-						} else if (imovel.getValorMensal() > 0) {
-							if (imovel.getPossui() == 1) {
-								dtbImovel.addRow(new String[] { String.valueOf(imovel.getIdImovel()),
-										imovel.getEndereco().getBairro(), imovel.getEndereco().getCidade(),
-										imovel.getMetrosquadrados(),
-										String.valueOf(imovel.getValorMensal()) + " [Alugar]" });
-							}
-						}
-					}
-				}
-			}
-		}
-
+		
 		if (jrbMetros.isSelected()) {
 			for (Imovel imovel : imovelDao.todos()) {
 				if (imovel.getMetrosquadrados().toString().toLowerCase().contains(jtfPesquisa.getText())) {
@@ -389,12 +340,12 @@ public class TelaListaImovel extends JInternalFrame implements ActionListener {
 									imovel.getMetrosquadrados(),
 									String.valueOf(imovel.getValorTotal()) + " [Venda]" });
 						} else if (imovel.getValorMensal() > 0) {
-							if (imovel.getPossui() == 1) {
+							
 								dtbImovel.addRow(new String[] { String.valueOf(imovel.getIdImovel()),
 										imovel.getEndereco().getBairro(), imovel.getEndereco().getCidade(),
 										imovel.getMetrosquadrados(),
 										String.valueOf(imovel.getValorMensal()) + " [Alugar]" });
-							}
+							
 						}
 					}
 				}
@@ -412,12 +363,12 @@ public class TelaListaImovel extends JInternalFrame implements ActionListener {
 									imovel.getMetrosquadrados(),
 									String.valueOf(imovel.getValorTotal()) + " [Venda]" });
 						} else if (imovel.getValorMensal() > 0) {
-							if (imovel.getPossui() == 1) {
+						
 								dtbImovel.addRow(new String[] { String.valueOf(imovel.getIdImovel()),
 										imovel.getEndereco().getBairro(), imovel.getEndereco().getCidade(),
 										imovel.getMetrosquadrados(),
 										String.valueOf(imovel.getValorMensal()) + " [Alugar]" });
-							}
+							
 						}
 					}
 				}

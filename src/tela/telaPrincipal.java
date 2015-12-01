@@ -46,7 +46,6 @@ public class telaPrincipal extends JFrame implements ActionListener {
 			jmiRelatorioCorretor, jmiProcurarImovel, jmiImovel;
 	private Usuario usuario;
 	private ArrayList<JInternalFrame> frames = new ArrayList<>();
-	private JLabel jlbLogo;
 
 	telaPrincipal() {
 		setTitle("M&M Sistema Imobiliário");
@@ -291,6 +290,7 @@ public class telaPrincipal extends JFrame implements ActionListener {
 		
 		if(e.getSource() == jmiNotas){
 			telaPrincipal.getTlPrincipal().esconderTelas();
+			telaPrincipal.getTlPrincipal().getTlListaNota().alimentarTabela();
 			telaPrincipal.getTlPrincipal().getTlListaNota().setVisible(true);
 		}
 
