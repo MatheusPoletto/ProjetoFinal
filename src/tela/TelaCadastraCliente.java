@@ -286,7 +286,6 @@ public class TelaCadastraCliente extends JInternalFrame implements ActionListene
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
-			ms.sucessoCadastrarCliente();
 
 		}
 	}
