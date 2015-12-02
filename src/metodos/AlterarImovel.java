@@ -3,11 +3,12 @@ package metodos;
 import DAOFactory.DaoFactoryJDBC;
 import dao.ImovelDAO;
 import imovel.Imovel;
+import utilitario.MensagemSucesso;
 
 public class AlterarImovel {
 
-	ImovelDAO imovelDao = DaoFactoryJDBC.get().imovelDAO();
-
+	private ImovelDAO imovelDao = DaoFactoryJDBC.get().imovelDAO();
+	private MensagemSucesso ms = new MensagemSucesso();
 	
 	public void alterarImovel(Integer idImovel, String metrosQuadrados, Double valorTotal, Double valorMensal, Integer mesesContrato,
 		String imagem1, String imagem2, String imagem3, String imagem4, String descricao1,
@@ -34,6 +35,7 @@ public class AlterarImovel {
 		imovel.setDescricao3(descricao3);
 		imovel.setPossui(possui);	
 		imovelDao.alterar(imovel);
+		ms.sucessoCadastrarImovel();
 
 	}
 	

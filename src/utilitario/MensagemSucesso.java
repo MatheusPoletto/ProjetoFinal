@@ -18,6 +18,21 @@ public class MensagemSucesso {
 				JOptionPane.PLAIN_MESSAGE);
 	}
 	
+	public void sucessoCadastrarImovel(){
+		JOptionPane.showMessageDialog(null, 
+				"Imóvel cadastrado com sucesso!", 
+				"Sucesso!",
+				JOptionPane.PLAIN_MESSAGE);
+	}
+
+	public void sucessoGerarEstorno(){
+		JOptionPane.showMessageDialog(null, 
+				"Estorno efeutado com sucesso! A venda e a nota fiscal foram removidas!", 
+				"Sucesso!",
+				JOptionPane.PLAIN_MESSAGE);
+	}
+	
+	
 	public void sucessoAlterarCliente(){
 		JOptionPane.showMessageDialog(null, 
 				"Cliente alterado com sucesso!", 

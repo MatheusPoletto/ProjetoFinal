@@ -219,10 +219,29 @@ public class TelaCadastraCliente extends JInternalFrame implements ActionListene
 			botaoAjuda();
 		}
 		if(e.getSource() == jbtLimpar){
-			
+			limparCampos();
 		}
 	}	
 	
+	private void limparCampos() {
+		jtfNome.setText("");
+		jtfRua.setText("");
+		jtfBairro.setText("");
+		jtfNumero.setText("");
+		jtfCidade.setText("");
+		jtfUf.setText("");
+		jtfCep.setText("");
+		jtfDataNascimento.setText("");
+		jtfEmail.setText("");
+		jtfGenero.setText("");
+		jtfInteresse1.setText("");
+		jtfInteresse2.setText("");
+		jtfInteresse3.setText("");
+		jtfTelefoneCelular.setText("");
+		jtfTelefoneResidencial.setText("");
+		
+	}
+
 	private void botaoAjuda() {
 		ma.ajudaCadastroClienteInteresses();
 	}

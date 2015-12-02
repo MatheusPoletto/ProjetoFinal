@@ -25,6 +25,7 @@ import model.Imobiliaria;
 import model.NotaFiscal;
 import model.Venda;
 import utilitario.CriarCamponentes;
+import utilitario.MensagemSucesso;
 
 public class TelaAlterarNota extends JInternalFrame implements ActionListener {
 
@@ -225,6 +226,8 @@ public class TelaAlterarNota extends JInternalFrame implements ActionListener {
 		if (e.getSource() == jbtEstorno) {
 			nfDao.excluir(nfRem);
 			vendaDao.excluir(vendaRem);
+			MensagemSucesso ms = new MensagemSucesso();
+			ms.sucessoGerarEstorno();
 			this.setVisible(false);
 			telaPrincipal.getTlPrincipal().getTlListaNota().alimentarTabela();
 		}

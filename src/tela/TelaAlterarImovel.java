@@ -355,7 +355,7 @@ public class TelaAlterarImovel extends JInternalFrame implements ActionListener 
 		Integer possui = jcbPossui.getSelectedIndex();
 		
 		AlterarImovel ai = new AlterarImovel();
-		ai.alterarImovel(1, metrosQuadrados, valorTotal, valorMensal, mesesContrato, imagem1, imagem2, imagem3, imagem4, descricao1, descricao2, descricao3, possui);
+		ai.alterarImovel(imovelAlterar.getIdImovel(), metrosQuadrados, valorTotal, valorMensal, mesesContrato, imagem1, imagem2, imagem3, imagem4, descricao1, descricao2, descricao3, possui);
 		
 		enderecoAlterar.setRua(jtfRua.getText());
 		enderecoAlterar.setBairro(jtfBairro.getText());
@@ -383,7 +383,6 @@ public class TelaAlterarImovel extends JInternalFrame implements ActionListener 
 			imovelAlterar.setValorMensal(0.0);
 		}
 		enderecoDao.alterar(enderecoAlterar);
-		imovelDao.alterar(imovelAlterar);
 
 	}
 
