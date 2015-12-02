@@ -20,11 +20,15 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
+import javax.xml.stream.events.EndDocument;
+
 import DAOFactory.DaoFactoryJDBC;
 import dao.ClienteDAO;
 import dao.EnderecoDAO;
 import dao.ImovelDAO;
 import imovel.Imovel;
+import metodos.CadastrarEndereco;
+import metodos.CadastrarImovel;
 import pessoa.Cliente;
 import pessoa.Endereco;
 import utilitario.CriarCamponentes;
@@ -330,7 +334,7 @@ public class TelaCadastroImovel extends JInternalFrame implements ActionListener
 		if (e.getSource() == jbtAjudaDescricao) {
 			criarBotaAjudaDescricao();
 		}
-		if(e.getSource() == jbtNovo){
+		if (e.getSource() == jbtNovo) {
 			telaPrincipal.getTlPrincipal().getTlCadastraCliente().setVisible(true);
 		}
 
@@ -386,30 +390,31 @@ public class TelaCadastroImovel extends JInternalFrame implements ActionListener
 	}
 
 	private void procorarProprietario() {
-		if(jtfRg.getText().equals("") || (jtfRg.getText().isEmpty())){
+		if (jtfRg.getText().equals("") || (jtfRg.getText().isEmpty())) {
 			telaPrincipal.getTlPrincipal().getTlProcurarCliente().setVisible(true);
-			telaPrincipal.getTlPrincipal().getTlProcurarCliente().setLocation(telaPrincipal.getTlPrincipal().getTlProcurarCliente().getX(), 10);
+			telaPrincipal.getTlPrincipal().getTlProcurarCliente()
+					.setLocation(telaPrincipal.getTlPrincipal().getTlProcurarCliente().getX(), 10);
 			telaPrincipal.getTlPrincipal().getTlProcurarCliente().setIsVenda(0);
-		}else{
-		for (Cliente cliente : clienteDao.todos()) {
-			if (cliente.getPessoa().getRg().equals(jtfRg.getText())) {
-				this.clienteEncontrado = cliente;
-				jtfNome.setText(cliente.getPessoa().getNome());
-				jtfCpf.setText(cliente.getPessoa().getCpf());
+		} else {
+			for (Cliente cliente : clienteDao.todos()) {
+				if (cliente.getPessoa().getRg().equals(jtfRg.getText())) {
+					this.clienteEncontrado = cliente;
+					jtfNome.setText(cliente.getPessoa().getNome());
+					jtfCpf.setText(cliente.getPessoa().getCpf());
+				}
 			}
-		}
 		}
 
 	}
-	
-	public void selecionouProprietario(Cliente cliente){
+
+	public void selecionouProprietario(Cliente cliente) {
 		this.clienteEncontrado = cliente;
 		jtfNome.setText(cliente.getPessoa().getNome());
 		jtfCpf.setText(cliente.getPessoa().getCpf());
 		jtfRg.setText(cliente.getPessoa().getRg());
 	}
 
-	private void salvarImovel(){
+	private void salvarImovel() {
 		jtfsValidar.add(jtfRua);
 		jtfsValidar.add(jtfNumero);
 		jtfsValidar.add(jtfBairro);
@@ -418,44 +423,47 @@ public class TelaCadastroImovel extends JInternalFrame implements ActionListener
 		jtfsValidar.add(jtfCep);
 		jtfsValidar.add(jtfNome);
 		jtfsValidar.add(jtfCpf);
+
 		Boolean camposPreenchidos = mc.verificaCampos(jtfsValidar, "cadastro_imovel");
 		if (camposPreenchidos == true) {
 			if ((jcbPossui.getSelectedIndex() >= 0) && (btgSelecionado)) {
-				Imovel imovel = new Imovel();
-				Endereco endereco = new Endereco();
-				Cliente cliente = clienteEncontrado;
+				CadastrarEndereco ce = new CadastrarEndereco();
+				String rua = jtfRua.getText();
+				String numero = jtfNumero.getText();
+				String bairro = jtfBairro.getText();
+				String cidade = jtfCidade.getText();
+				String uf = jtfUf.getText();
+				String cep = jtfCep.getText();
+				Endereco endereco = ce.salvarEndereco(rua, numero, bairro, cidade, uf, cep);
 
-				endereco.setId(enderecoDao.maiorId() + 1);
-				endereco.setRua(jtfRua.getText());
-				endereco.setNumero(jtfNumero.getText());
-				endereco.setBairro(jtfBairro.getText());
-				endereco.setCidade(jtfCidade.getText());
-				endereco.setUf(jtfUf.getText());
-				endereco.setCep(jtfCep.getText());
-				enderecoDao.inserir(endereco);	
-				imovel.setIdImovel(imovelDao.maiorId() + 1);
-				imovel.setMetrosquadrados(jtfMetrosQuadrados.getText());
-				imovel.setCliente(cliente);
+				String metrosQuadrados = jtfMetrosQuadrados.getText();
+				Cliente cliente = clienteEncontrado;
+				Double valorTotal = null;
+				Double valorMensal = null;
+				Integer mesesContrato = null;
 				if (jrbVender.isSelected()) {
-					imovel.setValorTotal(Double.valueOf(jtfValorTotal.getText()));
-					imovel.setValorMensal(0.0);
-					imovel.setMesesContrato(0);
+					valorTotal = Double.valueOf(jtfValorTotal.getText());
+					valorMensal = 0.0;
+					mesesContrato = 0;
 				} else if (jrbAlugar.isSelected()) {
-					imovel.setValorMensal(Double.valueOf(jtfValorMensal.getText()));
-					imovel.setMesesContrato(Integer.valueOf(jtfMesesContrato.getText()));
-					imovel.setValorTotal(0.0);
+					valorMensal = Double.valueOf(jtfValorMensal.getText());
+					mesesContrato = Integer.valueOf(jtfMesesContrato.getText());
+					valorTotal = 0.0;
 				}
-				imovel.setEndereco(endereco);
-				imovel.setImagem1(arquivo1.getAbsolutePath());
-				imovel.setImagem2(arquivo2.getAbsolutePath());
-				imovel.setImagem3(arquivo3.getAbsolutePath());
-				imovel.setImagem4(arquivo4.getAbsolutePath());
-				imovel.setDescricao1(jtfDescricao1.getText());
-				imovel.setDescricao2(jtfDescricao2.getText());
-				imovel.setDescricao3(jtfDescricao3.getText());
-				imovel.setPossui(jcbPossui.getSelectedIndex());
-				imovelDao.inserir(imovel);
-			}else {
+				
+				String imagem1 = arquivo1.getAbsolutePath();
+				String imagem2 = arquivo2.getAbsolutePath();
+				String imagem3 = arquivo3.getAbsolutePath();
+				String imagem4 = arquivo4.getAbsolutePath();
+				String descricao1 = jtfDescricao1.getText();
+				String descricao2 = jtfDescricao2.getText();
+				String descricao3 = jtfDescricao3.getText();
+	
+				Integer possui = jcbPossui.getSelectedIndex();
+				
+				CadastrarImovel ci = new CadastrarImovel();
+				ci.salvarImovel(rua, numero, bairro, cidade, uf, cep, metrosQuadrados, cliente, valorTotal, valorMensal, mesesContrato, endereco, imagem1, imagem2, imagem3, imagem4, descricao1, descricao2, descricao3, possui);
+			} else {
 				JOptionPane.showMessageDialog(null, "Defina o tipo do imóvel.");
 			}
 		}

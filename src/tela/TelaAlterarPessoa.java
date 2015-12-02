@@ -28,6 +28,9 @@ import dao.ClienteDAO;
 import dao.CorretorDAO;
 import dao.EnderecoDAO;
 import dao.PessoaDAO;
+import metodos.AlterarCliente;
+import metodos.AlterarCorretor;
+import metodos.AlterarPessoa;
 import pessoa.Cliente;
 import pessoa.Corretor;
 import pessoa.Endereco;
@@ -51,7 +54,7 @@ public class TelaAlterarPessoa extends JInternalFrame implements ActionListener 
 	private JPanel jpnInteresses;
 	private JLabel jlbInteresses;
 	private JTextField jtfInteresse1, jtfInteresse2, jtfInteresse3;
- 
+
 	private JPanel jpnInfoCorretor;
 	private JLabel jlbSalario, jlbComissao;
 	private JTextField jtfSalario, jtfComissao;
@@ -59,7 +62,6 @@ public class TelaAlterarPessoa extends JInternalFrame implements ActionListener 
 	private JButton jbtAjuda, jbtSalvar, jbtCancelar;
 
 	private PessoaDAO pessoaDao = DaoFactoryJDBC.get().pessoaDAO();
-	private EnderecoDAO enderecoDao = DaoFactoryJDBC.get().enderecoDAO();
 	private ClienteDAO clienteDao = DaoFactoryJDBC.get().clienteDAO();
 	private CorretorDAO corretorDao = DaoFactoryJDBC.get().corretorDAO();
 
@@ -299,43 +301,14 @@ public class TelaAlterarPessoa extends JInternalFrame implements ActionListener 
 		return passou;
 	}
 
-	private Pessoa alteraPessoaEndereco() {
-		Date data = null;
-		try {
-			data = new SimpleDateFormat("yyyy-MM-dd").parse(jtfDataNascimento.getText());
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-
-		Pessoa pessoa = pessoaDao.buscar(idPessoa);
-		pessoa.setNome(jtfNome.getText());
-		pessoa.setRg(jtfRg.getText());
-		pessoa.setCpf(jtfCpf.getText());
-		pessoa.setDataNascimento(data);
-		pessoa.setGenero(jtfGenero.getText());
-		pessoa.setEstadoCivil(jcbEstadoCivil.getSelectedItem().toString());
-		pessoa.setTelefoneResidencial(jtfTelefoneResidencial.getText());
-		pessoa.setTelefoneCelular(jtfTelefoneCelular.getText());
-		pessoa.setEmail(jtfEmail.getText());
-
-		Endereco endereco = enderecoDao.buscar(pessoa.getEndereco().getId());
-		endereco.setRua(jtfRua.getText());
-		endereco.setNumero(jtfNumero.getText());
-		endereco.setBairro(jtfBairro.getText());
-		endereco.setCidade(jtfCidade.getText());
-		endereco.setUf(jtfUf.getText());
-		endereco.setCep(jtfCep.getText());
-		enderecoDao.alterar(endereco);
-
-		pessoa.setEndereco(endereco);
-		pessoaDao.alterar(pessoa);
-
-		return pessoa;
-	}
-
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == jbtSalvar) {
-			salvarAlteracoes();
+			try {
+				salvarAlteracoes();
+			} catch (ParseException e1) {
+
+				e1.printStackTrace();
+			}
 		}
 		if (e.getSource() == jbtAjuda) {
 			botaoAjuda();
@@ -359,7 +332,7 @@ public class TelaAlterarPessoa extends JInternalFrame implements ActionListener 
 
 	}
 
-	private void salvarAlteracoes() {
+	private void salvarAlteracoes() throws ParseException {
 		ArrayList<JTextField> jtf = new ArrayList<>();
 		jtf.add(jtfNome);
 		jtf.add(jtfRg);
@@ -370,34 +343,32 @@ public class TelaAlterarPessoa extends JInternalFrame implements ActionListener 
 		Boolean camposOk = verificaCampos(jtf);
 
 		if (camposOk) {
-			if (tipo.equals("CLIENTE")) {
-				Pessoa pessoa = alteraPessoaEndereco();
-				Cliente cliente = new Cliente();
-				for (Cliente cliente1 : clienteDao.todos()) {
-					if (cliente1.getPessoa().getId() == idPessoa) {
-						cliente.setIdCliente(cliente1.getIdCliente());
-						cliente.setInteresse1(jtfInteresse1.getText());
-						cliente.setInteresse2(jtfInteresse2.getText());
-						cliente.setInteresse3(jtfInteresse3.getText());
-					}
-				}
-				clienteDao.alterar(cliente);
-				JOptionPane.showMessageDialog(null, "Cliente alterado com sucesso!", "Sucesso!",
-						JOptionPane.PLAIN_MESSAGE);
+			String nome = jtfNome.getText();
+			String rg = jtfRg.getText();
+			String cpf = jtfCpf.getText();
+			Date dataNascimento = new SimpleDateFormat("yyyy-MM-dd").parse(jtfDataNascimento.getText());
+			String genero = jtfGenero.getText();
+			String estadoCivil = jcbEstadoCivil.getSelectedItem().toString();
+			String telefoneResidencial = jtfTelefoneResidencial.getText();
+			String telefoneCelular = jtfTelefoneCelular.getText();
+			String email = jtfEmail.getText();
 
+			if (tipo.equals("CLIENTE")) {
+				String interesse1 = jtfInteresse1.getText();
+				String interesse2 = jtfInteresse2.getText();
+				String interesse3 = jtfInteresse3.getText();
+
+				AlterarCliente ac = new AlterarCliente();
+				ac.alterarCliente(idPessoa, nome, rg, cpf, dataNascimento, genero, estadoCivil, telefoneResidencial,
+						telefoneCelular, email, interesse1, interesse2, interesse3);
 			}
 			if (tipo.equals("CORRETOR")) {
-				Pessoa pessoa = alteraPessoaEndereco();
-				Corretor corretor = new Corretor();
-				for (Corretor corretor1 : corretorDao.todos()) {
-					if (corretor1.getPessoa().getId() == idPessoa) {
-						corretor.setIdCorretor(corretor1.getIdCorretor());
-						corretor.setSalario(Double.valueOf(jtfSalario.getText()));
-					}
-				}
-				corretorDao.alterar(corretor);
-				JOptionPane.showMessageDialog(null, "Corretor alterado com sucesso!", "Sucesso!",
-						JOptionPane.PLAIN_MESSAGE);
+				Double salario = Double.valueOf(jtfSalario.getText());
+
+				AlterarCorretor ac = new AlterarCorretor();
+				ac.alterarCorretor(idPessoa, nome, rg, cpf, dataNascimento, genero, estadoCivil, telefoneResidencial,
+						telefoneCelular, email, salario);
+
 			}
 			telaPrincipal.getTlPrincipal().getTlAlterarPessoa().setVisible(false);
 			telaPrincipal.getTlPrincipal().getTlListaPessoas().setVisible(true);
@@ -408,7 +379,8 @@ public class TelaAlterarPessoa extends JInternalFrame implements ActionListener 
 
 	public void preencherCampos(Integer idPessoa, String tipo) {
 		this.idPessoa = idPessoa;
-		this.tipo = tipo;
+		this.tipo = tipo.toUpperCase();
+
 		Pessoa pessoa = pessoaDao.buscar(idPessoa);
 		jtfNome.setText(pessoa.getNome());
 		jtfRg.setText(pessoa.getRg());

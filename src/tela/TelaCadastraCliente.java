@@ -19,10 +19,9 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.text.MaskFormatter;
 
-import DAOFactory.DaoFactoryJDBC;
-import dao.ClienteDAO;
-import dao.EnderecoDAO;
-import dao.PessoaDAO;
+import metodos.CadastrarCliente;
+import metodos.CadastrarEndereco;
+import metodos.CadastrarPessoa;
 import pessoa.Cliente;
 import pessoa.Endereco;
 import pessoa.Pessoa;
@@ -51,9 +50,6 @@ public class TelaCadastraCliente extends JInternalFrame implements ActionListene
 	private JPanel jpnCadastrar;
 	private JButton jbtSalvar, jbtLimpar;
 	private ArrayList<JTextField> jtfsValidar = new ArrayList<>();
-	private PessoaDAO pessoaDao = DaoFactoryJDBC.get().pessoaDAO();
-	private EnderecoDAO enderecoDao = DaoFactoryJDBC.get().enderecoDAO();
-	private ClienteDAO clienteDao = DaoFactoryJDBC.get().clienteDAO();
 	private CriarCamponentes cp = new CriarCamponentes();
 	private MetodosCheck mc = new MetodosCheck();
 	private MensagemSucesso ms = new MensagemSucesso();
@@ -225,67 +221,54 @@ public class TelaCadastraCliente extends JInternalFrame implements ActionListene
 		if(e.getSource() == jbtLimpar){
 			
 		}
-	}
-
-	private void salvarCliente() {
-		jtfsValidar.add(jtfNome);
-		jtfsValidar.add(jtfRg);
-		jtfsValidar.add(jtfCpf);		
-		Boolean camposPreenchidos = mc.verificaCampos(jtfsValidar, "cadastro_cliente");
-		if (camposPreenchidos == true) {
-			Pessoa pessoa = cadastrarPessoaEndereco();
-			Cliente cliente = new Cliente(pessoa, clienteDao.maiorId() + 1);
-			cliente.setInteresse1(jtfInteresse1.getText());
-			cliente.setInteresse2(jtfInteresse2.getText());
-			cliente.setInteresse3(jtfInteresse3.getText());
-			clienteDao.inserir(cliente);
-			ms.sucessoCadastrarCliente();
-
-		}
-	}
-
-	private Pessoa cadastrarPessoaEndereco() {
-		Date data = null;
-		try {
-			data = new SimpleDateFormat("yyyy-MM-dd").parse(jtfDataNascimento.getText());
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-
-		Pessoa pessoa = new Pessoa();
-		pessoa.setId(pessoaDao.maiorId() + 1);
-		pessoa.setNome(jtfNome.getText());
-		pessoa.setRg(jtfRg.getText());
-		pessoa.setCpf(jtfCpf.getText());
-		pessoa.setDataNascimento(data);
-		pessoa.setGenero(jtfGenero.getText());
-		pessoa.setEstadoCivil(jcbEstadoCivil.getSelectedItem().toString());
-		pessoa.setTelefoneResidencial(jtfTelefoneResidencial.getText());
-		pessoa.setTelefoneCelular(jtfTelefoneCelular.getText());
-		pessoa.setEmail(jtfEmail.getText());
-
-		Endereco endereco = new Endereco();
-		endereco.setId(enderecoDao.maiorId() + 1);
-		endereco.setRua(jtfRua.getText());
-		endereco.setNumero(jtfNumero.getText());
-		endereco.setBairro(jtfBairro.getText());
-		endereco.setCidade(jtfCidade.getText());
-		endereco.setUf(jtfUf.getText());
-		endereco.setCep(jtfCep.getText());
-		enderecoDao.inserir(endereco);
-
-		pessoa.setEndereco(endereco);
-		pessoaDao.inserir(pessoa);
-
-		return pessoa;
-	}
-
+	}	
+	
 	private void botaoAjuda() {
 		ma.ajudaCadastroClienteInteresses();
 	}
 
 	public static void main(String[] args) {
 		new TelaCadastraCliente();
+	}
+	
+	private void salvarCliente() {
+		jtfsValidar.add(jtfNome);
+		jtfsValidar.add(jtfRg);
+		jtfsValidar.add(jtfCpf);		
+		Boolean camposPreenchidos = mc.verificaCampos(jtfsValidar, "cadastro_cliente");
+		if (camposPreenchidos == true) {
+			try {
+				String nome = jtfNome.getText();
+				String rg = jtfRg.getText();
+				String cpf = jtfCpf.getText();
+				Date dataNascimento = new SimpleDateFormat("yyyy-MM-dd").parse(jtfDataNascimento.getText());
+				String genero = jtfGenero.getText();
+				String estadoCivil = jcbEstadoCivil.getSelectedItem().toString();
+				String telefoneResidencial = jtfTelefoneResidencial.getText();
+				String telefoneCelular = jtfTelefoneCelular.getText();
+				String email = jtfEmail.getText();
+				String rua = jtfRua.getText();
+				String numero = jtfNumero.getText();
+				String bairro  = jtfBairro.getText();
+				String cidade = jtfCidade.getText();
+				String uf = jtfUf.getText();
+				String cep = jtfCep.getText();
+				String interesse1 = jtfInteresse1.getText();
+				String interesse2 = jtfInteresse2.getText();
+				String interesse3 = jtfInteresse3.getText();
+				
+				CadastrarEndereco ce = new CadastrarEndereco();
+				Endereco endereco = ce.salvarEndereco(rua, numero, bairro, cidade, uf, cep);
+				CadastrarPessoa cp = new CadastrarPessoa();
+				Pessoa pessoa = cp.salvarPessoa(nome, rg, cpf, dataNascimento, genero, estadoCivil, telefoneResidencial, telefoneCelular, email,  endereco);
+				CadastrarCliente cc = new CadastrarCliente();
+				Cliente cliente = cc.salvarCliente(pessoa, interesse1, interesse2, interesse3);
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			ms.sucessoCadastrarCliente();
+
+		}
 	}
 
 }

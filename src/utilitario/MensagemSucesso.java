@@ -18,5 +18,19 @@ public class MensagemSucesso {
 				JOptionPane.PLAIN_MESSAGE);
 	}
 	
+	public void sucessoAlterarCliente(){
+		JOptionPane.showMessageDialog(null, 
+				"Cliente alterado com sucesso!", 
+				"Sucesso!",
+				JOptionPane.PLAIN_MESSAGE);
+	}
+	
+	public void sucessoAlterarCorretor(){
+		JOptionPane.showMessageDialog(null, 
+				"Corretor alterado com sucesso!", 
+				"Sucesso!",
+				JOptionPane.PLAIN_MESSAGE);
+	}
+	
 	
 }

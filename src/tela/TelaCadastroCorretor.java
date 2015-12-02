@@ -27,6 +27,11 @@ import dao.CorretorDAO;
 import dao.EnderecoDAO;
 import dao.PessoaDAO;
 import dao.UsuarioDAO;
+import metodos.CadastrarCliente;
+import metodos.CadastrarCorretor;
+import metodos.CadastrarEndereco;
+import metodos.CadastrarPessoa;
+import pessoa.Cliente;
 import pessoa.Corretor;
 import pessoa.Endereco;
 import pessoa.Pessoa;
@@ -232,49 +237,19 @@ public class TelaCadastroCorretor extends JInternalFrame implements ActionListen
 
 	}
 
-	private Pessoa cadastrarPessoaEndereco() {
-		Date data = null;
-		try {
-			data = new SimpleDateFormat("yyyy-MM-dd").parse(jtfDataNascimento.getText());
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-
-		Pessoa pessoa = new Pessoa();
-		pessoa.setId(pessoaDao.maiorId() + 1);
-		pessoa.setNome(jtfNome.getText());
-		pessoa.setRg(jtfRg.getText());
-		pessoa.setCpf(jtfCpf.getText());
-		pessoa.setDataNascimento(data);
-		pessoa.setGenero(jtfGenero.getText());
-		pessoa.setEstadoCivil(jcbEstadoCivil.getSelectedItem().toString());
-		pessoa.setTelefoneResidencial(jtfTelefoneResidencial.getText());
-		pessoa.setTelefoneCelular(jtfTelefoneCelular.getText());
-		pessoa.setEmail(jtfEmail.getText());
-
-		Endereco endereco = new Endereco();
-		endereco.setId(enderecoDao.maiorId() + 1);
-		endereco.setRua(jtfRua.getText());
-		endereco.setNumero(jtfNumero.getText());
-		endereco.setBairro(jtfBairro.getText());
-		endereco.setCidade(jtfCidade.getText());
-		endereco.setUf(jtfUf.getText());
-		endereco.setCep(jtfCep.getText());
-		enderecoDao.inserir(endereco);
-
-		pessoa.setEndereco(endereco);
-		pessoaDao.inserir(pessoa);
-
-		return pessoa;
-	}
 
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == jbtSalvar) {
-			salvarCorretor();
+			try {
+				salvarCorretor();
+			} catch (ParseException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 	}
 
-	private void salvarCorretor() {
+	private void salvarCorretor() throws ParseException {
 		jtfsValidar.add(jtfNome);
 		jtfsValidar.add(jtfRg);
 		jtfsValidar.add(jtfCpf);
@@ -295,13 +270,32 @@ public class TelaCadastroCorretor extends JInternalFrame implements ActionListen
 		jtfsValidar.add(jtfSenha);
 		Boolean camposPreenchidos = mc.verificaCampos(jtfsValidar, "cadastro_corretor");
 		if (camposPreenchidos == true) {
-			Pessoa pessoa = cadastrarPessoaEndereco();
-			Corretor corretor = new Corretor(pessoa, corretorDao.maiorId() + 1, Double.valueOf(jtfSalario.getText()));
-			corretorDao.inserir(corretor);
-			Usuario usuario = new Usuario(1, jtfUsuario.getText(), jtfSenha.getText(), corretor, 1);
-			usuarioDao.inserir(usuario);
-			ms.sucessoCadastrarCorretor();
-
+			String nome = jtfNome.getText();
+			String rg = jtfRg.getText();
+			String cpf = jtfCpf.getText();
+			Date dataNascimento = new SimpleDateFormat("yyyy-MM-dd").parse(jtfDataNascimento.getText());
+			String genero = jtfGenero.getText();
+			String estadoCivil = jcbEstadoCivil.getSelectedItem().toString();
+			String telefoneResidencial = jtfTelefoneResidencial.getText();
+			String telefoneCelular = jtfTelefoneCelular.getText();
+			String email = jtfEmail.getText();
+			String rua = jtfRua.getText();
+			String numero = jtfNumero.getText();
+			String bairro  = jtfBairro.getText();
+			String cidade = jtfCidade.getText();
+			String uf = jtfUf.getText();
+			String cep = jtfCep.getText();
+			Double salario =  Double.valueOf(jtfSalario.getText());
+			String login = jtfUsuario.getText();
+			String senha = jtfSenha.getText();
+			Integer nivelAcesso = 0; //cadastra como gestor
+			
+			CadastrarEndereco ce = new CadastrarEndereco();
+			Endereco endereco = ce.salvarEndereco(rua, numero, bairro, cidade, uf, cep);
+			CadastrarPessoa cp = new CadastrarPessoa();
+			Pessoa pessoa = cp.salvarPessoa(nome, rg, cpf, dataNascimento, genero, estadoCivil, telefoneResidencial, telefoneCelular, email,  endereco);
+			CadastrarCorretor cc = new CadastrarCorretor();
+			Corretor corretor = cc.salvarCorretor(pessoa, salario, login, senha, nivelAcesso);
 		}
 
 	}

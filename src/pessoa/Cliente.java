@@ -7,10 +7,13 @@ public class Cliente {
 	private String interesse2;
 	private String interesse3;
 
-	public Cliente(Pessoa pessoa, Integer idCliente) {
+	public Cliente(Pessoa pessoa, Integer idCliente, String interesse1, String interesse2, String interesse3) {
 		super();
 		this.pessoa = pessoa;
 		this.idCliente = idCliente;
+		this.interesse1 = interesse1;
+		this.interesse2 = interesse2;
+		this.interesse3 = interesse3;
 	}
 
 	public Cliente() {
