@@ -20,12 +20,8 @@ import javax.swing.JTextField;
 
 import DAOFactory.DaoFactoryJDBC;
 import dao.EnderecoDAO;
-import dao.ImovelDAO;
 import imovel.Imovel;
 import metodos.AlterarImovel;
-import metodos.CadastrarEndereco;
-import metodos.CadastrarImovel;
-import pessoa.Cliente;
 import pessoa.Endereco;
 import utilitario.CriarCamponentes;
 import utilitario.MensagemAjuda;
@@ -72,7 +68,6 @@ public class TelaAlterarImovel extends JInternalFrame implements ActionListener 
 	private JComboBox<String> jcbPossui;
 	private Endereco enderecoAlterar;
 	private EnderecoDAO enderecoDao = DaoFactoryJDBC.get().enderecoDAO();
-	private ImovelDAO imovelDao = DaoFactoryJDBC.get().imovelDAO();
 	private MetodosCheck mc = new MetodosCheck();
 	private MensagemAjuda ma = new MensagemAjuda();
 

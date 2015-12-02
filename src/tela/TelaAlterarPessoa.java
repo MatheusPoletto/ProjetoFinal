@@ -26,14 +26,12 @@ import javax.swing.text.MaskFormatter;
 import DAOFactory.DaoFactoryJDBC;
 import dao.ClienteDAO;
 import dao.CorretorDAO;
-import dao.EnderecoDAO;
 import dao.PessoaDAO;
 import metodos.AlterarCliente;
 import metodos.AlterarCorretor;
-import metodos.AlterarPessoa;
+
 import pessoa.Cliente;
 import pessoa.Corretor;
-import pessoa.Endereco;
 import pessoa.Pessoa;
 
 public class TelaAlterarPessoa extends JInternalFrame implements ActionListener {
