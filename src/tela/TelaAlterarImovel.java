@@ -22,6 +22,10 @@ import DAOFactory.DaoFactoryJDBC;
 import dao.EnderecoDAO;
 import dao.ImovelDAO;
 import imovel.Imovel;
+import metodos.AlterarImovel;
+import metodos.CadastrarEndereco;
+import metodos.CadastrarImovel;
+import pessoa.Cliente;
 import pessoa.Endereco;
 import utilitario.CriarCamponentes;
 import utilitario.MensagemAjuda;
@@ -326,6 +330,42 @@ public class TelaAlterarImovel extends JInternalFrame implements ActionListener 
 	}
 
 	private void salvarAlteracoes() {
+		CadastrarEndereco ce = new CadastrarEndereco();
+		String rua = jtfRua.getText();
+		String numero = jtfNumero.getText();
+		String bairro = jtfBairro.getText();
+		String cidade = jtfCidade.getText();
+		String uf = jtfUf.getText();
+		String cep = jtfCep.getText();
+		Endereco endereco = ce.salvarEndereco(rua, numero, bairro, cidade, uf, cep);
+
+		String metrosQuadrados = jtfMetrosQuadrados.getText();
+		Double valorTotal = null;
+		Double valorMensal = null;
+		Integer mesesContrato = null;
+		if (jrbVender.isSelected()) {
+			valorTotal = Double.valueOf(jtfValorTotal.getText());
+			valorMensal = 0.0;
+			mesesContrato = 0;
+		} else if (jrbAlugar.isSelected()) {
+			valorMensal = Double.valueOf(jtfValorMensal.getText());
+			mesesContrato = Integer.valueOf(jtfMesesContrato.getText());
+			valorTotal = 0.0;
+		}
+		
+		String imagem1 = arquivo1.getAbsolutePath();
+		String imagem2 = arquivo2.getAbsolutePath();
+		String imagem3 = arquivo3.getAbsolutePath();
+		String imagem4 = arquivo4.getAbsolutePath();
+		String descricao1 = jtfDescricao1.getText();
+		String descricao2 = jtfDescricao2.getText();
+		String descricao3 = jtfDescricao3.getText();
+
+		Integer possui = jcbPossui.getSelectedIndex();
+		
+		AlterarImovel ai = new AlterarImovel();
+		ai.salvarImovel(rua, numero, bairro, cidade, uf, cep, metrosQuadrados, valorTotal, valorMensal, mesesContrato, endereco, imagem1, imagem2, imagem3, imagem4, descricao1, descricao2, descricao3, possui);
+		
 		enderecoAlterar.setRua(jtfRua.getText());
 		enderecoAlterar.setBairro(jtfBairro.getText());
 		enderecoAlterar.setNumero(jtfNumero.getText());

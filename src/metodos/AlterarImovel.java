@@ -12,7 +12,7 @@ public class AlterarImovel {
 
 	
 	public void alterarImovel(String rua, String numero, String bairro, String cidade, String uf, String cep,
-			String metrosQuadrados, Cliente cliente, Double valorTotal, Double valorMensal, Integer mesesContrato,
+			String metrosQuadrados, Double valorTotal, Double valorMensal, Integer mesesContrato,
 			Endereco endereco, String imagem1, String imagem2, String imagem3, String imagem4, String descricao1,
 			String descricao2, String descricao3, Integer possui) {
 
