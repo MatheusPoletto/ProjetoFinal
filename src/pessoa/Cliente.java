@@ -5,7 +5,7 @@ public class Cliente {
 	private Integer idCliente;
 	private String interesse1;
 	private String interesse2;
-	private String interesse3;
+	private String interesse3; 
 
 	public Cliente(Pessoa pessoa, Integer idCliente, String interesse1, String interesse2, String interesse3) {
 		super();
