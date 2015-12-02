@@ -1,0 +1,260 @@
+body{
+	margin:0 ; 
+	padding: 0 ; 
+		background-color:  #FBFBFB; 
+}
+
+h1{
+	text-align: center;
+	font-family: Verdana;
+}
+
+
+
+
+.topodobanner{
+	
+	background-color:  #21B7C6; 
+	height: 75px; 
+	width: 100%; 
+	
+	
+}
+.topodobanner img {
+	margin-left: 200px; 
+	
+	height: 70px; 
+	
+}
+.texto{
+	
+	float: right; 
+	color: white; 
+	margin-right: 50px;
+	text-align: center; 
+	font-family: verdana;
+	font-size: 20px; 
+	font-weight: lighter;
+}
+
+.topomenu{
+	
+	background-color: #00A0B0;
+	height: 75px; 
+	width: 100%; 
+	float: left; 
+}
+.topomenu li {
+	margin-left: 5px; 
+	text-align: center; 
+	padding: 5px 30px; 
+float: left; 
+display: block; 
+	
+
+	
+
+	
+}
+.topomenu a{
+	color: white; 
+	text-decoration: none; 
+	font-weight: 600;
+	font-family: verdana; 
+	font-size: 20px; 
+}
+
+.topomenu input{
+	margin-top: 5px; 
+	height: 30px; 
+	width: 200px; 
+
+	margin-right: 10px; 
+	border-radius: 70px; 
+	color: #ccc; 
+	font-size: 15px; 
+	font-family: verdana; 
+	
+}
+
+
+.cont{
+
+	
+	width: 100%;
+	height: 800px; 
+	float: left; 
+font-size: 20px; 
+border-bottom: solid 2px #333333;
+}
+
+.cont p{
+	
+	font-family: Helvetica; 
+}
+
+
+.inputs {
+	margin-left: 10%; 
+	
+	width: 40%;
+	height: 550px; 
+	float: left; 
+	padding: 10,  10,  10,  10; 
+	
+}
+
+.inputs input{
+	width: 400px; 
+	height: 35px; 
+	border-radius: 4px; 
+	
+}
+.inputs textarea{
+	width: 400px;
+	height: 100px;
+	border: solid 1px; 
+}
+
+.inputs button{
+	width: 200px;
+	height: 50px; 
+	margin-left: 25%; 
+	text-align: center; 
+	
+}
+
+.localizacao{
+	
+	width: 50%;
+	float: left;
+	height: 650px; 
+	
+}
+
+.localizacao p{
+	margin-top: 9%;
+	text-align: center;
+}
+
+.loc1{
+	
+	margin-top: 2%;
+	width: 50%;
+	float: left;
+	margin-left: 25%;  
+	height: 15%;
+	background: #21B7C6;
+}
+.loc1 p{
+	
+	text-align: center; 
+	font-size: 15px;
+}
+
+.loc2{
+	
+margin-top: 10%;
+	width: 50%;
+	margin-left: 25%;
+	height: 70%;
+	background:  #00A0B0;
+}
+.loc2 p{
+	font-family: sans-serif;
+	font-size: 15px; 
+}
+
+iframe{
+	width: 100%;
+	height: 200px;
+}
+
+
+
+
+
+
+
+
+
+
+.empresadobem{
+	
+margin-top: 70%;
+	width: 100%; 
+	height: 250px; 
+
+}
+
+.empresa1{
+	width: 33%;
+	height: 250px;
+
+	float: left; 
+}
+.empresa2{
+	width: 33%;
+	height: 250px;
+	
+	float: left; 
+}
+
+.empresa3{
+	width: 34%;
+	height: 250px;
+	
+	float: left; 
+}
+.empresadobem img{
+	width: 250px; 
+	height: 150px; 
+	
+}
+
+.empresadobem p{
+	text-align: center; 
+}
+
+
+.redessociais{
+	
+	margin-top: 0px; 
+	height: 220px; 
+	width: 100%; 
+background-color:  #FBFBFB; 
+float: left; 
+
+}
+
+.facebook{
+	width: 50%;
+	height: 150px; 
+	float: left; 
+	
+	
+}
+
+.youtube{
+	height: 150px; 
+	width: 50%;
+	float: left; 
+	
+	
+}
+
+.facebook, .youtube p{
+	text-align: center; 
+	font-family: Verdana; 
+	font-size: 18px; 
+	
+}
+
+
+.rodape{
+	text-align: center;
+}
+hr{
+	border: solid  1px #333333;
+	color: red;
+}

@@ -1,0 +1,249 @@
+body {
+	margin: 0;
+	padding: 0;
+	background-color: #FBFBFB;
+}
+
+h1 {
+	text-align: center;
+	font-family: Verdana;
+	color: #333333;
+}
+
+h2 {
+	text-align: center;
+	font-family: sans-serif;
+	color: #333333;
+}
+
+hr{
+	border: solid 1px;
+	color: #333333;
+}
+
+.topodobanner {
+
+	background-color: #21B7C6;
+	height: 75px;
+	width: 100%;
+}
+.topodobanner img {
+	margin-left: 200px;
+	height: 70px;
+}
+.texto {
+
+	float: right;
+	color: white;
+	margin-right: 50px;
+	text-align: center;
+	font-family: verdana;
+	font-size: 20px;
+	font-weight: lighter;
+}
+
+.topomenu {
+
+	background-color: #00A0B0;
+	height: 75px;
+	width: 100%;
+	float: left;
+}
+.topomenu li {
+	margin-left: 5px;
+	text-align: center;
+	padding: 5px 30px;
+	float: left;
+	display: block;
+}
+.topomenu a {
+	color: white;
+	text-decoration: none;
+	font-weight: 600;
+	font-family: verdana;
+	font-size: 20px;
+}
+
+.topomenu input {
+	margin-top: 5px;
+	height: 30px;
+	width: 200px;
+	margin-right: 10px;
+	border-radius: 70px;
+	color: #ccc;
+	font-size: 15px;
+	font-family: verdana;
+}
+
+.programador {
+	width: 100%;
+	height: 700px;
+	float: left;
+}
+
+.fotoprogramador {
+	width: 35%;
+	margin-left: 5%;
+	height: 300px;
+	float: left;
+}
+
+.sobreprogramador {
+	width: 50%;
+	height: 325px;
+	float: right;
+	margin-right: 5px;
+}
+
+.sobreprogramador {
+
+	text-align: center;
+	font-weight: bold;
+	font-size: verdana;
+}
+.fotoprogramador img {
+	width: 100%;
+	height: 300px;
+	border: solid 2px;
+}
+
+.fotoprogramador2 {
+	border: solid 2px;
+	width: 35%;
+	margin-top: 35px;
+	margin-left: 5%;
+	height: 300px;
+	float: left;
+}
+
+.sobreprogramador2 {
+	margin-top: 30px;
+	width: 50%;
+	height: 300px;
+	float: right;
+	margin-right: 5px;
+}
+
+.sobreprogramador img {
+	padding: 10px;
+	width: 60px;
+	height: 60px;
+}
+
+.sobreprogramador2 {
+
+	text-align: center;
+	font-weight: bold;
+	font-size: verdana;
+}
+
+.sobreprogramador2 img {
+	padding: 10px;
+	width: 60px;
+	height: 60px;
+}
+.fotoprogramador2 img {
+	width: 100%;
+	height: 300px;
+}
+
+.contato {
+	height: 250px;
+	width: 100%;
+	background-color: #FBFBFB;
+}
+
+.contato1 {
+	height: 250px;
+	width: 48%;
+	float: left;
+	margin-left: 10px;
+	text-align: center;
+}
+
+.contato2 {
+	margin-top: 10px;
+	height: 250px;
+	width: 50%;
+	float: left;
+}
+
+#nome, #email {
+	height: 30px;
+	width: 300px;
+}
+#deseja {
+	height: 100px;
+	width: 610px;
+}
+#enviar {
+	height: 50px;
+	width: 100px;
+	margin-left: 275px;
+}
+
+.empresadobem {
+
+	width: 100%;
+	height: 250px;
+}
+
+.empresa1 {
+	width: 33%;
+	height: 250px;
+	float: left;
+}
+.empresa2 {
+	width: 33%;
+	height: 250px;
+	float: left;
+}
+
+.empresa3 {
+	width: 34%;
+	height: 250px;
+	float: left;
+}
+.empresadobem img {
+	width: 250px;
+	height: 150px;
+}
+
+.empresadobem p {
+	text-align: center;
+}
+
+.redessociais {
+	margin-top: 0px;
+	height: 220px;
+	width: 100%;
+	background-color: #FBFBFB;
+	float: left; 
+	
+}
+
+.facebook {
+	width: 50%;
+	height: 150px;
+	float: left;
+}
+
+.youtube {
+	height: 150px;
+	width: 50%;
+	float: left;
+}
+
+.facebook, .youtube p {
+	text-align: center;
+	font-family: Verdana;
+	font-size: 18px;
+}
+
+.rodape {
+text-align: center;
+}
+
+#titulocolorido {
+
+}

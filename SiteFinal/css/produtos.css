@@ -1,0 +1,277 @@
+body{
+	margin:0 ; 
+	padding: 0 ; 
+		background-color:  #FBFBFB; 
+}
+
+h1{
+	color: #333333;
+}
+
+hr{
+	border: solid 1px;
+	color: #333333;
+}
+
+
+
+
+.topodobanner{
+	
+	background-color:  #21B7C6; 
+	height: 75px; 
+	width: 100%; 
+	
+	
+}
+.topodobanner img {
+	margin-left: 200px; 
+	
+	height: 70px; 
+	
+}
+.texto{
+	
+	float: right; 
+	color: white; 
+	margin-right: 50px;
+	text-align: center; 
+	font-family: verdana;
+	font-size: 20px; 
+	font-weight: lighter;
+}
+
+.topomenu{
+	
+	background-color: #00A0B0;
+	height: 75px; 
+	width: 100%; 
+	float: left; 
+}
+.topomenu li {
+	margin-left: 5px; 
+	text-align: center; 
+	padding: 5px 30px; 
+float: left; 
+display: block; 
+	
+
+	
+
+	
+}
+.topomenu a{
+	color: white; 
+	text-decoration: none; 
+	font-weight: 600;
+	font-family: verdana; 
+	font-size: 20px; 
+}
+
+.topomenu input{
+	margin-top: 5px; 
+	height: 30px; 
+	width: 200px; 
+
+	margin-right: 10px; 
+	border-radius: 70px; 
+	color: #ccc; 
+	font-size: 15px; 
+	font-family: verdana; 
+	
+}
+
+.produto{
+	margin-top: 90px; 
+	height: 500px; 
+	width: 100%;
+	
+}
+
+.produto h2, h3{
+	text-align: center; 
+}
+
+.fotoproduto{
+	
+	height: 400px;
+	width: 28%;
+	float: left;
+	
+}
+
+.fotoproduto p{
+	text-align: center;
+	margin-top: 125px;
+}
+
+.descricaoproduto{
+	
+	height: 400px;
+	width: 70%;
+	float: left;
+	
+}
+
+.descricaoproduto p {
+	text-align: center; 
+	font-family: verdana; 
+}
+
+.descricaoproduto li{
+	font-size: 17px; 
+}
+
+.breve{
+	height: 380px; 
+	width: 100%;
+	float: left; 
+	border-bottom: solid 2px #333333;
+}
+.fotobreve{
+	height: 300px;
+	width: 35%;
+	float: left; 
+	margin-left: 45px; 
+}
+
+.brevedescricao{
+	
+	height: 300px;
+	width: 60%;
+	float: left; 
+}
+
+.brevedescricao p{
+	text-align: center; 
+	font-family: verdana; 
+}
+
+#Justificado1, #Justificado2, #Justificado3{
+	text-align: justify;
+}
+.brevedescricao li{
+	font-size: 17px; 
+}
+
+.contato{
+	margin-top: 32%;
+	height: 250px; 
+	width: 100%;
+
+	background-color:  #FBFBFB; 
+}
+
+.contato1{
+	height: 250px; 
+	width: 48%;
+	
+	float: left; 
+	margin-left: 10px; 
+	text-align: center; 
+}
+
+.contato2{
+	margin-top: 10px; 
+	height: 250px; 
+	width: 50%;
+	
+	float: left; 
+}
+
+#nome, #email{
+	height: 30px; 
+	width: 300px; 
+}
+#deseja{
+	height: 100px; 
+	width: 610px; 
+	
+}
+#enviar {
+	height: 50px; 
+	width: 100px; 
+	margin-left: 275px;
+	
+	
+}
+
+
+
+
+
+.empresadobem{
+	border-top: solid 2px #333333;
+
+	width: 100%; 
+	height: 250px; 
+	
+}
+
+.empresa1{
+	width: 33%;
+	height: 250px;
+
+	float: left; 
+}
+.empresa2{
+	width: 33%;
+	height: 250px;
+	
+	float: left; 
+}
+
+.empresa3{
+	width: 34%;
+	height: 250px;
+	
+	float: left; 
+}
+.empresadobem img{
+	width: 250px; 
+	height: 150px; 
+	
+}
+
+.empresadobem p{
+	text-align: center; 
+}
+
+
+.redessociais{
+	border-top: solid 2px #333333;
+	margin-top: 0px; 
+	height: 220px; 
+	width: 100%; 
+background-color:  #FBFBFB; 
+float: left; 
+
+}
+
+.facebook{
+	width: 50%;
+	height: 150px; 
+	float: left; 
+	
+	
+}
+
+.youtube{
+	height: 150px; 
+	width: 50%;
+	float: left; 
+	
+	
+}
+
+.facebook, .youtube p{
+	text-align: center; 
+	font-family: Verdana; 
+	font-size: 18px; 
+	
+}
+
+.rodape{
+text-align: center;
+}
+
