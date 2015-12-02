@@ -33,22 +33,22 @@ public class telaPrincipal extends JFrame implements ActionListener {
 	private TelaProcurarCliente tlProcurarCliente = new TelaProcurarCliente();
 	private TelaAlterarImovel tlAlterarImovel = new TelaAlterarImovel();
 	private TelaAlterarNota tlAlterarNota = new TelaAlterarNota();
-	private TelaListaNota tlListaNota= new TelaListaNota();
+	private TelaListaNota tlListaNota = new TelaListaNota();
 	private telaLogin tlLogin = new telaLogin();
 	private TelaListaImovel tlListaImovel = new TelaListaImovel();
 	private TelaCadastroImovel tlCadastroImovel = new TelaCadastroImovel();
 	private TelaProcurarCorretor tlProcurarCorretor = new TelaProcurarCorretor();
 	private TelaCadastrarVenda tlCadastrarVenda = new TelaCadastrarVenda();
 	private static telaPrincipal tlPrincipal = new telaPrincipal();
-	
+
 	private JMenu jmnCadastro, jmnProcurar, jmnGerenciamento, jmnRelatorios, jmnSair, jmnVendas;
-	private JMenuItem  jmiCliente, jmiCorretor, jmiProcurarPessoa, jmiContaUsuario, jmiRelatorioCliente, jmiNotas,
+	private JMenuItem jmiCliente, jmiCorretor, jmiProcurarPessoa, jmiContaUsuario, jmiRelatorioCliente, jmiNotas,
 			jmiRelatorioCorretor, jmiProcurarImovel, jmiImovel;
 	private Usuario usuario;
 	private ArrayList<JInternalFrame> frames = new ArrayList<>();
 
 	telaPrincipal() {
-		setTitle("M&M Sistema Imobiliário");
+		setTitle("ImoSoft Imobiliárias");
 		setLayout(null);
 
 		criarBarra();
@@ -73,8 +73,7 @@ public class telaPrincipal extends JFrame implements ActionListener {
 		frames.add(tlAlterarNota);
 		frames.add(tlListaNota);
 		posicionaFrames(frames);
-		
-		
+
 	}
 
 	private void criarBarra() {
@@ -85,7 +84,7 @@ public class telaPrincipal extends JFrame implements ActionListener {
 		jmiImovel = new JMenuItem("Cadastro de imóvel");
 		jmiImovel.addActionListener(this);
 		jmnCadastro.add(jmiImovel);
-		
+
 		jmnCadastro.addSeparator();
 		jmiCliente = new JMenuItem("Cadastro de cliente");
 		jmnCadastro.add(jmiCliente);
@@ -104,15 +103,13 @@ public class telaPrincipal extends JFrame implements ActionListener {
 		jmnProcurar.addSeparator();
 		jmnProcurar.add(jmiProcurarImovel);
 		barra.add(jmnProcurar);
-		
+
 		jmnVendas = new JMenu("Vendas");
 		jmiNotas = new JMenuItem("Vendas/Notas Fiscais");
 		jmnVendas.add(jmiNotas);
 		jmiNotas.addActionListener(this);
-		
+
 		barra.add(jmnVendas);
-		
-		
 
 		jmnGerenciamento = new JMenu("Gerenciamento");
 		jmiContaUsuario = new JMenuItem("Contas de usuários");
@@ -180,8 +177,7 @@ public class telaPrincipal extends JFrame implements ActionListener {
 		tlPrincipal.setVisible(true);
 		barra.setVisible(true);
 	}
-	
-	
+
 	public TelaListaNota getTlListaNota() {
 		return tlListaNota;
 	}
@@ -201,7 +197,7 @@ public class telaPrincipal extends JFrame implements ActionListener {
 	public TelaCadastroCorretor getTlCadastroCorretor() {
 		return tlCadastroCorretor;
 	}
-	
+
 	public TelaListaImovel getTlListaImovel() {
 		return tlListaImovel;
 	}
@@ -246,11 +242,11 @@ public class telaPrincipal extends JFrame implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		if(e.getSource() == jmiProcurarImovel){
+		if (e.getSource() == jmiProcurarImovel) {
 			esconderTelas();
 			tlListaImovel.setVisible(true);
 		}
-		if(e.getSource() == jmiImovel){
+		if (e.getSource() == jmiImovel) {
 			esconderTelas();
 			tlCadastroImovel.setVisible(true);
 		}
@@ -258,8 +254,8 @@ public class telaPrincipal extends JFrame implements ActionListener {
 			esconderTelas();
 			tlCadastraCliente.setVisible(true);
 		}
-		
-		if (e.getSource() == jmiCorretor){
+
+		if (e.getSource() == jmiCorretor) {
 			esconderTelas();
 			tlCadastroCorretor.setVisible(true);
 		}
@@ -285,10 +281,12 @@ public class telaPrincipal extends JFrame implements ActionListener {
 		}
 
 		if (e.getSource() == jmiRelatorioCorretor) {
-			// aqui o que faz para gerar relatorio de corretores
+			Map<String, Object> parametros = new HashMap<String, Object>();
+			new RelatorioUtil().viewReport("src/relatorios/Cherry_Landscape_1.jasper", ConexaoUtil.getCon(),
+					parametros);
 		}
-		
-		if(e.getSource() == jmiNotas){
+
+		if (e.getSource() == jmiNotas) {
 			telaPrincipal.getTlPrincipal().esconderTelas();
 			telaPrincipal.getTlPrincipal().getTlListaNota().alimentarTabela();
 			telaPrincipal.getTlPrincipal().getTlListaNota().setVisible(true);

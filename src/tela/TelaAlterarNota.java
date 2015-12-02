@@ -103,7 +103,7 @@ public class TelaAlterarNota extends JInternalFrame implements ActionListener {
 	}
 
 	public TelaAlterarNota() {
-		setTitle("NOTA FISCAL");
+		setTitle("Nota Fiscal");
 		setLayout(null);
 
 		criarComponentes();

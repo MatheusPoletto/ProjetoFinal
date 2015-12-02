@@ -34,7 +34,7 @@ public class TelaProcurarCorretor extends JInternalFrame implements ActionListen
 	private CriarCamponentes cp = new CriarCamponentes();
 
 	public TelaProcurarCorretor() {
-		setTitle("Selecione proprietário");
+		setTitle("Selecione o proprietário");
 		setLayout(null);
 
 		jlbTitulo = cp.criarLabelTitulo("LOCALIZAR UM CORRETOR", 0, 0, 465, 44, jlbTitulo);

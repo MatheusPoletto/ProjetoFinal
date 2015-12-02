@@ -77,7 +77,7 @@ public class TelaAlterarImovel extends JInternalFrame implements ActionListener 
 	private MensagemAjuda ma = new MensagemAjuda();
 
 	public TelaAlterarImovel() {
-		setTitle("ALTERAR IMÓVEL");
+		setTitle("Alterar Imóvel");
 		setLayout(null);
 
 		jlbTitulo = cp.criarLabelTitulo("ALTERAÇÃO DE IMÓVEL", 0, 0, 707, 44, jlbTitulo);
@@ -101,7 +101,7 @@ public class TelaAlterarImovel extends JInternalFrame implements ActionListener 
 	}
 
 	private void criarComponentes() {
-		jbtSalvarAlteracoes = cp.criarBotao("SALVAR ALTERAÇÕES", 540, 473, 150, 27, jbtSalvarAlteracoes);
+		jbtSalvarAlteracoes = cp.criarBotao("SALVAR", 540, 473, 150, 27, jbtSalvarAlteracoes);
 		jbtCancelar = cp.criarBotao("CANCELAR", 440, 473, 100, 27, jbtCancelar);
 		jbtProcurar1 = cp.criarBotao("PROCURAR", 590, 0, 100, 24, jbtProcurar1);
 		jbtProcurar2 = cp.criarBotao("PROCURAR", 590, 0, 100, 24, jbtProcurar2);

@@ -57,7 +57,7 @@ public class TelaCadastrarVenda extends JInternalFrame implements ActionListener
 	private Corretor CorretorResponsavel;
 
 	public TelaCadastrarVenda() {
-		setTitle("CADASTRO DE VENDA");
+		setTitle("Cadastro de Venda");
 		setLayout(null);
 
 		jlbTitulo = cp.criarLabelTitulo("CADASTRO DE VENDA", 0, 0, 850, 44, jlbTitulo);

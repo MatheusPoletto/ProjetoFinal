@@ -55,7 +55,7 @@ public class TelaListaUsuario extends JInternalFrame implements ActionListener {
 	private Integer idUsuario;
 
 	public TelaListaUsuario() {
-		setTitle("Registro de usuarios");
+		setTitle("Registro de usuários");
 		setLayout(null);
 
 		jlbTitulo = new JLabel("Contas de usuário", SwingConstants.CENTER);

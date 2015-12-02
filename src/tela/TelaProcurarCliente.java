@@ -42,7 +42,7 @@ public class TelaProcurarCliente extends JInternalFrame implements ActionListene
 	}
 
 	public TelaProcurarCliente() {
-		setTitle("Selecione proprietário");
+		setTitle("Selecione o proprietário");
 		setLayout(null);
 
 		jlbTitulo = new JLabel("LOCALIZAR UM CLIENTE", SwingConstants.CENTER);

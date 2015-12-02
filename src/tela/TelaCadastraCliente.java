@@ -224,21 +224,22 @@ public class TelaCadastraCliente extends JInternalFrame implements ActionListene
 	}	
 	
 	private void limparCampos() {
-		jtfNome.setText("");
-		jtfRua.setText("");
-		jtfBairro.setText("");
-		jtfNumero.setText("");
-		jtfCidade.setText("");
-		jtfUf.setText("");
+		jtfNome.setText(" ");
+		jtfRua.setText(" ");
+		jtfBairro.setText(" ");
+		jtfNumero.setText(" ");
+		jtfCidade.setText(" ");
+		jtfUf.setText(" ");
 		jtfCep.setText("");
-		jtfDataNascimento.setText("");
-		jtfEmail.setText("");
-		jtfGenero.setText("");
-		jtfInteresse1.setText("");
-		jtfInteresse2.setText("");
-		jtfInteresse3.setText("");
-		jtfTelefoneCelular.setText("");
-		jtfTelefoneResidencial.setText("");
+		jtfDataNascimento.setText(" ");
+		jtfEmail.setText(" ");
+		jtfGenero.setText(" ");
+		jtfInteresse1.setText(" ");
+		jtfInteresse2.setText(" ");
+		jtfInteresse3.setText(" ");
+		jtfTelefoneCelular.setText(" ");
+		jtfTelefoneResidencial.setText(" ");
+		jtfDataNascimento.setText("2015-10-10");
 		
 	}
 

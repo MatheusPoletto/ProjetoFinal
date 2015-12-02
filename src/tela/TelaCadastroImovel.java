@@ -87,7 +87,7 @@ public class TelaCadastroImovel extends JInternalFrame implements ActionListener
 	private Boolean btgSelecionado = false;
 
 	public TelaCadastroImovel() {
-		setTitle("CADASTRO DE IMOVEL");
+		setTitle("Cadastro de Imóvel");
 		setLayout(null);
 
 		jlbTitulo = cp.criarLabelTitulo("CADASTRO DE IMÓVEL", 0, 0, 707, 44, jlbTitulo);
