@@ -330,15 +330,6 @@ public class TelaAlterarImovel extends JInternalFrame implements ActionListener 
 	}
 
 	private void salvarAlteracoes() {
-		CadastrarEndereco ce = new CadastrarEndereco();
-		String rua = jtfRua.getText();
-		String numero = jtfNumero.getText();
-		String bairro = jtfBairro.getText();
-		String cidade = jtfCidade.getText();
-		String uf = jtfUf.getText();
-		String cep = jtfCep.getText();
-		Endereco endereco = ce.salvarEndereco(rua, numero, bairro, cidade, uf, cep);
-
 		String metrosQuadrados = jtfMetrosQuadrados.getText();
 		Double valorTotal = null;
 		Double valorMensal = null;
@@ -364,7 +355,7 @@ public class TelaAlterarImovel extends JInternalFrame implements ActionListener 
 		Integer possui = jcbPossui.getSelectedIndex();
 		
 		AlterarImovel ai = new AlterarImovel();
-		ai.salvarImovel(rua, numero, bairro, cidade, uf, cep, metrosQuadrados, valorTotal, valorMensal, mesesContrato, endereco, imagem1, imagem2, imagem3, imagem4, descricao1, descricao2, descricao3, possui);
+		ai.alterarImovel(1, metrosQuadrados, valorTotal, valorMensal, mesesContrato, imagem1, imagem2, imagem3, imagem4, descricao1, descricao2, descricao3, possui);
 		
 		enderecoAlterar.setRua(jtfRua.getText());
 		enderecoAlterar.setBairro(jtfBairro.getText());

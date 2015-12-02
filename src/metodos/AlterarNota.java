@@ -1,13 +1,19 @@
 package metodos;
 
+import DAOFactory.DaoFactoryJDBC;
+import dao.NotaFiscalDAO;
+import dao.VendaDAO;
+import model.NotaFiscal;
+import model.Venda;
+
 public class AlterarNota {
 
-//CORRIGIR!
-  private NotaFiscalDAO nfDao = DAOFACTORYJDBC.get().notaFiscalDAO;
+	private NotaFiscalDAO nfDao = DaoFactoryJDBC.get().notaFiscalDAO();
+	private VendaDAO vendaoDao = DaoFactoryJDBC.get().vendaDAO();
 
-  public excluirNota(NotaFiscal nf, Venda venda){
-  	nfDao.excluir(nf);
-	  vendaDao.excluir(venda);
-  }
+	public void excluirNota(NotaFiscal nf, Venda venda) {
+		nfDao.excluir(nf);
+		vendaoDao.excluir(venda);
+	}
 
 }
