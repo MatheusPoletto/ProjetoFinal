@@ -1,6 +1,5 @@
 package utilitario;
 
-
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
@@ -11,7 +10,6 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -20,8 +18,8 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 public class CriarCamponentes {
-	
-	public JLabel criarLabelTitulo(String texto, Integer col, Integer lin, Integer lar, Integer alt, JLabel label){
+
+	public JLabel criarLabelTitulo(String texto, Integer col, Integer lin, Integer lar, Integer alt, JLabel label) {
 		label = new JLabel(texto, SwingConstants.CENTER);
 		label.setBounds(col, lin, lar, alt);
 		label.setVisible(true);
@@ -44,7 +42,7 @@ public class CriarCamponentes {
 		return panel;
 
 	}
-	
+
 	public JLabel criarLabel(String texto, Integer col, Integer lin, Integer lar, Integer alt, JLabel label) {
 		label = new JLabel(texto);
 		label.setBounds(col, lin, lar, alt);
@@ -52,8 +50,9 @@ public class CriarCamponentes {
 		return label;
 
 	}
-	
-	public JLabel criarLabelCentralizada(String texto, Integer col, Integer lin, Integer lar, Integer alt, JLabel label) {
+
+	public JLabel criarLabelCentralizada(String texto, Integer col, Integer lin, Integer lar, Integer alt,
+			JLabel label) {
 		label = new JLabel(texto, SwingConstants.CENTER);
 		label.setBounds(col, lin, lar, alt);
 		label.setVisible(true);
@@ -76,35 +75,37 @@ public class CriarCamponentes {
 		return button;
 
 	}
-	
-	public JRadioButton criarRadioButton(String texto, Integer col, Integer lin, Integer lar, Integer alt, JRadioButton radioButton){
+
+	public JRadioButton criarRadioButton(String texto, Integer col, Integer lin, Integer lar, Integer alt,
+			JRadioButton radioButton) {
 		radioButton = new JRadioButton(texto);
 		radioButton.setBounds(col, lin, lar, alt);
 		radioButton.setVisible(true);
 		return radioButton;
 	}
-	
-	public BufferedImage redimensionarImagem(String endereco, Integer larg, Integer altu){
+
+	public BufferedImage redimensionarImagem(String endereco, Integer larg, Integer altu) {
 		File arquivo = new File(endereco);
 		BufferedImage aux = null;
 		try {
 			BufferedImage bi;
 			bi = ImageIO.read(arquivo);
-			aux= new BufferedImage(larg, altu, bi.getType());
+			aux = new BufferedImage(larg, altu, bi.getType());
 			Graphics2D g = aux.createGraphics();
-			AffineTransform at = AffineTransform.getScaleInstance((double) larg / bi.getWidth(), (double) altu / bi.getHeight());
+			AffineTransform at = AffineTransform.getScaleInstance((double) larg / bi.getWidth(),
+					(double) altu / bi.getHeight());
 			g.drawRenderedImage(bi, at);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		return aux;
 	}
-	
-	public JButton alterarCorBotoes(JButton button){
+
+	public JButton alterarCorBotoes(JButton button) {
 		button.setBackground(new Color(23, 20, 20));
 		button.setForeground(Color.white);
 		return button;
 	}
-	
+
 }

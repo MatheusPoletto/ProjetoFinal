@@ -28,31 +28,23 @@ import dao.UsuarioDAO;
 import pessoa.Corretor;
 import pessoa.Pessoa;
 import pessoa.Usuario;
+import utilitario.CriarCamponentes;
 
 public class TelaListaUsuario extends JInternalFrame implements ActionListener {
-
 	private static final long serialVersionUID = 3808050315768550191L;
-
 	private JTable jtbUsuarios;
-
 	private DefaultTableModel dtbUsuarios;
-
 	private JScrollPane jspUsuarios;
-
 	private JLabel jlbTitulo, jlbSenha, jlbUsuario, jlbNivel;
 	private JTextField jtfUsuario, jtfSenha;
-
 	private JButton jbtEditar, jbtSalvar, jbtCancelar;
-
 	private UsuarioDAO usuarioDao = DaoFactoryJDBC.get().usuarioDAO();
 	private PessoaDAO pessoaDao = DaoFactoryJDBC.get().pessoaDAO();
 	private CorretorDAO corretorDao = DaoFactoryJDBC.get().corretorDAO();
-
 	private JComboBox<String> jcbNivel;
-
 	private JPanel jpnAlterar, jpnOpcoes;
-
 	private Integer idUsuario;
+	private CriarCamponentes cp = new CriarCamponentes();
 
 	public TelaListaUsuario() {
 		setTitle("Registro de usuários");
@@ -79,17 +71,17 @@ public class TelaListaUsuario extends JInternalFrame implements ActionListener {
 	}
 
 	private void criarComponentes() {
-		jbtEditar = criarBotao("EDITAR", 0, 324, 514, 30, jbtEditar);
-
+		jbtEditar = cp.criarBotao("EDITAR", 0, 324, 514, 30, jbtEditar);
 		jbtEditar.setBackground(new Color(23, 20, 21));
 		jbtEditar.setForeground(Color.white);
+		getContentPane().add(jbtEditar);
 
-		jlbUsuario = criarLabel("Login:", 10, 0, 100, 30, jlbUsuario);
-		jlbSenha = criarLabel("Senha:", 160, 0, 100, 30, jlbSenha);
-		jlbNivel = criarLabel("Acesso:", 280, 0, 100, 30, jlbNivel);
+		jlbUsuario = cp.criarLabel("Login:", 10, 0, 100, 30, jlbUsuario);
+		jlbSenha = cp.criarLabel("Senha:", 160, 0, 100, 30, jlbSenha);
+		jlbNivel = cp.criarLabel("Acesso:", 280, 0, 100, 30, jlbNivel);
 
-		jtfUsuario = criarTextField(50, 6, 100, 24, jtfUsuario);
-		jtfSenha = criarTextField(205, 6, 70, 24, jtfSenha);
+		jtfUsuario = cp.criarTextField(50, 6, 100, 24, jtfUsuario);
+		jtfSenha = cp.criarTextField(205, 6, 70, 24, jtfSenha);
 
 		jcbNivel = new JComboBox<>();
 		jcbNivel.setBounds(330, 6, 181, 24);
@@ -98,7 +90,7 @@ public class TelaListaUsuario extends JInternalFrame implements ActionListener {
 		jcbNivel.setVisible(true);
 		getContentPane().add(jcbNivel);
 
-		jpnAlterar = criarPanel("", 0, 324, 514, 35, jpnAlterar, false);
+		jpnAlterar = cp.criarPanel("", 0, 324, 514, 35, jpnAlterar, false);
 		jpnAlterar.add(jlbUsuario);
 		jpnAlterar.add(jtfUsuario);
 		jpnAlterar.add(jlbSenha);
@@ -106,9 +98,10 @@ public class TelaListaUsuario extends JInternalFrame implements ActionListener {
 		jpnAlterar.add(jlbNivel);
 		jpnAlterar.add(jcbNivel);
 		jpnAlterar.setBorder(BorderFactory.createLineBorder(new Color(23, 20, 20), 1));
+		getContentPane().add(jpnAlterar);
 
-		jbtSalvar = criarBotao("SALVAR", 5, 2, 100, 30, jbtSalvar);
-		jbtCancelar = criarBotao("CANCELAR", 105, 2, 100, 30, jbtCancelar);
+		jbtSalvar = cp.criarBotao("SALVAR", 5, 2, 100, 30, jbtSalvar);
+		jbtCancelar = cp.criarBotao("CANCELAR", 105, 2, 100, 30, jbtCancelar);
 
 		jbtSalvar.setBackground(new Color(23, 20, 20));
 		jbtSalvar.setForeground(Color.green);
@@ -116,10 +109,11 @@ public class TelaListaUsuario extends JInternalFrame implements ActionListener {
 		jbtCancelar.setBackground(new Color(23, 20, 20));
 		jbtCancelar.setForeground(Color.white);
 
-		jpnOpcoes = criarPanel("", 155, 360, 210, 35, jpnOpcoes, false);
+		jpnOpcoes = cp.criarPanel("", 155, 360, 210, 35, jpnOpcoes, false);
 		jpnOpcoes.add(jbtSalvar);
 		jpnOpcoes.add(jbtCancelar);
 		jpnOpcoes.setBorder(BorderFactory.createLineBorder(new Color(23, 20, 20), 1));
+		getContentPane().add(jpnOpcoes);
 
 	}
 
@@ -230,46 +224,6 @@ public class TelaListaUsuario extends JInternalFrame implements ActionListener {
 			jcbNivel.setSelectedIndex(usuario.getNivelAcesso());
 
 		}
-
-	}
-
-	private JButton criarBotao(String texto, Integer col, Integer lin, Integer lar, Integer alt, JButton button) {
-		button = new JButton(texto);
-		button.setBounds(col, lin, lar, alt);
-		button.addActionListener(this);
-		button.setVisible(true);
-		getContentPane().add(button);
-		return button;
-
-	}
-
-	private JLabel criarLabel(String texto, Integer col, Integer lin, Integer lar, Integer alt, JLabel label) {
-		label = new JLabel(texto);
-		label.setBounds(col, lin, lar, alt);
-		label.setVisible(true);
-		getContentPane().add(label);
-		return label;
-
-	}
-
-	private JTextField criarTextField(Integer col, Integer lin, Integer lar, Integer alt, JTextField textField) {
-		textField = new JTextField();
-		textField.setBounds(col, lin, lar, alt);
-		textField.setVisible(true);
-		getContentPane().add(textField);
-		return textField;
-
-	}
-
-	private JPanel criarPanel(String texto, Integer col, Integer lin, Integer lar, Integer alt, JPanel panel,
-			Boolean visibilidade) {
-		panel = new JPanel();
-		panel.setLayout(null);
-		panel.setBorder(BorderFactory.createTitledBorder(texto));
-		panel.setBounds(col, lin, lar, alt);
-		panel.setVisible(visibilidade);
-		getContentPane().add(panel);
-		return panel;
 
 	}
 

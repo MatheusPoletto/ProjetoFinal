@@ -1,7 +1,5 @@
 package metodos;
 
-import java.util.Date;
-
 import DAOFactory.DaoFactoryJDBC;
 import dao.ImobiliariaDAO;
 import dao.ImovelDAO;

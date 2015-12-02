@@ -26,7 +26,6 @@ import imovel.Imovel;
 import utilitario.CriarCamponentes;
 
 public class TelaListaImovel extends JInternalFrame implements ActionListener {
-
 	private static final long serialVersionUID = 1L;
 	private JLabel jlbTitulo;
 	private CriarCamponentes cp = new CriarCamponentes();
@@ -64,13 +63,13 @@ public class TelaListaImovel extends JInternalFrame implements ActionListener {
 		criarParteInferior();
 
 		alimentaTable();
-		
+
 		setClosable(true);
 		setResizable(false);
 		setSize(650, 550);
 		setVisible(true);
 		setDefaultCloseOperation(HIDE_ON_CLOSE);
-		
+
 	}
 
 	private void criarParteInferior() {
@@ -94,7 +93,7 @@ public class TelaListaImovel extends JInternalFrame implements ActionListener {
 		getContentPane().add(jbtVender);
 
 		jpnTipoVenda = cp.criarPanel("", 270, 10, 345, 230, jpnTipoVenda, true);
-		
+
 		jlbVenda = cp.criarLabelCentralizada("", 10, 5, 325, 24, jlbVenda);
 		jlbVendaPreco = cp.criarLabelCentralizada("", 10, 30, 325, 24, jlbVendaPreco);
 		jlbVendaRua = cp.criarLabelCentralizada("", 10, 70, 325, 24, jlbVendaPreco);
@@ -136,17 +135,17 @@ public class TelaListaImovel extends JInternalFrame implements ActionListener {
 		jbtRemover = cp.criarBotao("REMOVER", 523, 164, 110, 24, jbtRemover);
 		jbtAlterar = cp.criarBotao("ALTERAR", 523, 188, 110, 24, jbtAlterar);
 		jbtTodos = cp.criarBotao("ATUALIZAR", 523, 212, 110, 24, jbtTodos);
-		
+
 		jbtInfo = cp.alterarCorBotoes(jbtInfo);
 		jbtRemover = cp.alterarCorBotoes(jbtRemover);
 		jbtAlterar = cp.alterarCorBotoes(jbtAlterar);
 		jbtTodos = cp.alterarCorBotoes(jbtTodos);
-		
+
 		jbtInfo.addActionListener(this);
 		jbtRemover.addActionListener(this);
 		jbtAlterar.addActionListener(this);
 		jbtTodos.addActionListener(this);
-		
+
 		getContentPane().add(jbtInfo);
 		getContentPane().add(jbtRemover);
 		getContentPane().add(jbtAlterar);
@@ -183,9 +182,9 @@ public class TelaListaImovel extends JInternalFrame implements ActionListener {
 	private void criarPanelProcurar() {
 		jrbMetros = cp.criarRadioButton("m²", 250, 10, 100, 24, jrbMetros);
 		jrbValor = cp.criarRadioButton("Valor", 350, 10, 100, 24, jrbValor);
-		
+
 		jtfPesquisa = cp.criarTextField(185, 40, 250, 24, jtfPesquisa);
-		
+
 		jbtFiltrar = cp.criarBotao("Procurar", 435, 40, 100, 24, jbtFiltrar);
 		jbtFiltrar = cp.alterarCorBotoes(jbtFiltrar);
 		jbtFiltrar.addActionListener(this);
@@ -242,8 +241,8 @@ public class TelaListaImovel extends JInternalFrame implements ActionListener {
 		if (e.getSource() == jbtAlterar) {
 			alterar();
 		}
-		
-		if(e.getSource() == jbtVender){
+
+		if (e.getSource() == jbtVender) {
 			if (jtbImovel.getSelectedRow() == -1) {
 				JOptionPane.showMessageDialog(null, "Selecione um imóvel para vender!", "Erro",
 						JOptionPane.ERROR_MESSAGE);
@@ -253,29 +252,27 @@ public class TelaListaImovel extends JInternalFrame implements ActionListener {
 				telaPrincipal.getTlPrincipal().esconderTelas();
 				telaPrincipal.getTlPrincipal().getTlCadastrarVenda().setVisible(true);
 				telaPrincipal.getTlPrincipal().getTlCadastrarVenda().preencherCampos(imovel);
-				
+
 			}
 		}
 	}
 
 	private void alterar() {
 		if (jtbImovel.getSelectedRow() == -1) {
-			JOptionPane.showMessageDialog(null, "Selecione um imóvel para alterar!", "Erro",
-					JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Selecione um imóvel para alterar!", "Erro", JOptionPane.ERROR_MESSAGE);
 		} else {
 			String id = String.valueOf(dtbImovel.getValueAt(jtbImovel.getSelectedRow(), 0));
 			Imovel imovel = imovelDao.buscar(Integer.valueOf(id));
 			telaPrincipal.getTlPrincipal().esconderTelas();
 			telaPrincipal.getTlPrincipal().getTlAlterarImovel().setVisible(true);
-			telaPrincipal.getTlPrincipal().getTlAlterarImovel().preencherCampos(imovel);			
+			telaPrincipal.getTlPrincipal().getTlAlterarImovel().preencherCampos(imovel);
 		}
-		
+
 	}
 
 	private void remover() {
 		if (jtbImovel.getSelectedRow() == -1) {
-			JOptionPane.showMessageDialog(null, "Selecione um imóvel para remover!", "Erro",
-					JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Selecione um imóvel para remover!", "Erro", JOptionPane.ERROR_MESSAGE);
 		} else {
 			String id = String.valueOf(dtbImovel.getValueAt(jtbImovel.getSelectedRow(), 0));
 			Imovel imovel = imovelDao.buscar(Integer.valueOf(id));
@@ -283,13 +280,12 @@ public class TelaListaImovel extends JInternalFrame implements ActionListener {
 			JOptionPane.showMessageDialog(null, "Removido com sucesso!");
 			alimentaTable();
 		}
-		
+
 	}
 
 	private void mostrarInformações() {
 		if (jtbImovel.getSelectedRow() == -1) {
-			JOptionPane.showMessageDialog(null, "Selecione um imóvel da tabela!", "Erro",
-					JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Selecione um imóvel da tabela!", "Erro", JOptionPane.ERROR_MESSAGE);
 		} else {
 			String id = String.valueOf(dtbImovel.getValueAt(jtbImovel.getSelectedRow(), 0));
 			Imovel imovel = imovelDao.buscar(Integer.valueOf(id));
@@ -324,12 +320,12 @@ public class TelaListaImovel extends JInternalFrame implements ActionListener {
 			BufferedImage img4 = cp.redimensionarImagem(imovel.getImagem4(), 125, 125);
 			jlbImg4.setIcon(new ImageIcon(img4));
 		}
-		
+
 	}
 
 	private void filtrar() {
 		dtbImovel.setRowCount(0);
-		
+
 		if (jrbMetros.isSelected()) {
 			for (Imovel imovel : imovelDao.todos()) {
 				if (imovel.getMetrosquadrados().toString().toLowerCase().contains(jtfPesquisa.getText())) {
@@ -337,15 +333,14 @@ public class TelaListaImovel extends JInternalFrame implements ActionListener {
 						if (imovel.getValorTotal() > 0) {
 							dtbImovel.addRow(new String[] { String.valueOf(imovel.getIdImovel()),
 									imovel.getEndereco().getBairro(), imovel.getEndereco().getCidade(),
-									imovel.getMetrosquadrados(),
-									String.valueOf(imovel.getValorTotal()) + " [Venda]" });
+									imovel.getMetrosquadrados(), String.valueOf(imovel.getValorTotal()) + " [Venda]" });
 						} else if (imovel.getValorMensal() > 0) {
-							
-								dtbImovel.addRow(new String[] { String.valueOf(imovel.getIdImovel()),
-										imovel.getEndereco().getBairro(), imovel.getEndereco().getCidade(),
-										imovel.getMetrosquadrados(),
-										String.valueOf(imovel.getValorMensal()) + " [Alugar]" });
-							
+
+							dtbImovel.addRow(new String[] { String.valueOf(imovel.getIdImovel()),
+									imovel.getEndereco().getBairro(), imovel.getEndereco().getCidade(),
+									imovel.getMetrosquadrados(),
+									String.valueOf(imovel.getValorMensal()) + " [Alugar]" });
+
 						}
 					}
 				}
@@ -360,21 +355,20 @@ public class TelaListaImovel extends JInternalFrame implements ActionListener {
 						if (imovel.getValorTotal() > 0) {
 							dtbImovel.addRow(new String[] { String.valueOf(imovel.getIdImovel()),
 									imovel.getEndereco().getBairro(), imovel.getEndereco().getCidade(),
-									imovel.getMetrosquadrados(),
-									String.valueOf(imovel.getValorTotal()) + " [Venda]" });
+									imovel.getMetrosquadrados(), String.valueOf(imovel.getValorTotal()) + " [Venda]" });
 						} else if (imovel.getValorMensal() > 0) {
-						
-								dtbImovel.addRow(new String[] { String.valueOf(imovel.getIdImovel()),
-										imovel.getEndereco().getBairro(), imovel.getEndereco().getCidade(),
-										imovel.getMetrosquadrados(),
-										String.valueOf(imovel.getValorMensal()) + " [Alugar]" });
-							
+
+							dtbImovel.addRow(new String[] { String.valueOf(imovel.getIdImovel()),
+									imovel.getEndereco().getBairro(), imovel.getEndereco().getCidade(),
+									imovel.getMetrosquadrados(),
+									String.valueOf(imovel.getValorMensal()) + " [Alugar]" });
+
 						}
 					}
 				}
 			}
 		}
-		
+
 	}
 
 	public static void main(String[] args) {

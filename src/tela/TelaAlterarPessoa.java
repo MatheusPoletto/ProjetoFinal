@@ -33,40 +33,33 @@ import metodos.AlterarCorretor;
 import pessoa.Cliente;
 import pessoa.Corretor;
 import pessoa.Pessoa;
+import utilitario.CriarCamponentes;
 
 public class TelaAlterarPessoa extends JInternalFrame implements ActionListener {
-
 	private static final long serialVersionUID = 835773138459611748L;
-
 	private JPanel jpnCadastroPessoa;
 	private JLabel jlbTitulo, jlbNome, jlbRg, jlbCpf, jlbDataNascimento, jlbEstadoCivil, jlbGenero,
 			jlbTelefoneResidencial, jlbTelefoneCelular, jlbEmail;
 	private JTextField jtfNome, jtfRg, jtfCpf, jtfDataNascimento, jtfGenero, jtfTelefoneResidencial, jtfTelefoneCelular,
 			jtfEmail;
 	private JComboBox<String> jcbEstadoCivil;
-
 	private JPanel jpnCadastroEndereco;
 	private JLabel jlbRua, jlbNumero, jlbBairro, jlbCidade, jlbUf, jlbCep;
 	private JTextField jtfRua, jtfNumero, jtfBairro, jtfCidade, jtfUf, jtfCep;
-
 	private JPanel jpnInteresses;
 	private JLabel jlbInteresses;
 	private JTextField jtfInteresse1, jtfInteresse2, jtfInteresse3;
-
 	private JPanel jpnInfoCorretor;
 	private JLabel jlbSalario, jlbComissao;
 	private JTextField jtfSalario, jtfComissao;
-
 	private JButton jbtAjuda, jbtSalvar, jbtCancelar;
-
 	private PessoaDAO pessoaDao = DaoFactoryJDBC.get().pessoaDAO();
 	private ClienteDAO clienteDao = DaoFactoryJDBC.get().clienteDAO();
 	private CorretorDAO corretorDao = DaoFactoryJDBC.get().corretorDAO();
-
 	private Integer idPessoa = null;
 	private String tipo = null;
-
 	private ArrayList<JTextField> jtfsValidar = new ArrayList<>();
+	private CriarCamponentes cp = new CriarCamponentes();
 
 	public TelaAlterarPessoa() {
 		setTitle("Alterar pessoa");
@@ -111,73 +104,77 @@ public class TelaAlterarPessoa extends JInternalFrame implements ActionListener 
 	}
 
 	private void criarSalvarCancelar() {
-		jbtSalvar = criarBotao("SALVAR", 497, 330, 81, 25, jbtSalvar);
+		jbtSalvar = cp.criarBotao("SALVAR", 497, 330, 81, 25, jbtSalvar);
 		jbtSalvar.setBackground(new Color(23, 20, 21));
 		jbtSalvar.setForeground(Color.green);
+		getContentPane().add(jbtSalvar);
 
-		jbtCancelar = criarBotao("CANCELAR", 579, 330, 97, 25, jbtCancelar);
+		jbtCancelar = cp.criarBotao("CANCELAR", 579, 330, 97, 25, jbtCancelar);
 		jbtCancelar.setBackground(new Color(23, 20, 21));
 		jbtCancelar.setForeground(Color.white);
+		getContentPane().add(jbtCancelar);
 
 	}
 
 	private void criarPainelNovoCorretor() {
-		jlbSalario = criarLabel("Salário:", 10, 0, 80, 30, jlbSalario);
-		jlbComissao = criarLabel("Comissão:", 105, 0, 80, 30, jlbComissao);
+		jlbSalario = cp.criarLabel("Salário:", 10, 0, 80, 30, jlbSalario);
+		jlbComissao = cp.criarLabel("Comissão:", 105, 0, 80, 30, jlbComissao);
 
-		jtfSalario = criarTextField(55, 4, 50, 27, jtfSalario);
-		jtfComissao = criarTextField(167, 4, 35, 27, jtfComissao);
+		jtfSalario = cp.criarTextField(55, 4, 50, 27, jtfSalario);
+		jtfComissao = cp.criarTextField(167, 4, 35, 27, jtfComissao);
 
-		jpnInfoCorretor = criarPanel("", 20, 325, 465, 35, jpnInfoCorretor, false);
+		jpnInfoCorretor = cp.criarPanel("", 20, 325, 465, 35, jpnInfoCorretor, false);
 		jpnInfoCorretor.add(jlbSalario);
 		jpnInfoCorretor.add(jtfSalario);
 		jpnInfoCorretor.add(jlbComissao);
 		jpnInfoCorretor.add(jtfComissao);
 		jpnInfoCorretor.setBorder(BorderFactory.createLineBorder(new Color(23, 20, 20), 1));
+		getContentPane().add(jpnInfoCorretor);
 
 	}
 
 	private void criarPainelNovoCliente() {
-		jlbInteresses = criarLabel("INTERESSES DE IMÓVEIS:", 10, 0, 150, 30, jlbInteresses);
+		jlbInteresses = cp.criarLabel("INTERESSES DE IMÓVEIS:", 10, 0, 150, 30, jlbInteresses);
 
-		jtfInteresse1 = criarTextField(160, 4, 90, 27, jtfInteresse1);
-		jtfInteresse2 = criarTextField(251, 4, 90, 27, jtfInteresse2);
-		jtfInteresse3 = criarTextField(324, 4, 90, 27, jtfInteresse3);
+		jtfInteresse1 = cp.criarTextField(160, 4, 90, 27, jtfInteresse1);
+		jtfInteresse2 = cp.criarTextField(251, 4, 90, 27, jtfInteresse2);
+		jtfInteresse3 = cp.criarTextField(324, 4, 90, 27, jtfInteresse3);
 
-		jbtAjuda = criarBotao("", 434, 4, 27, 27, jbtAjuda);
+		jbtAjuda = cp.criarBotao("", 434, 4, 27, 27, jbtAjuda);
 		jbtAjuda.setIcon(new ImageIcon("img/question_item_24.png"));
 		jbtAjuda.setOpaque(false);
 		jbtAjuda.setBorderPainted(false);
 		jbtAjuda.setBackground(new Color(0, 0, 0, 0));
 
-		jpnInteresses = criarPanel("", 20, 325, 465, 35, jpnInteresses, false);
+		jpnInteresses = cp.criarPanel("", 20, 325, 465, 35, jpnInteresses, false);
 		jpnInteresses.add(jlbInteresses);
 		jpnInteresses.add(jtfInteresse1);
 		jpnInteresses.add(jtfInteresse2);
 		jpnInteresses.add(jtfInteresse3);
 		jpnInteresses.add(jbtAjuda);
 		jpnInteresses.setBorder(BorderFactory.createLineBorder(new Color(23, 20, 20), 1));
+		getContentPane().add(jpnInteresses);
 
 	}
 
 	private void criarPainelCadastroPessoa() {
-		jlbNome = criarLabel("Nome:", 10, 20, 110, 30, jlbNome);
-		jlbRg = criarLabel("RG:", 10, 50, 110, 30, jlbRg);
-		jlbCpf = criarLabel("CPF:", 210, 50, 110, 30, jlbCpf);
-		jlbDataNascimento = criarLabel("Data de nascimento:", 420, 50, 120, 30, jlbDataNascimento);
-		jlbGenero = criarLabel("Gênero:", 10, 80, 110, 30, jlbGenero);
-		jlbEstadoCivil = criarLabel("Estado Civil:", 210, 80, 110, 30, jlbEstadoCivil);
-		jlbTelefoneResidencial = criarLabel("Tel. fixo:", 10, 110, 120, 30, jlbTelefoneResidencial);
-		jlbTelefoneCelular = criarLabel("Tel. celular:", 210, 110, 110, 30, jlbTelefoneCelular);
-		jlbEmail = criarLabel("Email:", 10, 140, 110, 30, jlbEmail);
+		jlbNome = cp.criarLabel("Nome:", 10, 20, 110, 30, jlbNome);
+		jlbRg = cp.criarLabel("RG:", 10, 50, 110, 30, jlbRg);
+		jlbCpf = cp.criarLabel("CPF:", 210, 50, 110, 30, jlbCpf);
+		jlbDataNascimento = cp.criarLabel("Data de nascimento:", 420, 50, 120, 30, jlbDataNascimento);
+		jlbGenero = cp.criarLabel("Gênero:", 10, 80, 110, 30, jlbGenero);
+		jlbEstadoCivil = cp.criarLabel("Estado Civil:", 210, 80, 110, 30, jlbEstadoCivil);
+		jlbTelefoneResidencial = cp.criarLabel("Tel. fixo:", 10, 110, 120, 30, jlbTelefoneResidencial);
+		jlbTelefoneCelular = cp.criarLabel("Tel. celular:", 210, 110, 110, 30, jlbTelefoneCelular);
+		jlbEmail = cp.criarLabel("Email:", 10, 140, 110, 30, jlbEmail);
 
-		jtfNome = criarTextField(80, 24, 560, 24, jtfNome);
-		jtfRg = criarTextField(80, 54, 120, 24, jtfRg);
-		jtfCpf = criarTextField(280, 54, 120, 24, jtfCpf);
-		jtfGenero = criarTextField(80, 84, 120, 24, jtfGenero);
-		jtfTelefoneResidencial = criarTextField(80, 114, 120, 24, jtfTelefoneResidencial);
-		jtfTelefoneCelular = criarTextField(280, 114, 120, 24, jtfTelefoneCelular);
-		jtfEmail = criarTextField(80, 144, 320, 24, jtfEmail);
+		jtfNome = cp.criarTextField(80, 24, 560, 24, jtfNome);
+		jtfRg = cp.criarTextField(80, 54, 120, 24, jtfRg);
+		jtfCpf = cp.criarTextField(280, 54, 120, 24, jtfCpf);
+		jtfGenero = cp.criarTextField(80, 84, 120, 24, jtfGenero);
+		jtfTelefoneResidencial = cp.criarTextField(80, 114, 120, 24, jtfTelefoneResidencial);
+		jtfTelefoneCelular = cp.criarTextField(280, 114, 120, 24, jtfTelefoneCelular);
+		jtfEmail = cp.criarTextField(80, 144, 320, 24, jtfEmail);
 
 		jcbEstadoCivil = new JComboBox<>();
 		jcbEstadoCivil.setBounds(280, 84, 120, 24);
@@ -196,7 +193,7 @@ public class TelaAlterarPessoa extends JInternalFrame implements ActionListener 
 		jtfDataNascimento.setBounds(550, 54, 90, 24);
 		jtfDataNascimento.setVisible(true);
 
-		jpnCadastroPessoa = criarPanel("Dados pessoais", 20, 50, 655, 182, jpnCadastroPessoa, true);
+		jpnCadastroPessoa = cp.criarPanel("Dados pessoais", 20, 50, 655, 182, jpnCadastroPessoa, true);
 		jpnCadastroPessoa.add(jlbNome);
 		jpnCadastroPessoa.add(jlbRg);
 		jpnCadastroPessoa.add(jlbCpf);
@@ -215,25 +212,26 @@ public class TelaAlterarPessoa extends JInternalFrame implements ActionListener 
 		jpnCadastroPessoa.add(jtfTelefoneResidencial);
 		jpnCadastroPessoa.add(jtfTelefoneCelular);
 		jpnCadastroPessoa.add(jtfEmail);
+		getContentPane().add(jpnCadastroPessoa);
 
 	}
 
 	private void criarPainelEndereco() {
-		jlbRua = criarLabel("Rua:", 10, 20, 110, 30, jlbRua);
-		jlbNumero = criarLabel("Nº:", 510, 20, 110, 30, jlbNumero);
-		jlbBairro = criarLabel("Bairro:", 10, 50, 110, 30, jlbBairro);
-		jlbCidade = criarLabel("Cidade:", 210, 50, 120, 30, jlbCidade);
-		jlbUf = criarLabel("UF:", 420, 50, 110, 30, jlbUf);
-		jlbCep = criarLabel("CEP:", 510, 50, 110, 30, jlbCep);
+		jlbRua = cp.criarLabel("Rua:", 10, 20, 110, 30, jlbRua);
+		jlbNumero = cp.criarLabel("Nº:", 510, 20, 110, 30, jlbNumero);
+		jlbBairro = cp.criarLabel("Bairro:", 10, 50, 110, 30, jlbBairro);
+		jlbCidade = cp.criarLabel("Cidade:", 210, 50, 120, 30, jlbCidade);
+		jlbUf = cp.criarLabel("UF:", 420, 50, 110, 30, jlbUf);
+		jlbCep = cp.criarLabel("CEP:", 510, 50, 110, 30, jlbCep);
 
-		jtfRua = criarTextField(80, 24, 420, 24, jtfRua);
-		jtfNumero = criarTextField(550, 24, 90, 24, jtfNumero);
-		jtfBairro = criarTextField(80, 54, 120, 24, jtfBairro);
-		jtfCidade = criarTextField(280, 52, 130, 24, jtfCidade);
-		jtfUf = criarTextField(450, 54, 50, 24, jtfUf);
-		jtfCep = criarTextField(550, 54, 90, 24, jtfCep);
+		jtfRua = cp.criarTextField(80, 24, 420, 24, jtfRua);
+		jtfNumero = cp.criarTextField(550, 24, 90, 24, jtfNumero);
+		jtfBairro = cp.criarTextField(80, 54, 120, 24, jtfBairro);
+		jtfCidade = cp.criarTextField(280, 52, 130, 24, jtfCidade);
+		jtfUf = cp.criarTextField(450, 54, 50, 24, jtfUf);
+		jtfCep = cp.criarTextField(550, 54, 90, 24, jtfCep);
 
-		jpnCadastroEndereco = criarPanel("Endereço", 20, 232, 655, 90, jpnCadastroEndereco, true);
+		jpnCadastroEndereco = cp.criarPanel("Endereço", 20, 232, 655, 90, jpnCadastroEndereco, true);
 		jpnCadastroEndereco.add(jlbRua);
 		jpnCadastroEndereco.add(jlbNumero);
 		jpnCadastroEndereco.add(jlbBairro);
@@ -246,46 +244,7 @@ public class TelaAlterarPessoa extends JInternalFrame implements ActionListener 
 		jpnCadastroEndereco.add(jtfCidade);
 		jpnCadastroEndereco.add(jtfUf);
 		jpnCadastroEndereco.add(jtfCep);
-
-	}
-
-	private JPanel criarPanel(String texto, Integer col, Integer lin, Integer lar, Integer alt, JPanel panel,
-			Boolean visibilidade) {
-		panel = new JPanel();
-		panel.setLayout(null);
-		panel.setBorder(BorderFactory.createTitledBorder(texto));
-		panel.setBounds(col, lin, lar, alt);
-		panel.setVisible(visibilidade);
-		getContentPane().add(panel);
-		return panel;
-
-	}
-
-	private JLabel criarLabel(String texto, Integer col, Integer lin, Integer lar, Integer alt, JLabel label) {
-		label = new JLabel(texto);
-		label.setBounds(col, lin, lar, alt);
-		label.setVisible(true);
-		getContentPane().add(label);
-		return label;
-
-	}
-
-	private JTextField criarTextField(Integer col, Integer lin, Integer lar, Integer alt, JTextField textField) {
-		textField = new JTextField();
-		textField.setBounds(col, lin, lar, alt);
-		textField.setVisible(true);
-		getContentPane().add(textField);
-		return textField;
-
-	}
-
-	private JButton criarBotao(String texto, Integer col, Integer lin, Integer lar, Integer alt, JButton button) {
-		button = new JButton(texto);
-		button.setBounds(col, lin, lar, alt);
-		button.addActionListener(this);
-		button.setVisible(true);
-		getContentPane().add(button);
-		return button;
+		getContentPane().add(jpnCadastroEndereco);
 
 	}
 

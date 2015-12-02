@@ -8,7 +8,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -16,63 +15,39 @@ import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.text.MaskFormatter;
 
-import DAOFactory.DaoFactoryJDBC;
-import dao.CorretorDAO;
-import dao.EnderecoDAO;
-import dao.PessoaDAO;
-import dao.UsuarioDAO;
-import metodos.CadastrarCliente;
 import metodos.CadastrarCorretor;
 import metodos.CadastrarEndereco;
 import metodos.CadastrarPessoa;
-import pessoa.Cliente;
 import pessoa.Corretor;
 import pessoa.Endereco;
 import pessoa.Pessoa;
-import pessoa.Usuario;
 import utilitario.CriarCamponentes;
-import utilitario.MensagemSucesso;
 import utilitario.MetodosCheck;
 
 public class TelaCadastroCorretor extends JInternalFrame implements ActionListener {
-
 	private static final long serialVersionUID = -4618300901528138050L;
-
 	private JLabel jlbTitulo;
 	private JLabel jlbNome, jlbRg, jlbCpf, jlbDataNascimento, jlbGenero, jlbEstadoCivil, jlbTelefoneResidencial,
 			jlbTelefoneCelular, jlbEmail;
 	private JTextField jtfNome, jtfRg, jtfCpf, jtfGenero, jtfTelefoneResidencial, jtfTelefoneCelular, jtfEmail,
 			jtfDataNascimento;
 	private JComboBox<String> jcbEstadoCivil;
-
 	private JPanel jpnCadastroEndereco;
 	private JLabel jlbRua, jlbNumero, jlbCidade, jlbBairro, jlbUf, jlbCep;
 	private JTextField jtfRua, jtfNumero, jtfCidade, jtfBairro, jtfUf, jtfCep;
-
 	private JLabel jlbSalario, jlbComissao, jlbUsuario, jlbSenha;
 	private JTextField jtfSalario, jtfComissao, jtfUsuario, jtfSenha;
 	private JPanel jpnCadastroCliente;
 	private JPanel jpnInfoCorretor;
-
 	private JButton jbtSalvar, jbtLimpar;
 	private JPanel jpnCadastrar;
- 
 	private ArrayList<JTextField> jtfsValidar = new ArrayList<>();
-
-	private PessoaDAO pessoaDao = DaoFactoryJDBC.get().pessoaDAO();
-	private EnderecoDAO enderecoDao = DaoFactoryJDBC.get().enderecoDAO();
-	private CorretorDAO corretorDao = DaoFactoryJDBC.get().corretorDAO();
-	private UsuarioDAO usuarioDao = DaoFactoryJDBC.get().usuarioDAO();
-	
 	private MetodosCheck mc = new MetodosCheck();
-	private MensagemSucesso ms = new MensagemSucesso();
-	
 	private CriarCamponentes cp = new CriarCamponentes();
 
 	public TelaCadastroCorretor() {
@@ -95,7 +70,6 @@ public class TelaCadastroCorretor extends JInternalFrame implements ActionListen
 		criarPanelCadastrar();
 
 		criarPanelInfoCorretor();
-
 
 		setResizable(false);
 		setSize(700, 450);
@@ -191,7 +165,7 @@ public class TelaCadastroCorretor extends JInternalFrame implements ActionListen
 		jpnCadastroEndereco.add(jtfUf);
 		jpnCadastroEndereco.add(jtfCep);
 		getContentPane().add(jpnCadastroEndereco);
-		
+
 	}
 
 	private void criarPanelCadastrar() {
@@ -204,7 +178,7 @@ public class TelaCadastroCorretor extends JInternalFrame implements ActionListen
 		jbtLimpar.setBackground(new Color(23, 20, 20));
 		jbtLimpar.setForeground(Color.white);
 		jbtLimpar.addActionListener(this);
-		
+
 		jpnCadastrar = cp.criarPanel("", 463, 372, 220, 34, jpnCadastrar, true);
 		jpnCadastrar.add(jbtSalvar);
 		jpnCadastrar.add(jbtLimpar);
@@ -236,7 +210,6 @@ public class TelaCadastroCorretor extends JInternalFrame implements ActionListen
 		getContentPane().add(jpnInfoCorretor);
 
 	}
-
 
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == jbtSalvar) {
@@ -281,19 +254,20 @@ public class TelaCadastroCorretor extends JInternalFrame implements ActionListen
 			String email = jtfEmail.getText();
 			String rua = jtfRua.getText();
 			String numero = jtfNumero.getText();
-			String bairro  = jtfBairro.getText();
+			String bairro = jtfBairro.getText();
 			String cidade = jtfCidade.getText();
 			String uf = jtfUf.getText();
 			String cep = jtfCep.getText();
-			Double salario =  Double.valueOf(jtfSalario.getText());
+			Double salario = Double.valueOf(jtfSalario.getText());
 			String login = jtfUsuario.getText();
 			String senha = jtfSenha.getText();
-			Integer nivelAcesso = 0; //cadastra como gestor
-			
+			Integer nivelAcesso = 0; // cadastra como gestor
+
 			CadastrarEndereco ce = new CadastrarEndereco();
 			Endereco endereco = ce.salvarEndereco(rua, numero, bairro, cidade, uf, cep);
 			CadastrarPessoa cp = new CadastrarPessoa();
-			Pessoa pessoa = cp.salvarPessoa(nome, rg, cpf, dataNascimento, genero, estadoCivil, telefoneResidencial, telefoneCelular, email,  endereco);
+			Pessoa pessoa = cp.salvarPessoa(nome, rg, cpf, dataNascimento, genero, estadoCivil, telefoneResidencial,
+					telefoneCelular, email, endereco);
 			CadastrarCorretor cc = new CadastrarCorretor();
 			Corretor corretor = cc.salvarCorretor(pessoa, salario, login, senha, nivelAcesso);
 		}

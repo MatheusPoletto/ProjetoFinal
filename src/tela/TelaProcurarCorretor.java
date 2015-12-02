@@ -1,25 +1,19 @@
 package tela;
 
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
-import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
 import DAOFactory.DaoFactoryJDBC;
-import dao.ClienteDAO;
 import dao.CorretorDAO;
-import pessoa.Cliente;
 import pessoa.Corretor;
 import utilitario.CriarCamponentes;
 
@@ -86,6 +80,7 @@ public class TelaProcurarCorretor extends JInternalFrame implements ActionListen
 
 		alimentarTable();
 	}
+
 	public static void main(String[] args) {
 		new TelaProcurarCorretor();
 	}
@@ -142,11 +137,10 @@ public class TelaProcurarCorretor extends JInternalFrame implements ActionListen
 	private void alimentarTable() {
 		dbtCorretores.setRowCount(0);
 		for (Corretor corretor : corretorDao.todos()) {
-			dbtCorretores.addRow(new String[] { String.valueOf(corretor.getIdCorretor()), corretor.getPessoa().getNome(),
-					corretor.getPessoa().getRg() });
+			dbtCorretores.addRow(new String[] { String.valueOf(corretor.getIdCorretor()),
+					corretor.getPessoa().getNome(), corretor.getPessoa().getRg() });
 		}
 
 	}
 
 }
-

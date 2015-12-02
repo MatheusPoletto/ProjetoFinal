@@ -1,7 +1,6 @@
 package tela;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -14,7 +13,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JToolBar;
 import javax.swing.ListSelectionModel;
-import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
 import DAOFactory.DaoFactoryJDBC;
@@ -32,30 +30,20 @@ import utilitario.CriarCamponentes;
 import utilitario.MetodosCheck;
 
 public class TelaListaPessoa extends JInternalFrame implements ActionListener {
-
 	private static final long serialVersionUID = 7740174946149044157L;
-
 	private JButton jbtEditarPessoa, jbtRemoverPessoa, jbtAtualizarPessoas, jbtCriarPessoa, jbtMenu, jbtFiltrarCliente,
 			jbtFiltraCorretor, jbtPesquisarRg;
-
 	private JTable jtbPessoas;
-
 	private DefaultTableModel dtbPessoas;
-
 	private JScrollPane jspPessoas;
-
 	private JToolBar jtbBarra;
-
 	private Boolean menuVisivel = false;
-
 	private JLabel jlbTitulo;
-
 	private PessoaDAO pessoaDao = DaoFactoryJDBC.get().pessoaDAO();
 	private CorretorDAO corretorDao = DaoFactoryJDBC.get().corretorDAO();
 	private ClienteDAO clienteDao = DaoFactoryJDBC.get().clienteDAO();
 	private UsuarioDAO usuarioDao = DaoFactoryJDBC.get().usuarioDAO();
 	private EnderecoDAO enderecoDao = DaoFactoryJDBC.get().enderecoDAO();
-	
 	private CriarCamponentes cp = new CriarCamponentes();
 	private MetodosCheck mc = new MetodosCheck();
 
@@ -259,7 +247,7 @@ public class TelaListaPessoa extends JInternalFrame implements ActionListener {
 				}
 			}
 			if (encontrou == false) {
-					mc.selecionaMensagemRetorno("pesquisa_rg_sem_resultado");
+				mc.selecionaMensagemRetorno("pesquisa_rg_sem_resultado");
 			} else if (encontrou == true) {
 				JOptionPane.showMessageDialog(null,
 						"Durante a pesquisa foram encontradas [" + dtbPessoas.getRowCount() + 1

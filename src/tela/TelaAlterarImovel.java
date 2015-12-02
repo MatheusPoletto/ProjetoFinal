@@ -338,7 +338,7 @@ public class TelaAlterarImovel extends JInternalFrame implements ActionListener 
 			mesesContrato = Integer.valueOf(jtfMesesContrato.getText());
 			valorTotal = 0.0;
 		}
-		
+
 		String imagem1 = arquivo1.getAbsolutePath();
 		String imagem2 = arquivo2.getAbsolutePath();
 		String imagem3 = arquivo3.getAbsolutePath();
@@ -348,10 +348,11 @@ public class TelaAlterarImovel extends JInternalFrame implements ActionListener 
 		String descricao3 = jtfDescricao3.getText();
 
 		Integer possui = jcbPossui.getSelectedIndex();
-		
+
 		AlterarImovel ai = new AlterarImovel();
-		ai.alterarImovel(imovelAlterar.getIdImovel(), metrosQuadrados, valorTotal, valorMensal, mesesContrato, imagem1, imagem2, imagem3, imagem4, descricao1, descricao2, descricao3, possui);
-		
+		ai.alterarImovel(imovelAlterar.getIdImovel(), metrosQuadrados, valorTotal, valorMensal, mesesContrato, imagem1,
+				imagem2, imagem3, imagem4, descricao1, descricao2, descricao3, possui);
+
 		enderecoAlterar.setRua(jtfRua.getText());
 		enderecoAlterar.setBairro(jtfBairro.getText());
 		enderecoAlterar.setNumero(jtfNumero.getText());

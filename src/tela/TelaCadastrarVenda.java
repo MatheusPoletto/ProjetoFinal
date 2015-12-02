@@ -1,31 +1,22 @@
 package tela;
 
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Date;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import DAOFactory.DaoFactoryJDBC;
 import dao.ClienteDAO;
-import dao.ImobiliariaDAO;
 import dao.ImovelDAO;
-import dao.NotaFiscalDAO;
-import dao.VendaDAO;
 import imovel.Imovel;
 import metodos.CadastrarNota;
-import model.Imobiliaria;
 import model.NotaFiscal;
 import model.Venda;
 import pessoa.Cliente;
@@ -33,6 +24,7 @@ import pessoa.Corretor;
 import utilitario.CriarCamponentes;
 
 public class TelaCadastrarVenda extends JInternalFrame implements ActionListener {
+	private static final long serialVersionUID = -7762800330615514724L;
 	private CriarCamponentes cp = new CriarCamponentes();
 	private JPanel jpnImovel;
 	private JLabel jlbTitulo;
@@ -52,7 +44,6 @@ public class TelaCadastrarVenda extends JInternalFrame implements ActionListener
 	private JPanel jpnValores;
 	private Imovel imovelVenda;
 	private ClienteDAO clienteDao = DaoFactoryJDBC.get().clienteDAO();
-	private VendaDAO vendaDao = DaoFactoryJDBC.get().vendaDAO();
 	private Cliente ClienteComprador, clienteProprietario;
 	private Corretor CorretorResponsavel;
 
@@ -255,7 +246,7 @@ public class TelaCadastrarVenda extends JInternalFrame implements ActionListener
 									+ Double.valueOf(jtfComissaoImobiliaria.getText()))));
 
 			NotaFiscal nf = cn.gerarNota(total, horaAgora, venda);
-			
+
 			telaPrincipal.getTlPrincipal().esconderTelas();
 			telaPrincipal.getTlPrincipal().getTlAlterarNota().preencherCampos(venda, nf, total);
 			telaPrincipal.getTlPrincipal().getTlAlterarNota().setVisible(true);

@@ -1,6 +1,5 @@
 package utilitario;
 
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,13 +9,13 @@ import javax.swing.JTextField;
 public class MetodosCheck {
 	MensagemErro erro = new MensagemErro();
 
-	public void selecionaMensagemRetorno(String tela){
+	public void selecionaMensagemRetorno(String tela) {
 		switch (tela) {
 		case "cadastro_cliente":
 			erro.erroCadastrarCliente();
 			break;
 		case "cadastro_corretor":
-			erro.erroCadastrarCorretor();	
+			erro.erroCadastrarCorretor();
 			break;
 		case "adicionar_jpg":
 			erro.erroFormatoJpg();
@@ -31,7 +30,7 @@ public class MetodosCheck {
 			break;
 		}
 	}
-	
+
 	public Boolean verificaCampos(List<JTextField> componentes, String tela) {
 		Boolean passou = true;
 		for (JTextField cp : componentes) {
@@ -39,7 +38,7 @@ public class MetodosCheck {
 				passou = false;
 			}
 		}
-		
+
 		if (passou == false) {
 			selecionaMensagemRetorno(tela);
 		}
@@ -55,19 +54,18 @@ public class MetodosCheck {
 		return retorno;
 
 	}
-	
-	public Boolean verificaExtensaoJpg(JFileChooser chooser, String tela){
+
+	public Boolean verificaExtensaoJpg(JFileChooser chooser, String tela) {
 		Boolean isJpg = null;
-		if(chooser.getSelectedFile().getAbsolutePath().toString().toLowerCase().endsWith(".jpg")){	
+		if (chooser.getSelectedFile().getAbsolutePath().toString().toLowerCase().endsWith(".jpg")) {
 			isJpg = true;
-		}else {
+		} else {
 			isJpg = false;
 			selecionaMensagemRetorno(tela);
 		}
-		
+
 		return isJpg;
-		
+
 	}
-	
 
 }

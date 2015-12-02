@@ -27,7 +27,6 @@ import pessoa.Endereco;
 import pessoa.Pessoa;
 import utilitario.CriarCamponentes;
 import utilitario.MensagemAjuda;
-import utilitario.MensagemSucesso;
 import utilitario.MetodosCheck;
 
 public class TelaCadastraCliente extends JInternalFrame implements ActionListener {
@@ -52,8 +51,7 @@ public class TelaCadastraCliente extends JInternalFrame implements ActionListene
 	private ArrayList<JTextField> jtfsValidar = new ArrayList<>();
 	private CriarCamponentes cp = new CriarCamponentes();
 	private MetodosCheck mc = new MetodosCheck();
-	private MensagemSucesso ms = new MensagemSucesso();
-	private MensagemAjuda ma= new MensagemAjuda();
+	private MensagemAjuda ma = new MensagemAjuda();
 
 	public TelaCadastraCliente() {
 		setTitle("Cadastro de cliente");
@@ -87,7 +85,7 @@ public class TelaCadastraCliente extends JInternalFrame implements ActionListene
 		jbtLimpar.setBackground(new Color(23, 20, 20));
 		jbtLimpar.setForeground(Color.white);
 		jbtSalvar.addActionListener(this);
-		
+
 		jpnCadastrar = cp.criarPanel("", 463, 372, 220, 34, jpnCadastrar, true);
 		jpnCadastrar.add(jbtSalvar);
 		jpnCadastrar.add(jbtLimpar);
@@ -218,11 +216,11 @@ public class TelaCadastraCliente extends JInternalFrame implements ActionListene
 		if (e.getSource() == jbtAjuda) {
 			botaoAjuda();
 		}
-		if(e.getSource() == jbtLimpar){
+		if (e.getSource() == jbtLimpar) {
 			limparCampos();
 		}
-	}	
-	
+	}
+
 	private void limparCampos() {
 		jtfNome.setText(" ");
 		jtfRua.setText(" ");
@@ -240,7 +238,7 @@ public class TelaCadastraCliente extends JInternalFrame implements ActionListene
 		jtfTelefoneCelular.setText(" ");
 		jtfTelefoneResidencial.setText(" ");
 		jtfDataNascimento.setText("2015-10-10");
-		
+
 	}
 
 	private void botaoAjuda() {
@@ -250,11 +248,11 @@ public class TelaCadastraCliente extends JInternalFrame implements ActionListene
 	public static void main(String[] args) {
 		new TelaCadastraCliente();
 	}
-	
+
 	private void salvarCliente() {
 		jtfsValidar.add(jtfNome);
 		jtfsValidar.add(jtfRg);
-		jtfsValidar.add(jtfCpf);		
+		jtfsValidar.add(jtfCpf);
 		Boolean camposPreenchidos = mc.verificaCampos(jtfsValidar, "cadastro_cliente");
 		if (camposPreenchidos == true) {
 			try {
@@ -269,18 +267,19 @@ public class TelaCadastraCliente extends JInternalFrame implements ActionListene
 				String email = jtfEmail.getText();
 				String rua = jtfRua.getText();
 				String numero = jtfNumero.getText();
-				String bairro  = jtfBairro.getText();
+				String bairro = jtfBairro.getText();
 				String cidade = jtfCidade.getText();
 				String uf = jtfUf.getText();
 				String cep = jtfCep.getText();
 				String interesse1 = jtfInteresse1.getText();
 				String interesse2 = jtfInteresse2.getText();
 				String interesse3 = jtfInteresse3.getText();
-				
+
 				CadastrarEndereco ce = new CadastrarEndereco();
 				Endereco endereco = ce.salvarEndereco(rua, numero, bairro, cidade, uf, cep);
 				CadastrarPessoa cp = new CadastrarPessoa();
-				Pessoa pessoa = cp.salvarPessoa(nome, rg, cpf, dataNascimento, genero, estadoCivil, telefoneResidencial, telefoneCelular, email,  endereco);
+				Pessoa pessoa = cp.salvarPessoa(nome, rg, cpf, dataNascimento, genero, estadoCivil, telefoneResidencial,
+						telefoneCelular, email, endereco);
 				CadastrarCliente cc = new CadastrarCliente();
 				Cliente cliente = cc.salvarCliente(pessoa, interesse1, interesse2, interesse3);
 			} catch (ParseException e) {

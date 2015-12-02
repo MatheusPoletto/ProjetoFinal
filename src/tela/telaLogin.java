@@ -1,7 +1,6 @@
 package tela;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -14,26 +13,20 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
 import DAOFactory.DaoFactoryJDBC;
 import dao.UsuarioDAO;
 import pessoa.Usuario;
+import utilitario.CriarCamponentes;
 
 public class telaLogin extends JFrame implements ActionListener {
-
 	private static final long serialVersionUID = 6804972754057030926L;
-
 	private JTextField jtfUsuario;
-
 	private JPasswordField jpfSenha;
-
 	private JLabel jlbUsuario, jlbSenha, jlbIcon1;
-
 	private JButton jbtEntrar;
-
 	private Usuario usuario;
-
 	private UsuarioDAO usuarioDao = DaoFactoryJDBC.get().usuarioDAO();
+	private CriarCamponentes cp = new CriarCamponentes();
 
 	telaLogin() {
 		setTitle("ImoSoft - Login");
@@ -98,25 +91,10 @@ public class telaLogin extends JFrame implements ActionListener {
 		getContentPane().add(jbtEntrar);
 		getContentPane().add(jlbIcon1);
 
-		criarLabel("Usuário", 135, 100, 130, 25, jlbUsuario);
-		criarLabel("Senha", 135, 160, 130, 25, jlbSenha);
-
-	}
-
-	public void criarLabel(String texto, Integer col, Integer lin, Integer lar, Integer alt, JLabel label) {
-		label = new JLabel(texto, SwingConstants.CENTER);
-		label.setBounds(col, lin, lar, alt);
-		label.setFont(new Font("Arial", Font.BOLD, 14));
-		label.setVisible(true);
-		getContentPane().add(label);
-
-	}
-
-	public void criarTextField(Integer col, Integer lin, Integer lar, Integer alt, JTextField textField) {
-		textField = new JTextField();
-		textField.setBounds(col, lin, lar, alt);
-		textField.setVisible(true);
-		getContentPane().add(textField);
+		jlbUsuario = cp.criarLabelCentralizada("Usuário", 135, 100, 130, 25, jlbUsuario);
+		jlbSenha = cp.criarLabelCentralizada("Senha", 135, 160, 130, 25, jlbSenha);
+		getContentPane().add(jlbUsuario);
+		getContentPane().add(jlbSenha);
 
 	}
 

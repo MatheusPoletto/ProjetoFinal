@@ -20,25 +20,20 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
-import javax.xml.stream.events.EndDocument;
 
 import DAOFactory.DaoFactoryJDBC;
 import dao.ClienteDAO;
-import dao.EnderecoDAO;
-import dao.ImovelDAO;
-import imovel.Imovel;
+
 import metodos.CadastrarEndereco;
 import metodos.CadastrarImovel;
 import pessoa.Cliente;
 import pessoa.Endereco;
 import utilitario.CriarCamponentes;
 import utilitario.MensagemAjuda;
-import utilitario.MensagemErro;
 import utilitario.MensagemSucesso;
 import utilitario.MetodosCheck;
 
 public class TelaCadastroImovel extends JInternalFrame implements ActionListener {
-
 	private static final long serialVersionUID = 4319035476296494897L;
 	private JLabel jlbTitulo;
 	private JPanel jpnLocalizador, jpnTab1;
@@ -76,8 +71,6 @@ public class TelaCadastroImovel extends JInternalFrame implements ActionListener
 	private JLabel jlbDescricao1, jlbDescricao2, jlbDescricao3;
 	private JTextField jtfDescricao1, jtfDescricao2, jtfDescricao3;
 	private JPanel jpnTab6;
-	private ImovelDAO imovelDao = DaoFactoryJDBC.get().imovelDAO();
-	private EnderecoDAO enderecoDao = DaoFactoryJDBC.get().enderecoDAO();
 	private ClienteDAO clienteDao = DaoFactoryJDBC.get().clienteDAO();
 	private Cliente clienteEncontrado;
 	private MetodosCheck mc = new MetodosCheck();
@@ -450,7 +443,7 @@ public class TelaCadastroImovel extends JInternalFrame implements ActionListener
 					mesesContrato = Integer.valueOf(jtfMesesContrato.getText());
 					valorTotal = 0.0;
 				}
-				
+
 				String imagem1 = arquivo1.getAbsolutePath();
 				String imagem2 = arquivo2.getAbsolutePath();
 				String imagem3 = arquivo3.getAbsolutePath();
@@ -458,11 +451,13 @@ public class TelaCadastroImovel extends JInternalFrame implements ActionListener
 				String descricao1 = jtfDescricao1.getText();
 				String descricao2 = jtfDescricao2.getText();
 				String descricao3 = jtfDescricao3.getText();
-	
+
 				Integer possui = jcbPossui.getSelectedIndex();
-				
+
 				CadastrarImovel ci = new CadastrarImovel();
-				ci.salvarImovel(rua, numero, bairro, cidade, uf, cep, metrosQuadrados, cliente, valorTotal, valorMensal, mesesContrato, endereco, imagem1, imagem2, imagem3, imagem4, descricao1, descricao2, descricao3, possui);
+				ci.salvarImovel(rua, numero, bairro, cidade, uf, cep, metrosQuadrados, cliente, valorTotal, valorMensal,
+						mesesContrato, endereco, imagem1, imagem2, imagem3, imagem4, descricao1, descricao2, descricao3,
+						possui);
 			} else {
 				JOptionPane.showMessageDialog(null, "Defina o tipo do imóvel.");
 			}

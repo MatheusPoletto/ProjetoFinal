@@ -29,9 +29,9 @@ public class RelatorioUtil {
 
 	public void compileViewReport(String pathRelatorio, Connection con, Map<String, Object> parametros) {
 		try {
-			JasperDesign jasperDesign = JRXmlLoader.load(pathRelatorio); 
-																			
-			JasperReport jr = JasperCompileManager.compileReport(jasperDesign); 
+			JasperDesign jasperDesign = JRXmlLoader.load(pathRelatorio);
+
+			JasperReport jr = JasperCompileManager.compileReport(jasperDesign);
 
 			JasperPrint jasperPrint = JasperFillManager.fillReport(jr, parametros, con);
 			JasperViewer.viewReport(jasperPrint);
@@ -52,11 +52,11 @@ public class RelatorioUtil {
 
 	public void compileViewReport(String pathRelatorio, List<?> dados, Map<String, Object> parametros) {
 		try {
-			JasperDesign jasperDesign = JRXmlLoader.load(pathRelatorio); 
+			JasperDesign jasperDesign = JRXmlLoader.load(pathRelatorio);
 
-			JRDataSource dataSource = new JRBeanCollectionDataSource(dados); 
+			JRDataSource dataSource = new JRBeanCollectionDataSource(dados);
 
-			JasperReport jr = JasperCompileManager.compileReport(jasperDesign); 
+			JasperReport jr = JasperCompileManager.compileReport(jasperDesign);
 
 			JasperPrint jasperPrint = JasperFillManager.fillReport(jr, parametros, dataSource);
 			JasperViewer.viewReport(jasperPrint);

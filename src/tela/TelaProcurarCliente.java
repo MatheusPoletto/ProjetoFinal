@@ -6,7 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -18,8 +17,8 @@ import javax.swing.table.DefaultTableModel;
 
 import DAOFactory.DaoFactoryJDBC;
 import dao.ClienteDAO;
-import groovy.mock.interceptor.Ignore;
 import pessoa.Cliente;
+import utilitario.CriarCamponentes;
 
 public class TelaProcurarCliente extends JInternalFrame implements ActionListener {
 	private static final long serialVersionUID = -4879493420031527614L;
@@ -30,16 +29,7 @@ public class TelaProcurarCliente extends JInternalFrame implements ActionListene
 	private JButton jbtSelecionar, jbtPesquisar, jbtAtualizar;
 	private ClienteDAO clienteDao = DaoFactoryJDBC.get().clienteDAO();
 	private Integer isVenda;
-	
-	
-
-	public Integer getIsVenda() {
-		return isVenda;
-	}
-
-	public void setIsVenda(Integer isVenda) {
-		this.isVenda = isVenda;
-	}
+	private CriarCamponentes cp = new CriarCamponentes();
 
 	public TelaProcurarCliente() {
 		setTitle("Selecione o proprietário");
@@ -56,17 +46,20 @@ public class TelaProcurarCliente extends JInternalFrame implements ActionListene
 
 		criarTabela();
 
-		jbtPesquisar = criarBotao("PESQUISAR", 0, 493, 155, 30, jbtPesquisar);
+		jbtPesquisar = cp.criarBotao("PESQUISAR", 0, 493, 155, 30, jbtPesquisar);
 		jbtPesquisar.setBackground(new Color(23, 20, 21));
 		jbtPesquisar.setForeground(Color.white);
+		getContentPane().add(jbtPesquisar);
 
-		jbtAtualizar = criarBotao("ATUALIZAR", 155, 493, 155, 30, jbtPesquisar);
+		jbtAtualizar = cp.criarBotao("ATUALIZAR", 155, 493, 155, 30, jbtPesquisar);
 		jbtAtualizar.setBackground(new Color(23, 20, 21));
 		jbtAtualizar.setForeground(Color.white);
+		getContentPane().add(jbtAtualizar);
 
-		jbtSelecionar = criarBotao("SELECIONAR", 310, 493, 155, 30, jbtSelecionar);
+		jbtSelecionar = cp.criarBotao("SELECIONAR", 310, 493, 155, 30, jbtSelecionar);
 		jbtSelecionar.setBackground(new Color(23, 20, 21));
 		jbtSelecionar.setForeground(Color.white);
+		getContentPane().add(jbtSelecionar);
 
 		setResizable(false);
 		setClosable(true);
@@ -98,18 +91,16 @@ public class TelaProcurarCliente extends JInternalFrame implements ActionListene
 		alimentarTable();
 	}
 
-	public JButton criarBotao(String texto, Integer col, Integer lin, Integer lar, Integer alt, JButton button) {
-		button = new JButton(texto);
-		button.setBounds(col, lin, lar, alt);
-		button.addActionListener(this);
-		button.setVisible(true);
-		getContentPane().add(button);
-		return button;
-
-	}
-
 	public static void main(String[] args) {
 		new TelaProcurarCliente();
+	}
+
+	public Integer getIsVenda() {
+		return isVenda;
+	}
+
+	public void setIsVenda(Integer isVenda) {
+		this.isVenda = isVenda;
 	}
 
 	@Override
@@ -152,12 +143,12 @@ public class TelaProcurarCliente extends JInternalFrame implements ActionListene
 				JOptionPane.showMessageDialog(null, "Selecione uma linha para continuar!", "Alerta!",
 						JOptionPane.ERROR_MESSAGE);
 			} else {
-				if(isVenda == 1){
-				String id = String.valueOf(dtbClientes.getValueAt(jtbClientes.getSelectedRow(), 0));
-				Cliente cliente = clienteDao.buscar(Integer.valueOf(id));
-				telaPrincipal.getTlPrincipal().getTlCadastrarVenda().selecionouProprietario(cliente);
-				this.setVisible(false);
-				}else if(isVenda == 0){
+				if (isVenda == 1) {
+					String id = String.valueOf(dtbClientes.getValueAt(jtbClientes.getSelectedRow(), 0));
+					Cliente cliente = clienteDao.buscar(Integer.valueOf(id));
+					telaPrincipal.getTlPrincipal().getTlCadastrarVenda().selecionouProprietario(cliente);
+					this.setVisible(false);
+				} else if (isVenda == 0) {
 					String id = String.valueOf(dtbClientes.getValueAt(jtbClientes.getSelectedRow(), 0));
 					Cliente cliente = clienteDao.buscar(Integer.valueOf(id));
 					telaPrincipal.getTlPrincipal().getTlCadastroImovel().selecionouProprietario(cliente);

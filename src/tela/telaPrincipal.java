@@ -7,10 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
-import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -40,10 +38,9 @@ public class telaPrincipal extends JFrame implements ActionListener {
 	private TelaProcurarCorretor tlProcurarCorretor = new TelaProcurarCorretor();
 	private TelaCadastrarVenda tlCadastrarVenda = new TelaCadastrarVenda();
 	private static telaPrincipal tlPrincipal = new telaPrincipal();
-
 	private JMenu jmnCadastro, jmnProcurar, jmnGerenciamento, jmnRelatorios, jmnSair, jmnVendas;
 	private JMenuItem jmiCliente, jmiCorretor, jmiProcurarPessoa, jmiContaUsuario, jmiRelatorioCliente, jmiNotas,
-			jmiRelatorioCorretor, jmiProcurarImovel, jmiImovel;
+			jmiProcurarImovel, jmiImovel;
 	private Usuario usuario;
 	private ArrayList<JInternalFrame> frames = new ArrayList<>();
 
@@ -119,11 +116,8 @@ public class telaPrincipal extends JFrame implements ActionListener {
 
 		jmnRelatorios = new JMenu("Relatórios");
 		jmiRelatorioCliente = new JMenuItem("Gerar relatório de clientes cadastrados");
-		jmiRelatorioCorretor = new JMenuItem("Gerar relatório de corretores cadastrados");
 		jmiRelatorioCliente.addActionListener(this);
-		jmiRelatorioCorretor.addActionListener(this);
 		jmnRelatorios.add(jmiRelatorioCliente);
-		jmnRelatorios.add(jmiRelatorioCorretor);
 		barra.add(jmnRelatorios);
 
 		jmnSair = new JMenu("Sair");
@@ -278,12 +272,6 @@ public class telaPrincipal extends JFrame implements ActionListener {
 		if (e.getSource() == jmiRelatorioCliente) {
 			Map<String, Object> parametros = new HashMap<String, Object>();
 			new RelatorioUtil().viewReport("src/relatorios/Cherry_Landscape.jasper", ConexaoUtil.getCon(), parametros);
-		}
-
-		if (e.getSource() == jmiRelatorioCorretor) {
-			Map<String, Object> parametros = new HashMap<String, Object>();
-			new RelatorioUtil().viewReport("src/relatorios/Cherry_Landscape_1.jasper", ConexaoUtil.getCon(),
-					parametros);
 		}
 
 		if (e.getSource() == jmiNotas) {
