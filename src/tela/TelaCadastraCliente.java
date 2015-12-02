@@ -81,7 +81,7 @@ public class TelaCadastraCliente extends JInternalFrame implements ActionListene
 		jbtSalvar.setForeground(Color.white);
 		jbtSalvar.addActionListener(this);
 
-		jbtLimpar = cp.criarBotao("LIMPAR", 10, 2, 100, 30, jbtLimpar);
+		jbtLimpar = cp.criarBotao("NOVO", 10, 2, 100, 30, jbtLimpar);
 		jbtLimpar.setBackground(new Color(23, 20, 20));
 		jbtLimpar.setForeground(Color.white);
 		jbtSalvar.addActionListener(this);

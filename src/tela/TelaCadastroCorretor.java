@@ -174,7 +174,7 @@ public class TelaCadastroCorretor extends JInternalFrame implements ActionListen
 		jbtSalvar.setForeground(Color.white);
 		jbtSalvar.addActionListener(this);
 
-		jbtLimpar = cp.criarBotao("LIMPAR", 10, 2, 100, 30, jbtLimpar);
+		jbtLimpar = cp.criarBotao("NOVO", 10, 2, 100, 30, jbtLimpar);
 		jbtLimpar.setBackground(new Color(23, 20, 20));
 		jbtLimpar.setForeground(Color.white);
 		jbtLimpar.addActionListener(this);

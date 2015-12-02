@@ -419,7 +419,7 @@ idCliente, idImovel, idCorretor) values
 (1, '2015-11-29', 1050.00, 105.50, 1, 1, 91);
 
 insert into imovel values (2, "150", 2, 150111.10, 0.0, 0, 2, "casa/5.jpg", "casa/6.jpg", "casa/7.jpg", "Grande", "Luxo", "Confortavel", "casa/8.jpg", 1);
-insert into imovel values (2, "150", 2, 0.0 , 1500.00, 6, 2, "casa/1.jpg", "casa/3.jpg", "casa/5.jpg", "pequena", "teste", "aluguel", "casa/8.jpg", 1);
+
 
 insert into endereco values(101, "Rua irineu bornhausen", "150", "Antonio Paglia", "Ponte Serrada", "89683-000", "SC");
-insert into imobiliaria values(1, "M&M Sistema Imobili√°rio", "Matheus Poletto e Matheus Ribak corretora de im√≥veis", "054.1233.31219/10", 101);
+insert into imobiliaria values(1, "M&M Sistema Imobili·rio", "Matheus Poletto e Matheus Ribak corretora de imÛveis", "054.1233.31219/10", 10, "1234-8974");
