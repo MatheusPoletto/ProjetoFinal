@@ -222,6 +222,7 @@ public class TelaAlterarNota extends JInternalFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == jbtImprimir) {
 			JOptionPane.showMessageDialog(null, "Imprimindo...");
+			JOptionPane.showMessageDialog(null, "Concluído!");
 		}
 		if (e.getSource() == jbtEstorno) {
 			nfDao.excluir(nfRem);

@@ -5,9 +5,11 @@ import dao.ImovelDAO;
 import imovel.Imovel;
 import pessoa.Cliente;
 import pessoa.Endereco;
+import utilitario.MensagemSucesso;
 
 public class CadastrarImovel {
-	ImovelDAO imovelDao = DaoFactoryJDBC.get().imovelDAO();
+	private ImovelDAO imovelDao = DaoFactoryJDBC.get().imovelDAO();
+	private MensagemSucesso ms = new MensagemSucesso();
 
 	public void salvarImovel(String rua, String numero, String bairro, String cidade, String uf, String cep,
 			String metrosQuadrados, Cliente cliente, Double valorTotal, Double valorMensal, Integer mesesContrato,
@@ -24,6 +26,7 @@ public class CadastrarImovel {
 		Imovel imovel = new Imovel(imovelDao.maiorId(), metrosQuadrados, valorTotal, valorMensal, mesesContrato,
 				endereco, cliente, imagem1, imagem2, imagem3, descricao1, descricao2, descricao3, imagem4, possui);
 		imovelDao.inserir(imovel);
+		ms.sucessoCadastrarImovel();
 
 	}
 

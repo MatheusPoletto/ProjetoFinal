@@ -135,7 +135,7 @@ public class TelaListaImovel extends JInternalFrame implements ActionListener {
 		jbtInfo = cp.criarBotao("INFO.", 523, 140, 110, 24, jbtInfo);
 		jbtRemover = cp.criarBotao("REMOVER", 523, 164, 110, 24, jbtRemover);
 		jbtAlterar = cp.criarBotao("ALTERAR", 523, 188, 110, 24, jbtAlterar);
-		jbtTodos = cp.criarBotao("TODOS", 523, 212, 110, 24, jbtTodos);
+		jbtTodos = cp.criarBotao("ATUALIZAR", 523, 212, 110, 24, jbtTodos);
 		
 		jbtInfo = cp.alterarCorBotoes(jbtInfo);
 		jbtRemover = cp.alterarCorBotoes(jbtRemover);
